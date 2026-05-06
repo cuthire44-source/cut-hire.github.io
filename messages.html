@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut & Hire — Inbox</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--s1:#111;--s2:#161616;--s3:#1c1c1c;--s4:#222;--red:#e02020;--rg:rgba(224,32,32,.5);--rs:rgba(224,32,32,.12);--w:#f5f0eb;--m:#555;--m2:#3a3a3a;--b:rgba(255,255,255,.07);--grn:#22c55e;--blu:#3a7bd5;--amb:#f59e0b}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;cursor:none;display:flex;flex-direction:column}
+#cur{position:fixed;width:10px;height:10px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--rg)}
+#cur-ring{position:fixed;width:28px;height:28px;border:1.5px solid rgba(224,32,32,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:8000;opacity:.38}
+
+/* TOP NAV */
+.tnav{height:54px;background:var(--s1);border-bottom:1px solid var(--b);display:flex;align-items:center;padding:0 1.4rem;gap:.9rem;flex-shrink:0;z-index:200;position:relative}
+.logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;text-decoration:none;color:var(--w);display:flex;align-items:center;gap:.4rem}
+.disc{width:20px;height:20px;border-radius:50%;background:conic-gradient(from 0deg,#3a7bd5,#a855f7,#22d3ee,#3a7bd5);animation:spin 3s linear infinite;box-shadow:0 0 8px rgba(58,123,213,.7);flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.amp{color:var(--red);font-style:italic}
+.nav-divider{width:1px;height:22px;background:var(--b)}
+.nav-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--m);letter-spacing:.12em;text-transform:uppercase}
+.nav-sp{flex:1}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.user-chip{display:flex;align-items:center;gap:.6rem;background:var(--s2);border:1px solid var(--b);padding:.35rem .85rem .35rem .45rem}
+.u-av{width:28px;height:28px;border-radius:50%;background:var(--rs);border:1px solid rgba(224,32,32,.3);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--red)}
+.u-name{font-size:.8rem;color:var(--w)}
+.u-role{font-size:.65rem;color:var(--m);font-family:'DM Mono',monospace}
+.signout{background:none;border:1px solid var(--b);color:var(--m);font-size:.7rem;padding:.28rem .75rem;cursor:none;font-family:'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;transition:all .2s;text-decoration:none}
+.signout:hover{border-color:var(--red);color:var(--red)}
+.home-link{background:none;border:1px solid var(--b);color:var(--m);font-size:.7rem;padding:.28rem .75rem;cursor:none;font-family:'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase;transition:all .2s;text-decoration:none}
+.home-link:hover{border-color:rgba(255,255,255,.2);color:var(--w)}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:290px;flex-shrink:0;background:var(--s1);border-right:1px solid var(--b);display:flex;flex-direction:column;overflow:hidden}
+.sb-head{padding:1.1rem 1.1rem .7rem;border-bottom:1px solid var(--b);flex-shrink:0}
+.sb-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.unread-total{background:var(--red);color:#fff;font-size:.6rem;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px;font-family:'DM Mono',monospace}
+.sb-search{display:flex;background:var(--s2);border:1px solid var(--b);overflow:hidden;transition:border-color .2s}
+.sb-search:focus-within{border-color:rgba(224,32,32,.35)}
+.sb-search input{flex:1;background:transparent;border:none;outline:none;padding:.5rem .75rem;color:var(--w);font-family:'DM Sans',sans-serif;font-size:.8rem}
+.sb-search input::placeholder{color:var(--m)}
+.sb-search span{padding:.5rem .65rem;color:var(--m);font-size:.82rem}
+.thread-list{flex:1;overflow-y:auto}
+.thread-list::-webkit-scrollbar{width:3px}
+.thread-list::-webkit-scrollbar-thumb{background:var(--m2)}
+.ti{padding:.85rem 1.1rem;cursor:none;transition:background .15s;border-bottom:1px solid rgba(255,255,255,.04);position:relative;border-left:2px solid transparent}
+.ti:hover{background:var(--s2)}
+.ti.active{background:var(--s3);border-left-color:var(--red)}
+.ti-top{display:flex;align-items:center;gap:.65rem}
+.ti-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;position:relative}
+.ti-online{position:absolute;bottom:0;right:0;width:9px;height:9px;background:var(--grn);border-radius:50%;border:1.5px solid var(--s1)}
+.ti-info{flex:1;min-width:0}
+.ti-name{font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:.3rem}
+.ti-time{font-size:.65rem;color:var(--m);font-family:'DM Mono',monospace;flex-shrink:0}
+.ti-bottom{display:flex;align-items:center;gap:.4rem;margin-top:.2rem}
+.ti-badge-tag{font-size:.58rem;font-family:'DM Mono',monospace;letter-spacing:.05em;text-transform:uppercase;padding:.1rem .4rem;border-radius:2px;flex-shrink:0}
+.tag-mod{background:rgba(245,158,11,.18);color:var(--amb)}
+.tag-ed{background:rgba(58,123,213,.18);color:var(--blu)}
+.tag-sys{background:rgba(255,255,255,.07);color:var(--m)}
+.tag-cl{background:rgba(34,197,94,.15);color:var(--grn)}
+.ti-preview{font-size:.75rem;color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.unread-badge{background:var(--red);color:#fff;font-size:.58rem;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;padding:0 4px;font-family:'DM Mono',monospace;flex-shrink:0}
+.new-msg-btn{margin:.9rem 1.1rem;background:var(--rs);border:1px solid rgba(224,32,32,.22);color:var(--red);padding:.6rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;cursor:none;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.45rem;flex-shrink:0}
+.new-msg-btn:hover{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* ── CHAT PANEL ── */
+.chat-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* chat header */
+.ch-header{padding:.9rem 1.4rem;background:var(--s1);border-bottom:1px solid var(--b);display:flex;align-items:center;gap:.9rem;flex-shrink:0}
+.ch-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;position:relative}
+.ch-online{position:absolute;bottom:0;right:0;width:10px;height:10px;background:var(--grn);border-radius:50%;border:2px solid var(--s1)}
+.ch-info{flex:1}
+.ch-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700}
+.ch-status{font-size:.72rem;color:var(--m);display:flex;align-items:center;gap:.35rem;margin-top:.12rem}
+.s-dot{width:6px;height:6px;border-radius:50%;background:var(--grn)}
+.ch-actions{display:flex;gap:.5rem}
+.ch-btn{background:var(--s2);border:1px solid var(--b);color:var(--m);padding:.4rem .85rem;font-size:.72rem;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase;cursor:none;transition:all .2s}
+.ch-btn:hover{border-color:rgba(255,255,255,.18);color:var(--w)}
+
+/* messages */
+.msgs{flex:1;overflow-y:auto;padding:1.4rem;display:flex;flex-direction:column;gap:.75rem}
+.msgs::-webkit-scrollbar{width:3px}
+.msgs::-webkit-scrollbar-thumb{background:var(--m2)}
+.date-sep{text-align:center;margin:.3rem 0;flex-shrink:0}
+.date-sep span{font-size:.65rem;color:var(--m);font-family:'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;background:var(--s2);padding:.18rem .75rem}
+.mr{display:flex;gap:.65rem;max-width:74%;animation:mi .22s ease}
+@keyframes mi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.mr.own{align-self:flex-end;flex-direction:row-reverse}
+.mr.sys{align-self:center;max-width:82%}
+.m-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;align-self:flex-end}
+.mb-wrap{display:flex;flex-direction:column}
+.mr.own .mb-wrap{align-items:flex-end}
+.m-sender{font-size:.68rem;color:var(--m);margin-bottom:.22rem;font-family:'DM Mono',monospace}
+.bubble{padding:.62rem .95rem;font-size:.875rem;line-height:1.62}
+.mr.own .bubble{background:var(--rs);border:1px solid rgba(224,32,32,.22)}
+.mr:not(.own):not(.sys) .bubble{background:var(--s2);border:1px solid var(--b)}
+.mr.sys .bubble{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--amb);font-size:.78rem;text-align:center}
+.m-meta{font-size:.63rem;color:var(--m);margin-top:.28rem;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:.35rem}
+.mr.own .m-meta{justify-content:flex-end}
+
+/* typing */
+.typing{display:none;align-items:center;gap:.5rem;padding:.3rem 0;flex-shrink:0}
+.typing.show{display:flex}
+.t-dots{display:flex;gap:3px}
+.t-dot{width:5px;height:5px;background:var(--m);border-radius:50%;animation:td 1s infinite}
+.t-dot:nth-child(2){animation-delay:.2s}
+.t-dot:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.t-label{font-size:.72rem;color:var(--m)}
+
+/* input bar */
+.input-bar{padding:.9rem 1.4rem;background:var(--s1);border-top:1px solid var(--b);flex-shrink:0}
+.input-row{display:flex;gap:.6rem;align-items:flex-end}
+.input-wrap{flex:1;background:var(--s2);border:1px solid var(--b);display:flex;align-items:flex-end;transition:border-color .2s}
+.input-wrap:focus-within{border-color:rgba(224,32,32,.4)}
+.msg-inp{flex:1;background:transparent;border:none;outline:none;color:var(--w);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:.7rem 1rem;resize:none;max-height:120px;min-height:40px;line-height:1.5}
+.msg-inp::placeholder{color:var(--m)}
+.att-btn{background:none;border:none;color:var(--m);padding:.7rem .75rem;cursor:none;font-size:.95rem;transition:color .2s;line-height:1}
+.att-btn:hover{color:var(--w)}
+.send-btn{background:var(--red);border:none;color:#fff;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:none;font-size:.85rem;transition:box-shadow .2s,transform .15s;flex-shrink:0}
+.send-btn:hover{box-shadow:0 0 14px var(--rg);transform:scale(1.06)}
+.inp-hint{font-size:.67rem;color:var(--m);margin-top:.45rem;font-family:'DM Mono',monospace}
+
+/* empty state */
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;color:var(--m)}
+.empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.35}
+.empty h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:rgba(245,240,235,.5);margin-bottom:.5rem}
+.empty p{font-size:.82rem;line-height:1.65;max-width:260px}
+
+/* ── INFO PANEL ── */
+.info-panel{width:248px;flex-shrink:0;background:var(--s1);border-left:1px solid var(--b);overflow-y:auto;padding:1.1rem}
+.info-panel::-webkit-scrollbar{width:3px}
+.info-panel::-webkit-scrollbar-thumb{background:var(--m2)}
+.ip-sec{margin-bottom:1.7rem}
+.ip-lbl{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--m);margin-bottom:.75rem;padding-bottom:.45rem;border-bottom:1px solid var(--b)}
+.ip-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.55rem}
+.ip-k{font-size:.73rem;color:var(--m)}
+.ip-v{font-size:.75rem;color:var(--w);text-align:right;font-family:'DM Mono',monospace}
+.ip-status{font-size:.68rem;padding:.18rem .55rem}
+.st-pend{background:rgba(245,158,11,.14);color:var(--amb)}
+.st-act{background:rgba(34,197,94,.14);color:var(--grn)}
+.st-rev{background:rgba(58,123,213,.14);color:var(--blu)}
+.ep-wrap{text-align:center;padding:.7rem 0}
+.ep-av{width:50px;height:50px;border-radius:50%;margin:0 auto .65rem;background:var(--s2);border:1px solid var(--b);font-size:1.5rem;display:flex;align-items:center;justify-content:center}
+.ep-name{font-family:'Playfair Display',serif;font-size:.95rem;margin-bottom:.2rem}
+.ep-role{font-size:.72rem;color:var(--m)}
+.ep-stars{color:#ffd700;font-size:.78rem;margin:.35rem 0}
+.ep-btn{width:100%;background:var(--rs);border:1px solid rgba(224,32,32,.22);color:var(--red);padding:.5rem;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;cursor:none;letter-spacing:.06em;text-transform:uppercase;transition:all .2s;margin-top:.5rem}
+.ep-btn:hover{background:var(--red);color:#fff}
+.mod-info{background:var(--s2);border:1px solid var(--b);padding:.9rem;font-size:.78rem;color:var(--m);line-height:1.65}
+.mod-info strong{color:var(--w)}
+
+/* ── NEW MESSAGE MODAL ── */
+.nm-ov{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(5px)}
+.nm-ov.open{opacity:1;pointer-events:all}
+.nm-box{background:var(--s1);border:1px solid var(--b);max-width:470px;width:90%;padding:2rem;position:relative;transform:translateY(12px);transition:transform .25s}
+.nm-ov.open .nm-box{transform:none}
+.nm-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--red),transparent)}
+.nm-close{position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:var(--m);font-size:1.2rem;cursor:none;transition:color .2s;line-height:1}
+.nm-close:hover{color:var(--red)}
+.nm-title{font-family:'Playfair Display',serif;font-size:1.35rem;margin-bottom:.35rem}
+.nm-title em{color:var(--red);font-style:italic}
+.nm-sub{font-size:.8rem;color:var(--m);margin-bottom:1.35rem;line-height:1.6}
+.nm-form{display:flex;flex-direction:column;gap:.85rem}
+.nm-form select,.nm-form input,.nm-form textarea{background:var(--s2);border:1px solid var(--b);color:var(--w);padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.86rem;outline:none;transition:border-color .2s;width:100%}
+.nm-form select:focus,.nm-form input:focus,.nm-form textarea:focus{border-color:var(--red)}
+.nm-form input::placeholder,.nm-form textarea::placeholder{color:var(--m)}
+.nm-form textarea{resize:vertical;min-height:85px}
+.nm-form select option{background:var(--s2)}
+.nm-submit{background:var(--red);color:#fff;border:none;padding:.82rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:none;letter-spacing:.07em;text-transform:uppercase;transition:box-shadow .2s}
+.nm-submit:hover{box-shadow:0 0 20px var(--rg)}
+
+@media(max-width:900px){.info-panel{display:none}}
+@media(max-width:640px){.sidebar{width:220px}.tnav .nav-label{display:none}}
+@media(max-width:480px){.sidebar{display:none}}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- TOP NAV -->
+<div class="tnav">
+  <a href="index.html" class="logo"><div class="disc"></div>Cut <span class="amp">&amp;</span> Hire</a>
+  <div class="nav-divider"></div>
+  <span class="nav-label">Inbox</span>
+  <div class="nav-sp"></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="u-av" id="u-av">?</div>
+      <div>
+        <div class="u-name" id="u-name">—</div>
+        <div class="u-role" id="u-role">—</div>
+      </div>
+    </div>
+    <a href="index.html" class="home-link">← Site</a>
+    <a href="auth.html" class="signout" onclick="signOut()">Sign Out</a>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">
+        Messages
+        <span class="unread-total" id="unread-total">0</span>
+      </div>
+      <div class="sb-search">
+        <span>🔍</span>
+        <input type="text" placeholder="Search…" oninput="filterThreads(this.value)">
+      </div>
+    </div>
+    <div class="thread-list" id="thread-list"></div>
+    <button class="new-msg-btn" onclick="openNM()">＋ New Message</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-panel" id="chat-panel">
+    <div class="empty">
+      <div class="empty-icon">💬</div>
+      <h3>Select a conversation</h3>
+      <p>Choose a thread on the left or tap "New Message" to contact a moderator.</p>
+    </div>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="info-panel">
+    <div class="ip-sec">
+      <div class="ip-lbl">Project Status</div>
+      <div class="ip-row"><span class="ip-k">Status</span><span class="ip-status st-pend" id="ip-status">Awaiting Match</span></div>
+      <div class="ip-row"><span class="ip-k">Submitted</span><span class="ip-v" id="ip-date">—</span></div>
+      <div class="ip-row"><span class="ip-k">Style</span><span class="ip-v" id="ip-style">—</span></div>
+      <div class="ip-row"><span class="ip-k">Budget</span><span class="ip-v" id="ip-budget">—</span></div>
+    </div>
+    <div class="ip-sec" id="ed-sec" style="display:none">
+      <div class="ip-lbl">Assigned Editor</div>
+      <div id="ed-profile"></div>
+    </div>
+    <div class="ip-sec">
+      <div class="ip-lbl">Support Hours</div>
+      <div class="mod-info">Our moderators are here <strong>Mon–Fri 9am–6pm EST</strong>. Average response: <strong>&lt; 2 hours.</strong></div>
+    </div>
+    <div class="ip-sec">
+      <div class="ip-lbl">Quick Links</div>
+      <div style="display:flex;flex-direction:column;gap:.4rem">
+        <a href="index.html" style="font-size:.78rem;color:var(--m);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--w)'" onmouseout="this.style.color='var(--m)'">← Back to Marketplace</a>
+        <a href="#" style="font-size:.78rem;color:var(--m);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--w)'" onmouseout="this.style.color='var(--m)'">📋 View My Projects</a>
+        <a href="#" style="font-size:.78rem;color:var(--m);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--w)'" onmouseout="this.style.color='var(--m)'">💳 Billing & Payments</a>
+        <a href="#" style="font-size:.78rem;color:var(--m);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--w)'" onmouseout="this.style.color='var(--m)'">❓ Help Center</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW MESSAGE MODAL -->
+<div class="nm-ov" id="nm-ov" onclick="handleNMOv(event)">
+  <div class="nm-box">
+    <button class="nm-close" onclick="closeNM()">✕</button>
+    <h2 class="nm-title">New <em>Message</em></h2>
+    <p class="nm-sub">Send a message to our moderators. They'll reply within 2 hours and connect you with the right editor.</p>
+    <div class="nm-form">
+      <select id="nm-topic">
+        <option value="">What's this about?</option>
+        <option>I need help finding an editor</option>
+        <option>Question about pricing / quotes</option>
+        <option>Issue with an active project</option>
+        <option>Billing or payment question</option>
+        <option>Editor application status</option>
+        <option>General question or feedback</option>
+      </select>
+      <input type="text" id="nm-subject" placeholder="Subject line">
+      <textarea id="nm-body" placeholder="Describe your situation in detail. The more context you give, the faster we can help…"></textarea>
+      <button class="nm-submit" onclick="sendNM()">Send to Moderator →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
+
+// Auth
+let user=null;
+try{user=JSON.parse(localStorage.getItem('ch_user'));}catch(e){}
+if(!user){window.location.href='auth.html';}
+
+const initials=(user?.name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+document.getElementById('u-av').textContent=initials;
+document.getElementById('u-name').textContent=user?.name||'User';
+document.getElementById('u-role').textContent=user?.role==='editor'?'✂️ Editor':'🎬 Client';
+function signOut(){localStorage.removeItem('ch_user');}
+
+const isEditor=user?.role==='editor';
+const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+document.getElementById('ip-date').textContent=today;
+document.getElementById('ip-style').textContent='Cinematic / Travel';
+document.getElementById('ip-budget').textContent='$200–$400';
+
+// ── THREAD DATA ──
+const threads = isEditor ? [
+  {
+    id:'mod',name:'Alex — Moderator',av:'🎯',bg:'rgba(245,158,11,.18)',col:'#f59e0b',
+    online:true,type:'mod',tag:'Moderator',tagCls:'tag-mod',
+    preview:'We have a new client who might be a great match for you…',
+    time:'2m',unread:2,
+    msgs:[
+      {from:'sys',text:'👋 Welcome to Cut & Hire! Your editor profile has been reviewed and approved. You\'re now live on the marketplace.'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Hey! Really happy to have you on the platform. Reviewed your reel — the color grades on the travel pieces are stunning.',time:'Yesterday 10:12'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'We\'ve already got a client request that matches your style perfectly. Can I introduce you to them?',time:'Yesterday 10:15'},
+      {from:'me',sender:'You',text:'Thanks so much! Absolutely, I\'d love that — what\'s the brief?',time:'Yesterday 11:04'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Client name is Jordan, travel vlog from Southeast Asia — 6 hours of footage, wants a 5-8 min cinematic YouTube cut + short reels. Budget $250–$350. Interested?',time:'Yesterday 11:09'},
+      {from:'me',sender:'You',text:'100% — that\'s right in my wheelhouse. Go ahead and connect us.',time:'Yesterday 11:22'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Perfect! I\'ve connected you with Jordan now. Check your Jordan K. thread. They\'ve been briefed on your work.',time:'2m'},
+    ]
+  },
+  {
+    id:'client',name:'Jordan K. — Client',av:'👤',bg:'rgba(58,123,213,.18)',col:'#3a7bd5',
+    online:false,type:'client',tag:'Client',tagCls:'tag-cl',
+    preview:'So excited! I have the footage ready on Drive whenever you are 📂',
+    time:'45m',unread:0,
+    msgs:[
+      {from:'sys',text:'🔗 You\'ve been connected with Jordan K. by moderator Alex. Project: Southeast Asia Travel Vlog — $250–350 budget, YouTube + Reels.'},
+      {from:'other',sender:'Jordan K.',av:'👤',bg:'rgba(58,123,213,.18)',text:'Hi!! So excited to finally connect. I watched your Bali reel three times — that\'s exactly the vibe I\'m going for.',time:'1h ago'},
+      {from:'other',sender:'Jordan K.',av:'👤',bg:'rgba(58,123,213,.18)',text:'I have about 6 hours of footage — lots of drone from Bali and Thailand, GoPro underwater from Koh Tao, some handheld market stuff in Chiang Mai.',time:'1h ago'},
+      {from:'me',sender:'You',text:'This sounds amazing!! I love working with that kind of footage — drone + underwater is such a great combo. Can you share the Drive link? I\'ll do a full review and send you a detailed plan by tomorrow.',time:'55m ago'},
+      {from:'other',sender:'Jordan K.',av:'👤',bg:'rgba(58,123,213,.18)',text:'Yes! Here it is: drive.google.com/yourfootage123 — folders are organized by location already. There\'s also a doc with my shot notes.',time:'50m ago'},
+      {from:'other',sender:'Jordan K.',av:'👤',bg:'rgba(58,123,213,.18)',text:'So excited! I have the footage ready on Drive whenever you are 📂',time:'45m ago'},
+    ]
+  },
+] : [
+  {
+    id:'mod',name:'Alex — Moderator',av:'🎯',bg:'rgba(245,158,11,.18)',col:'#f59e0b',
+    online:true,type:'mod',tag:'Moderator',tagCls:'tag-mod',
+    preview:'Great news — we\'ve found the perfect match for you!',
+    time:'5m',unread:3,
+    msgs:[
+      {from:'sys',text:'👋 Welcome to Cut & Hire! A moderator will reach out shortly to understand your project and find your perfect editor match.'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Hey! Welcome aboard — I\'m Alex, your dedicated project moderator. I saw your project brief and I\'m already excited. A Southeast Asia travel reel sounds like a dream project!',time:'Today 9:15'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Quick questions to nail the match: What\'s your footage length roughly? Any YouTube channels or videos whose editing style you love? And main platform — YouTube, Instagram, both?',time:'Today 9:17'},
+      {from:'me',sender:'You',text:'Hey Alex! About 6 hours total — Bali, Thailand, Koh Tao. Style-wise I\'m obsessed with @KaraAndNate and also sort of @Yes Theory vibes. Main platform is YouTube, but I\'d love 3-4 short reels cut down from it too.',time:'Today 10:04'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Those are great references — I know exactly the look. Mix of cinematic slow-burn and high-energy cuts with moody color grades. I have a few editors in mind already.',time:'Today 10:11'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Checking their availability now. Give me a couple hours and I\'ll come back with the best match. In the meantime — do you have a hard deadline for this?',time:'Today 10:12'},
+      {from:'me',sender:'You',text:'No super hard deadline, but ideally within 2 weeks for the YouTube cut. Reels can follow.',time:'Today 10:28'},
+      {from:'mod',sender:'Alex (Mod)',av:'🎯',bg:'rgba(245,158,11,.18)',text:'Great news — we\'ve found the perfect match for you! Her name is Sofia Reyes (@sofiacuts). Five stars, 312 projects done, specializes in exactly this style. Connecting you now — check your Sofia Reyes thread!',time:'5m ago'},
+    ]
+  },
+  {
+    id:'editor',name:'Sofia Reyes — Editor',av:'👩🏽',bg:'rgba(34,197,94,.14)',col:'#22c55e',
+    online:true,type:'editor',tag:'Editor',tagCls:'tag-ed',
+    preview:'Hi! Can\'t wait to dig into your footage 🎬',
+    time:'Just now',unread:1,
+    msgs:[
+      {from:'sys',text:'🔗 You\'ve been connected with Sofia Reyes by moderator Alex. Sofia has been fully briefed on your project details and references.'},
+      {from:'other',sender:'Sofia Reyes',av:'👩🏽',bg:'rgba(34,197,94,.14)',text:'Hi! I\'m Sofia — so excited to be working on this with you. Alex briefed me on the Southeast Asia footage and your @KaraAndNate / @Yes Theory references. I\'m obsessed with both.',time:'2m ago'},
+      {from:'other',sender:'Sofia Reyes',av:'👩🏽',bg:'rgba(34,197,94,.14)',text:'Hi! Can\'t wait to dig into your footage 🎬',time:'Just now'},
+    ]
+  },
+  {
+    id:'sys',name:'Cut & Hire System',av:'⚙️',bg:'rgba(255,255,255,.07)',col:'#666',
+    online:true,type:'sys',tag:'System',tagCls:'tag-sys',
+    preview:'Your account has been verified. You\'re all set!',
+    time:'Today',unread:0,
+    msgs:[
+      {from:'sys',text:'✅ Account verified. You can now post projects, message moderators, and receive editor connections.'},
+      {from:'sys',text:'🔒 Payments are secured in escrow. Funds only release when you approve the final delivery.'},
+      {from:'sys',text:'💡 Tip: The more detail you give your moderator (footage length, reference videos, deadline), the faster and better the editor match.'},
+      {from:'sys',text:'📱 Download the Cut & Hire app to receive instant push notifications when your editor sends updates.'},
+    ]
+  }
+];
+
+let active=null;
+let typTimer=null;
+
+// Render thread list
+function renderList(filter=''){
+  const el=document.getElementById('thread-list');
+  const list=filter?threads.filter(t=>t.name.toLowerCase().includes(filter.toLowerCase())):threads;
+  el.innerHTML=list.map(t=>`
+    <div class="ti ${active?.id===t.id?'active':''}" onclick="openThread('${t.id}')">
+      <div class="ti-top">
+        <div class="ti-av" style="background:${t.bg}">
+          ${t.av}
+          ${t.online?'<div class="ti-online"></div>':''}
+        </div>
+        <div class="ti-info">
+          <div class="ti-name">
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</span>
+            <span class="ti-time">${t.time}</span>
+          </div>
+          <div class="ti-bottom">
+            <span class="ti-badge-tag ${t.tagCls}">${t.tag}</span>
+            <span class="ti-preview">${t.preview}</span>
+            ${t.unread>0?`<span class="unread-badge">${t.unread}</span>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+  // update total unread
+  const total=threads.reduce((s,t)=>s+t.unread,0);
+  const el2=document.getElementById('unread-total');
+  el2.textContent=total;
+  el2.style.display=total>0?'inline-flex':'none';
+}
+
+function filterThreads(v){renderList(v);}
+
+function openThread(id){
+  active=threads.find(t=>t.id===id);
+  if(!active)return;
+  active.unread=0;
+  renderList();
+  renderChat();
+  updateInfo();
+}
+
+function renderChat(){
+  if(!active){document.getElementById('chat-panel').innerHTML='<div class="empty"><div class="empty-icon">💬</div><h3>Select a conversation</h3><p>Choose a thread on the left.</p></div>';return;}
+  const t=active;
+  document.getElementById('chat-panel').innerHTML=`
+    <div class="ch-header">
+      <div class="ch-av" style="background:${t.bg}">
+        <span>${t.av}</span>
+        ${t.online?'<div class="ch-online"></div>':''}
+      </div>
+      <div class="ch-info">
+        <div class="ch-name">${t.name}</div>
+        <div class="ch-status">${t.online?`<div class="s-dot"></div><span>Online now</span>`:'<span>Offline</span>'}</div>
+      </div>
+      <div class="ch-actions">
+        <button class="ch-btn" title="Attached files">📎 Files</button>
+        <button class="ch-btn" title="Project brief">📋 Brief</button>
+      </div>
+    </div>
+    <div class="msgs" id="msgs">
+      <div class="date-sep"><span>Today</span></div>
+      ${t.msgs.map(m=>renderMsg(m)).join('')}
+      <div class="typing" id="typing">
+        <div class="ti-av" style="background:${t.bg};width:26px;height:26px;font-size:.75rem">${t.av}</div>
+        <div class="t-dots"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>
+        <span class="t-label">${t.name.split('—')[0].trim()} is typing…</span>
+      </div>
+    </div>
+    <div class="input-bar">
+      <div class="input-row">
+        <div class="input-wrap">
+          <textarea class="msg-inp" id="msg-inp" placeholder="Type a message…" rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"></textarea>
+          <button class="att-btn" title="Attach">📎</button>
+        </div>
+        <button class="send-btn" onclick="sendMsg()">➤</button>
+      </div>
+      <div class="inp-hint">Enter to send · Shift+Enter for new line</div>
+    </div>`;
+  scroll();
+  document.getElementById('msg-inp').focus();
+}
+
+function renderMsg(m){
+  if(m.from==='sys'){
+    return `<div class="mr sys"><div class="bubble">${m.text}</div></div>`;
+  }
+  const own=m.from==='me';
+  return `<div class="mr ${own?'own':''}">
+    ${!own?`<div class="m-av" style="background:${m.bg||'var(--s2)'}">${m.av||'👤'}</div>`:''}
+    <div class="mb-wrap">
+      ${!own?`<div class="m-sender">${m.sender}</div>`:''}
+      <div class="bubble">${m.text.replace(/\n/g,'<br>')}</div>
+      <div class="m-meta">
+        <span>${m.time||'Just now'}</span>
+        ${own?'<span style="color:var(--grn)">✓✓</span>':''}
+      </div>
+    </div>
+    ${own?`<div class="m-av" style="background:var(--rs);color:var(--red);font-size:.65rem;font-weight:700">${initials}</div>`:''}
+  </div>`;
+}
+
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+function sendMsg(){
+  const inp=document.getElementById('msg-inp');
+  if(!inp||!active)return;
+  const text=inp.value.trim();
+  if(!text)return;
+  const msg={from:'me',sender:'You',text,time:'Just now'};
+  active.msgs.push(msg);
+  active.preview=text.slice(0,55)+(text.length>55?'…':'');
+  inp.value='';inp.style.height='auto';
+  renderChat();
+  renderList();
+  simReply();
+}
+
+function simReply(){
+  const t=active;
+  if(!t||t.type==='sys')return;
+  const tyEl=document.getElementById('typing');
+  if(tyEl)tyEl.classList.add('show');
+  scroll();
+  const pools={
+    mod:['Got it — I\'m on it right away.','Noted! Let me check with the team and get back to you shortly.','Perfect, that\'s super helpful. Give me a moment.','On it! I\'ll follow up within the hour.','Understood — I\'ll sort that out for you.'],
+    editor:['Sounds great! I\'ll factor that into the edit.','Love that direction — working on it now.','Perfect, give me a day and I\'ll have a draft ready for you.','Great feedback! Revising and will resend soon.','On it! The footage is looking amazing btw 🔥'],
+    client:['That sounds amazing, can\'t wait to see it!','Great, I\'ll keep an eye out!','Awesome, really appreciate the quick turnaround.','Perfect, that makes sense!'],
+  };
+  const pool=pools[t.type]||pools.mod;
+  const reply=pool[Math.floor(Math.random()*pool.length)];
+  clearTimeout(typTimer);
+  typTimer=setTimeout(()=>{
+    if(!active||active.id!==t.id)return;
+    const ty=document.getElementById('typing');
+    if(ty)ty.classList.remove('show');
+    const rep={from:'other',sender:t.name.split('—')[0].trim(),av:t.av,bg:t.bg,text:reply,time:'Just now'};
+    t.msgs.push(rep);
+    t.preview=reply.slice(0,55)+(reply.length>55?'…':'');
+    renderChat();renderList();
+  },1400+Math.random()*900);
+}
+
+function scroll(){setTimeout(()=>{const el=document.getElementById('msgs');if(el)el.scrollTop=el.scrollHeight;},30);}
+
+function updateInfo(){
+  if(!active)return;
+  const st=document.getElementById('ip-status');
+  const es=document.getElementById('ed-sec');
+  if(active.type==='editor'||active.id==='editor'){
+    st.className='ip-status st-act';st.textContent='Editor Assigned';
+    es.style.display='block';
+    document.getElementById('ed-profile').innerHTML=`
+      <div class="ep-wrap">
+        <div class="ep-av">👩🏽</div>
+        <div class="ep-name">Sofia Reyes</div>
+        <div class="ep-role">Cinematic · Travel</div>
+        <div class="ep-stars">★★★★★</div>
+        <div style="font-size:.72rem;color:var(--m);margin-bottom:.4rem">312 projects · $120/video</div>
+        <button class="ep-btn">View Full Profile</button>
+      </div>`;
+  } else {
+    st.className='ip-status st-pend';st.textContent='Awaiting Match';
+    es.style.display='none';
+  }
+}
+
+// New message modal
+function openNM(){document.getElementById('nm-ov').classList.add('open');}
+function closeNM(){document.getElementById('nm-ov').classList.remove('open');}
+function handleNMOv(e){if(e.target===document.getElementById('nm-ov'))closeNM();}
+function sendNM(){
+  const topic=document.getElementById('nm-topic').value;
+  const subj=document.getElementById('nm-subject').value.trim();
+  const body=document.getElementById('nm-body').value.trim();
+  if(!topic||!subj||!body)return;
+  closeNM();
+  const modT=threads.find(t=>t.type==='mod');
+  if(modT){
+    modT.msgs.push({from:'me',sender:'You',text:`[${topic}]\n\n${body}`,time:'Just now'});
+    modT.preview=body.slice(0,55)+(body.length>55?'…':'');
+    openThread(modT.id);
+    simReply();
+  }
+  document.getElementById('nm-topic').value='';
+  document.getElementById('nm-subject').value='';
+  document.getElementById('nm-body').value='';
+}
+
+// Init
+renderList();
+// auto-open first thread
+if(threads.length>0)openThread(threads[0].id);
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut & Hire — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--s1:#111;--s2:#161616;--s3:#1c1c1c;--red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.12);--w:#f5f0eb;--m:#555;--b:rgba(255,255,255,.08)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;cursor:none;overflow-x:hidden;display:flex;flex-direction:column}
+#cur{position:fixed;width:12px;height:12px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 14px var(--rg)}
+#cur-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(224,32,32,.38);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:8000;opacity:.5}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none}
+.o1{width:600px;height:600px;background:rgba(224,32,32,.08);top:-15%;left:-15%}
+.o2{width:500px;height:500px;background:rgba(58,123,213,.07);bottom:-15%;right:-10%}
+.o3{width:300px;height:300px;background:rgba(168,85,247,.06);top:50%;right:15%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;text-decoration:none;color:var(--w);display:flex;align-items:center;gap:.5rem}
+.disc{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 0deg,#3a7bd5,#a855f7,#22d3ee,#3a7bd5);animation:spin 3s linear infinite;box-shadow:0 0 10px rgba(58,123,213,.7)}
+.amp{color:var(--red);font-style:italic}
+@keyframes spin{to{transform:rotate(360deg)}}
+.back{font-size:.78rem;color:var(--m);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;display:flex;align-items:center;gap:.4rem}
+.back:hover{color:var(--w)}
+main{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+@media(max-width:768px){main{grid-template-columns:1fr}}
+.left-panel{background:var(--s1);border-right:1px solid var(--b);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6rem 4rem;position:relative;overflow:hidden}
+@media(max-width:768px){.left-panel{display:none}}
+.lp-disc{width:120px;height:120px;border-radius:50%;background:conic-gradient(from 0deg,#1a3a6e,#3a7bd5,#a855f7,#22d3ee,#1a3a6e);animation:spin 8s linear infinite;box-shadow:0 0 60px rgba(58,123,213,.4),inset 0 0 30px rgba(0,0,0,.5);margin-bottom:2.5rem;position:relative}
+.lp-disc::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;background:var(--s1);border-radius:50%}
+.lp-lollipop{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:8px;height:90px;background:linear-gradient(to bottom,var(--red),#7a0000);border-radius:4px;box-shadow:0 0 20px var(--rg)}
+.lp-lollipop::before{content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:24px;height:24px;border-radius:50%;background:radial-gradient(circle,#ff5555,var(--red));box-shadow:0 0 22px var(--rg)}
+.lp-h{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;line-height:1.05;text-align:center;margin-bottom:1rem}
+.lp-h em{color:var(--red);font-style:italic}
+.lp-p{font-size:.88rem;color:var(--m);text-align:center;line-height:1.75;max-width:300px;margin-bottom:2.5rem}
+.lp-stats{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+.lp-stat{text-align:center}
+.lp-sn{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700}
+.lp-sn span{color:var(--red)}
+.lp-sl{font-size:.68rem;color:var(--m);text-transform:uppercase;letter-spacing:.1em}
+.lp-orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none}
+.lo1{width:300px;height:300px;background:rgba(224,32,32,.08);bottom:-10%;right:-10%}
+.lo2{width:200px;height:200px;background:rgba(58,123,213,.07);top:10%;right:5%}
+.right-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 3rem 3rem;background:var(--bg);overflow-y:auto}
+.auth-wrap{width:100%;max-width:420px}
+.role-tabs{display:flex;border:1px solid var(--b);overflow:hidden;margin-bottom:1.8rem}
+.rt{flex:1;padding:.65rem;background:transparent;border:none;color:var(--m);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;cursor:none;transition:all .2s;position:relative}
+.rt.on{background:var(--rs);color:var(--w)}
+.rt::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .2s}
+.rt.on::after{transform:scaleX(1)}
+.mode-row{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:1.8rem}
+.mb{background:none;border:none;color:var(--m);font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:none;padding:.28rem .7rem;transition:color .2s;position:relative}
+.mb.on{color:var(--w)}
+.mb.on::after{content:'';position:absolute;bottom:-2px;left:.7rem;right:.7rem;height:1px;background:var(--red)}
+.msep{color:var(--m);font-size:.7rem;opacity:.5}
+.auth-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:800;margin-bottom:.35rem;line-height:1.1}
+.auth-title em{font-style:italic;color:var(--red)}
+.auth-sub{font-size:.83rem;color:var(--m);margin-bottom:1.7rem;line-height:1.65}
+.fg{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.fg label{font-size:.7rem;color:var(--m);text-transform:uppercase;letter-spacing:.09em;font-family:'DM Mono',monospace}
+.fg input,.fg select,.fg textarea{background:var(--s2);border:1px solid var(--b);color:var(--w);padding:.78rem 1rem;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--rs)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--m)}
+.fg select option{background:var(--s2)}
+.fg textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.pw-bars{display:flex;gap:3px;margin-top:.38rem}
+.pw-b{height:3px;flex:1;background:var(--b);border-radius:2px;transition:background .3s}
+.pw-b.wk{background:#e02020}.pw-b.md{background:#f59e0b}.pw-b.st{background:#22c55e}
+.err{font-size:.72rem;color:var(--red);margin-top:.28rem;display:none}
+.err.show{display:block}
+.terms-row{display:flex;align-items:flex-start;gap:.6rem;margin:.4rem 0 .2rem}
+.terms-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--red);cursor:none;margin-top:2px;flex-shrink:0}
+.terms-row label{font-size:.78rem;color:var(--m);line-height:1.5}
+.terms-row a{color:var(--red);text-decoration:none}
+.sub-btn{width:100%;background:var(--red);color:#fff;border:none;padding:.92rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.92rem;letter-spacing:.07em;text-transform:uppercase;cursor:none;transition:box-shadow .2s,transform .15s;margin-top:.4rem;position:relative;overflow:hidden}
+.sub-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .45s}
+.sub-btn:hover{box-shadow:0 0 28px var(--rg);transform:translateY(-1px)}
+.sub-btn:hover::before{transform:translateX(100%)}
+.sub-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.div{display:flex;align-items:center;gap:.9rem;margin:1.3rem 0;color:var(--m);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--b)}
+.soc-btn{width:100%;background:var(--s2);border:1px solid var(--b);color:var(--w);padding:.78rem;font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:none;transition:border-color .2s,background .2s;display:flex;align-items:center;justify-content:center;gap:.65rem}
+.soc-btn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+.soc-btn:disabled{opacity:.6;cursor:not-allowed}
+.af{text-align:center;margin-top:1.4rem;font-size:.8rem;color:var(--m)}
+.af a{color:var(--red);text-decoration:none;transition:opacity .2s}
+.af a:hover{opacity:.75}
+.success{display:none;text-align:center;padding:1.5rem 0 .5rem;animation:fdin .4s ease}
+.success.show{display:block}
+@keyframes fdin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.s-icon{font-size:3rem;margin-bottom:1rem;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.s-title{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:.55rem}
+.s-msg{font-size:.85rem;color:var(--m);line-height:1.7;margin-bottom:1.5rem}
+.s-cta{display:inline-block;background:var(--red);color:#fff;text-decoration:none;padding:.8rem 2rem;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;transition:box-shadow .2s}
+.s-cta:hover{box-shadow:0 0 20px var(--rg)}
+.progress-bar{width:100%;height:3px;background:var(--b);margin-top:1.2rem;overflow:hidden}
+.progress-fill{height:100%;background:var(--red);animation:progress 2.2s linear forwards}
+@keyframes progress{from{width:0}to{width:100%}}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--b);color:var(--w);padding:.75rem 1.5rem;font-size:.82rem;font-family:'DM Mono',monospace;z-index:9000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.toast.error{border-color:rgba(224,32,32,.4);color:var(--red)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.shake{animation:shake .3s ease}
+.ed-fields{display:none}
+.ed-fields.show{display:block}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+<div class="bg-orb o3"></div>
+<div class="toast" id="toast"></div>
+
+<nav>
+  <a href="index.html" class="logo"><div class="disc"></div>Cut <span class="amp">&amp;</span> Hire</a>
+  <a href="index.html" class="back">← Back to site</a>
+</nav>
+
+<main>
+  <div class="left-panel">
+    <div class="lp-orb lo1"></div>
+    <div class="lp-orb lo2"></div>
+    <div class="lp-lollipop"></div>
+    <div class="lp-disc"></div>
+    <h2 class="lp-h">Where <em>great</em><br>edits begin.</h2>
+    <p class="lp-p">Join thousands of creators and editors on the marketplace built for visual storytellers.</p>
+    <div class="lp-stats">
+      <div class="lp-stat"><div class="lp-sn">4<span>K+</span></div><div class="lp-sl">Editors</div></div>
+      <div class="lp-stat"><div class="lp-sn">98<span>%</span></div><div class="lp-sl">Satisfaction</div></div>
+      <div class="lp-stat"><div class="lp-sn">12<span>K+</span></div><div class="lp-sl">Projects Done</div></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="auth-wrap" id="auth-wrap">
+
+      <div class="role-tabs">
+        <button class="rt on" id="rt-client" onclick="setRole('client',this)">🎬 Client</button>
+        <button class="rt" id="rt-editor" onclick="setRole('editor',this)">✂️ Editor</button>
+      </div>
+
+      <div class="mode-row">
+        <button class="mb on" id="mb-si" onclick="setMode('signin')">Sign In</button>
+        <span class="msep">/</span>
+        <button class="mb" id="mb-su" onclick="setMode('signup')">Create Account</button>
+      </div>
+
+      <!-- SIGN IN -->
+      <div id="si-wrap">
+        <h2 class="auth-title">Welcome <em>back.</em></h2>
+        <p class="auth-sub" id="si-sub">Sign in to your client account to manage projects and messages.</p>
+        <div class="fg"><label>Email</label><input type="email" id="si-email" placeholder="you@example.com"><span class="err" id="si-email-err">Enter a valid email.</span></div>
+        <div class="fg"><label>Password</label><input type="password" id="si-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')handleSI()"><span class="err" id="si-pass-err">Password must be at least 6 characters.</span></div>
+        <button class="sub-btn" id="si-btn" onclick="handleSI()">Sign In →</button>
+        <div class="div">or continue with</div>
+        <button class="soc-btn" id="google-btn" onclick="handleGoogle()">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+        <p class="af">No account? <a href="#" onclick="setMode('signup');return false">Create one free →</a></p>
+      </div>
+
+      <!-- SIGN UP -->
+      <div id="su-wrap" style="display:none">
+        <h2 class="auth-title" id="su-title">Join as a <em>Client.</em></h2>
+        <p class="auth-sub" id="su-sub">Create your free account. A moderator will help you find the right editor.</p>
+        <div class="form-row">
+          <div class="fg"><label>First Name</label><input type="text" id="su-first" placeholder="Alex"></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="su-last" placeholder="Rivera"></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" id="su-email" placeholder="you@example.com"><span class="err" id="su-email-err">Enter a valid email.</span></div>
+        <div class="fg">
+          <label>Password</label>
+          <input type="password" id="su-pass" placeholder="Min. 8 characters" oninput="checkPW(this.value)">
+          <div class="pw-bars"><div class="pw-b" id="pb1"></div><div class="pw-b" id="pb2"></div><div class="pw-b" id="pb3"></div><div class="pw-b" id="pb4"></div></div>
+        </div>
+        <div id="cl-fields">
+          <div class="fg"><label>Content style needed</label><select id="su-style"><option value="">Select a style…</option><option>YouTube / Long-form</option><option>Reels / TikTok / Shorts</option><option>Cinematic / Film</option><option>Wedding Film</option><option>Documentary</option><option>Music Video</option><option>Corporate / Brand</option><option>Other</option></select></div>
+          <div class="fg"><label>Monthly budget</label><select id="su-budget"><option value="">Select range…</option><option>Under $100</option><option>$100 – $300</option><option>$300 – $700</option><option>$700 – $1,500</option><option>$1,500+</option></select></div>
+        </div>
+        <div id="ed-fields" class="ed-fields">
+          <div class="fg"><label>Primary Specialty</label><select id="su-spec"><option value="">Select specialty…</option><option>Cinematic / Film</option><option>YouTube / Content</option><option>Reels / TikTok</option><option>Wedding / Events</option><option>Music Video</option><option>VFX / Motion Graphics</option><option>Documentary</option><option>Corporate / Brand</option></select></div>
+          <div class="fg"><label>Years of Experience</label><select id="su-exp"><option value="">Select…</option><option>Under 1 year</option><option>1 – 3 years</option><option>3 – 5 years</option><option>5 – 10 years</option><option>10+ years</option></select></div>
+          <div class="fg"><label>Software Used</label><select id="su-sw"><option value="">Select primary tool…</option><option>Adobe Premiere Pro</option><option>DaVinci Resolve</option><option>Final Cut Pro</option><option>After Effects</option><option>CapCut / Mobile</option><option>Other</option></select></div>
+          <div class="fg"><label>Portfolio / Reel URL</label><input type="url" id="su-port" placeholder="https://vimeo.com/youreel"></div>
+          <div class="fg"><label>Short bio (optional)</label><textarea id="su-bio" placeholder="Tell clients about your style and what you love editing…"></textarea></div>
+        </div>
+        <div class="terms-row">
+          <input type="checkbox" id="su-terms">
+          <label for="su-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <button class="sub-btn" id="su-btn" onclick="handleSU()">Create Account →</button>
+        <div class="div">or</div>
+        <button class="soc-btn" id="google-btn2" onclick="handleGoogle()">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign up with Google
+        </button>
+        <p class="af">Have an account? <a href="#" onclick="setMode('signin');return false">Sign in →</a></p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success" id="success">
+        <div class="s-icon" id="s-icon">🎬</div>
+        <h3 class="s-title" id="s-title">You're in.</h3>
+        <p class="s-msg" id="s-msg">Your account is ready. Taking you to your inbox…</p>
+        <a href="messages.html" class="s-cta" id="s-cta">Open Inbox →</a>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword,
+         signInWithEmailAndPassword, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+// ── Firebase config ──
+const app = initializeApp({
+  apiKey: "AIzaSyACG95bU_QtH-15SmlPb9u7mljS41kqNVg",
+  authDomain: "cut-and-hire.firebaseapp.com",
+  projectId: "cut-and-hire",
+  storageBucket: "cut-and-hire.firebasestorage.app",
+  messagingSenderId: "723901720605",
+  appId: "1:723901720605:web:42747aa9c3053423a8fef4"
+});
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// ── Redirect if already logged in ──
+onAuthStateChanged(auth, user => {
+  if (user) window.location.href = 'messages.html';
+});
+
+// ── UI state ──
+let role = 'client';
+let mode = 'signin';
+
+window.setRole = (r, el) => {
+  role = r;
+  document.querySelectorAll('.rt').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  const ef = document.getElementById('ed-fields');
+  const cf = document.getElementById('cl-fields');
+  if (r === 'editor') {
+    ef.classList.add('show'); cf.style.display = 'none';
+    document.getElementById('su-title').innerHTML = 'Join as an <em>Editor.</em>';
+    document.getElementById('su-sub').textContent = 'Apply to join our talent network.';
+    document.getElementById('si-sub').textContent = 'Sign in to your editor account.';
+  } else {
+    ef.classList.remove('show'); cf.style.display = 'block';
+    document.getElementById('su-title').innerHTML = 'Join as a <em>Client.</em>';
+    document.getElementById('su-sub').textContent = 'Create your free account. A moderator will help you find the right editor.';
+    document.getElementById('si-sub').textContent = 'Sign in to your client account to manage projects and messages.';
+  }
+};
+
+window.setMode = (m) => {
+  mode = m;
+  document.getElementById('mb-si').classList.toggle('on', m === 'signin');
+  document.getElementById('mb-su').classList.toggle('on', m === 'signup');
+  document.getElementById('si-wrap').style.display = m === 'signin' ? 'block' : 'none';
+  document.getElementById('su-wrap').style.display = m === 'signup' ? 'block' : 'none';
+};
+
+window.checkPW = (pw) => {
+  const bars = ['pb1','pb2','pb3','pb4'].map(id => document.getElementById(id));
+  bars.forEach(b => b.className = 'pw-b');
+  if (!pw.length) return;
+  let sc = 0;
+  if (pw.length >= 8) sc++; if (/[A-Z]/.test(pw)) sc++; if (/[0-9]/.test(pw)) sc++; if (/[^A-Za-z0-9]/.test(pw)) sc++;
+  const cls = sc <= 1 ? 'wk' : sc <= 2 ? 'md' : 'st';
+  for (let i = 0; i < sc; i++) bars[i].classList.add(cls);
+};
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+function setLoading(loading) {
+  ['si-btn','su-btn','google-btn','google-btn2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = loading;
+  });
+}
+
+// ── Save user profile to Firestore ──
+async function saveUserProfile(firebaseUser, extraData = {}) {
+  const ref = doc(db, 'users', firebaseUser.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    // New user — create profile
+    await setDoc(ref, {
+      uid: firebaseUser.uid,
+      name: firebaseUser.displayName || extraData.name || 'User',
+      email: firebaseUser.email,
+      role: extraData.role || role,
+      photoURL: firebaseUser.photoURL || null,
+      createdAt: serverTimestamp(),
+      ...extraData
+    });
+  }
+  return snap.exists() ? snap.data() : { role: extraData.role || role };
+}
+
+function showSuccess(userData) {
+  document.getElementById('si-wrap').style.display = 'none';
+  document.getElementById('su-wrap').style.display = 'none';
+  const ss = document.getElementById('success');
+  ss.classList.add('show');
+  const isEditor = (userData.role || role) === 'editor';
+  if (isEditor) {
+    document.getElementById('s-icon').textContent = '✂️';
+    document.getElementById('s-title').textContent = 'Welcome, Editor!';
+    document.getElementById('s-msg').textContent = 'Your account is set up. A moderator will review your profile and connect you with clients.';
+  } else {
+    document.getElementById('s-icon').textContent = '🎬';
+    document.getElementById('s-title').textContent = "You're in.";
+    document.getElementById('s-msg').textContent = 'Your account is ready. Taking you to your inbox…';
+  }
+  setTimeout(() => { window.location.href = 'messages.html'; }, 2300);
+}
+
+// ── Google Sign-In ──
+window.handleGoogle = async () => {
+  setLoading(true);
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const userData = await saveUserProfile(result.user, { role });
+    showSuccess(userData);
+  } catch (err) {
+    setLoading(false);
+    if (err.code !== 'auth/popup-closed-by-user') {
+      showToast('Google sign-in failed: ' + err.message, true);
+    }
+  }
+};
+
+// ── Email Sign In ──
+window.handleSI = async () => {
+  const em = document.getElementById('si-email').value.trim();
+  const pw = document.getElementById('si-pass').value;
+  const eer = !em.includes('@');
+  const per = pw.length < 6;
+  document.getElementById('si-email-err').classList.toggle('show', eer);
+  document.getElementById('si-pass-err').classList.toggle('show', per);
+  if (eer || per) {
+    document.getElementById('auth-wrap').style.animation = 'shake .3s ease';
+    setTimeout(() => document.getElementById('auth-wrap').style.animation = '', 350);
+    return;
+  }
+  setLoading(true);
+  try {
+    const result = await signInWithEmailAndPassword(auth, em, pw);
+    const snap = await getDoc(doc(db, 'users', result.user.uid));
+    showSuccess(snap.exists() ? snap.data() : {});
+  } catch (err) {
+    setLoading(false);
+    const msgs = {
+      'auth/user-not-found': 'No account found with that email.',
+      'auth/wrong-password': 'Incorrect password.',
+      'auth/invalid-credential': 'Incorrect email or password.',
+      'auth/too-many-requests': 'Too many attempts. Try again later.'
+    };
+    showToast(msgs[err.code] || err.message, true);
+  }
+};
+
+// ── Email Sign Up ──
+window.handleSU = async () => {
+  const first = document.getElementById('su-first').value.trim();
+  const last = document.getElementById('su-last').value.trim();
+  const em = document.getElementById('su-email').value.trim();
+  const pw = document.getElementById('su-pass').value;
+  const terms = document.getElementById('su-terms').checked;
+  const eer = !em.includes('@');
+  document.getElementById('su-email-err').classList.toggle('show', eer);
+  if (!first || !last || eer || pw.length < 6 || !terms) {
+    document.getElementById('auth-wrap').style.animation = 'shake .3s ease';
+    setTimeout(() => document.getElementById('auth-wrap').style.animation = '', 350);
+    if (!terms) showToast('Please accept the Terms of Service.', true);
+    return;
+  }
+  setLoading(true);
+  try {
+    const result = await createUserWithEmailAndPassword(auth, em, pw);
+    const extraData = {
+      name: first + ' ' + last,
+      role,
+      style: document.getElementById('su-style')?.value || '',
+      budget: document.getElementById('su-budget')?.value || '',
+      specialty: document.getElementById('su-spec')?.value || '',
+      experience: document.getElementById('su-exp')?.value || '',
+      software: document.getElementById('su-sw')?.value || '',
+      portfolio: document.getElementById('su-port')?.value || '',
+      bio: document.getElementById('su-bio')?.value || '',
+    };
+    await saveUserProfile(result.user, extraData);
+    showSuccess(extraData);
+  } catch (err) {
+    setLoading(false);
+    const msgs = {
+      'auth/email-already-in-use': 'An account with this email already exists.',
+      'auth/weak-password': 'Password must be at least 6 characters.',
+      'auth/invalid-email': 'Please enter a valid email address.'
+    };
+    showToast(msgs[err.code] || err.message, true);
+  }
+};
+</script>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a)})();
+</script>
+</body>
+</html>

@@ -177,51 +177,10 @@ section{padding:6rem 2rem}
 .vp-placeholder p{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--m);text-transform:uppercase}
 .vp-placeholder img{width:48px;height:48px;object-fit:contain;animation:spin 4s linear infinite;filter:drop-shadow(0 0 10px rgba(58,123,213,.6))}
 
-/* ── FULLSCREEN — applied to #vp-wrap ── */
-#vp-wrap:fullscreen,
-#vp-wrap:-webkit-full-screen,
-#vp-wrap:-moz-full-screen,
-#vp-wrap:-ms-fullscreen {
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:100vw !important;
-  height:100vh !important;
-  background:#000 !important;
-  opacity:1 !important;
-  pointer-events:all !important;
-  padding:0 !important;
-}
-#vp-wrap:fullscreen .vp-title,
-#vp-wrap:-webkit-full-screen .vp-title,
-#vp-wrap:-moz-full-screen .vp-title,
-#vp-wrap:-ms-fullscreen .vp-title {
-  display:none;
-}
-#vp-wrap:fullscreen .vp-screen,
-#vp-wrap:-webkit-full-screen .vp-screen,
-#vp-wrap:-moz-full-screen .vp-screen,
-#vp-wrap:-ms-fullscreen .vp-screen {
-  width:100vw !important;
-  max-width:100vw !important;
-  height:calc(100vh - 70px) !important;
-  aspect-ratio:unset !important;
-}
-#vp-wrap:fullscreen .vp-controls,
-#vp-wrap:-webkit-full-screen .vp-controls,
-#vp-wrap:-moz-full-screen .vp-controls,
-#vp-wrap:-ms-fullscreen .vp-controls {
-  width:100vw !important;
-  max-width:100vw !important;
-  border:none !important;
-  background:rgba(0,0,0,.85) !important;
-}
-#vp-wrap:fullscreen .vp-close,
-#vp-wrap:-webkit-full-screen .vp-close {
-  color:rgba(255,255,255,.6);
-  top:1rem;
-  right:1.2rem;
+/* ── FULLSCREEN — video element goes fullscreen natively ── */
+#vp-video:fullscreen,
+#vp-video:-webkit-full-screen {
+  width:100vw;height:100vh;object-fit:contain;background:#000;
 }
 
 /* ── SERVICES ── */
@@ -552,7 +511,7 @@ function drawWorkCanvas(cv,cat){
     ctx.clearRect(0,0,w,h);
     const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,colors[0]);g.addColorStop(1,colors[1]);ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
     for(let l=0;l<5;l++){ctx.strokeStyle=`rgba(224,32,32,${.08+l*.04})`;ctx.lineWidth=1+l*.2;ctx.beginPath();for(let x=0;x<w;x++){const y=h/2+Math.sin((x/w)*Math.PI*(4+l)+t+l*.8)*20*(1-l*.15)+Math.sin((x/w)*Math.PI*10+t*1.3)*7;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();}
-    if(window._cdImg&&window._cdImg.complete){ctx.save();ctx.translate(w-40,32);ctx.rotate(t*.5);ctx.drawImage(window._cdImg,-17,-17,34,34);ctx.restore();}
+    if(window._cdImg&&window._cdImg.complete&&window._cdImg.naturalWidth>0){const s=34;ctx.save();ctx.translate(w-40,32);ctx.rotate(t*.5);ctx.drawImage(window._cdImg,0,0,window._cdImg.naturalWidth,window._cdImg.naturalHeight,-s/2,-s/2,s,s);ctx.restore();}
     t+=.013;requestAnimationFrame(fr);
   };fr();
 }
@@ -662,20 +621,21 @@ function vpSetVol(v){
   vpVolImg.src=v==0?'volume-mute.png':'volume.png';
 }
 
-// ── FULLSCREEN: request on vp-wrap so custom controls stay visible ──
+// ── FULLSCREEN: fullscreen the video element itself (most reliable) ──
 function vpToggleFS(){
   if(!vpIsFS){
-    const el=vpEl;
+    const el=video;
     const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
     if(req){
-      req.call(el).then(()=>{
-        vpFsImg.src='unfullscreen.png';
-        vpIsFS=true;
-      }).catch(()=>{});
+      req.call(el);
+      vpFsImg.src='unfullscreen.png';
+      vpIsFS=true;
     }
   } else {
     const exit=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;
     if(exit) exit.call(document);
+    vpFsImg.src='fullscreen.png';
+    vpIsFS=false;
   }
 }
 

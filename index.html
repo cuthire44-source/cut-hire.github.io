@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0a;--s1:#111;--s2:#161616;
+  --bg:#0a0a0a;--s1:#0a0a0a;--s2:#111;
   --red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.13);
   --w:#f5f0eb;--m:#5a5a5a;--b:rgba(255,255,255,.07);
 }
@@ -22,7 +22,6 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 /* ── PAGE LOAD WIPE ── */
 #page-wipe{position:fixed;inset:0;background:var(--red);z-index:9999;transform-origin:top;animation:wipe-out .9s cubic-bezier(.76,0,.24,1) .1s forwards}
 @keyframes wipe-out{0%{transform:scaleY(1)}100%{transform:scaleY(0)}}
-/* lock scroll during wipe */
 body.loading{overflow:hidden!important;height:100vh}
 
 /* ── NAV ── */
@@ -63,13 +62,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .particle{position:absolute;border-radius:50%;pointer-events:none;animation:particle-float linear infinite}
 @keyframes particle-float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:.4}100%{transform:translateY(-20vh) rotate(720deg);opacity:0}}
 
-.eyebrow{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:1.6rem;opacity:0;animation:fup .6s .9s forwards}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3.8rem,10vw,9rem);font-weight:900;line-height:.92;letter-spacing:-.03em;opacity:0;animation:fup .7s 1.1s forwards}
+/* ── SCISSORS HERO BG ── */
+.scissors-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sc-item{position:absolute;opacity:0;animation:sc-float linear infinite}
+@keyframes sc-float{
+  0%{transform:translateY(110vh) rotate(0deg) scale(var(--sc));opacity:0}
+  8%{opacity:var(--so)}
+  88%{opacity:var(--so)}
+  100%{transform:translateY(-20vh) rotate(var(--sr)) scale(var(--sc));opacity:0}
+}
+/* cutting line across hero */
+.cut-line{position:absolute;top:50%;left:-5%;width:110%;height:1px;background:linear-gradient(to right,transparent,rgba(224,32,32,.25),rgba(224,32,32,.5),rgba(224,32,32,.25),transparent);animation:cut-slide 6s ease-in-out infinite;transform-origin:left}
+@keyframes cut-slide{0%,100%{top:38%;opacity:0}20%{opacity:1}50%{top:62%;opacity:1}80%{opacity:.5}90%{opacity:0}}
+.cut-line2{position:absolute;top:50%;left:-5%;width:110%;height:1px;background:linear-gradient(to right,transparent,rgba(224,32,32,.15),rgba(224,32,32,.3),rgba(224,32,32,.15),transparent);animation:cut-slide2 9s ease-in-out infinite 3s}
+@keyframes cut-slide2{0%,100%{top:55%;opacity:0}20%{opacity:1}50%{top:35%;opacity:1}80%{opacity:.4}90%{opacity:0}}
+
+.eyebrow{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:1.6rem;opacity:0;animation:fup .6s .9s forwards;position:relative;z-index:1}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3.8rem,10vw,9rem);font-weight:900;line-height:.92;letter-spacing:-.03em;opacity:0;animation:fup .7s 1.1s forwards;position:relative;z-index:1}
 .hero-h1 .italic{font-style:italic;color:var(--red);display:block;position:relative}
 .hero-h1 .italic::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--red);animation:underline-grow 1s 1.8s forwards}
 @keyframes underline-grow{to{width:100%}}
-.hero-sub{max-width:480px;margin:2rem auto 0;color:var(--m);font-size:1rem;line-height:1.8;opacity:0;animation:fup .7s 1.3s forwards}
-.hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .7s 1.5s forwards}
+.hero-sub{max-width:480px;margin:2rem auto 0;color:var(--m);font-size:1rem;line-height:1.8;opacity:0;animation:fup .7s 1.3s forwards;position:relative;z-index:1}
+.hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .7s 1.5s forwards;position:relative;z-index:1}
 
 .btn-primary{background:var(--red);color:#fff;border:none;padding:.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.92rem;cursor:pointer;transition:box-shadow .25s,transform .15s;text-decoration:none;display:inline-block;letter-spacing:.04em;position:relative;overflow:hidden}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
@@ -78,7 +92,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.15);padding:.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.92rem;cursor:pointer;transition:border-color .2s,transform .15s,background .2s;text-decoration:none;display:inline-block;letter-spacing:.04em}
 .btn-outline:hover{border-color:var(--red);transform:translateY(-3px);background:var(--rs)}
 
-.hero-stats{margin-top:4.5rem;display:flex;gap:3.5rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .7s 1.7s forwards}
+.hero-stats{margin-top:4.5rem;display:flex;gap:3.5rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .7s 1.7s forwards;position:relative;z-index:1}
 .stat{text-align:center;position:relative}
 .stat::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:1px;background:var(--red);transition:width .4s}
 .stat:hover::after{width:60%}
@@ -121,7 +135,7 @@ section{padding:6rem 2rem}
 .cat-tab span{position:relative;z-index:1}
 
 .work-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:220px;gap:3px}
-.wc{position:relative;overflow:hidden;cursor:pointer;background:var(--s1);transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+.wc{position:relative;overflow:hidden;cursor:pointer;background:var(--s2);transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
 .wc.tall{grid-row:span 2}
 .wc.wide{grid-column:span 2}
 .wc-canvas{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s}
@@ -153,8 +167,6 @@ section{padding:6rem 2rem}
 .vp-bigplay.show{opacity:1}
 .vp-bigplay img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(224,32,32,.9));animation:bigplay-pop .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes bigplay-pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-
-/* controls bar */
 .vp-controls{width:min(900px,92vw);background:rgba(10,10,10,.95);border:1px solid var(--b);border-top:none;padding:.7rem 1.1rem .8rem;display:flex;flex-direction:column;gap:.55rem}
 .vp-timeline{position:relative;height:4px;background:rgba(255,255,255,.12);cursor:pointer;border-radius:2px;transition:height .2s}
 .vp-timeline:hover{height:7px}
@@ -178,74 +190,53 @@ section{padding:6rem 2rem}
 .vp-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;pointer-events:none}
 .vp-placeholder p{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--m);text-transform:uppercase}
 .vp-placeholder img{width:48px;height:48px;object-fit:contain;animation:spin 4s linear infinite;filter:drop-shadow(0 0 10px rgba(58,123,213,.6))}
-
-/* ── FULLSCREEN — video element goes fullscreen natively ── */
-#vp-video:fullscreen,
-#vp-video:-webkit-full-screen {
-  width:100vw;height:100vh;object-fit:contain;background:#000;
-}
+#vp-video:fullscreen,#vp-video:-webkit-full-screen{width:100vw;height:100vh;object-fit:contain;background:#000;}
 
 /* ── SERVICES ── */
-#services{background:var(--s1)}
-.serv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:2.8rem}
-.sv{background:var(--bg);padding:2.4rem 2rem;border:1px solid var(--b);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+#services{background:var(--bg)}
+.serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2.8rem}
+.sv{background:var(--s2);padding:2rem 1.6rem;border:1px solid var(--b);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
 .sv::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .4s}
 .sv::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,var(--rs),transparent 65%);opacity:0;transition:opacity .4s}
 .sv:hover{border-color:rgba(224,32,32,.3);transform:translateY(-4px)}
 .sv:hover::after{transform:scaleX(1)}
 .sv:hover::before{opacity:1}
-.sv-i{font-size:2rem;margin-bottom:1rem;display:inline-block;transition:transform .4s}
+.sv-i{font-size:1.6rem;margin-bottom:.8rem;display:inline-block;transition:transform .4s}
 .sv:hover .sv-i{transform:scale(1.2) rotate(-5deg)}
-.sv-n{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.6rem;transition:color .3s}
+.sv-n{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.5rem;transition:color .3s}
 .sv:hover .sv-n{color:var(--red)}
-.sv-p{font-size:.82rem;color:var(--m);line-height:1.7}
+.sv-p{font-size:.78rem;color:var(--m);line-height:1.7}
 
-/* ── JOIN US SECTION ── */
+/* ── HIRE SECTION (formerly joinus, now client-only) ── */
 #joinus{background:var(--bg);padding:6rem 2rem;position:relative;overflow:hidden}
-#joinus::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(224,32,32,.05),transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(58,123,213,.05),transparent 60%);pointer-events:none}
-.join-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:3rem}
-.jc{background:var(--s1);border:1px solid var(--b);padding:3rem 2.4rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
-.jc::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s}
-.jc.hire-side::before{background:radial-gradient(circle at 50% 100%,rgba(224,32,32,.08),transparent 65%)}
-.jc.join-side::before{background:radial-gradient(circle at 50% 100%,rgba(58,123,213,.08),transparent 65%)}
-.jc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform .4s}
-.jc.hire-side::after{background:var(--red)}
-.jc.join-side::after{background:#3a7bd5}
-.jc:hover{transform:translateY(-4px)}
-.jc:hover::before{opacity:1}
-.jc:hover::after{transform:scaleX(1)}
-.jc-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid;margin-bottom:1.4rem}
-.jc.hire-side .jc-badge{color:var(--red);border-color:rgba(224,32,32,.3);background:rgba(224,32,32,.06)}
-.jc.join-side .jc-badge{color:#3a7bd5;border-color:rgba(58,123,213,.3);background:rgba(58,123,213,.06)}
+#joinus::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(224,32,32,.05),transparent 60%);pointer-events:none}
+.hire-card{max-width:700px;margin:3rem auto 0;background:var(--s2);border:1px solid rgba(224,32,32,.2);padding:3.5rem;position:relative;overflow:hidden}
+.hire-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(224,32,32,.08),transparent 65%);pointer-events:none}
+.hire-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red)}
+.jc-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid;margin-bottom:1.4rem;color:var(--red);border-color:rgba(224,32,32,.3);background:rgba(224,32,32,.06)}
 .jc-icon{font-size:2.4rem;margin-bottom:1rem;display:block}
-.jc h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;line-height:1.1;margin-bottom:.8rem}
+.hire-card h3{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;line-height:1.1;margin-bottom:.8rem}
 .jc-desc{color:var(--m);font-size:.9rem;line-height:1.8;margin-bottom:1.6rem}
 .jc-perks{list-style:none;margin-bottom:2rem;display:flex;flex-direction:column;gap:.55rem}
 .jc-perks li{font-size:.83rem;color:var(--m);display:flex;align-items:flex-start;gap:.6rem;line-height:1.6}
-.jc-perks li::before{content:'◆';font-size:.5rem;margin-top:.3rem;flex-shrink:0}
-.jc.hire-side .jc-perks li::before{color:var(--red)}
-.jc.join-side .jc-perks li::before{color:#3a7bd5}
-.btn-blue{background:#3a7bd5;color:#fff;border:none;padding:.9rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;transition:box-shadow .25s,transform .15s;text-decoration:none;display:inline-block;letter-spacing:.04em;position:relative;overflow:hidden}
-.btn-blue::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
-.btn-blue:hover{box-shadow:0 0 36px rgba(58,123,213,.5);transform:translateY(-3px)}
-.btn-blue:hover::before{transform:translateX(100%)}
-.jc-divider{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;width:44px;height:44px;background:var(--bg);border:1px solid var(--b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--m);letter-spacing:.05em}
-@media(max-width:760px){.join-grid{grid-template-columns:1fr}.jc-divider{display:none}}
+.jc-perks li::before{content:'◆';font-size:.5rem;margin-top:.3rem;flex-shrink:0;color:var(--red)}
+
+/* ── DISCORD CTA ── */
 #discord{background:var(--bg);text-align:center;position:relative;overflow:hidden;padding:7rem 2rem}
 #discord::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(224,32,32,.08),transparent 70%);animation:cta-pulse 4s ease-in-out infinite}
 @keyframes cta-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 .disc-h{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,7vw,5.5rem);font-weight:900;line-height:1;margin-bottom:1.2rem}
 .disc-h em{font-style:italic;color:var(--red)}
 .disc-sub{color:var(--m);max-width:420px;margin:0 auto 2.4rem;font-size:.95rem;line-height:1.8}
-.disc-ticket{display:inline-flex;align-items:center;gap:.7rem;background:var(--s1);border:1px solid var(--b);padding:.9rem 2rem;font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--m);margin-top:1.4rem;transition:border-color .3s,color .3s}
+.disc-ticket{display:inline-flex;align-items:center;gap:.7rem;background:var(--s2);border:1px solid var(--b);padding:.9rem 2rem;font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--m);margin-top:1.4rem;transition:border-color .3s,color .3s}
 .disc-ticket:hover{border-color:rgba(224,32,32,.3);color:var(--w)}
 .disc-ticket span{color:var(--red);animation:arrow-bounce .8s ease-in-out infinite}
 @keyframes arrow-bounce{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 
 /* ── PROCESS ── */
-#process{background:var(--s1)}
+#process{background:var(--bg)}
 .proc-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:2.8rem}
-.ps{background:var(--bg);padding:2.4rem 1.8rem;border:1px solid var(--b);transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.ps{background:var(--s2);padding:2.4rem 1.8rem;border:1px solid var(--b);transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
 .ps::before{content:'';position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,var(--rs),transparent);transition:height .4s}
 .ps:hover{border-color:rgba(224,32,32,.25);transform:translateY(-4px)}
 .ps:hover::before{height:60px}
@@ -257,8 +248,21 @@ section{padding:6rem 2rem}
 .ps:hover h3{color:var(--red)}
 .ps p{font-size:.82rem;color:var(--m);line-height:1.7}
 
+/* ── APPLY BANNER (inline, after process) ── */
+#apply-banner{background:var(--bg);padding:0 2rem 6rem}
+.apply-inner{max-width:1200px;margin:0 auto;border:1px solid rgba(58,123,213,.2);padding:2.4rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.apply-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 50%,rgba(58,123,213,.06),transparent 60%);pointer-events:none}
+.apply-inner::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#3a7bd5}
+.apply-text h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;margin-bottom:.3rem}
+.apply-text h3 em{color:#3a7bd5;font-style:italic}
+.apply-text p{font-size:.83rem;color:var(--m);max-width:480px;line-height:1.7}
+.btn-blue{background:#3a7bd5;color:#fff;border:none;padding:.9rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;transition:box-shadow .25s,transform .15s;text-decoration:none;display:inline-block;letter-spacing:.04em;position:relative;overflow:hidden;flex-shrink:0}
+.btn-blue::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-blue:hover{box-shadow:0 0 36px rgba(58,123,213,.5);transform:translateY(-3px)}
+.btn-blue:hover::before{transform:translateX(100%)}
+
 /* ── FOOTER ── */
-footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem}
+footer{background:var(--s2);border-top:1px solid var(--b);padding:3rem 2rem 2rem}
 .fi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem}
 .fb p{font-size:.8rem;color:var(--m);margin-top:.6rem;max-width:260px;line-height:1.7}
 .f-links{display:flex;gap:2rem;list-style:none}
@@ -288,8 +292,17 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
 .mag{display:inline-block;transition:transform .2s}
 #progress{position:fixed;top:0;left:0;height:2px;background:var(--red);z-index:9998;width:0%;transition:width .1s linear;box-shadow:0 0 8px var(--rg)}
 
-@media(max-width:900px){.work-grid{grid-template-columns:repeat(2,1fr)}.wc.wide{grid-column:span 1}}
-@media(max-width:640px){nav{padding:1rem 1.4rem}.nav-links{display:none}.work-grid{grid-template-columns:1fr 1fr}.wc.tall{grid-row:span 1}}
+@media(max-width:900px){
+  .work-grid{grid-template-columns:repeat(2,1fr)}.wc.wide{grid-column:span 1}
+  .serv-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  nav{padding:1rem 1.4rem}.nav-links{display:none}
+  .work-grid{grid-template-columns:1fr 1fr}.wc.tall{grid-row:span 1}
+  .serv-grid{grid-template-columns:1fr}
+  .apply-inner{flex-direction:column;text-align:center;padding:2rem}
+  .hire-card{padding:2rem 1.4rem}
+}
 </style>
 </head>
 <body>
@@ -309,10 +322,10 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#joinus">Join Us</a></li>
+    <li><a href="#joinus">Hire Us</a></li>
     <li><a href="#process">Process</a></li>
   </ul>
-  <a href="https://discord.gg/fu65FNsqa" target="_blank" class="hire-nav mag">Hire Us →</a>
+  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="hire-nav mag">Hire Us →</a>
 </nav>
 
 <!-- HERO -->
@@ -320,12 +333,16 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
   <div class="orb o1"></div>
   <div class="orb o2"></div>
   <div class="orb o3"></div>
+  <!-- Scissors background layer -->
+  <div class="scissors-bg" id="scissors-bg"></div>
+  <div class="cut-line"></div>
+  <div class="cut-line2"></div>
   <div id="particles"></div>
   <p class="eyebrow">✦ Video Editing Studio ✦</p>
   <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
   <p class="hero-sub">A dedicated team of video editors crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
   <div class="hero-cta">
-    <a href="https://discord.gg/fu65FNsqa" target="_blank" class="btn-primary mag">Start a Project →</a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Start a Project →</a>
     <a href="#work" class="btn-outline mag">View Our Work</a>
   </div>
   <div class="hero-stats" id="hero-stats">
@@ -381,71 +398,27 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
   </div>
 </section>
 
-<!-- JOIN US -->
+<!-- HIRE OUR EDITORS (client-only, no apply) -->
 <section id="joinus">
   <div class="con" style="position:relative;z-index:1">
     <div class="rv" style="text-align:center">
-      <p class="sec-lbl" style="justify-content:center">Two Ways In</p>
-      <h2 class="sec-h2">Want to <em>Hire</em> or <em>Join</em> Us?</h2>
-      <p style="color:var(--m);max-width:520px;margin:0 auto 0;font-size:.95rem;line-height:1.8">Whether you need world-class editors for your project, or you <em style="color:var(--w);font-style:normal">are</em> a world-class editor — there's a place for you here.</p>
+      <p class="sec-lbl" style="justify-content:center">Work With Us</p>
+      <h2 class="sec-h2">Hire Our <em>Editors</em></h2>
+      <p style="color:var(--m);max-width:520px;margin:0 auto;font-size:.95rem;line-height:1.8">Need a video edited? We match you with a hand-picked editor. Not happy? We reassign — no questions asked.</p>
     </div>
-    <div class="join-grid rv" style="position:relative">
-
-      <!-- HIRE OUR EDITORS -->
-      <div class="jc hire-side rv-left">
-        <div class="jc-badge">🎬 For Clients</div>
-        <span class="jc-icon">🎯</span>
-        <h3>Hire Our <em style="color:var(--red);font-style:italic">Editors</em></h3>
-        <p class="jc-desc">Need a video edited? We match you with one of our 35+ hand-picked editors. Not happy with who you got? Request a swap — no questions asked.</p>
-        <ul class="jc-perks">
-          <li>Tell us your vision, style & deadline</li>
-          <li>We match you with the perfect editor</li>
-          <li>Work directly — no agency middleman</li>
-          <li>Not happy with the sample? Free reassignment</li>
-          <li>All work done inside private Discord channels</li>
-        </ul>
-        <a href="https://discord.gg/fu65FNsqa" target="_blank" class="btn-primary mag">Open a Ticket →</a>
-      </div>
-
-      <!-- OR divider -->
-      <div class="jc-divider">OR</div>
-
-      <!-- APPLY AS EDITOR -->
-      <div class="jc join-side rv-right">
-        <div class="jc-badge">✂️ For Editors</div>
-        <span class="jc-icon">🚀</span>
-        <h3>Apply as an <em style="color:#3a7bd5;font-style:italic">Editor</em></h3>
-        <p class="jc-desc">Think you have what it takes? We're always looking for exceptional video editors to join our network. Go through our selection process and start getting clients.</p>
-        <ul class="jc-perks">
-          <li>Join our Discord and open an "Apply" ticket</li>
-          <li>Submit a portfolio or sample edit</li>
-          <li>Pass our quality review (we only take the best)</li>
-          <li>Get matched with real clients from day one</li>
-          <li>Work on your schedule — full flexibility</li>
-        </ul>
-        <a href="https://discord.gg/fu65FNsqa" target="_blank" class="btn-blue mag">Apply Now →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- DISCORD CTA -->
-<section id="discord">
-  <div class="con" style="position:relative;z-index:1">
-    <div class="rv-scale">
-      <img src="disc.png" style="width:90px;height:90px;object-fit:contain;animation:spin 6s linear infinite;filter:drop-shadow(0 0 24px rgba(58,123,213,.7));margin:0 auto 2rem;display:block">
-      <p class="sec-lbl" style="justify-content:center">Let's Work Together</p>
-      <h2 class="disc-h">Ready to <em>Create</em><br>Something Great?</h2>
-      <p class="disc-sub">Join our Discord server, open a ticket, and tell us about your project. We'll get back to you fast.</p>
-      <a href="https://discord.gg/fu65FNsqa" target="_blank" class="btn-primary mag" style="font-size:.95rem;padding:1rem 2.8rem">
-        Join Our Discord →
-      </a>
-      <div>
-        <div class="disc-ticket">
-          <span>→</span> Open a ticket to start working with us
-        </div>
-      </div>
+    <div class="hire-card rv" style="position:relative;z-index:1">
+      <div class="jc-badge">🎬 For Clients</div>
+      <span class="jc-icon">🎯</span>
+      <h3>Get Your Video <em style="color:var(--red);font-style:italic">Edited</em></h3>
+      <p class="jc-desc">Tell us your vision, style, and deadline. We match you with one of our 35+ hand-picked editors. Work directly — no agency middleman. All work done inside private Discord channels.</p>
+      <ul class="jc-perks">
+        <li>Tell us your vision, style &amp; deadline</li>
+        <li>We match you with the perfect editor</li>
+        <li>Work directly — no agency middleman</li>
+        <li>Not happy with the sample? Free reassignment</li>
+        <li>All work done inside private Discord channels</li>
+      </ul>
+      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Open a Ticket →</a>
     </div>
   </div>
 </section>
@@ -462,6 +435,37 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
       <div class="ps rv"><div class="ps-n">02</div><div class="ps-i">📋</div><h3>Share Your Brief</h3><p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor on our team.</p></div>
       <div class="ps rv"><div class="ps-n">03</div><div class="ps-i">🎬</div><h3>We Get to Work</h3><p>Your editor dives in. You get regular updates and can leave feedback at any point in Discord.</p></div>
       <div class="ps rv"><div class="ps-n">04</div><div class="ps-i">✅</div><h3>Approve & Deliver</h3><p>Final file delivered in your preferred format. You only pay when you're happy with the result.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY AS EDITOR BANNER (after process, before discord CTA) -->
+<div id="apply-banner">
+  <div class="apply-inner rv">
+    <div class="apply-text">
+      <h3>Are You an <em>Editor</em>?</h3>
+      <p>Think you have what it takes? We're always looking for exceptional video editors to join our network. Submit a portfolio, pass our quality review, and start getting real clients from day one.</p>
+    </div>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-blue mag">Apply Now →</a>
+  </div>
+</div>
+
+<!-- DISCORD CTA -->
+<section id="discord">
+  <div class="con" style="position:relative;z-index:1">
+    <div class="rv-scale">
+      <img src="disc.png" style="width:90px;height:90px;object-fit:contain;animation:spin 6s linear infinite;filter:drop-shadow(0 0 24px rgba(58,123,213,.7));margin:0 auto 2rem;display:block">
+      <p class="sec-lbl" style="justify-content:center">Let's Work Together</p>
+      <h2 class="disc-h">Ready to <em>Create</em><br>Something Great?</h2>
+      <p class="disc-sub">Join our Discord server, open a ticket, and tell us about your project. We'll get back to you fast.</p>
+      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag" style="font-size:.95rem;padding:1rem 2.8rem">
+        Join Our Discord →
+      </a>
+      <div>
+        <div class="disc-ticket">
+          <span>→</span> Open a ticket to start working with us
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -483,7 +487,7 @@ footer{background:var(--s1);border-top:1px solid var(--b);padding:3rem 2rem 2rem
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
-      <li><a href="https://discord.gg/fu65FNsqa" target="_blank">Discord</a></li>
+      <li><a href="https://discord.gg/dXemseJsDV" target="_blank">Discord</a></li>
     </ul>
   </div>
   <div class="fb-bot">
@@ -539,6 +543,10 @@ window.addEventListener('load',()=>document.body.style.overflow='visible');
 window._cdImg=new Image();
 window._cdImg.src='disc.png';
 
+// ── PRELOAD SCISSORS IMAGE for hero bg ──
+window._scImg=new Image();
+window._scImg.src='scissors-6-512.png';
+
 // ── SCROLL PROGRESS BAR ──
 window.addEventListener('scroll',()=>{
   const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
@@ -554,6 +562,30 @@ for(let i=0;i<18;i++){
   const hue=Math.random()>.7?'rgba(224,32,32,':'rgba(58,123,213,';
   p.style.cssText=`width:${size}px;height:${size}px;background:${hue+(.3+Math.random()*.4)});left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*8}s;`;
   pc.appendChild(p);
+}
+
+// ── SCISSORS HERO BACKGROUND ──
+const scBg=document.getElementById('scissors-bg');
+const scCount=10;
+for(let i=0;i<scCount;i++){
+  const el=document.createElement('div');
+  el.className='sc-item';
+  const size=Math.random()*60+24;
+  const opacity=Math.random()*.09+.04;
+  const dur=Math.random()*18+14;
+  const delay=Math.random()*16;
+  const left=Math.random()*100;
+  const rot=Math.random()*360+180;
+  el.style.cssText=`
+    width:${size}px;height:${size}px;
+    left:${left}%;
+    --sc:1;--so:${opacity};--sr:${rot}deg;
+    animation-duration:${dur}s;
+    animation-delay:-${delay}s;
+    background:url('scissors-6-512.png') no-repeat center/contain;
+    filter:invert(1) sepia(1) saturate(3) hue-rotate(320deg) brightness(.7);
+  `;
+  scBg.appendChild(el);
 }
 
 // ── TICKER ──
@@ -712,21 +744,15 @@ function vpSetVol(v){
   vpVolImg.src=v==0?'volume-mute.png':'volume.png';
 }
 
-// ── FULLSCREEN: fullscreen the video element itself (most reliable) ──
 function vpToggleFS(){
   if(!vpIsFS){
     const el=video;
     const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
-    if(req){
-      req.call(el);
-      vpFsImg.src='unfullscreen.png';
-      vpIsFS=true;
-    }
+    if(req){req.call(el);vpFsImg.src='unfullscreen.png';vpIsFS=true;}
   } else {
     const exit=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;
     if(exit) exit.call(document);
-    vpFsImg.src='fullscreen.png';
-    vpIsFS=false;
+    vpFsImg.src='fullscreen.png';vpIsFS=false;
   }
 }
 
@@ -739,7 +765,6 @@ document.addEventListener('webkitfullscreenchange',()=>{
   else{vpFsImg.src='unfullscreen.png';vpIsFS=true;}
 });
 
-// timeline scrubbing
 const tl=document.getElementById('vp-tl');
 let scrubbing=false;
 function scrubTo(e){
@@ -752,11 +777,8 @@ function scrubTo(e){
 tl.addEventListener('mousedown',e=>{scrubbing=true;scrubTo(e);});
 window.addEventListener('mousemove',e=>{if(scrubbing)scrubTo(e);});
 window.addEventListener('mouseup',()=>scrubbing=false);
-
-// close on backdrop click
 vpEl.addEventListener('click',e=>{if(e.target===vpEl)vpClose();});
 
-// keyboard shortcuts
 window.addEventListener('keydown',e=>{
   if(!vpEl.classList.contains('open'))return;
   if(e.code==='Space'){e.preventDefault();vpTogglePlay();}
@@ -788,7 +810,7 @@ window.addEventListener('scroll',()=>{
 });
 
 // ── NAV ACTIVE SECTION ──
-const sections=['work','services','discord','process'];
+const sections=['work','services','joinus','process'];
 const navLinks=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{
   let cur='';

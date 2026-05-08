@@ -533,7 +533,13 @@ const scrollHints=[document.getElementById('scroll-left'),document.getElementByI
 scrollHints.forEach(h=>{
   h.style.cursor='pointer';
   h.addEventListener('click',()=>{
-    document.getElementById('work').scrollIntoView({behavior:'smooth'});
+    const circle = h.querySelector('.scroll-hint-circle');
+    circle.style.transition='transform .2s cubic-bezier(.34,1.56,.64,1)';
+    circle.style.transform='scale(1.25)';
+    setTimeout(()=>circle.style.transform='scale(1)',200);
+    setTimeout(()=>{
+      document.getElementById('work').scrollIntoView({behavior:'smooth'});
+    },150);
   });
 });
 let hintsEnabled=false;

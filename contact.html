@@ -58,7 +58,23 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .contact-content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
 
 /* CONTACT METHODS — no longer anchor tags, just divs */
-.contact-methods{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:3.5rem}
+.contact-methods{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  margin-bottom:0;
+}
+
+.contact-main-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:1.8rem;
+  margin-bottom:3.5rem;
+  position:relative;
+  z-index:2;
+}
+
 @media(max-width:640px){.contact-methods{grid-template-columns:1fr}}
 
 .contact-card{
@@ -133,7 +149,6 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
       <div class="cc-label">Primary</div>
       <div class="cc-title">Discord Server</div>
       <div class="cc-value">Join our server and open a private ticket. This is the fastest way to start a project, ask a question, or apply as an editor.</div>
-      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Open Discord →</a>
     </div>
 
     <div class="contact-card">
@@ -141,9 +156,12 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
       <div class="cc-label">Projects &amp; Hiring</div>
       <div class="cc-title">Open a Ticket</div>
       <div class="cc-value">Once you're in the server, open a ticket channel. Tell us your project details, style, and deadline and we'll get back to you fast.</div>
-      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Start a Ticket →</a>
     </div>
   </div>
+
+  <div class="contact-main-btn">
+  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Join Discord & Open a Ticket →</a>
+</div>
 
   <div class="info-strip">
     <div class="info-strip-inner">

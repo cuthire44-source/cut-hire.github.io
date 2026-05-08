@@ -457,6 +457,52 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
 <script>
 window.addEventListener('load',()=>document.body.style.overflow='visible');
+// TAB TITLE EASTER EGG
+(function(){
+  const originalTitle = document.title;
+
+  const awayTitles = [
+    'Still need an editor? 👀',
+    'Your video is waiting 🎬',
+    'Don’t leave the cut unfinished ✂️',
+    'Need clean edits? 🔥',
+    'Come back to Cut & Hire 💼'
+  ];
+
+  const backTitles = [
+    'Welcome back 🔥',
+    'Good to see you again 👋',
+    'Back to creating 🎬',
+    'Let’s finish the cut ✂️'
+  ];
+
+  let titleTimer = null;
+  let titleIndex = 0;
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){
+      clearInterval(titleTimer);
+
+      document.title = awayTitles[titleIndex % awayTitles.length];
+      titleIndex++;
+
+      titleTimer = setInterval(function(){
+        document.title = awayTitles[titleIndex % awayTitles.length];
+        titleIndex++;
+      }, 2200);
+
+    } else {
+      clearInterval(titleTimer);
+
+      const welcomeBack = backTitles[Math.floor(Math.random() * backTitles.length)];
+      document.title = welcomeBack;
+
+      setTimeout(function(){
+        document.title = originalTitle;
+      }, 1800);
+    }
+  });
+})();
 window._cdImg=new Image();window._cdImg.src='disc.png';
 
 // RETURN VISITOR DETECTION

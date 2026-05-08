@@ -29,35 +29,37 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 /* SCROLL INDICATORS */
 .scroll-hint{
   position:fixed;bottom:2.4rem;z-index:800;
-  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  display:flex;flex-direction:column;align-items:center;gap:.7rem;
   opacity:0;transition:opacity .8s;pointer-events:none;
 }
 .scroll-hint.left{left:2.4rem}
 .scroll-hint.right{right:2.4rem}
 .scroll-hint.visible{opacity:1}
-.scroll-hint.hidden{opacity:0 !important;transition:opacity .4s}
+.scroll-hint.hidden{opacity:0 !important;transition:opacity .5s}
 
 .scroll-hint-label{
   font-family:'DM Mono',monospace;
-  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(245,240,235,.6);
+  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(245,240,235,.85);
   writing-mode:horizontal-tb;
+  text-shadow:0 0 12px rgba(224,32,32,.4);
 }
 .scroll-hint-circle{
-  width:52px;height:52px;
-  border:1px solid rgba(224,32,32,.45);border-radius:50%;
+  width:68px;height:68px;
+  border:1.5px solid rgba(224,32,32,.65);border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(224,32,32,.08);
+  background:rgba(224,32,32,.13);
   animation:scroll-pulse 2s ease-in-out infinite;
+  box-shadow:0 0 0 0 rgba(224,32,32,.2),inset 0 0 18px rgba(224,32,32,.06);
 }
 .scroll-hint-circle svg{animation:bounce-arrow 2s ease-in-out infinite}
 @keyframes scroll-pulse{
-  0%,100%{border-color:rgba(224,32,32,.35);box-shadow:none}
-  50%{border-color:rgba(224,32,32,.75);box-shadow:0 0 20px rgba(224,32,32,.22)}
+  0%,100%{border-color:rgba(224,32,32,.5);box-shadow:0 0 12px rgba(224,32,32,.15),inset 0 0 18px rgba(224,32,32,.06)}
+  50%{border-color:rgba(224,32,32,.9);box-shadow:0 0 28px rgba(224,32,32,.35),inset 0 0 18px rgba(224,32,32,.1)}
 }
 @keyframes bounce-arrow{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(5px)}
+  50%{transform:translateY(6px)}
 }
 
 /* NAV */
@@ -280,16 +282,16 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 <!-- Scroll indicators -->
 <div class="scroll-hint left" id="scroll-left">
   <div class="scroll-hint-circle">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M4 9l4 4 4-4" stroke="rgba(224,32,32,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <path d="M11 4v14M6 13l5 5 5-5" stroke="rgba(224,32,32,0.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
   <div class="scroll-hint-label">Scroll</div>
 </div>
 <div class="scroll-hint right" id="scroll-right">
   <div class="scroll-hint-circle">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 3v10M4 9l4 4 4-4" stroke="rgba(224,32,32,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <path d="M11 4v14M6 13l5 5 5-5" stroke="rgba(224,32,32,0.95)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
   <div class="scroll-hint-label">Scroll</div>
@@ -310,7 +312,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     <li><a href="contact.html">Contact</a></li>
     <li><a href="joinus.html" class="nav-joinus">Join Us ✦</a></li>
   </ul>
-  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="hire-nav mag">Hire Us →</a>
+  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="hire-nav mag">Outsource to Us →</a>
 </nav>
 
 <section id="hero">
@@ -318,11 +320,11 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="sc-bg" id="sc-bg"></div>
   <div class="cut-line"></div>
   <div id="particles"></div>
-  <p class="eyebrow">✦ Video Editing Studio ✦</p>
-  <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
-  <p class="hero-sub">A dedicated team of video editors crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
+  <p class="eyebrow" id="hero-eyebrow">✦ Video Editing Studio ✦</p>
+  <h1 class="hero-h1" id="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
+  <p class="hero-sub" id="hero-sub">A dedicated team of video editors crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
   <div class="hero-cta">
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Start a Project →</a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag" id="hero-cta-primary">Start a Project →</a>
     <a href="#work" class="btn-outline mag">View Our Work</a>
   </div>
   <div class="hero-stats" id="hero-stats">
@@ -389,7 +391,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <img src="disc.png" style="width:80px;height:80px;object-fit:contain;animation:spin 6s linear infinite;filter:drop-shadow(0 0 22px rgba(58,123,213,.7));margin:0 auto 1.8rem;display:block">
       <p class="sec-lbl" style="justify-content:center">Let's Work Together</p>
       <h2 class="disc-h">Ready to <em>Create</em><br>Something Great?</h2>
-      <p class="disc-sub">Join our Discord, open a ticket, and tell us about your project. We'll get back to you fast.</p>
+      <p class="disc-sub" id="discord-sub">Join our Discord, open a ticket, and tell us about your project. We'll get back to you fast.</p>
       <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag" style="font-size:.92rem;padding:.95rem 2.6rem">Join Our Discord →</a>
       <div><div class="disc-ticket"><span>→</span> Open a ticket to start working with us</div></div>
     </div>
@@ -456,14 +458,37 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 window.addEventListener('load',()=>document.body.style.overflow='visible');
 window._cdImg=new Image();window._cdImg.src='disc.png';
 
+// RETURN VISITOR DETECTION
+(function(){
+  const VISIT_KEY='cnh_visits';
+  const visits = parseInt(localStorage.getItem(VISIT_KEY)||'0') + 1;
+  localStorage.setItem(VISIT_KEY, visits);
+  
+  if(visits > 1){
+    // Returning visitor — update hero content
+    const eyebrow = document.getElementById('hero-eyebrow');
+    const h1 = document.getElementById('hero-h1');
+    const sub = document.getElementById('hero-sub');
+    const ctaPrimary = document.getElementById('hero-cta-primary');
+    const discordSub = document.getElementById('discord-sub');
+    
+    if(eyebrow) eyebrow.textContent = '✦ Welcome Back ✦';
+    if(h1) h1.innerHTML = 'Good to Have You<br><span class="italic">Back Again.</span>';
+    if(sub) sub.textContent = 'Your next project is one Discord ticket away. The team is ready — let\'s make something great again.';
+    if(ctaPrimary){ ctaPrimary.textContent = 'Come Back, Let\'s Create →'; }
+    if(discordSub) discordSub.textContent = 'Welcome back. Open a new ticket and the team will pick up right where we left off — fast turnaround, same quality.';
+  }
+})();
+
 // SCROLL INDICATORS
-// Show after 3s on load, hide immediately on any mouse movement, never show again until next page load
+// Show after 3s if at top, hide when user scrolls down, reappear when user scrolls back to top
 const scrollHints=[document.getElementById('scroll-left'),document.getElementById('scroll-right')];
-let hintsShown=false;
+let hintsEnabled=false;
 let hintsVisible=false;
+let lastScrollY=0;
 
 function showScrollHints(){
-  if(window.scrollY>100)return; // don't show if already scrolled
+  if(hintsVisible)return;
   hintsVisible=true;
   scrollHints.forEach(h=>{h.classList.add('visible');h.classList.remove('hidden');});
 }
@@ -475,15 +500,23 @@ function hideScrollHints(){
 
 // Appear after 3 seconds
 setTimeout(()=>{
-  hintsShown=true;
-  showScrollHints();
+  hintsEnabled=true;
+  if(window.scrollY<80)showScrollHints();
 },3000);
 
-// Hide on any mouse movement
-window.addEventListener('mousemove', hideScrollHints, {once:true});
-// Also hide on scroll or touch
-window.addEventListener('scroll', hideScrollHints, {once:true});
-window.addEventListener('touchstart', hideScrollHints, {once:true, passive:true});
+// Show/hide based on scroll position (hide when down, show when back at top)
+window.addEventListener('scroll',()=>{
+  if(!hintsEnabled)return;
+  const sy=window.scrollY;
+  if(sy>80){
+    // User scrolled down - hide hints
+    hideScrollHints();
+  } else {
+    // Back at top - show hints again
+    showScrollHints();
+  }
+  lastScrollY=sy;
+});
 
 // progress bar & nav shrink
 window.addEventListener('scroll',()=>{

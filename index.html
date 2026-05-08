@@ -31,7 +31,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .scroll-hint{
   position:fixed;bottom:2.4rem;z-index:800;
   display:flex;flex-direction:column;align-items:center;gap:.7rem;
-  opacity:0;transition:opacity .8s;pointer-events:none;
+  opacity:0;transition:opacity .8s;pointer-events:all;
 }
 .scroll-hint.left{left:2.4rem}
 .scroll-hint.right{right:2.4rem}
@@ -522,7 +522,7 @@ window._cdImg=new Image();window._cdImg.src='disc.png';
     if(eyebrow) eyebrow.textContent = '✦ Welcome Back ✦';
     if(h1) h1.innerHTML = 'We Make<br><span class="italic">Frames Matter.</span>';
     if(sub) sub.textContent = 'Your next project is one Discord ticket away. The team is ready — let\'s make something great again.';
-    if(ctaPrimary){ ctaPrimary.textContent = 'Come Back, Let\'s Create →'; }
+    if(ctaPrimary){ ctaPrimary.textContent = 'Let\'s Create →'; }
     if(discordSub) discordSub.textContent = 'Welcome back. Open a new ticket and the team will pick up right where we left off — fast turnaround, same quality.';
   }
 })();
@@ -530,6 +530,12 @@ window._cdImg=new Image();window._cdImg.src='disc.png';
 // SCROLL INDICATORS
 // Show after 3s if at top, hide when user scrolls down, reappear when user scrolls back to top
 const scrollHints=[document.getElementById('scroll-left'),document.getElementById('scroll-right')];
+scrollHints.forEach(h=>{
+  h.style.cursor='pointer';
+  h.addEventListener('click',()=>{
+    document.getElementById('work').scrollIntoView({behavior:'smooth'});
+  });
+});
 let hintsEnabled=false;
 let hintsVisible=false;
 let lastScrollY=0;

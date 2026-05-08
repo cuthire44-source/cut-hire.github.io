@@ -50,7 +50,18 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .join-content{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
 
 /* TWO PATH CARDS */
-.paths{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4rem}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:0}
+
+.paths-main-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:-2.6rem;
+  margin-bottom:4rem;
+  position:relative;
+  z-index:2;
+}
+  
 @media(max-width:760px){.paths{grid-template-columns:1fr}}
 
 .path-card{background:var(--card);border:1px solid var(--b);padding:2.8rem 2.4rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,opacity .7s;opacity:1;transform:none}
@@ -195,7 +206,6 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
         <li>All communication inside private Discord channels</li>
         <li>You only pay when you're satisfied with the result</li>
       </ul>
-      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red">Open a Ticket →</a>
     </div>
 
     <!-- EDITOR CARD -->
@@ -212,10 +222,13 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
         <li>Join a network of 35+ professional editors</li>
         <li>Steady stream of clients without self-promotion</li>
       </ul>
-      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-blu">Apply Now →</a>
     </div>
   </div>
 
+  <div class="paths-main-btn">
+  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red">Join Discord & Open a Ticket →</a>
+</div>
+  
   <!-- HOW IT WORKS -->
   <div class="how-strip" id="how-strip">
     <p class="strip-label">How It Works</p>

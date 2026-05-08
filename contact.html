@@ -20,11 +20,20 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overfl
 body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");opacity:.5}
 
-
-
-/* BACK BUTTON */
-.back-btn{position:fixed;top:1.6rem;left:2rem;z-index:500;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--m);font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid rgba(255,255,255,.07);background:rgba(10,10,10,.85);backdrop-filter:blur(8px);transition:all .25s;animation:fade-in .3s .05s both}
-.back-btn:hover{color:var(--w);border-color:rgba(224,32,32,.35);background:rgba(224,32,32,.06)}
+/* BACK BUTTON — top left, clearly visible */
+.back-btn{
+  position:fixed;top:1.4rem;left:2rem;
+  z-index:500;display:inline-flex;align-items:center;gap:.5rem;
+  text-decoration:none;color:var(--w);
+  font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.5rem 1.3rem;
+  border:1px solid rgba(224,32,32,.45);
+  background:rgba(224,32,32,.1);
+  backdrop-filter:blur(10px);
+  transition:all .25s;
+  animation:fade-in .3s .05s both
+}
+.back-btn:hover{color:#fff;border-color:var(--red);background:rgba(224,32,32,.2);box-shadow:0 0 18px rgba(224,32,32,.25)}
 .back-btn svg{transition:transform .25s}
 .back-btn:hover svg{transform:translateX(-3px)}
 @keyframes fade-in{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
@@ -35,7 +44,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .o2{width:500px;height:500px;background:rgba(58,123,213,.06);bottom:-10%;right:-10%}
 
 /* HERO */
-.contact-hero{min-height:36vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 3rem;position:relative;z-index:1}
+.contact-hero{min-height:36vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:1}
 .contact-eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;opacity:0;animation:fup .4s .05s forwards}
 .contact-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fup .4s .15s forwards}
 .contact-h1 em{font-style:italic;color:var(--red)}
@@ -48,24 +57,38 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 /* MAIN CONTENT */
 .contact-content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
 
-/* CONTACT METHODS */
+/* CONTACT METHODS — no longer anchor tags, just divs */
 .contact-methods{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:3.5rem}
 @media(max-width:640px){.contact-methods{grid-template-columns:1fr}}
 
-.contact-card{background:var(--card);border:1px solid var(--b);padding:2.2rem 2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;text-decoration:none;color:inherit;display:block}
-.contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform .4s}
-.contact-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 110%,var(--rs),transparent 65%);opacity:0;transition:opacity .4s;pointer-events:none}
-.contact-card:hover{border-color:rgba(224,32,32,.25);transform:translateY(-3px)}
-.contact-card:hover::after{transform:scaleX(1)}
-.contact-card:hover::before{opacity:1}
+.contact-card{
+  background:var(--card);border:1px solid var(--b);
+  padding:2.2rem 2rem 1.6rem;
+  position:relative;overflow:hidden;
+  color:inherit;display:flex;flex-direction:column;
+}
+.contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(1);opacity:.4}
 
 .cc-icon{font-size:1.6rem;margin-bottom:.9rem;display:block}
 .cc-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
-.cc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem;transition:color .25s}
-.contact-card:hover .cc-title{color:var(--red)}
-.cc-value{font-size:.82rem;color:var(--m);line-height:1.75}
-.cc-action{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-top:.9rem;display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s}
-.contact-card:hover .cc-action{gap:.7rem}
+.cc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.cc-value{font-size:.82rem;color:var(--m);line-height:1.75;flex:1}
+
+/* Small Discord CTA button below each card */
+.cc-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:1.2rem;align-self:flex-start;
+  background:var(--red);color:#fff;
+  text-decoration:none;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.78rem;
+  padding:.55rem 1.2rem;
+  letter-spacing:.03em;
+  position:relative;overflow:hidden;
+  transition:box-shadow .25s,transform .15s;
+}
+.cc-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
+.cc-btn:hover{box-shadow:0 0 20px var(--rg);transform:translateY(-2px)}
+.cc-btn:hover::before{transform:translateX(100%)}
 
 /* INFO STRIP */
 .info-strip{background:var(--card);border:1px solid var(--b);padding:2rem 2.2rem;margin-bottom:3.5rem;position:relative;overflow:hidden}
@@ -104,21 +127,22 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 <div class="contact-content">
 
   <div class="contact-methods">
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="contact-card">
+    <!-- Non-clickable card, button below -->
+    <div class="contact-card">
       <span class="cc-icon">💬</span>
       <div class="cc-label">Primary</div>
       <div class="cc-title">Discord Server</div>
       <div class="cc-value">Join our server and open a private ticket. This is the fastest way to start a project, ask a question, or apply as an editor.</div>
-      <div class="cc-action">Open Discord →</div>
-    </a>
+      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Open Discord →</a>
+    </div>
 
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="contact-card">
+    <div class="contact-card">
       <span class="cc-icon">🎫</span>
       <div class="cc-label">Projects &amp; Hiring</div>
       <div class="cc-title">Open a Ticket</div>
       <div class="cc-value">Once you're in the server, open a ticket channel. Tell us your project details, style, and deadline and we'll get back to you fast.</div>
-      <div class="cc-action">Start a Ticket →</div>
-    </a>
+      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Start a Ticket →</a>
+    </div>
   </div>
 
   <div class="info-strip">

@@ -23,8 +23,8 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
 
 /* BACK BUTTON */
-.back-btn{position:fixed;top:1.6rem;left:2rem;z-index:500;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--m);font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid rgba(255,255,255,.07);background:rgba(10,10,10,.85);backdrop-filter:blur(8px);transition:all .25s;animation:fade-in .3s .05s both}
-.back-btn:hover{color:var(--w);border-color:rgba(224,32,32,.35);background:rgba(224,32,32,.06)}
+.back-btn{position:fixed;top:1.4rem;left:2rem;z-index:500;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--w);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem 1.3rem;border:1px solid rgba(224,32,32,.5);background:rgba(224,32,32,.12);backdrop-filter:blur(10px);transition:all .25s;animation:fade-in .3s .05s both}
+.back-btn:hover{color:#fff;border-color:var(--red);background:rgba(224,32,32,.22);box-shadow:0 0 18px rgba(224,32,32,.25)}
 .back-btn svg{transition:transform .25s}
 .back-btn:hover svg{transform:translateX(-3px)}
 @keyframes fade-in{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
@@ -36,7 +36,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .o3{width:350px;height:350px;background:rgba(224,32,32,.05);top:40%;right:5%}
 
 /* HERO AREA */
-.join-hero{min-height:38vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 3rem;position:relative;z-index:1}
+.join-hero{min-height:38vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:1}
 .join-eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;opacity:0;animation:fup .4s .05s forwards}
 .join-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fup .4s .15s forwards}
 .join-h1 em{font-style:italic;color:var(--red)}

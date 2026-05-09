@@ -186,7 +186,7 @@ section{padding:6rem 2rem}
 .ps:hover{border-color:rgba(224,32,32,.22);transform:translateY(-3px)}
 .ps:hover::before{height:55px}
 .ps-n{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:rgba(224,32,32,.35);line-height:1;margin-bottom:.8rem;transition:color .3s}
-.ps:hover .ps-n{color:rgba(224,32,32,.2)}
+.ps:hover .ps-n{color:rgba(224,32,32,.55)}
 .ps-i{font-size:1.4rem;margin-bottom:.8rem;display:inline-block;transition:transform .4s}
 .ps:hover .ps-i{transform:scale(1.2) rotate(5deg)}
 .ps h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.45rem;transition:color .3s}
@@ -306,8 +306,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     <li><a href="#work">Work</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#process">Process</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="joinus.html" class="nav-joinus">Join Us ✦</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/joinus" class="nav-joinus">Join Us ✦</a></li>
   </ul>
   <a href="#discord" class="hire-nav mag">Hire Us →</a>
 </nav>
@@ -411,8 +411,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <li><a href="#work">Work</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#process">Process</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="joinus.html">Join Us</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/joinus">Join Us</a></li>
       <li><a href="https://discord.gg/dXemseJsDV" target="_blank">Discord</a></li>
     </ul>
   </div>
@@ -501,26 +501,11 @@ window.addEventListener('load',()=>document.body.style.overflow='visible');
 })();
 window._cdImg=new Image();window._cdImg.src='disc.png';
 
-// RETURN VISITOR DETECTION
+// VISIT TRACKING (no UI changes)
 (function(){
   const VISIT_KEY='cnh_visits';
   const visits = parseInt(localStorage.getItem(VISIT_KEY)||'0') + 1;
   localStorage.setItem(VISIT_KEY, visits);
-  
-  if(visits > 1){
-    // Returning visitor — update hero content
-    const eyebrow = document.getElementById('hero-eyebrow');
-    const h1 = document.getElementById('hero-h1');
-    const sub = document.getElementById('hero-sub');
-    const ctaPrimary = document.getElementById('hero-cta-primary');
-    const discordSub = document.getElementById('discord-sub');
-    
-    if(eyebrow) eyebrow.textContent = '✦ Welcome Back ✦';
-    if(h1) h1.innerHTML = 'We Make<br><span class="italic">Frames Matter.</span>';
-    if(sub) sub.textContent = 'Your next project is one Discord ticket away. The team is ready — let\'s make something great again.';
-    if(ctaPrimary){ ctaPrimary.textContent = 'Let\'s Create →'; }
-    if(discordSub) discordSub.textContent = 'Join our Discord, open a ticket, and tell us about your project. We\'ll get back to you fast.';
-  }
 })();
 
 // SCROLL INDICATORS

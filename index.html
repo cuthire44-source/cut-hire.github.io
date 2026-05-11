@@ -128,13 +128,11 @@ section{padding:6rem 2rem}
 .cat-tab:hover,.cat-tab.on{border-color:var(--red);color:var(--w)}
 .cat-tab span{position:relative;z-index:1}
 
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;grid-auto-rows:220px}
 .wc{position:relative;overflow:hidden;cursor:pointer;background:var(--card);transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
-.wc.shortform-card{grid-column:span 1;aspect-ratio:9/16;height:auto;}
+.wc.shortform-card{grid-column:span 1;grid-row:span 2;}
 .wc.tall{grid-row:span 2}
 .wc.wide{grid-column:span 2}
-.wc:not(.shortform-card){height:220px}
-.wc.tall:not(.shortform-card){height:auto}
 .wc-canvas{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s}
 .wc:hover .wc-canvas{transform:scale(1.04)}
 .wc:hover{transform:scale(1.015)}
@@ -646,38 +644,38 @@ statsObs.observe(document.getElementById('hero-stats'));
 /* ===================== WORKS DATA ===================== */
 const works = [
   // SHORT FORM (11) — 9:16
-  { cat: 'shortform', title: 'Short 1',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 2',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 3',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 4',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 5',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 6',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 7',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 8',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 9',  src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 10', src: '', isPhoto: false },
-  { cat: 'shortform', title: 'Short 11', src: '', isPhoto: false },
+  { cat: 'shortform', title: 'Short 1',  src: 'short1.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 2',  src: 'short2.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 3',  src: 'short3.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 4',  src: 'short4.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 5',  src: 'short5.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 6',  src: 'short6.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 7',  src: 'short7.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 8',  src: 'short8.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 9',  src: 'short9.mp4',  isPhoto: false },
+  { cat: 'shortform', title: 'Short 10', src: 'short10.mp4', isPhoto: false },
+  { cat: 'shortform', title: 'Short 11', src: 'short11.mp4', isPhoto: false },
   // LONG FORM (14)
-  { cat: 'longform', title: 'Long Form 1',  size: 'tall', src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 2',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 3',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 4',  size: 'wide', src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 5',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 6',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 7',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 8',  size: 'tall', src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 9',  size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 10', size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 11', size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 12', size: 'wide', src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 13', size: '',     src: '', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 14', size: '',     src: '', isPhoto: false },
-  // THUMBNAILS (5)
-  { cat: 'thumbnail', title: 'Thumbnail 1', src: '', isPhoto: true, img: 'photos/thumbnail1.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 2', src: '', isPhoto: true, img: 'photos/thumbnail2.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 3', src: '', isPhoto: true, img: 'photos/thumbnail3.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 4', src: '', isPhoto: true, img: 'photos/thumbnail4.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 5', src: '', isPhoto: true, img: 'photos/thumbnail5.jpg' },
+  { cat: 'longform', title: 'Long Form 1',  size: 'tall', src: 'longform1.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 2',  size: '',     src: 'longform2.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 3',  size: '',     src: 'longform3.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 4',  size: 'wide', src: 'longform4.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 5',  size: '',     src: 'longform5.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 6',  size: '',     src: 'longform6.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 7',  size: '',     src: 'longform7.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 8',  size: 'tall', src: 'longform8.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 9',  size: '',     src: 'longform9.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 10', size: '',     src: 'longform10.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 11', size: '',     src: 'longform11.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
+  // THUMBNAILS (5) — root folder, .jpg
+  { cat: 'thumbnail', title: 'Thumbnail 1', src: '', isPhoto: true, img: 'thumbnail1.jpg' },
+  { cat: 'thumbnail', title: 'Thumbnail 2', src: '', isPhoto: true, img: 'thumbnail2.jpg' },
+  { cat: 'thumbnail', title: 'Thumbnail 3', src: '', isPhoto: true, img: 'thumbnail3.jpg' },
+  { cat: 'thumbnail', title: 'Thumbnail 4', src: '', isPhoto: true, img: 'thumbnail4.jpg' },
+  { cat: 'thumbnail', title: 'Thumbnail 5', src: '', isPhoto: true, img: 'thumbnail5.jpg' },
 ];
 
 const catColors = {
@@ -715,8 +713,8 @@ function renderWork(list) {
   g.innerHTML = list.map((w, i) => {
     const isShort = w.cat === 'shortform';
     const sizeClass = isShort ? 'shortform-card' : (w.size || '');
-    const badge = isShort ? '<div class="wc-badge">1080×1920</div>' : '';
-    const cw = isShort ? 270 : 600, ch = isShort ? 480 : 440;
+    const badge = isShort ? '<div class="wc-badge">9:16</div>' : '';
+    const cw = 600, ch = isShort ? 480 : 440;
     return `
     <div class="wc ${sizeClass} ${w.isPhoto ? 'is-photo' : 'is-video'} rv" data-idx="${i}" style="transition-delay:${i * .04}s">
       <canvas class="wc-canvas" id="wc${i}" width="${cw}" height="${ch}"></canvas>

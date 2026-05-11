@@ -54,16 +54,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4rem;align-items:stretch}
 
 
-@media(max-width:760px){
-  .paths{grid-template-columns:1fr}
-  .path-card{min-height:auto}
-  .path-btn{
-  margin-top:auto;
-  align-self:center;
-  min-width:245px;
-  text-align:center;
-}
-}
+@media(max-width:760px){.paths{grid-template-columns:1fr}.path-card{min-height:auto}.path-btn{width:100%;align-self:stretch;text-align:center}}
 
 .path-card{
   background:var(--card);
@@ -183,6 +174,184 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
 /* SPIN ANIM */
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===================== FINAL SYMMETRY FIXES ===================== */
+.join-hero{
+  min-height:34vh;
+  padding:5rem 2rem 2.6rem;
+}
+
+.join-sub{
+  max-width:620px;
+}
+
+.join-content{
+  max-width:1120px;
+  padding:3.6rem 2rem 6rem;
+}
+
+.paths{
+  max-width:1120px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom:4.4rem;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:2px;
+  align-items:stretch;
+}
+
+.path-card{
+  min-height:555px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.path-badge{
+  width:fit-content;
+}
+
+.path-icon{
+  min-height:2.4rem;
+}
+
+.path-desc{
+  min-height:104px;
+}
+
+.path-perks{
+  flex:1;
+  margin-bottom:2rem;
+}
+
+.path-btn{
+  margin-top:auto;
+  align-self:center;
+  min-width:250px;
+  text-align:center;
+}
+
+.how-strip{
+  max-width:1120px;
+  margin:0 auto 4.4rem;
+}
+
+.strip-label{
+  margin-left:0;
+}
+
+.how-steps{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:2px;
+  align-items:stretch;
+}
+
+.how-step{
+  min-height:190px;
+}
+
+.how-num{
+  color:#ff2a2a !important;
+  text-shadow:
+    0 0 10px rgba(224,32,32,.7),
+    0 0 26px rgba(224,32,32,.45),
+    0 0 52px rgba(224,32,32,.25);
+}
+
+.how-step:hover .how-num{
+  color:#ff3b3b !important;
+  text-shadow:
+    0 0 14px rgba(224,32,32,.95),
+    0 0 34px rgba(224,32,32,.62),
+    0 0 70px rgba(224,32,32,.35);
+}
+
+.network-section{
+  max-width:1120px;
+  margin:4.4rem auto 0;
+  padding:3rem;
+}
+
+.ns-body{
+  grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);
+  gap:2.5rem;
+}
+
+.ns-stats{
+  justify-content:center;
+}
+
+.ns-stat{
+  min-height:96px;
+}
+
+.ns-stat-n{
+  color:#4b9cff;
+  text-shadow:
+    0 0 10px rgba(58,123,213,.8),
+    0 0 26px rgba(58,123,213,.55),
+    0 0 55px rgba(58,123,213,.3);
+}
+
+.faq-section{
+  max-width:1120px;
+  margin:4.4rem auto 0;
+}
+
+.discord-strip{
+  max-width:1120px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+@media(max-width:900px){
+  .paths{
+    grid-template-columns:1fr;
+  }
+
+  .path-card{
+    min-height:auto;
+  }
+
+  .path-desc{
+    min-height:0;
+  }
+
+  .path-btn{
+    width:100%;
+    align-self:stretch;
+  }
+
+  .how-steps{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .ns-body{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:520px){
+  .join-content{
+    padding-left:1.2rem;
+    padding-right:1.2rem;
+  }
+
+  .how-steps{
+    grid-template-columns:1fr;
+  }
+
+  .network-section{
+    padding:2rem 1.4rem;
+  }
+
+  .discord-strip{
+    padding:2rem 1.4rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -217,14 +386,14 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
       <div class="path-badge cl">🎬 For Clients</div>
       <span class="path-icon">🎯</span>
       <h2>Outsource to Our <em>Editors</em></h2>
-      <p class="path-desc">Tell us your vision, style, and deadline. We match you with one of our 35+ hand-picked editors. Work directly with no agency middleman. Not satisfied with your first match? We reassign free of charge.</p>
+      <p class="path-desc">Tell us your vision, style, and deadline. We help match you with an editor who fits your project. Work directly with no agency middleman. You can request a free sample first. If the style fits, you can agree on the project and move forward.</p>
       <ul class="path-perks">
         <li>Tell us your vision, style &amp; deadline</li>
         <li>We match you with the perfect editor from our vetted roster</li>
         <li>Work directly — no agency middleman or markups</li>
-        <li>Not happy with the sample edit? Free reassignment, no questions</li>
+        <li>Request a free sample before moving forward</li>
         <li>All communication inside private Discord channels</li>
-        <li>You only pay when you're satisfied with the result</li>
+        <li>If the sample fits, agree on pricing and continue</li>
       </ul>
       <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red path-btn">Join Discord (Clients) →</a>
     </div>
@@ -272,7 +441,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
         <div class="how-num">04</div>
         <span class="how-step-icon">✅</span>
         <h4>Approve &amp; Deliver</h4>
-        <p>Final file in your preferred format. You only pay when you're happy with the result.</p>
+        <p>Review the sample, agree on the project, then receive the final polished edit.</p>
       </div>
     </div>
   </div>
@@ -283,11 +452,11 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
     <div class="ns-body">
       <div>
         <h3>Built on <em>Trust</em> &amp; <em>Quality</em></h3>
-        <p>Cut &amp; Hire isn't an agency — it's a network. Every editor in our roster has been personally vetted for quality, communication, and reliability. Clients get the right match every time. Editors get consistent work without the hustle of finding their own clients.</p>
+        <p>Cut &amp; Hire isn't an agency — it's a network. Editors in our roster are reviewed for quality, communication, and reliability. Clients get the right match every time. Editors get consistent work without the hustle of finding their own clients.</p>
         <p style="margin-top:1rem">All coordination happens through our Discord server. Private ticket channels keep every project organised, confidential, and moving fast.</p>
       </div>
       <div class="ns-stats">
-        <div class="ns-stat"><div class="ns-stat-n">35+</div><div class="ns-stat-l">Vetted editors across all styles — gaming, cinematic, short-form, documentary, brand</div></div>
+        <div class="ns-stat"><div class="ns-stat-n">35+</div><div class="ns-stat-l">Editors across all styles — gaming, cinematic, short-form, documentary, brand</div></div>
       </div>
     </div>
   </div>
@@ -297,7 +466,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
     <p class="strip-label" style="margin-bottom:1.8rem">Common Questions</p>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">How do I get started as a client? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Join our Discord server and open a ticket. Tell us about your project — what style you want, your deadline, and your budget. We'll match you with the right editor within 24 hours and send you a sample edit before any commitment.</div>
+      <div class="faq-a">Join our Discord server and open a ticket. Tell us about your project — what style you want, your deadline, and your budget. We'll match you with the right editor and help you request a free sample before you decide to continue.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">How do I apply as a video editor? <span class="faq-icon">+</span></div>
@@ -305,7 +474,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What if I'm not happy with the first edit? <span class="faq-icon">+</span></div>
-      <div class="faq-a">We offer free reassignment to a different editor, no questions asked. You don't pay until you're genuinely happy with the result. Our quality policy exists to protect you.</div>
+      <div class="faq-a">You can request a free sample first. If the style fits, you and the editor agree on price, deadline, and full project details before continuing.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What editing styles do you cover? <span class="faq-icon">+</span></div>

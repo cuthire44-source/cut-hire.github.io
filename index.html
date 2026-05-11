@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cut & Hire — Video Editing Studio</title>
+<title>Cut & Hire</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0a;--card:#0f0f0f;
+  --bg:#141414;--card:#1a1a1a;
   --red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.12);
-  --blue:#3a7bd5;--w:#f5f0eb;--m:#5c5c5c;--b:rgba(255,255,255,.06);
+  --blue:#3a7bd5;--w:#f5f0eb;--m:#7a7a7a;--b:rgba(255,255,255,.08);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");opacity:.5}
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.5}
 
 #progress{position:fixed;top:0;left:0;height:2px;background:var(--red);z-index:9998;width:0%;box-shadow:0 0 8px var(--rg);transition:width .1s linear}
 
@@ -31,10 +31,11 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 @keyframes bounce-arrow{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 /* ===================== NAV ===================== */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.3rem 3rem;background:linear-gradient(to bottom,rgba(10,10,10,.97) 60%,transparent);transition:padding .3s,background .3s;animation:nav-drop .5s .6s both}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.3rem 3rem;background:linear-gradient(to bottom,rgba(20,20,20,.97) 60%,transparent);transition:padding .3s,background .3s;animation:nav-drop .5s .6s both}
 @keyframes nav-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
-nav.shrunk{padding:.85rem 3rem;background:rgba(10,10,10,.98)}
+nav.shrunk{padding:.85rem 3rem;background:rgba(20,20,20,.98)}
 
+/* ===================== LOGO ===================== */
 .logo{text-decoration:none;color:var(--w);display:flex;align-items:center}
 .logo-anim-wrap{position:relative;width:158px;height:56px;flex-shrink:0;overflow:visible}
 .logo-anim-wrap.footer-logo{transform:scale(0.81);transform-origin:left center;}
@@ -61,8 +62,8 @@ nav.shrunk{padding:.85rem 3rem;background:rgba(10,10,10,.98)}
 /* ===================== HERO ===================== */
 #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden}
 .orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
-.o1{width:500px;height:500px;background:rgba(224,32,32,.09);top:-8%;left:-12%;animation:od1 14s ease-in-out infinite}
-.o2{width:420px;height:420px;background:rgba(58,123,213,.07);bottom:-8%;right:-8%;animation:od2 17s ease-in-out infinite}
+.o1{width:500px;height:500px;background:rgba(224,32,32,.07);top:-8%;left:-12%;animation:od1 14s ease-in-out infinite}
+.o2{width:420px;height:420px;background:rgba(58,123,213,.05);bottom:-8%;right:-8%;animation:od2 17s ease-in-out infinite}
 @keyframes od1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-25px)}}
 @keyframes od2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,25px)}}
 .sc-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
@@ -77,8 +78,8 @@ nav.shrunk{padding:.85rem 3rem;background:rgba(10,10,10,.98)}
 .hero-h1 .italic{font-style:italic;color:var(--red);display:block;position:relative}
 .hero-h1 .italic::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--red);animation:ug .8s 1.4s forwards}
 @keyframes ug{to{width:100%}}
-.hero-sub{max-width:460px;margin:1.8rem auto 0;color:var(--m);font-size:.93rem;line-height:1.85;opacity:0;animation:fup .3s .35s forwards;position:relative;z-index:1}
-.hero-cta{margin-top:2.4rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
+.hero-sub{max-width:500px;margin:1.8rem auto 0;color:var(--m);font-size:.93rem;line-height:1.85;opacity:0;animation:fup .3s .35s forwards;position:relative;z-index:1}
+.hero-cta{margin-top:2.4rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
 .hero-stats{margin-top:4rem;display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .3s .65s forwards;position:relative;z-index:1}
 @keyframes fup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .stat{text-align:center}
@@ -87,11 +88,11 @@ nav.shrunk{padding:.85rem 3rem;background:rgba(10,10,10,.98)}
 .stat-n .suf{color:var(--red)}
 .stat-l{font-size:.68rem;color:var(--m);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem}
 
-.btn-primary{background:var(--red);color:#fff;border:none;padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-block;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s}
+.btn-primary{background:var(--red);color:#fff;border:none;padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .btn-primary:hover{box-shadow:0 0 32px var(--rg);transform:translateY(-2px)}
 .btn-primary:hover::before{transform:translateX(100%)}
-.btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.13);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-block;letter-spacing:.04em;transition:border-color .2s,transform .15s,background .2s}
+.btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.15);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;transition:border-color .2s,transform .15s,background .2s;white-space:nowrap}
 .btn-outline:hover{border-color:var(--red);transform:translateY(-2px);background:var(--rs)}
 
 section{padding:6rem 2rem}
@@ -116,31 +117,14 @@ section{padding:6rem 2rem}
 .wc.shortform-card{grid-column:span 1;grid-row:span 2;}
 .wc.tall{grid-row:span 2}
 .wc.wide{grid-column:span 2}
-
-/* ---- thumbnail img (video frame or photo) ---- */
-.wc-thumb{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:block;
-  transition:transform .5s, opacity .4s;
-  opacity:1;
-}
+.wc-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s,opacity .4s;opacity:1;}
 .wc:hover .wc-thumb{transform:scale(1.04)}
-
-/* ---- gradient placeholder shown while frame loads ---- */
-.wc-placeholder{
-  position:absolute;inset:0;width:100%;height:100%;
-  background:linear-gradient(135deg,#080c2a 0%,#111a3e 100%);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .4s;
-}
-.wc-placeholder.shortform-ph{background:linear-gradient(135deg,#190a2e 0%,#2a103e 100%);}
-.wc-placeholder.thumbnail-ph{background:linear-gradient(135deg,#1a0d06 0%,#2e1c08 100%);}
-/* loading spinner inside placeholder */
+.wc-placeholder{position:absolute;inset:0;width:100%;height:100%;background:linear-gradient(135deg,#0d1020 0%,#161c38 100%);display:flex;align-items:center;justify-content:center;transition:opacity .4s;}
+.wc-placeholder.shortform-ph{background:linear-gradient(135deg,#140820 0%,#1e0e30 100%);}
+.wc-placeholder.thumbnail-ph{background:linear-gradient(135deg,#130c04 0%,#221508 100%);}
 .wc-placeholder-spinner{width:28px;height:28px;border:2px solid rgba(224,32,32,.2);border-top-color:rgba(224,32,32,.7);border-radius:50%;animation:spin .9s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* hide placeholder once thumb loaded */
 .wc-placeholder.loaded{opacity:0;pointer-events:none;}
-
 .wc:hover{transform:scale(1.015)}
 .wc-overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);opacity:0;transition:opacity .4s;display:flex;align-items:center;justify-content:center}
 .wc:hover .wc-overlay{opacity:1}
@@ -174,8 +158,9 @@ section{padding:6rem 2rem}
 .ps::before{content:'';position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,var(--rs),transparent);transition:height .4s}
 .ps:hover{border-color:rgba(224,32,32,.22);transform:translateY(-3px)}
 .ps:hover::before{height:55px}
-.ps-n{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:rgba(224,32,32,.35);line-height:1;margin-bottom:.8rem;transition:color .3s}
-.ps:hover .ps-n{color:rgba(224,32,32,.55)}
+/* FIXED: much more visible step numbers */
+.ps-n{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:rgba(224,32,32,.75);line-height:1;margin-bottom:.8rem;transition:color .3s;text-shadow:0 0 20px rgba(224,32,32,.3)}
+.ps:hover .ps-n{color:rgba(224,32,32,1);text-shadow:0 0 28px rgba(224,32,32,.5)}
 .ps-i{font-size:1.4rem;margin-bottom:.8rem;display:inline-block;transition:transform .4s}
 .ps:hover .ps-i{transform:scale(1.2) rotate(5deg)}
 .ps h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.45rem;transition:color .3s}
@@ -323,9 +308,9 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="sc-bg" id="sc-bg"></div>
   <div class="cut-line"></div>
   <div id="particles"></div>
-  <p class="eyebrow">✦ Video Editing Studio ✦</p>
+  <p class="eyebrow">✦ Video Editing Network ✦</p>
   <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
-  <p class="hero-sub">A dedicated team of video editors crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
+  <p class="hero-sub">A dedicated team of video editors & graphic designers crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
   <div class="hero-cta">
     <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Start a Project →</a>
     <a href="#work" class="btn-outline mag">View Our Work</a>
@@ -416,7 +401,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
           <img class="logo-cursor" id="fCursor" src="mouse.png" alt="">
         </div>
       </a>
-      <p>Elite video editing for creators, brands, and anyone with a story worth telling.</p>
+      <p>Elite video editing & graphic design for creators, brands, and anyone with a story worth telling.</p>
     </div>
     <ul class="f-links">
       <li><a href="#work">Work</a></li>
@@ -495,73 +480,6 @@ window.addEventListener('load', () => document.body.style.overflow = 'visible');
     }
   });
 })();
-
-/* ===================== LOGO ANIMATION ===================== */
-function runLogoAnim(ids, offset) {
-  const lDisc   = document.getElementById(ids.disc);
-  const lPin    = document.getElementById(ids.pin);
-  const lCursor = document.getElementById(ids.cursor);
-  const lStar   = document.getElementById(ids.star);
-  const lVe     = document.getElementById(ids.ve);
-  if (!lDisc || !lPin) return;
-
-  let t = offset || 0, discRot = 0;
-  const TOTAL = 6400, FPS = 1000 / 30;
-
-  function lerp(a, b, p) { return a + (b - a) * Math.min(1, Math.max(0, p)); }
-  function easeOut(p) { return 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3); }
-  function easeIn(p) { return Math.pow(Math.min(1, Math.max(0, p)), 3); }
-  function easeInOut(p) { p = Math.min(1, Math.max(0, p)); return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
-  function prog(s, e) { return Math.min(1, Math.max(0, (t - s) / (e - s))); }
-
-  function tick() {
-    t = (t + FPS) % TOTAL;
-    discRot += 1.1;
-    const g = 4 + 4 * Math.sin(t / 400);
-    lPin.style.filter = `drop-shadow(0 0 ${g}px rgba(224,32,32,0.9))`;
-    let dLeft = 4, dOp = 1;
-    if (t >= 3600 && t < 4400) { const p = easeIn(prog(3600, 4400)); dLeft = lerp(4, -60, p); dOp = lerp(1, 0, p); }
-    else if (t >= 4400 && t < 5200) { const p = easeOut(prog(4400, 5200)); dLeft = lerp(-60, 4, p); dOp = lerp(0, 1, p); }
-    lDisc.style.left = dLeft + 'px';
-    lDisc.style.opacity = dOp;
-    lDisc.style.transform = `rotate(${discRot}deg)`;
-    lDisc.style.filter = `drop-shadow(0 0 ${4 + 2 * Math.sin(t / 550)}px rgba(58,123,213,${0.45 + 0.2 * Math.sin(t / 550)}))`;
-    let cx = 55, cy = 30, cop = 0;
-    if (t >= 800 && t < 6200) {
-      cop = t < 1200 ? easeOut(prog(800, 1200)) : t > 5700 ? easeIn(1 - prog(5700, 6200)) : 1;
-      if (t < 2200) { const p = easeInOut(prog(800, 2200)); cx = lerp(68, 54, p); cy = lerp(40, 32, p); }
-      else if (t < 2800) { const p = easeInOut(prog(2200, 2800)); cx = lerp(54, 18, p); cy = lerp(32, 26, p); }
-      else if (t < 3600) { const p = easeInOut(prog(2800, 3600)); cx = lerp(18, 62, p); cy = lerp(26, 25, p); }
-      else if (t < 4400) { cx = 62; cy = 25; }
-      else { const p = easeOut(prog(4400, 5200)); cx = lerp(62, 72, p); cy = lerp(25, 32, p); }
-    }
-    lCursor.style.opacity = cop;
-    lCursor.style.left = cx + 'px';
-    lCursor.style.top = cy + 'px';
-    let sop = 0, ssc = 0, sx = 44, sy = 25;
-    if (t >= 1400 && t < 2800) {
-      if (t < 2200) { const p = easeOut(prog(1400, 2200)); sop = p; ssc = p; sx = lerp(52, 44, p); sy = lerp(38, 28, p); }
-      else { const p = easeIn(prog(2200, 2800)); sop = 1 - p; ssc = 1 - p; sx = lerp(44, 32, p); sy = lerp(28, 18, p); }
-    }
-    lStar.style.opacity = sop;
-    lStar.style.transform = `scale(${ssc})`;
-    lStar.style.left = sx + 'px';
-    lStar.style.top = sy + 'px';
-    let vop = 0, vsc = 0;
-    if (t >= 2800 && t < 5200) {
-      if (t < 3600) { const p = easeOut(prog(2800, 3600)); vop = p; vsc = p; }
-      else if (t < 4400) { vop = 1; vsc = 1; }
-      else { const p = easeIn(prog(4400, 5200)); vop = 1 - p; vsc = 1 - p * 0.4; }
-    }
-    lVe.style.opacity = vop;
-    lVe.style.transform = `scale(${vsc})`;
-    setTimeout(tick, FPS);
-  }
-  setTimeout(tick, 400);
-}
-
-runLogoAnim({ disc: 'lDisc', pin: 'lPin', cursor: 'lCursor', star: 'lStar', ve: 'lVe' }, 0);
-runLogoAnim({ disc: 'fDisc', pin: 'fPin', cursor: 'fCursor', star: 'fStar', ve: 'fVe' }, 1800);
 
 /* ===================== SCROLL HINTS ===================== */
 const scrollHints = [document.getElementById('scroll-left'), document.getElementById('scroll-right')];
@@ -660,7 +578,7 @@ const works = [
   { cat: 'longform', title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
   { cat: 'longform', title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
   { cat: 'longform', title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
-  // THUMBNAILS (5) — root folder, .jpg
+  // THUMBNAILS (5)
   { cat: 'thumbnail', title: 'Thumbnail 1', src: '', isPhoto: true, img: 'thumbnail1.jpg' },
   { cat: 'thumbnail', title: 'Thumbnail 2', src: '', isPhoto: true, img: 'thumbnail2.jpg' },
   { cat: 'thumbnail', title: 'Thumbnail 3', src: '', isPhoto: true, img: 'thumbnail3.jpg' },
@@ -668,50 +586,23 @@ const works = [
   { cat: 'thumbnail', title: 'Thumbnail 5', src: '', isPhoto: true, img: 'thumbnail5.jpg' },
 ];
 
-/* ===================== VIDEO FRAME CAPTURE =====================
-   Strategy: create a hidden <video>, seek to the target time,
-   draw one frame onto a temp <canvas>, export as dataURL,
-   set that as the <img> src. No animation loop = no overwrite.
-   The placeholder gradient fades out once the frame is ready.
-================================================================ */
+/* ===================== VIDEO FRAME CAPTURE ===================== */
 function grabVideoFrame(imgEl, placeholderEl, src, seekTime) {
   const vid = document.createElement('video');
-  vid.src = src;
-  vid.muted = true;
-  vid.playsInline = true;
-  vid.preload = 'metadata';
-  // must crossOrigin if served from different origin; harmless for same-origin
-  vid.crossOrigin = 'anonymous';
-
-  vid.addEventListener('loadedmetadata', () => {
-    // clamp seek time to actual duration
-    vid.currentTime = Math.min(seekTime, vid.duration * 0.08);
-  });
-
+  vid.src = src; vid.muted = true; vid.playsInline = true; vid.preload = 'metadata'; vid.crossOrigin = 'anonymous';
+  vid.addEventListener('loadedmetadata', () => { vid.currentTime = Math.min(seekTime, vid.duration * 0.08); });
   vid.addEventListener('seeked', () => {
     try {
       const cv = document.createElement('canvas');
-      cv.width  = vid.videoWidth  || 640;
-      cv.height = vid.videoHeight || 360;
-      const ctx = cv.getContext('2d');
-      ctx.drawImage(vid, 0, 0, cv.width, cv.height);
-      const dataURL = cv.toDataURL('image/jpeg', 0.85);
-      imgEl.src = dataURL;
+      cv.width = vid.videoWidth || 640; cv.height = vid.videoHeight || 360;
+      cv.getContext('2d').drawImage(vid, 0, 0, cv.width, cv.height);
+      imgEl.src = cv.toDataURL('image/jpeg', 0.85);
       imgEl.style.opacity = '1';
       placeholderEl.classList.add('loaded');
-    } catch(e) {
-      // CORS / security error — leave placeholder visible
-      console.warn('Frame grab failed for', src, e);
-    } finally {
-      vid.src = ''; // free memory
-    }
+    } catch(e) { console.warn('Frame grab failed for', src, e); }
+    finally { vid.src = ''; }
   });
-
-  // If metadata fails (file missing, network error), just leave gradient
-  vid.addEventListener('error', () => {
-    vid.src = '';
-  });
-
+  vid.addEventListener('error', () => { vid.src = ''; });
   vid.load();
 }
 
@@ -720,31 +611,20 @@ const camSVG  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" str
 
 function renderWork(list) {
   const g = document.getElementById('work-grid');
-
   g.innerHTML = list.map((w, i) => {
     const isShort = w.cat === 'shortform';
     const sizeClass = isShort ? 'shortform-card' : (w.size || '');
     const badge = isShort ? '<div class="wc-badge">9:16</div>' : '';
-
-    // Placeholder colour class
     const phClass = isShort ? 'shortform-ph' : w.cat === 'thumbnail' ? 'thumbnail-ph' : '';
-
     if (w.isPhoto && w.img) {
-      // ---- PHOTO / THUMBNAIL card ----
-      return `
-      <div class="wc ${sizeClass} is-photo rv" data-idx="${i}" style="transition-delay:${i * .04}s">
+      return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" style="transition-delay:${i*.04}s">
         <img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="lazy">
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     } else {
-      // ---- VIDEO card ----
-      // img starts invisible; placeholder shows until frame loads
-      return `
-      <div class="wc ${sizeClass} is-video rv" data-idx="${i}" style="transition-delay:${i * .04}s">
-        <div class="wc-placeholder ${phClass}" id="ph${i}">
-          <div class="wc-placeholder-spinner"></div>
-        </div>
+      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" style="transition-delay:${i*.04}s">
+        <div class="wc-placeholder ${phClass}" id="ph${i}"><div class="wc-placeholder-spinner"></div></div>
         <img class="wc-thumb" id="ft${i}" src="" alt="${w.title}" style="opacity:0;">
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${playSVG}</div></div>
@@ -752,15 +632,11 @@ function renderWork(list) {
     }
   }).join('');
 
-  // Kick off frame grabs for video cards
   list.forEach((w, i) => {
     if (w.isPhoto || !w.src) return;
-    const imgEl = document.getElementById('ft' + i);
-    const phEl  = document.getElementById('ph' + i);
+    const imgEl = document.getElementById('ft'+i), phEl = document.getElementById('ph'+i);
     if (!imgEl || !phEl) return;
-    // shortform → seek to 1s, longform → seek to 2s
-    const seekTime = w.cat === 'shortform' ? 1 : 2;
-    grabVideoFrame(imgEl, phEl, w.src, seekTime);
+    grabVideoFrame(imgEl, phEl, w.src, w.cat === 'shortform' ? 1 : 2);
   });
 
   g.querySelectorAll('.wc').forEach(card => {
@@ -770,7 +646,6 @@ function renderWork(list) {
       else vpOpen(w.src || '', w.title, w.cat === 'shortform');
     });
   });
-
   setTimeout(() => document.querySelectorAll('.wc.rv:not(.vis)').forEach(el => obs.observe(el)), 40);
 }
 
@@ -864,6 +739,73 @@ const obs = new IntersectionObserver(entries => entries.forEach(e => {
 document.querySelectorAll('.rv,.rv-scale').forEach(el => obs.observe(el));
 new MutationObserver(() => document.querySelectorAll('.rv:not(.vis)').forEach(el => obs.observe(el)))
   .observe(document.getElementById('work-grid'), { childList: true });
+
+/* ===================== LOGO ANIMATION ===================== */
+function runLogoAnim(ids, offset) {
+  const lDisc   = document.getElementById(ids.disc);
+  const lPin    = document.getElementById(ids.pin);
+  const lCursor = document.getElementById(ids.cursor);
+  const lStar   = document.getElementById(ids.star);
+  const lVe     = document.getElementById(ids.ve);
+  if (!lDisc || !lPin) return;
+
+  let t = offset || 0, discRot = 0;
+  const TOTAL = 6400, FPS = 1000 / 30;
+
+  function lerp(a, b, p) { return a + (b - a) * Math.min(1, Math.max(0, p)); }
+  function easeOut(p) { return 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3); }
+  function easeIn(p) { return Math.pow(Math.min(1, Math.max(0, p)), 3); }
+  function easeInOut(p) { p = Math.min(1, Math.max(0, p)); return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  function prog(s, e) { return Math.min(1, Math.max(0, (t - s) / (e - s))); }
+
+  function tick() {
+    t = (t + FPS) % TOTAL;
+    discRot += 1.1;
+    const g = 4 + 4 * Math.sin(t / 400);
+    lPin.style.filter = `drop-shadow(0 0 ${g}px rgba(224,32,32,0.9))`;
+    let dLeft = 4, dOp = 1;
+    if (t >= 3600 && t < 4400) { const p = easeIn(prog(3600, 4400)); dLeft = lerp(4, -60, p); dOp = lerp(1, 0, p); }
+    else if (t >= 4400 && t < 5200) { const p = easeOut(prog(4400, 5200)); dLeft = lerp(-60, 4, p); dOp = lerp(0, 1, p); }
+    lDisc.style.left = dLeft + 'px';
+    lDisc.style.opacity = dOp;
+    lDisc.style.transform = `rotate(${discRot}deg)`;
+    lDisc.style.filter = `drop-shadow(0 0 ${4 + 2 * Math.sin(t / 550)}px rgba(58,123,213,${0.45 + 0.2 * Math.sin(t / 550)}))`;
+    let cx = 55, cy = 30, cop = 0;
+    if (t >= 800 && t < 6200) {
+      cop = t < 1200 ? easeOut(prog(800, 1200)) : t > 5700 ? easeIn(1 - prog(5700, 6200)) : 1;
+      if (t < 2200) { const p = easeInOut(prog(800, 2200)); cx = lerp(68, 54, p); cy = lerp(40, 32, p); }
+      else if (t < 2800) { const p = easeInOut(prog(2200, 2800)); cx = lerp(54, 18, p); cy = lerp(32, 26, p); }
+      else if (t < 3600) { const p = easeInOut(prog(2800, 3600)); cx = lerp(18, 62, p); cy = lerp(26, 25, p); }
+      else if (t < 4400) { cx = 62; cy = 25; }
+      else { const p = easeOut(prog(4400, 5200)); cx = lerp(62, 72, p); cy = lerp(25, 32, p); }
+    }
+    lCursor.style.opacity = cop;
+    lCursor.style.left = cx + 'px';
+    lCursor.style.top = cy + 'px';
+    let sop = 0, ssc = 0, sx = 44, sy = 25;
+    if (t >= 1400 && t < 2800) {
+      if (t < 2200) { const p = easeOut(prog(1400, 2200)); sop = p; ssc = p; sx = lerp(52, 44, p); sy = lerp(38, 28, p); }
+      else { const p = easeIn(prog(2200, 2800)); sop = 1 - p; ssc = 1 - p; sx = lerp(44, 32, p); sy = lerp(28, 18, p); }
+    }
+    lStar.style.opacity = sop;
+    lStar.style.transform = `scale(${ssc})`;
+    lStar.style.left = sx + 'px';
+    lStar.style.top = sy + 'px';
+    let vop = 0, vsc = 0;
+    if (t >= 2800 && t < 5200) {
+      if (t < 3600) { const p = easeOut(prog(2800, 3600)); vop = p; vsc = p; }
+      else if (t < 4400) { vop = 1; vsc = 1; }
+      else { const p = easeIn(prog(4400, 5200)); vop = 1 - p; vsc = 1 - p * 0.4; }
+    }
+    lVe.style.opacity = vop;
+    lVe.style.transform = `scale(${vsc})`;
+    setTimeout(tick, FPS);
+  }
+  setTimeout(tick, 400);
+}
+
+runLogoAnim({ disc: 'lDisc', pin: 'lPin', cursor: 'lCursor', star: 'lStar', ve: 'lVe' }, 0);
+runLogoAnim({ disc: 'fDisc', pin: 'fPin', cursor: 'fCursor', star: 'fStar', ve: 'fVe' }, 1800);
 
 /* ===================== MAGNETIC BUTTONS ===================== */
 document.querySelectorAll('.mag').forEach(btn => {

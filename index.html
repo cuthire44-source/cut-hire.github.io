@@ -156,8 +156,8 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   z-index:1;
   text-align:center;
 }
-.hero-cta{margin-top:2.4rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
-.hero-stats{margin-top:4rem;display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .3s .65s forwards;position:relative;z-index:1}
+.hero-cta{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .62s forwards;position:relative;z-index:1}
+.hero-stats{margin-top:3rem;display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .3s .74s forwards;position:relative;z-index:1}
 @keyframes fup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 .stat{text-align:center}
 .stat-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;transition:transform .3s}
@@ -213,6 +213,106 @@ section{padding:6rem 2rem}
 .wc:hover::after{width:100%}
 .wc-badge{position:absolute;bottom:8px;right:8px;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;background:rgba(224,32,32,.75);color:#fff;padding:2px 6px;z-index:4;opacity:0;transition:opacity .3s}
 .wc:hover .wc-badge{opacity:1}
+
+
+/* ===================== HERO EXPLAINER ===================== */
+.hero-proof{
+  position:relative;
+  z-index:1;
+  margin:1.75rem auto 0;
+  width:min(100%,880px);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  opacity:0;
+  animation:fup .3s .44s forwards;
+}
+
+.hero-proof-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  padding:.95rem 1rem;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-proof-card::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:var(--red);
+  opacity:.75;
+}
+
+.hero-proof-k{
+  display:block;
+  font-family:'DM Mono',monospace;
+  font-size:.56rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:.38rem;
+}
+
+.hero-proof-card p{
+  color:rgba(245,240,235,.78);
+  font-size:.76rem;
+  line-height:1.55;
+}
+
+.hero-intent{
+  position:relative;
+  z-index:1;
+  margin:1.25rem auto 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:.55rem;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fup .3s .52s forwards;
+}
+
+.intent-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  border:1px solid rgba(224,32,32,.22);
+  background:rgba(224,32,32,.07);
+  color:rgba(245,240,235,.82);
+  padding:.45rem .8rem;
+  font-family:'DM Mono',monospace;
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.intent-pill span{
+  color:var(--red);
+}
+
+@media(max-width:760px){
+  .hero-proof{
+    grid-template-columns:1fr;
+    width:min(100%,520px);
+  }
+
+  .hero-proof-card{
+    text-align:center;
+  }
+
+  .hero-proof-card::before{
+    top:0;
+    right:0;
+    bottom:auto;
+    width:auto;
+    height:2px;
+  }
+}
 
 /* ===================== SERVICES ===================== */
 #services{background:var(--bg)}
@@ -402,7 +502,26 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div id="particles"></div>
   <p class="eyebrow">✦ Video Editing Network ✦</p>
   <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
-  <p class="hero-sub">A dedicated team of video editors & graphic designers crafting cinematic stories, viral content, and everything in between. Your vision, our cut.</p>
+  <p class="hero-sub">Need a video edited but don’t know who to trust? Cut &amp; Hire connects you with vetted video editors and designers for YouTube videos, Shorts, ads, thumbnails, and clean professional content.</p>
+  <div class="hero-proof">
+    <div class="hero-proof-card">
+      <span class="hero-proof-k">For Clients</span>
+      <p>Tell us what you need. We help match you with an editor who fits your style, budget, and deadline.</p>
+    </div>
+    <div class="hero-proof-card">
+      <span class="hero-proof-k">What We Make</span>
+      <p>Long videos, short-form clips, motion graphics, captions, thumbnails, color, sound, and clean pacing.</p>
+    </div>
+    <div class="hero-proof-card">
+      <span class="hero-proof-k">Simple Process</span>
+      <p>Join Discord, open a private ticket, send your footage, and work directly with the right editor.</p>
+    </div>
+  </div>
+  <div class="hero-intent">
+    <div class="intent-pill"><span>✓</span> Hire an editor</div>
+    <div class="intent-pill"><span>✓</span> Find a designer</div>
+    <div class="intent-pill"><span>✓</span> Get content polished</div>
+  </div>
   <div class="hero-cta">
     <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Start a Project →</a>
     <a href="#work" class="btn-outline mag">View Our Work</a>

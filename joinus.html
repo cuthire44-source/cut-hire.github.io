@@ -352,6 +352,63 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   }
 }
 
+
+/* ===================== BUTTON + CARD SYMMETRY FIX ===================== */
+.paths{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:2px;
+  align-items:stretch;
+  max-width:1120px;
+  margin:0 auto 4.4rem;
+}
+
+.path-card{
+  min-height:555px;
+  display:flex;
+  flex-direction:column;
+}
+
+.path-desc{
+  min-height:118px;
+}
+
+.path-perks{
+  flex:1;
+}
+
+.path-btn{
+  margin-top:auto;
+  align-self:center;
+  width:260px;
+  min-width:260px;
+  text-align:center;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .paths{
+    grid-template-columns:1fr;
+  }
+
+  .path-card{
+    min-height:auto;
+  }
+
+  .path-desc{
+    min-height:0;
+  }
+
+  .path-btn{
+    width:100%;
+    min-width:0;
+    align-self:stretch;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -386,12 +443,13 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
       <div class="path-badge cl">🎬 For Clients</div>
       <span class="path-icon">🎯</span>
       <h2>Outsource to Our <em>Editors</em></h2>
-      <p class="path-desc">Tell us your vision, style, and deadline. We help match you with an editor who fits your project. Work directly with no agency middleman. You can request a free sample first. If the style fits, you can agree on the project and move forward.</p>
+      <p class="path-desc">Tell us your vision, style, and deadline. We help match you with an editor who fits your project. Work directly with no agency middleman. You can request a free sample first. If the style fits, you can agree on the project and move forward. If the editor’s sample doesn’t fit, we can bring in another editor for your project.</p>
       <ul class="path-perks">
         <li>Tell us your vision, style &amp; deadline</li>
         <li>We match you with the perfect editor from our vetted roster</li>
         <li>Work directly — no agency middleman or markups</li>
         <li>Request a free sample before moving forward</li>
+        <li>If the sample doesn’t fit, we can bring in another editor</li>
         <li>All communication inside private Discord channels</li>
         <li>If the sample fits, agree on pricing and continue</li>
       </ul>
@@ -441,7 +499,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
         <div class="how-num">04</div>
         <span class="how-step-icon">✅</span>
         <h4>Approve &amp; Deliver</h4>
-        <p>Review the sample, agree on the project, then receive the final polished edit.</p>
+        <p>Review the sample first. If it fits, agree on the project details and receive the final polished edit.</p>
       </div>
     </div>
   </div>
@@ -474,7 +532,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What if I'm not happy with the first edit? <span class="faq-icon">+</span></div>
-      <div class="faq-a">You can request a free sample first. If the style fits, you and the editor agree on price, deadline, and full project details before continuing.</div>
+      <div class="faq-a">You can request a free sample first. If the sample fits, you and the editor agree on the price, deadline, and full project details before continuing. If you don’t like that editor’s sample, we can bring in another editor for your project.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What editing styles do you cover? <span class="faq-icon">+</span></div>

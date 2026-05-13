@@ -475,8 +475,27 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <p class="sec-lbl" style="justify-content:center">Let's Work Together</p>
       <h2 class="disc-h">Ready to <em>Create</em><br>Something Great?</h2>
       <p class="disc-sub">Join our Discord, open a ticket, and tell us about your project. We'll get back to you fast.</p>
-      <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag" style="font-size:.92rem;padding:.95rem 2.6rem">Join Our Discord →</a>
-      <div><a href="https://discord.gg/dXemseJsDV" target="_blank" class="disc-ticket"><span>→</span> Open a ticket to start working with us</a></div>
+      <div id="discord-invite-card" style="display:inline-flex;align-items:center;gap:1.2rem;background:#2b2d31;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem 1.4rem;margin:0 auto;max-width:460px;width:100%;text-align:left;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s;cursor:pointer" onmouseover="this.style.transform='scale(1.04) translateY(-4px)';this.style.boxShadow='0 0 40px rgba(35,165,90,.2),0 20px 60px rgba(0,0,0,.4)';this.style.borderColor='rgba(35,165,90,.35)'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(255,255,255,.1)'">
+  <img src="dadawfa223133414.gif" alt="Cut & Hire" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex-shrink:0">
+  <div style="flex:1;min-width:0">
+    <div style="font-size:.68rem;color:rgba(255,255,255,.5);margin-bottom:.2rem;font-family:'DM Mono',monospace;letter-spacing:.06em">You've been invited to join a server</div>
+    <div style="font-weight:700;font-size:.95rem;color:#fff;margin-bottom:.3rem">Cut & Hire</div>
+    <div style="font-size:.75rem;color:rgba(255,255,255,.5);display:flex;gap:1rem">
+      <span><span style="color:#23a55a;font-size:.55rem">●</span> <span id="disc-online">—</span> Online</span>
+      <span><span style="color:rgba(255,255,255,.3);font-size:.55rem">●</span> <span id="disc-members">—</span> Members</span>
+    </div>
+  </div>
+  <a href="https://discord.gg/dXemseJsDV" target="_blank" style="background:#23a55a;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:4px;font-weight:700;font-size:.85rem;text-decoration:none;flex-shrink:0;transition:background .2s" onmouseover="this.style.background='#1a8a47'" onmouseout="this.style.background='#23a55a'">Join</a>
+</div>
+<div style="margin-top:1.2rem"><a href="https://discord.gg/dXemseJsDV" target="_blank" class="disc-ticket"><span>→</span> Open a ticket to start working with us</a></div>
+<script>
+fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.approximate_member_count) document.getElementById('disc-members').textContent=d.approximate_member_count.toLocaleString();
+    if(d.approximate_presence_count) document.getElementById('disc-online').textContent=d.approximate_presence_count.toLocaleString();
+  }).catch(()=>{});
+</script>
     </div>
   </div>
 </section>

@@ -208,7 +208,6 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   background:transparent!important;
   border:none!important;
   box-shadow:none!important;
-
   opacity:1;
   transform:none;
   filter:none;
@@ -220,24 +219,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   filter:none;
 }
 
-@keyframes stat-pop{
-  0%{
-    opacity:0;
-    transform:translateY(42px) scale(.86);
-    filter:blur(8px);
-  }
-  55%{
-    opacity:1;
-    transform:translateY(-8px) scale(1.08);
-    filter:blur(0);
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0) scale(1);
-    filter:blur(0);
-  }
-}
-
+.stat-number,
 .stat-value{
   display:inline-block;
   background:transparent!important;
@@ -245,7 +227,18 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   box-shadow:none!important;
   padding:0!important;
   margin:0!important;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:'tnum' 1, 'lnum' 1;
+  will-change:contents;
+  transform:translateZ(0);
+  -webkit-font-smoothing:antialiased;
 }
+
+#hero-stats .stat:nth-child(1) .stat-number{min-width:2.5ch;}
+#hero-stats .stat:nth-child(2) .stat-number{min-width:2.5ch;}
+#hero-stats .stat:nth-child(3) .stat-number{min-width:3.5ch;}
+#hero-stats .stat:nth-child(4) .stat-number{min-width:4.8ch;}
 
 .stat-l{
   font-family:'DM Mono',monospace;
@@ -778,51 +771,63 @@ for (let i = 0; i < 12; i++) {
   scBg.appendChild(el);
 }
 
-/* ===================== STATS COUNTER - FABRI OLD CHANNELS STYLE ===================== */
+/* ===================== STATS COUNTER - FAST + SMOOTH ===================== */
 (function(){
   let statsGo = false;
 
-  const runStats = () => {
+  function easeOutCubic(t){
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function formatNumber(el, value, target, suffix, done){
+    if(suffix.toLowerCase() === 'm+'){
+      el.textContent = done ? target + 'M+' : value.toFixed(1) + 'M+';
+      return;
+    }
+
+    const whole = done ? target : Math.round(value);
+    el.textContent = whole + suffix;
+  }
+
+  function runStats(){
     if(statsGo) return;
 
     const strip = document.querySelector('#hero-stats');
-    if(!strip || strip.getBoundingClientRect().top >= window.innerHeight * .95) return;
+    if(!strip) return;
+
+    const rect = strip.getBoundingClientRect();
+    if(rect.top >= window.innerHeight * 0.95) return;
 
     statsGo = true;
 
-    document.querySelectorAll('#hero-stats .stat-n').forEach(el => {
-      el.classList.add('animate-in');
+    const numbers = document.querySelectorAll('#hero-stats .stat-number');
+    const duration = 1050; // fast, but not harsh/choppy
+    const start = performance.now();
+
+    numbers.forEach(el => {
+      const suffix = el.dataset.suffix || '';
+      el.textContent = suffix.toLowerCase() === 'm+' ? '0.0M+' : '0' + suffix;
     });
 
-    document.querySelectorAll('#hero-stats .stat-number').forEach(el => {
-      const target = +el.dataset.target || 0;
-      const suf = el.dataset.suffix || '';
-      const dur = 1900;
-      const t0 = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = easeOutCubic(p);
+      const done = p >= 1;
 
-      const step = now => {
-        const p = Math.min((now - t0) / dur, 1);
-        const e = 1 - Math.pow(1 - p, 3);
-        const cur = target * e;
+      numbers.forEach(el => {
+        const target = Number(el.dataset.target) || 0;
+        const suffix = el.dataset.suffix || '';
+        const value = target * eased;
+        formatNumber(el, value, target, suffix, done);
+      });
 
-        if(suf === 'M+'){
-          el.textContent = `${cur.toFixed(p < 1 ? 1 : 0)}M+`;
-        }else if(suf === '+'){
-          el.textContent = `${0 | cur}+`;
-        }else{
-          el.textContent = `${0 | cur}${suf}`;
-        }
+      if(!done){
+        requestAnimationFrame(step);
+      }
+    }
 
-        if(p < 1){
-          requestAnimationFrame(step);
-        }else{
-          el.textContent = `${target}${suf}`;
-        }
-      };
-
-      requestAnimationFrame(step);
-    });
-  };
+    requestAnimationFrame(step);
+  }
 
   window.addEventListener('load', runStats);
   window.addEventListener('scroll', runStats, { passive:true });

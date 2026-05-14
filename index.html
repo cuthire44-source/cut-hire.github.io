@@ -236,11 +236,23 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   background:transparent!important;
   border:none!important;
   box-shadow:none!important;
+  text-shadow:none!important;
   padding:0!important;
   margin:0 auto!important;
   font-family:'Playfair Display',serif;
   font-variant-numeric:lining-nums tabular-nums;
   font-feature-settings:'lnum' 1,'tnum' 1;
+}
+
+.stat-suffix{
+  color:var(--red);
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-style:normal;
+  font-size:.72em;
+  line-height:1;
+  margin-left:.035em;
+  text-shadow:none!important;
 }
 
 .stat-l{
@@ -518,7 +530,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="48" data-suffix="+">0+</span>
+        <span class="stat-number stat-value" data-target="48" data-suffix="+">0<span class="stat-suffix">+</span></span>
       </div>
     </div>
     <div class="stat-l">Clients Served</div>
@@ -528,7 +540,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="35" data-suffix="+">0+</span>
+        <span class="stat-number stat-value" data-target="35" data-suffix="+">0<span class="stat-suffix">+</span></span>
       </div>
     </div>
     <div class="stat-l">Editors on Team</div>
@@ -538,7 +550,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="200" data-suffix="+">0+</span>
+        <span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span>
       </div>
     </div>
     <div class="stat-l">Projects Done</div>
@@ -548,7 +560,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="15" data-suffix="M+">0.0M+</span>
+        <span class="stat-number stat-value" data-target="15" data-suffix="M+">0.0M<span class="stat-suffix">+</span></span>
       </div>
     </div>
     <div class="stat-l">Views Generated</div>
@@ -783,6 +795,17 @@ for (let i = 0; i < 12; i++) {
 (function(){
   let statsGo = false;
 
+  function renderStat(el, value, suffix, done){
+    if(suffix.toLowerCase() === 'm+'){
+      const number = done ? Math.round(value).toString() : value.toFixed(1);
+      el.innerHTML = number + 'M<span class="stat-suffix">+</span>';
+    }else if(suffix === '+'){
+      el.innerHTML = Math.floor(value) + '<span class="stat-suffix">+</span>';
+    }else{
+      el.textContent = Math.floor(value) + suffix;
+    }
+  }
+
   function runStats(){
     if(statsGo) return;
 
@@ -790,7 +813,7 @@ for (let i = 0; i < 12; i++) {
     if(!strip) return;
 
     const rect = strip.getBoundingClientRect();
-    if(rect.top >= window.innerHeight * 0.95) return;
+    if(rect.top >= window.innerHeight * .95) return;
 
     statsGo = true;
 
@@ -809,13 +832,7 @@ for (let i = 0; i < 12; i++) {
         const eased = 1 - Math.pow(1 - p, 3);
         const current = target * eased;
 
-        if(suffix.toLowerCase() === 'm+'){
-          el.textContent = p < 1 ? current.toFixed(1) + 'M+' : target + 'M+';
-        }else if(suffix === '+'){
-          el.textContent = Math.floor(current) + '+';
-        }else{
-          el.textContent = Math.floor(current) + suffix;
-        }
+        renderStat(el, current, suffix, p >= 1);
 
         if(p < 1){
           requestAnimationFrame(step);
@@ -827,8 +844,8 @@ for (let i = 0; i < 12; i++) {
   }
 
   window.addEventListener('load', runStats);
-  window.addEventListener('scroll', runStats, {passive:true});
-  runStats();
+  window.addEventListener('scroll', runStats, { passive:true });
+  setTimeout(runStats, 650);
 })();
 /* ===================== WORKS DATA ===================== */
 const works = [

@@ -21,7 +21,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overfl
 body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");opacity:.5}
 
-/* BACK BUTTON — top left, clearly visible */
+/* BACK BUTTON */
 .back-btn{
   position:fixed;top:1.4rem;left:2rem;
   z-index:500;display:inline-flex;align-items:center;gap:.5rem;
@@ -58,24 +58,13 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 /* MAIN CONTENT */
 .contact-content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
 
-/* CONTACT METHODS — no longer anchor tags, just divs */
+/* CONTACT CARDS */
 .contact-methods{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:2px;
   margin-bottom:0;
 }
-
-.contact-main-btn{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-top:1.8rem;
-  margin-bottom:3.5rem;
-  position:relative;
-  z-index:2;
-}
-
 @media(max-width:640px){.contact-methods{grid-template-columns:1fr}}
 
 .contact-card{
@@ -83,6 +72,8 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   padding:2.2rem 2rem 1.6rem;
   position:relative;overflow:hidden;
   color:inherit;display:flex;flex-direction:column;
+  opacity:0;
+  transform:translateY(28px);
 }
 .contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(1);opacity:.4}
 
@@ -91,35 +82,37 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .cc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
 .cc-value{font-size:.82rem;color:var(--m);line-height:1.75;flex:1}
 
-/* Small Discord CTA button below each card */
-.cc-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  margin-top:1.2rem;align-self:flex-start;
-  background:var(--red);color:#fff;
+/* BIG DISCORD BUTTON */
+.contact-main-btn{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:2rem;
+  position:relative;
+  z-index:2;
+  opacity:0;
+  transform:translateY(24px);
+}
+
+.btn-discord{
+  background:var(--red);
+  color:#fff;
   text-decoration:none;
-  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.78rem;
-  padding:.55rem 1.2rem;
-  letter-spacing:.03em;
-  position:relative;overflow:hidden;
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:1rem;
+  padding:1.1rem 2.8rem;
+  letter-spacing:.04em;
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
   transition:box-shadow .25s,transform .15s;
 }
-.cc-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
-.cc-btn:hover{box-shadow:0 0 20px var(--rg);transform:translateY(-2px)}
-.cc-btn:hover::before{transform:translateX(100%)}
-
-/* INFO STRIP */
-.info-strip{background:var(--card);border:1px solid var(--b);padding:2rem 2.2rem;margin-bottom:3.5rem;position:relative;overflow:hidden}
-.info-strip::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
-.info-strip-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-@media(max-width:640px){.info-strip-inner{grid-template-columns:1fr;gap:1.2rem}}
-.info-item-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.35rem}
-.info-item-val{font-size:.84rem;color:var(--m);line-height:1.7}
-
-/* FOOTER NOTE */
-.footer-note{border-top:1px solid var(--b);padding-top:2rem;text-align:center}
-.footer-note p{font-size:.78rem;color:var(--m);line-height:1.85}
-.footer-note a{color:var(--red);text-decoration:none;transition:opacity .2s}
-.footer-note a:hover{opacity:.7}
+.btn-discord::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-discord:hover{box-shadow:0 0 36px var(--rg);transform:translateY(-3px)}
+.btn-discord:hover::before{transform:translateX(100%)}
 </style>
 </head>
 <body>
@@ -144,15 +137,14 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 <div class="contact-content">
 
   <div class="contact-methods">
-    <!-- Non-clickable card, button below -->
-    <div class="contact-card">
+    <div class="contact-card" id="card-1">
       <span class="cc-icon">💬</span>
       <div class="cc-label">Primary</div>
       <div class="cc-title">Discord Server</div>
       <div class="cc-value">Join our server and open a private ticket. This is the fastest way to start a project, ask a question, or apply as an editor.</div>
     </div>
 
-    <div class="contact-card">
+    <div class="contact-card" id="card-2">
       <span class="cc-icon">🎫</span>
       <div class="cc-label">Projects &amp; Hiring</div>
       <div class="cc-title">Clients — Open a Ticket</div>
@@ -160,44 +152,30 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
     </div>
   </div>
 
-  <div class="contact-main-btn">
-  <a href="https://discord.gg/dXemseJsDV" target="_blank" class="cc-btn">Join Discord & Open a Ticket →</a>
-</div>
-
-  <div class="info-strip">
-    <div class="info-strip-inner">
-      <div>
-        <div class="info-item-label">Response Time</div>
-        <div class="info-item-val">We typically respond within a few hours. Tickets are monitored daily.</div>
-      </div>
-      <div>
-        <div class="info-item-label">All Communication</div>
-        <div class="info-item-val">Everything happens inside private Discord channels — organised and confidential.</div>
-      </div>
-      <div>
-        <div class="info-item-label">For Editors</div>
-        <div class="info-item-val">Applying to join the roster? Fill out our <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" style="color:var(--red);text-decoration:none">editor application form</a> to get started.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-note">
-    <p>Not sure where to start? Head to <a href="/joinus">Join Us</a> for a full breakdown of how everything works,<br>or jump straight into <a href="https://discord.gg/dXemseJsDV" target="_blank">our Discord</a> and open a ticket.</p>
+  <div class="contact-main-btn" id="discord-btn">
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-discord">Join Discord &amp; Open a Ticket →</a>
   </div>
 
 </div>
 
 <script>
 window.addEventListener('load', () => {
+  // Cards animate in staggered
   document.querySelectorAll('.contact-card').forEach((c, i) => {
-    c.style.opacity = '0';
-    c.style.transform = 'translateY(24px)';
-    c.style.transition = `opacity .6s ${0.1 + i * 0.12}s, transform .6s ${0.1 + i * 0.12}s`;
+    c.style.transition = `opacity .6s ${0.1 + i * 0.14}s, transform .6s ${0.1 + i * 0.14}s`;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       c.style.opacity = '1';
       c.style.transform = 'none';
     }));
   });
+
+  // Button animates in after cards
+  const btn = document.getElementById('discord-btn');
+  btn.style.transition = 'opacity .6s .42s, transform .6s .42s';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    btn.style.opacity = '1';
+    btn.style.transform = 'none';
+  }));
 });
 </script>
 </body>

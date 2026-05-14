@@ -113,6 +113,14 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .btn-discord::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .btn-discord:hover{box-shadow:0 0 36px var(--rg);transform:translateY(-3px)}
 .btn-discord:hover::before{transform:translateX(100%)}
+
+/* ===================== PERFORMANCE TUNING (keeps visuals/features) ===================== */
+body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
+.orb{will-change:transform;transform:translateZ(0);backface-visibility:hidden}
+.path-card,.how-step,.discord-strip,.network-section,.faq-item,.contact-card,.btn-discord,.btn-red,.btn-blu{contain:layout paint}
+.join-content,.contact-content{content-visibility:auto;contain-intrinsic-size:900px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -160,22 +168,27 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 
 <script>
 window.addEventListener('load', () => {
-  // Cards animate in staggered
-  document.querySelectorAll('.contact-card').forEach((c, i) => {
-    c.style.transition = `opacity .6s ${0.1 + i * 0.14}s, transform .6s ${0.1 + i * 0.14}s`;
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      c.style.opacity = '1';
-      c.style.transform = 'none';
-    }));
-  });
+  (window.requestIdleCallback || function(cb){return setTimeout(cb,80);})(() => {
+    // Cards animate in staggered
+    document.querySelectorAll('.contact-card').forEach((c, i) => {
+      c.style.transition = `opacity .6s ${0.1 + i * 0.14}s, transform .6s ${0.1 + i * 0.14}s`;
+    });
 
-  // Button animates in after cards
-  const btn = document.getElementById('discord-btn');
-  btn.style.transition = 'opacity .6s .42s, transform .6s .42s';
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    btn.style.opacity = '1';
-    btn.style.transform = 'none';
-  }));
+    // Button animates in after cards
+    const btn = document.getElementById('discord-btn');
+    if(btn) btn.style.transition = 'opacity .6s .42s, transform .6s .42s';
+
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.contact-card').forEach(c => {
+        c.style.opacity = '1';
+        c.style.transform = 'none';
+      });
+      if(btn){
+        btn.style.opacity = '1';
+        btn.style.transform = 'none';
+      }
+    });
+  });
 });
 </script>
 </body>

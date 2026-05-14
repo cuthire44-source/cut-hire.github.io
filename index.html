@@ -158,13 +158,16 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   text-align:center;
 }
 .hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
-.hero-stats{margin-top:4rem;display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fup .3s .65s forwards;position:relative;z-index:1}
-@keyframes fup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
-.stat{text-align:center}
-.stat-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;transition:transform .3s}
-.stat:hover .stat-n{transform:scale(1.07)}
-.stat-n .suf{color:var(--red)}
-.stat-l{font-size:.68rem;color:var(--m);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem}
+.hero-stats{margin-top:4rem;display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;opacity:0;animation:fup .3s .65s forwards;position:relative;z-index:1}
+.stat{position:relative;display:flex;flex-direction:column;align-items:center;padding:1.8rem 3rem}
+.stat:not(:last-child)::after{content:'';position:absolute;right:0;top:18%;height:64%;width:1px;background:linear-gradient(to bottom,transparent,rgba(224,32,32,.3),transparent)}
+.stat-number-wrap{height:72px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.stat-n{font-family:'Playfair Display',serif;font-size:3.6rem;font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--w);display:flex;align-items:baseline;gap:1px;will-change:transform,opacity;transform:translateY(80px);opacity:0;transition:transform 0s,opacity 0s}
+.stat-n.animate-in{transition:transform .75s cubic-bezier(.22,1,.36,1),opacity .4s ease;transform:translateY(0);opacity:1}
+.suf{color:var(--red);font-style:italic;font-size:2.3rem;font-weight:900;font-family:'Playfair Display',serif;margin-left:1px}
+.stat-l{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-top:.7rem;text-align:center}
+.stat-bar{height:1.5px;width:0;background:linear-gradient(to right,transparent,var(--red),transparent);margin-top:.5rem;border-radius:1px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.stat:hover .stat-bar{width:80%}
 
 .btn-primary{background:var(--red);color:#fff;border:none;padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
@@ -410,11 +413,35 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     <a href="#work" class="btn-outline mag">View Our Work</a>
   </div>
   <div class="hero-stats" id="hero-stats">
-    <div class="stat"><div class="stat-n"><span id="s-clients">0</span><span class="suf">+</span></div><div class="stat-l">Clients Served</div></div>
-    <div class="stat"><div class="stat-n"><span id="s-editors">0</span><span class="suf">+</span></div><div class="stat-l">Editors on Team</div></div>
-    <div class="stat"><div class="stat-n"><span id="s-projects">0</span><span class="suf">+</span></div><div class="stat-l">Projects Done</div></div>
-    <div class="stat"><div class="stat-n"><span id="s-views">0</span><span class="suf">M+</span></div><div class="stat-l">Views Generated</div></div>
+  <div class="stat">
+    <div class="stat-number-wrap">
+      <div class="stat-n" id="sn-0"><span class="sv">0</span><span class="suf">+</span></div>
+    </div>
+    <div class="stat-l">Clients Served</div>
+    <div class="stat-bar"></div>
   </div>
+  <div class="stat">
+    <div class="stat-number-wrap">
+      <div class="stat-n" id="sn-1"><span class="sv">0</span><span class="suf">+</span></div>
+    </div>
+    <div class="stat-l">Editors on Team</div>
+    <div class="stat-bar"></div>
+  </div>
+  <div class="stat">
+    <div class="stat-number-wrap">
+      <div class="stat-n" id="sn-2"><span class="sv">0</span><span class="suf">+</span></div>
+    </div>
+    <div class="stat-l">Projects Done</div>
+    <div class="stat-bar"></div>
+  </div>
+  <div class="stat">
+    <div class="stat-number-wrap">
+      <div class="stat-n" id="sn-3"><span class="sv">0</span><span class="suf">M+</span></div>
+    </div>
+    <div class="stat-l">Views Generated</div>
+    <div class="stat-bar"></div>
+  </div>
+</div>
 </section>
 
 <!-- ==================== WORK ==================== -->
@@ -640,22 +667,74 @@ for (let i = 0; i < 12; i++) {
 }
 
 /* ===================== STATS COUNTER ===================== */
-function countUp(id, target) {
-  const el = document.getElementById(id); if (!el) return;
-  const dur = 1900; let st = performance.now();
-  (function step(ts) {
-    const p = Math.min((ts - st) / dur, 1), e = 1 - Math.pow(1 - p, 4);
-    el.textContent = Math.floor(e * target);
-    if (p < 1) requestAnimationFrame(step); else el.textContent = target;
-  })(performance.now());
-}
-const statsObs = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting) {
-    countUp('s-clients', 48); countUp('s-editors', 35); countUp('s-projects', 200); countUp('s-views', 15);
-    statsObs.disconnect();
+(function(){
+  var stats=[
+    {id:'sn-0',target:48, delay:0  },
+    {id:'sn-1',target:35, delay:140},
+    {id:'sn-2',target:200,delay:280},
+    {id:'sn-3',target:15, delay:420},
+  ];
+
+  function easeOutQuart(t){ return 1-Math.pow(1-t,4); }
+
+  function runCounter(el,target,delay){
+    var valEl=el.querySelector('.sv');
+    var duration=2200;
+    setTimeout(function(){
+      el.classList.add('animate-in');
+      var startTime=null;
+      var lastInt=-1;
+      function tick(timestamp){
+        if(!startTime)startTime=timestamp;
+        var elapsed=timestamp-startTime;
+        var progress=Math.min(elapsed/duration,1);
+        var eased=easeOutQuart(progress);
+        var current=eased*target;
+        var rounded=Math.round(current);
+        if(rounded!==lastInt){
+          lastInt=rounded;
+          valEl.textContent=rounded;
+        }
+        if(progress<1){
+          requestAnimationFrame(tick);
+        }else{
+          valEl.textContent=target;
+        }
+      }
+      requestAnimationFrame(tick);
+    },delay);
   }
-}, { threshold: .3 });
-statsObs.observe(document.getElementById('hero-stats'));
+
+  var triggered=false;
+  var statsSection=document.getElementById('hero-stats');
+
+  var observer=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting&&!triggered){
+      triggered=true;
+      observer.disconnect();
+      stats.forEach(function(s){
+        var el=document.getElementById(s.id);
+        if(el)runCounter(el,s.target,s.delay);
+      });
+    }
+  },{threshold:0.35});
+
+  observer.observe(statsSection);
+
+  setTimeout(function(){
+    if(!triggered){
+      var rect=statsSection.getBoundingClientRect();
+      if(rect.top<window.innerHeight){
+        triggered=true;
+        observer.disconnect();
+        stats.forEach(function(s){
+          var el=document.getElementById(s.id);
+          if(el)runCounter(el,s.target,s.delay);
+        });
+      }
+    }
+  },900);
+})();
 
 /* ===================== WORKS DATA ===================== */
 const works = [

@@ -205,18 +205,19 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   display:inline-flex;
   align-items:baseline;
   justify-content:center;
-  gap:0;
   background:transparent!important;
   border:none!important;
   box-shadow:none!important;
-  will-change:transform,opacity,filter;
-  transform:translateY(42px) scale(.86);
-  opacity:0;
-  filter:blur(8px);
+
+  opacity:1;
+  transform:none;
+  filter:none;
 }
 
 .stat-n.animate-in{
-  animation:stat-pop .95s cubic-bezier(.16,1,.3,1) forwards;
+  opacity:1;
+  transform:none;
+  filter:none;
 }
 
 @keyframes stat-pop{
@@ -516,7 +517,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="48" data-suffix="+">0</span>
+        <span class="stat-number stat-value" data-target="48" data-suffix="+">0+</span>
       </div>
     </div>
     <div class="stat-l">Clients Served</div>
@@ -526,7 +527,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="35" data-suffix="+">0</span>
+        <span class="stat-number stat-value" data-target="35" data-suffix="+">0+</span>
       </div>
     </div>
     <div class="stat-l">Editors on Team</div>
@@ -536,7 +537,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="200" data-suffix="+">0</span>
+        <span class="stat-number stat-value" data-target="200" data-suffix="+">0+</span>
       </div>
     </div>
     <div class="stat-l">Projects Done</div>
@@ -546,7 +547,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n">
-        <span class="stat-number stat-value" data-target="15" data-suffix="M+">0</span>
+        <span class="stat-number stat-value" data-target="15" data-suffix="M+">0.0M+</span>
       </div>
     </div>
     <div class="stat-l">Views Generated</div>

@@ -160,10 +160,10 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 }
 .hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
 .hero-stats{margin-top:4rem;display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;opacity:0;animation:fup .3s .65s forwards;position:relative;z-index:1}
-.stat{position:relative;display:flex;flex-direction:column;align-items:center;padding:1.8rem 3rem}
-.stat:not(:last-child)::after{content:'';position:absolute;right:0;top:18%;height:64%;width:1px;background:linear-gradient(to bottom,transparent,rgba(224,32,32,.3),transparent)}
+.stat{position:relative;display:flex;flex-direction:column;align-items:center;padding:1.8rem 2.5rem}
+.stat:not(:last-child)::after{display:none}
 .stat-number-wrap{display:flex;align-items:flex-end;justify-content:center;position:relative}
-.stat-n{font-family:'Playfair Display',serif;font-size:3.6rem;font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--w);display:flex;align-items:baseline;gap:1px;will-change:transform,opacity;transform:translateY(80px);opacity:0;transition:transform 0s,opacity 0s}
+.stat-n{font-family:'Playfair Display',serif;font-size:3.6rem;font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--w);display:flex;align-items:baseline;gap:3px;will-change:transform,opacity;transform:translateY(80px);opacity:0;transition:transform 0s,opacity 0s}
 .stat-n.animate-in{transition:transform .75s cubic-bezier(.22,1,.36,1),opacity .4s ease;transform:translateY(0);opacity:1}
 .suf{color:var(--red);font-style:italic;font-size:2.3rem;font-weight:900;font-family:'Playfair Display',serif;margin-left:1px}
 .stat-l{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-top:.7rem;text-align:center}
@@ -676,11 +676,11 @@ for (let i = 0; i < 12; i++) {
     {id:'sn-3',target:15, delay:420},
   ];
 
-  function easeOutQuart(t){ return 1-Math.pow(1-t,4); }
+  function easeOutQuart(t){ return 1-(1-t)*(1-t); }
 
   function runCounter(el,target,delay){
     var valEl=el.querySelector('.sv');
-    var duration=2200;
+    var duration=1800;
     setTimeout(function(){
       el.classList.add('animate-in');
       var startTime=null;

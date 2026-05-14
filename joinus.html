@@ -415,6 +415,14 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   margin-right: auto;
 }
 
+
+/* ===================== PERFORMANCE TUNING (keeps visuals/features) ===================== */
+body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
+.orb{will-change:transform;transform:translateZ(0);backface-visibility:hidden}
+.path-card,.how-step,.discord-strip,.network-section,.faq-item,.contact-card,.btn-discord,.btn-red,.btn-blu{contain:layout paint}
+.join-content,.contact-content{content-visibility:auto;contain-intrinsic-size:900px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -571,16 +579,20 @@ window.addEventListener('load',()=>document.body.style.overflow='visible');
   // tracking only
 })();
 
-// Subtle staggered card reveal on load (no IntersectionObserver dependency)
+// Subtle staggered card reveal on load, deferred until first paint is done
 window.addEventListener('load', () => {
-  document.querySelectorAll('.path-card').forEach((c, i) => {
-    c.style.opacity = '0';
-    c.style.transform = 'translateY(28px)';
-    c.style.transition = `opacity .6s ${0.1 + i * 0.12}s, transform .6s ${0.1 + i * 0.12}s`;
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      c.style.opacity = '1';
-      c.style.transform = 'none';
-    }));
+  (window.requestIdleCallback || function(cb){return setTimeout(cb,90);})(() => {
+    document.querySelectorAll('.path-card').forEach((c, i) => {
+      c.style.opacity = '0';
+      c.style.transform = 'translate3d(0,28px,0)';
+      c.style.transition = `opacity .6s ${0.1 + i * 0.12}s, transform .6s ${0.1 + i * 0.12}s`;
+    });
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.path-card').forEach(c => {
+        c.style.opacity = '1';
+        c.style.transform = 'none';
+      });
+    });
   });
 });
 

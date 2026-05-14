@@ -840,20 +840,35 @@ document.addEventListener('visibilitychange', () => {
 /* ===================== STATS COUNTER - FABRI OLD CHANNELS STYLE ===================== */
 (function(){
   let statsGo = false;
+  let startAllowed = false;
 
   function renderStat(el, value, suffix, done){
+    const safeValue = Math.max(0, value);
+
     if(suffix.toLowerCase() === 'm+'){
-      const number = done ? Math.round(value).toString() : value.toFixed(1);
-      el.innerHTML = number + 'M<span class="stat-suffix">+</span>';
-    }else if(suffix === '+'){
-      el.innerHTML = Math.floor(value) + '<span class="stat-suffix">+</span>';
-    }else{
-      el.textContent = Math.floor(value) + suffix;
+      const target = Number(el.dataset.target) || 0;
+
+      /* Avoid the ugly pause on 14.9M+ before it becomes 15M+ */
+      if(done || safeValue >= target - 0.08){
+        el.innerHTML = Math.round(target) + 'M<span class="stat-suffix">+</span>';
+      }else{
+        el.innerHTML = safeValue.toFixed(1) + 'M<span class="stat-suffix">+</span>';
+      }
+      return;
     }
+
+    if(suffix === '+'){
+      const target = Number(el.dataset.target) || 0;
+      const rounded = done ? target : Math.min(target, Math.round(safeValue));
+      el.innerHTML = rounded + '<span class="stat-suffix">+</span>';
+      return;
+    }
+
+    el.textContent = (done ? Math.round(value) : Math.round(safeValue)) + suffix;
   }
 
   function runStats(){
-    if(statsGo) return;
+    if(statsGo || !startAllowed) return;
 
     const strip = document.querySelector('#hero-stats');
     if(!strip) return;
@@ -875,7 +890,9 @@ document.addEventListener('visibilitychange', () => {
 
       function step(now){
         const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
+
+        /* Smooth like Fabri's counter, but without hanging on the value before the final number */
+        const eased = 1 - Math.pow(1 - p, 2.45);
         const current = target * eased;
 
         renderStat(el, current, suffix, p >= 1);
@@ -889,9 +906,13 @@ document.addEventListener('visibilitychange', () => {
     });
   }
 
-  window.addEventListener('load', runStats);
+  /* Start exactly when the stats fade-up begins, not before it */
+  setTimeout(() => {
+    startAllowed = true;
+    runStats();
+  }, 650);
+
   window.addEventListener('scroll', runStats, { passive:true });
-  setTimeout(runStats, 650);
 })();
 /* ===================== WORKS DATA ===================== */
 const works = [

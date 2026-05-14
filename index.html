@@ -246,28 +246,6 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   margin:0!important;
 }
 
-.stat-value.bump{
-  animation:number-bump .16s cubic-bezier(.34,1.56,.64,1);
-}
-
-@keyframes number-bump{
-  0%{transform:translateY(0) scale(1)}
-  55%{transform:translateY(-3px) scale(1.08)}
-  100%{transform:translateY(0) scale(1)}
-}
-
-.suf{
-  color:var(--red);
-  font-style:italic;
-  font-size:2.15rem;
-  font-weight:900;
-  font-family:'Playfair Display',serif;
-  margin-left:2px;
-  display:inline-block;
-  transform:translateY(-.03em);
-  letter-spacing:-.04em;
-}
-
 .stat-l{
   font-family:'DM Mono',monospace;
   font-size:.62rem;
@@ -538,7 +516,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n" id="sn-0">
-        <span class="stat-value">0</span><span class="suf">+</span>
+        <span class="stat-value" data-target="48" data-suffix="+">0</span>
       </div>
     </div>
     <div class="stat-l">Clients Served</div>
@@ -548,7 +526,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n" id="sn-1">
-        <span class="stat-value">0</span><span class="suf">+</span>
+        <span class="stat-value" data-target="35" data-suffix="+">0</span>
       </div>
     </div>
     <div class="stat-l">Editors on Team</div>
@@ -558,7 +536,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n" id="sn-2">
-        <span class="stat-value">0</span><span class="suf">+</span>
+        <span class="stat-value" data-target="200" data-suffix="+">0</span>
       </div>
     </div>
     <div class="stat-l">Projects Done</div>
@@ -568,7 +546,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="stat">
     <div class="stat-number-wrap">
       <div class="stat-n" id="sn-3">
-        <span class="stat-value">0</span><span class="suf">M+</span>
+        <span class="stat-value" data-target="15" data-suffix="M+">0</span>
       </div>
     </div>
     <div class="stat-l">Views Generated</div>
@@ -801,92 +779,66 @@ for (let i = 0; i < 12; i++) {
 
 /* ===================== STATS COUNTER ===================== */
 (function(){
-  var stats=[
-    {id:'sn-0',target:48, delay:0},
-    {id:'sn-1',target:35, delay:180},
-    {id:'sn-2',target:200,delay:360},
-    {id:'sn-3',target:15, delay:540},
+  const stats = [
+    { id:'sn-0', target:48,  delay:0 },
+    { id:'sn-1', target:35,  delay:120 },
+    { id:'sn-2', target:200, delay:240 },
+    { id:'sn-3', target:15,  delay:360 }
   ];
 
-  function easeOutExpo(t){
-    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  let statsGo = false;
+  const statsSection = document.getElementById('hero-stats');
+
+  function easeOutCubic(t){
+    return 1 - Math.pow(1 - t, 3);
   }
 
-  function bump(el){
-    el.classList.remove('bump');
-    void el.offsetWidth;
-    el.classList.add('bump');
-  }
+  function runCounter(el, target, delay){
+    const valEl = el.querySelector('.stat-value');
+    if(!valEl) return;
 
-  function runCounter(el,target,delay){
-    var valEl=el.querySelector('.stat-value');
-    var duration=1700;
-
-    setTimeout(function(){
+    setTimeout(() => {
       el.classList.add('animate-in');
 
-      var startTime=null;
-      var lastInt=-1;
+      const duration = 1900;
+      const start = performance.now();
 
-      function tick(timestamp){
-        if(!startTime) startTime=timestamp;
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const e = easeOutCubic(p);
+        const cur = target * e;
 
-        var elapsed=timestamp-startTime;
-        var progress=Math.min(elapsed/duration,1);
-        var eased=easeOutExpo(progress);
-        var rounded=Math.round(eased * target);
+        valEl.textContent = Math.floor(cur);
 
-        if(rounded!==lastInt){
-          lastInt=rounded;
-          valEl.textContent=rounded;
-          bump(valEl);
-        }
-
-        if(progress<1){
-          requestAnimationFrame(tick);
+        if(p < 1){
+          requestAnimationFrame(step);
         }else{
-          valEl.textContent=target;
-          bump(valEl);
+          valEl.textContent = target;
         }
       }
 
-      requestAnimationFrame(tick);
-    },delay);
+      requestAnimationFrame(step);
+    }, delay);
   }
 
-  var triggered=false;
-  var statsSection=document.getElementById('hero-stats');
-
   function startStats(){
-    if(triggered) return;
-    triggered=true;
+    if(statsGo || !statsSection) return;
 
-    stats.forEach(function(s){
-      var el=document.getElementById(s.id);
-      if(el) runCounter(el,s.target,s.delay);
+    const rect = statsSection.getBoundingClientRect();
+    if(rect.top > window.innerHeight * 0.95) return;
+
+    statsGo = true;
+
+    stats.forEach(s => {
+      const el = document.getElementById(s.id);
+      if(el) runCounter(el, s.target, s.delay);
     });
   }
 
-  var observer=new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){
-      observer.disconnect();
-      startStats();
-    }
-  },{threshold:0.25});
-
-  if(statsSection){
-    observer.observe(statsSection);
-
-    setTimeout(function(){
-      var rect=statsSection.getBoundingClientRect();
-      if(rect.top<window.innerHeight && rect.bottom>0){
-        observer.disconnect();
-        startStats();
-      }
-    },700);
-  }
+  window.addEventListener('load', startStats);
+  window.addEventListener('scroll', startStats, { passive:true });
+  startStats();
 })();
-
 /* ===================== WORKS DATA ===================== */
 const works = [
   // SHORT FORM (11) — 9:16

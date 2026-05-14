@@ -451,6 +451,17 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 .stagger>*:nth-child(1){transition-delay:.05s}.stagger>*:nth-child(2){transition-delay:.11s}.stagger>*:nth-child(3){transition-delay:.17s}.stagger>*:nth-child(4){transition-delay:.23s}.stagger>*:nth-child(5){transition-delay:.29s}.stagger>*:nth-child(6){transition-delay:.35s}
 .mag{display:inline-block;transition:transform .2s}
 
+
+/* ===================== PERFORMANCE TUNING (keeps visuals/features) ===================== */
+#hero,#work,#services,#process,#discord,footer{isolation:isolate}
+.orb,.sc-item,.particle,.cut-line,.scroll-hint-circle,.wc-thumb,.wc-placeholder{will-change:transform,opacity;backface-visibility:hidden;transform:translateZ(0)}
+.wc,.sv,.ps,.cat-tab,.btn-primary,.btn-outline,.hire-nav,.disc-ticket{contain:layout paint}
+.work-grid{content-visibility:auto;contain-intrinsic-size:900px}
+#services,#process,#discord{content-visibility:auto;contain-intrinsic-size:720px}
+@media(prefers-reduced-motion:reduce){
+  .particle,.sc-item,.cut-line,.orb,.scroll-hint-circle,.scroll-hint-circle svg{animation:none!important}
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media(max-width:960px){
   nav{grid-template-columns:160px 1fr 160px;padding:1rem 1.6rem;}
@@ -741,55 +752,90 @@ window.addEventListener('load', () => document.body.style.overflow = 'visible');
   });
 })();
 
-/* ===================== SCROLL HINTS ===================== */
-const scrollHints = [document.getElementById('scroll-left'), document.getElementById('scroll-right')];
+/* ===================== SCROLL HINTS + PROGRESS + NAV (rAF OPTIMIZED) ===================== */
+const scrollHints = [document.getElementById('scroll-left'), document.getElementById('scroll-right')].filter(Boolean);
 scrollHints.forEach(h => {
   h.addEventListener('click', () => {
     const c = h.querySelector('.scroll-hint-circle');
-    c.style.transition = 'transform .2s cubic-bezier(.34,1.56,.64,1)';
-    c.style.transform = 'scale(1.25)';
-    setTimeout(() => c.style.transform = 'scale(1)', 200);
-    setTimeout(() => document.getElementById('work').scrollIntoView({ behavior: 'smooth' }), 150);
-  });
+    if(c){
+      c.style.transition = 'transform .2s cubic-bezier(.34,1.56,.64,1)';
+      c.style.transform = 'scale(1.25)';
+      setTimeout(() => c.style.transform = 'scale(1)', 200);
+    }
+    setTimeout(() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }), 150);
+  }, {passive:true});
 });
+
 let hintsEnabled = false, hintsVisible = false;
-function showHints() { if (hintsVisible) return; hintsVisible = true; scrollHints.forEach(h => { h.classList.add('visible'); h.classList.remove('hidden'); }); }
-function hideHints() { if (!hintsVisible) return; hintsVisible = false; scrollHints.forEach(h => { h.classList.remove('visible'); h.classList.add('hidden'); }); }
-setTimeout(() => { hintsEnabled = true; if (window.scrollY < 80) showHints(); }, 3000);
-window.addEventListener('scroll', () => { if (!hintsEnabled) return; window.scrollY > 80 ? hideHints() : showHints(); });
+function showHints(){ if(hintsVisible) return; hintsVisible = true; scrollHints.forEach(h => { h.classList.add('visible'); h.classList.remove('hidden'); }); }
+function hideHints(){ if(!hintsVisible) return; hintsVisible = false; scrollHints.forEach(h => { h.classList.remove('visible'); h.classList.add('hidden'); }); }
 
-/* ===================== PROGRESS & NAV ===================== */
-window.addEventListener('scroll', () => {
-  document.getElementById('progress').style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
-  document.getElementById('main-nav').classList.toggle('shrunk', window.scrollY > 80);
+const progressEl = document.getElementById('progress');
+const mainNav = document.getElementById('main-nav');
+const navAnchors = Array.from(document.querySelectorAll('.nav-links a'));
+let scrollTicking = false;
+
+function updateScrollUI(){
+  scrollTicking = false;
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  if(progressEl) progressEl.style.width = (y / max * 100) + '%';
+  if(mainNav) mainNav.classList.toggle('shrunk', y > 80);
+  if(hintsEnabled) y > 80 ? hideHints() : showHints();
+
   let cur = '';
-  ['work', 'services', 'process'].forEach(id => {
-    const s = document.getElementById(id);
-    if (s && window.scrollY >= s.offsetTop - 220) cur = id;
+  ['work','services','process'].forEach(id => {
+    const sec = document.getElementById(id);
+    if(sec && y >= sec.offsetTop - 220) cur = id;
   });
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  navAnchors.forEach(a => {
     const h = a.getAttribute('href');
-    if (h && h.startsWith('#')) a.style.color = h === '#' + cur ? 'var(--w)' : '';
+    if(h && h.startsWith('#')) a.style.color = h === '#' + cur ? 'var(--w)' : '';
+  });
+}
+function requestScrollUI(){
+  if(scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(updateScrollUI);
+}
+setTimeout(() => { hintsEnabled = true; requestScrollUI(); }, 3000);
+window.addEventListener('scroll', requestScrollUI, {passive:true});
+window.addEventListener('resize', requestScrollUI, {passive:true});
+requestScrollUI();
+
+/* ===================== PARTICLES + SCISSORS BG (DEFERRED) ===================== */
+function initDecorations(){
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced) return;
+
+  const pc = document.getElementById('particles');
+  if(pc && !pc.dataset.ready){
+    pc.dataset.ready = '1';
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div'); p.className = 'particle';
+      const size = Math.random() * 3.5 + 1.5;
+      p.style.cssText = `width:${size}px;height:${size}px;background:rgba(224,32,32,${.2 + Math.random() * .25});left:${Math.random() * 100}%;animation-duration:${9 + Math.random() * 13}s;animation-delay:${Math.random() * 9}s;`;
+      pc.appendChild(p);
+    }
+  }
+
+  const scBg = document.getElementById('sc-bg');
+  if(scBg && !scBg.dataset.ready){
+    scBg.dataset.ready = '1';
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('div'); el.className = 'sc-item';
+      const sz = Math.random() * 52 + 18, op = Math.random() * .05 + .022, dur = Math.random() * 15 + 12, del = Math.random() * 13, rot = (Math.random() - .5) * 360;
+      el.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;--op:${op};--rot:${rot}deg;animation-duration:${dur}s;animation-delay:-${del}s;filter:brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(330deg) brightness(.5);`;
+      scBg.appendChild(el);
+    }
+  }
+}
+(window.requestIdleCallback || function(cb){ return setTimeout(cb, 450); })(initDecorations);
+document.addEventListener('visibilitychange', () => {
+  document.querySelectorAll('.particle,.sc-item,.cut-line').forEach(el => {
+    el.style.animationPlayState = document.hidden ? 'paused' : '';
   });
 });
-
-/* ===================== PARTICLES ===================== */
-const pc = document.getElementById('particles');
-for (let i = 0; i < 14; i++) {
-  const p = document.createElement('div'); p.className = 'particle';
-  const s = Math.random() * 3.5 + 1.5;
-  p.style.cssText = `width:${s}px;height:${s}px;background:rgba(224,32,32,${.2 + Math.random() * .25});left:${Math.random() * 100}%;animation-duration:${9 + Math.random() * 13}s;animation-delay:${Math.random() * 9}s;`;
-  pc.appendChild(p);
-}
-
-/* ===================== SCISSORS BG ===================== */
-const scBg = document.getElementById('sc-bg');
-for (let i = 0; i < 12; i++) {
-  const el = document.createElement('div'); el.className = 'sc-item';
-  const sz = Math.random() * 52 + 18, op = Math.random() * .05 + .022, dur = Math.random() * 15 + 12, del = Math.random() * 13, rot = (Math.random() - .5) * 360;
-  el.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;--op:${op};--rot:${rot}deg;animation-duration:${dur}s;animation-delay:-${del}s;filter:brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(330deg) brightness(.5);`;
-  scBg.appendChild(el);
-}
 
 /* ===================== STATS COUNTER - FABRI OLD CHANNELS STYLE ===================== */
 (function(){
@@ -904,6 +950,51 @@ function grabVideoFrame(imgEl, placeholderEl, src, seekTime) {
   vid.load();
 }
 
+
+/* Lazy thumbnail generation: keeps video-frame previews but stops all videos loading at page start */
+const frameQueue = [];
+let frameBusy = false;
+const seenFrameCards = new WeakSet();
+const lazyFrameObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    const card = entry.target;
+    lazyFrameObserver.unobserve(card);
+    if(seenFrameCards.has(card)) return;
+    seenFrameCards.add(card);
+    frameQueue.push(card);
+    requestFrameQueue();
+  });
+}, {rootMargin:'450px 0px', threshold:.01});
+
+function scheduleLazyFrameGrabs(root){
+  if(!root) return;
+  root.querySelectorAll('.wc.is-video').forEach(card => lazyFrameObserver.observe(card));
+}
+
+function requestFrameQueue(){
+  if(frameBusy) return;
+  frameBusy = true;
+  (window.requestIdleCallback || function(cb){ return setTimeout(cb, 80); })(processFrameQueue, {timeout:700});
+}
+
+function processFrameQueue(){
+  const card = frameQueue.shift();
+  if(!card){ frameBusy = false; return; }
+  const idx = card.dataset.idx;
+  const src = card.dataset.src;
+  const cat = card.dataset.cat;
+  const imgEl = document.getElementById('ft' + idx);
+  const phEl = document.getElementById('ph' + idx);
+  if(imgEl && phEl && src){
+    grabVideoFrame(imgEl, phEl, src, cat === 'shortform' ? 1 : 2);
+  }
+  setTimeout(() => {
+    frameBusy = false;
+    requestFrameQueue();
+  }, 110);
+}
+
 const playSVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
 const camSVG  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>`;
 
@@ -921,7 +1012,7 @@ function renderWork(list) {
         <div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     } else {
-      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" style="transition-delay:${i*.04}s">
+      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${w.cat}" style="transition-delay:${i*.04}s">
         <div class="wc-placeholder ${phClass}" id="ph${i}"><div class="wc-placeholder-spinner"></div></div>
         <img class="wc-thumb" id="ft${i}" src="" alt="${w.title}" style="opacity:0;">
         ${badge}
@@ -930,12 +1021,7 @@ function renderWork(list) {
     }
   }).join('');
 
-  list.forEach((w, i) => {
-    if (w.isPhoto || !w.src) return;
-    const imgEl = document.getElementById('ft'+i), phEl = document.getElementById('ph'+i);
-    if (!imgEl || !phEl) return;
-    grabVideoFrame(imgEl, phEl, w.src, w.cat === 'shortform' ? 1 : 2);
-  });
+  scheduleLazyFrameGrabs(g);
 
   g.querySelectorAll('.wc').forEach(card => {
     card.addEventListener('click', () => {
@@ -952,7 +1038,7 @@ function filterWork(cat, el) {
   document.querySelectorAll('.wc').forEach(c => { c.style.opacity = '0'; c.style.transform = 'scale(.95)'; });
   setTimeout(() => renderWork(cat === 'all' ? works : works.filter(w => w.cat === cat)), 200);
 }
-renderWork(works);
+(window.requestIdleCallback || function(cb){return setTimeout(cb,250);})(() => renderWork(works));
 
 /* ===================== VIDEO PLAYER ===================== */
 const vpEl = document.getElementById('vp-wrap'), video = document.getElementById('vp-video');

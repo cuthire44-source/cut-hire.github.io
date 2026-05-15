@@ -43,7 +43,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 /* ===================== NAV ===================== */
 nav{
   position:absolute;
-  top:2.2rem;
+  top:1rem;
   left:0;
   right:0;
   z-index:500;
@@ -57,7 +57,7 @@ nav{
 }
 @keyframes nav-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
 nav.shrunk{
-  top:1.4rem;
+  top:1rem;
   padding:0 3rem;
   background:transparent;
 }
@@ -105,10 +105,30 @@ nav.shrunk{
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-  padding:5.5rem 2rem 2rem;
+  padding:5.35rem 2rem 2rem;
   text-align:center;
   position:relative;
   overflow:hidden;
+}
+
+.hero-logo-wrap{
+  margin-bottom:1.15rem;
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero-logo-gif{
+  width:118px;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  mix-blend-mode:screen;
+  filter:contrast(1.04) brightness(1.03);
+  opacity:.9;
+  backface-visibility:hidden;
+  transform:translateZ(0);
 }
 .orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
 .o1{width:500px;height:500px;background:rgba(224,32,32,.07);top:-8%;left:-12%;animation:od1 14s ease-in-out infinite}
@@ -125,12 +145,10 @@ nav.shrunk{
 .eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1}
 .hero-h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(3.5rem,7.5vw,8rem);
+  font-size:clamp(3.8rem,7.5vw,7.6rem);
   font-weight:900;
   line-height:.9;
   letter-spacing:-.04em;
-  opacity:0;
-  animation:fup .8s .2s forwards;
   position:relative;
   z-index:1;
   text-align:center;
@@ -151,27 +169,47 @@ nav.shrunk{
   bottom:4px;
   left:50%;
   transform:translateX(-50%);
-  width:0;
+  width:100%;
   height:2px;
   background:var(--red);
-  animation:ug .8s 1.4s forwards;
   opacity:.9;
 }
 @keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes ug{to{width:100%}}
 .hero-sub{
   max-width:620px;
-  margin:1.55rem auto 0;
+  margin:1.35rem auto 0;
   color:var(--m);
   font-size:.9rem;
   line-height:1.85;
-  opacity:0;
-  animation:fup .8s .2s forwards;
   position:relative;
   z-index:1;
   text-align:center;
 }
-.hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1}
+.hero-cta{
+  margin-top:2.35rem;
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  z-index:1;
+}
+
+.hero-logo-wrap,
+.hero-h1,
+.hero-sub,
+.hero-cta{
+  opacity:0;
+  transform:translateY(18px);
+  animation:hero-smooth-in 1.05s cubic-bezier(.22,1,.36,1) .25s forwards;
+  will-change:opacity,transform;
+}
+@keyframes hero-smooth-in{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
 .hero-stats{
   width:min(860px,100%);
   margin:4rem auto 0;
@@ -533,7 +571,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
 /* ===================== RESPONSIVE ===================== */
 @media(max-width:960px){
-  nav{top:1.4rem;padding:0 1.6rem;}
+  nav{top:1rem;padding:0 1.6rem;}
   .logo-anim-wrap,.logo-gif{width:125px;height:72px;}
   .nav-links{gap:1.2rem;}
   .work-grid{grid-template-columns:repeat(2,1fr);grid-auto-flow:dense;}
@@ -542,7 +580,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   .proc-steps{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
-  nav{top:1.4rem;display:flex;justify-content:space-between;padding:0 1.4rem;}
+  nav{top:1rem;display:flex;justify-content:space-between;padding:0 1.4rem;}
   .nav-links{display:none}
   .logo-anim-wrap,.logo-gif{width:118px;height:68px;}
   .hero-h1{font-size:clamp(3rem,15vw,4.8rem);line-height:.95;}
@@ -595,8 +633,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="cut-line"></div>
   <div id="particles"></div>
 
-  <!-- FIX: GIF sits above the headline, replacing the old eyebrow label -->
-  <div style="margin-bottom:0.6rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1;">
+  <!-- Hero logo -->
+  <div class="hero-logo-wrap">
     <img src="dadawfa2231314.gif" alt="Cut & Hire" class="hero-logo-gif">
   </div>
 

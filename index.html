@@ -289,7 +289,8 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   width:80%;
 }
 
-.btn-primary{background:var(--red);color:#fff;border:none;padding:1.1rem 3rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
+/* FIX: Smaller "Start a Project" button */
+.btn-primary{background:var(--red);color:#fff;border:none;padding:.75rem 2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .btn-primary:hover{box-shadow:0 0 32px var(--rg);transform:translateY(-2px)}
 .btn-primary:hover::before{transform:translateX(100%)}
@@ -362,7 +363,6 @@ section{padding:6rem 2rem}
 .ps::before{content:'';position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,var(--rs),transparent);transition:height .4s}
 .ps:hover{border-color:rgba(224,32,32,.22);transform:translateY(-3px)}
 .ps:hover::before{height:55px}
-/* FIXED: much more visible step numbers */
 .ps-n{
   font-family:'Playfair Display',serif;
   font-size:3.5rem;
@@ -463,7 +463,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 .mag{display:inline-block;transition:transform .2s}
 
 
-/* ===================== PERFORMANCE TUNING (keeps visuals/features) ===================== */
+/* ===================== PERFORMANCE TUNING ===================== */
 #hero,#work,#services,#process,#discord,footer{isolation:isolate}
 .orb,.sc-item,.particle,.cut-line,.scroll-hint-circle,.wc-thumb,.wc-placeholder{will-change:transform,opacity;backface-visibility:hidden;transform:translateZ(0)}
 .wc,.sv,.ps,.cat-tab,.btn-primary,.btn-outline,.hire-nav,.disc-ticket{contain:layout paint}
@@ -517,8 +517,13 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="scroll-hint-label">Scroll</div>
 </div>
 
-<!-- ==================== NAV ==================== -->
-<div></div>
+<!-- ==================== NAV — FIXED: proper opening tag restored ==================== -->
+<nav id="main-nav">
+  <a href="#" class="logo">
+    <div class="logo-anim-wrap" id="navLogoWrap">
+      <img class="logo-gif" src="dadawfa2231314.gif" alt="Cut & Hire">
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#services">Services</a></li>
@@ -536,16 +541,21 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="sc-bg" id="sc-bg"></div>
   <div class="cut-line"></div>
   <div id="particles"></div>
-  <div style="margin-bottom:0.2rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1;">
-  <img src="dadawfa2231314.gif" alt="Cut & Hire" style="width:160px;height:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(224,32,32,.5));mix-blend-mode:lighten;">
-</div>
-  <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
-  <p class="hero-sub">Need a video edited but don’t know who to trust? Cut &amp; Hire connects you with vetted video editors and designers for YouTube videos, Shorts, ads, thumbnails, and clean professional content.</p>
-<div class="hero-cta">
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag btn-glow">Start a Project</a>
+
+  <!-- FIX: GIF sits above the headline, replacing the old eyebrow label -->
+  <div style="margin-bottom:0.6rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1;">
+    <img src="dadawfa2231314.gif" alt="Cut & Hire" style="width:160px;height:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(224,32,32,.5));mix-blend-mode:lighten;">
   </div>
-  </section>
-  
+
+  <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
+  <p class="hero-sub">Need a video edited but don't know who to trust? Cut &amp; Hire connects you with vetted video editors and designers for YouTube videos, Shorts, ads, thumbnails, and clean professional content.</p>
+
+  <!-- FIX: Only "Start a Project", no "View Our Work" -->
+  <div class="hero-cta">
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag btn-glow">Start a Project →</a>
+  </div>
+</section>
+
 <!-- ==================== STATS ==================== -->
 <section style="padding:3rem 2rem;background:var(--bg)">
   <div class="con">
@@ -554,10 +564,11 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="35" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors on Team</div><div class="stat-bar"></div></div>
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="M+">0<span class="stat-suffix">M+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>       
-       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="10" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Niches Covered</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="10" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Niches Covered</div><div class="stat-bar"></div></div>
     </div>
   </div>
 </section>
+
 <!-- ==================== WORK ==================== -->
 <section id="work">
   <div class="con">
@@ -730,7 +741,7 @@ window.addEventListener('load', () => document.body.style.overflow = 'visible');
   });
 })();
 
-/* ===================== SCROLL HINTS + PROGRESS + NAV (rAF OPTIMIZED) ===================== */
+/* ===================== SCROLL HINTS + PROGRESS + NAV ===================== */
 const scrollHints = [document.getElementById('scroll-left'), document.getElementById('scroll-right')].filter(Boolean);
 scrollHints.forEach(h => {
   h.addEventListener('click', () => {
@@ -781,7 +792,7 @@ window.addEventListener('scroll', requestScrollUI, {passive:true});
 window.addEventListener('resize', requestScrollUI, {passive:true});
 requestScrollUI();
 
-/* ===================== PARTICLES + SCISSORS BG (DEFERRED) ===================== */
+/* ===================== PARTICLES + SCISSORS BG ===================== */
 function initDecorations(){
   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(prefersReduced) return;
@@ -815,7 +826,7 @@ document.addEventListener('visibilitychange', () => {
   });
 });
 
-/* ===================== STATS COUNTER - FABRI OLD CHANNELS STYLE ===================== */
+/* ===================== STATS COUNTER ===================== */
 (function(){
   let statsGo = false;
   let startAllowed = false;
@@ -825,8 +836,6 @@ document.addEventListener('visibilitychange', () => {
 
     if(suffix.toLowerCase() === 'm+'){
       const target = Number(el.dataset.target) || 0;
-
-      /* Avoid the ugly pause on 14.9M+ before it becomes 15M+ */
       if(done || safeValue >= target - 0.08){
         el.innerHTML = Math.round(target) + 'M<span class="stat-suffix">+</span>';
       }else{
@@ -868,8 +877,6 @@ document.addEventListener('visibilitychange', () => {
 
       function step(now){
         const p = Math.min((now - start) / duration, 1);
-
-        /* Smooth like Fabri's counter, but without hanging on the value before the final number */
         const eased = 1 - Math.pow(1 - p, 2.45);
         const current = target * eased;
 
@@ -884,7 +891,6 @@ document.addEventListener('visibilitychange', () => {
     });
   }
 
-  /* Start exactly when the stats fade-up begins, not before it */
   setTimeout(() => {
     startAllowed = true;
     runStats();
@@ -892,6 +898,7 @@ document.addEventListener('visibilitychange', () => {
 
   window.addEventListener('scroll', runStats, { passive:true });
 })();
+
 /* ===================== WORKS DATA ===================== */
 const works = [
   // SHORT FORM (11) — 9:16
@@ -911,16 +918,16 @@ const works = [
   { cat: 'longform', title: 'Long Form 2',  size: '',     src: 'longform2.mp4',  isPhoto: false },
   { cat: 'longform', title: 'Long Form 3',  size: '',     src: 'longform3.mp4',  isPhoto: false },
   { cat: 'longform', title: 'Long Form 5',  size: 'wide', src: 'longform5.mp4',  isPhoto: false },
-{ cat: 'longform', title: 'Long Form 6',  size: '',     src: 'longform6.mp4',  isPhoto: false },
-{ cat: 'longform', title: 'Long Form 7',  size: '',     src: 'longform7.mp4',  isPhoto: false },
-{ cat: 'longform', title: 'Long Form 8',  size: 'tall', src: 'longform8.mp4',  isPhoto: false },
-{ cat: 'longform', title: 'Long Form 9',  size: '',     src: 'longform9.mp4',  isPhoto: false },
-{ cat: 'longform', title: 'Long Form 10', size: '',     src: 'longform10.mp4', isPhoto: false },
-{ cat: 'longform', title: 'Long Form 11', size: '',     src: 'longform11.mp4', isPhoto: false },
-{ cat: 'longform', title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
-{ cat: 'longform', title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
-{ cat: 'longform', title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
-  // THUMBNAILS (5)
+  { cat: 'longform', title: 'Long Form 6',  size: '',     src: 'longform6.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 7',  size: '',     src: 'longform7.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 8',  size: 'tall', src: 'longform8.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 9',  size: '',     src: 'longform9.mp4',  isPhoto: false },
+  { cat: 'longform', title: 'Long Form 10', size: '',     src: 'longform10.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 11', size: '',     src: 'longform11.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
+  { cat: 'longform', title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
+  // THUMBNAILS (6)
   { cat: 'thumbnail', title: 'Thumbnail 1', src: '', isPhoto: true, img: 'thumbnail1.jpg' },
   { cat: 'thumbnail', title: 'Thumbnail 2', src: '', isPhoto: true, img: 'thumbnail2.jpg' },
   { cat: 'thumbnail', title: 'Thumbnail 3', src: '', isPhoto: true, img: 'thumbnail3.jpg' },
@@ -949,8 +956,6 @@ function grabVideoFrame(imgEl, placeholderEl, src, seekTime) {
   vid.load();
 }
 
-
-/* Lazy thumbnail generation: keeps video-frame previews but stops all videos loading at page start */
 const frameQueue = [];
 let frameBusy = false;
 const seenFrameCards = new WeakSet();

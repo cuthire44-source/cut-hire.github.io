@@ -153,7 +153,7 @@ nav.shrunk{
   z-index:1;
   text-align:center;
   width:min(100%,1050px);
-  margin:0 auto;
+  margin:-2.2rem auto 0;
 }
 .hero-h1 .italic{
   font-style:italic;
@@ -540,13 +540,9 @@ section{padding:6rem 2rem}
 
 /* ===================== FOOTER ===================== */
 footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2rem}
-.fi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+.fi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:2rem}
 .fb p{font-size:.78rem;color:var(--m);margin-top:.55rem;max-width:250px;line-height:1.75}
 .fb .logo{display:inline-flex}
-.f-links{display:flex;gap:2rem;list-style:none}
-.f-links a{font-size:.75rem;color:var(--m);text-decoration:none;letter-spacing:.05em;transition:color .2s;position:relative}
-.f-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--red);transition:width .3s}
-.f-links a:hover{color:var(--w)}.f-links a:hover::after{width:100%}
 .fb-bot{max-width:1200px;margin:2rem auto 0;border-top:1px solid var(--b);padding-top:1.3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .fb-bot p{font-size:.68rem;color:var(--m)}
 
@@ -758,14 +754,6 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
       </a>
       <p>Elite video editing & graphic design for creators, brands, and anyone with a story worth telling.</p>
     </div>
-    <ul class="f-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="/contact">Contact</a></li>
-      <li><a href="/joinus">Join Us</a></li>
-      <li><a href="https://discord.gg/dXemseJsDV" target="_blank">Discord</a></li>
-    </ul>
   </div>
   <div class="fb-bot">
     <p>© 2026 Cut & Hire. All rights reserved.</p>
@@ -899,7 +887,14 @@ function initDecorations(){
     for (let i = 0; i < 14; i++) {
       const p = document.createElement('div'); p.className = 'particle';
       const size = Math.random() * 3.5 + 1.5;
-      p.style.cssText = `width:${size}px;height:${size}px;background:rgba(224,32,32,${.2 + Math.random() * .25});left:${Math.random() * 100}%;animation-duration:${9 + Math.random() * 13}s;animation-delay:${Math.random() * 9}s;`;
+      p.style.cssText = `
+  width:${size}px;
+  height:${size}px;
+  background:rgba(224,32,32,${.18 + Math.random() * .22});
+  left:${Math.random() * 100}%;
+  animation-duration:${9 + Math.random() * 13}s;
+  animation-delay:-${Math.random() * 12}s;
+`;
       pc.appendChild(p);
     }
   }

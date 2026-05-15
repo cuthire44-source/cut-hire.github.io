@@ -211,7 +211,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 
 .stat-n{
   font-family:'Playfair Display',serif;
-  font-size:clamp(3rem,4.6vw,3.85rem);
+  font-size:clamp(1.8rem,2.8vw,2.4rem);
   font-weight:900;
   line-height:.92;
   letter-spacing:-.045em;
@@ -492,7 +492,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   .serv-grid{grid-template-columns:1fr}
   .proc-steps{grid-template-columns:1fr}
   .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1.6rem;width:min(420px,100%)}
-  .stat-n{font-size:2.55rem}
+  .stat-n{font-size:1.6rem}
   .stat-l{font-size:.55rem;letter-spacing:.14em}
   .scroll-hint{display:none}
 }
@@ -963,7 +963,7 @@ const works = [
 /* ===================== VIDEO FRAME CAPTURE ===================== */
 function grabVideoFrame(imgEl, placeholderEl, src, seekTime) {
   const vid = document.createElement('video');
-  vid.src = src; vid.muted = true; vid.playsInline = true; vid.preload = 'metadata'; vid.crossOrigin = 'anonymous';
+  vid.src = src; vid.muted = true; vid.playsInline = true; vid.preload = 'metadata';
   vid.addEventListener('loadedmetadata', () => { vid.currentTime = Math.min(seekTime, vid.duration * 0.08); });
   vid.addEventListener('seeked', () => {
     try {
@@ -1017,7 +1017,7 @@ function processFrameQueue(){
   const imgEl = document.getElementById('ft' + idx);
   const phEl = document.getElementById('ph' + idx);
   if(imgEl && phEl && src){
-    grabVideoFrame(imgEl, phEl, src, cat === 'shortform' ? 1 : 2);
+    grabVideoFrame(imgEl, phEl, src, cat === 'shortform' ? 0.5 : 1);
   }
   setTimeout(() => {
     frameBusy = false;

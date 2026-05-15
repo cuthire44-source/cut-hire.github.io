@@ -48,7 +48,7 @@ nav{
   right:0;
   z-index:500;
   display:grid;
-  grid-template-columns:220px 1fr 220px;
+  grid-template-columns:1fr 220px;
   align-items:center;
   padding:1.15rem 3rem;
   background:linear-gradient(to bottom,rgba(20,20,20,.97) 60%,transparent);
@@ -118,7 +118,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 @keyframes cl{0%,100%{top:35%;opacity:0}15%{opacity:1}55%{top:65%;opacity:1}85%{opacity:.3}95%{opacity:0}}
 .particle{position:absolute;border-radius:50%;pointer-events:none;animation:pf linear infinite}
 @keyframes pf{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:.3}100%{transform:translateY(-20vh) rotate(720deg);opacity:0}}
-.eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:fup .3s .1s forwards;position:relative;z-index:1}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1}
 .hero-h1{
   font-family:'Playfair Display',serif;
   font-size:clamp(3rem,7.6vw,7rem);
@@ -126,7 +126,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   line-height:.9;
   letter-spacing:-.04em;
   opacity:0;
-  animation:fup .35s .2s forwards;
+  animation:fup .8s .2s forwards;
   position:relative;
   z-index:1;
   text-align:center;
@@ -162,12 +162,12 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   font-size:.94rem;
   line-height:1.85;
   opacity:0;
-  animation:fup .3s .35s forwards;
+  animation:fup .8s .2s forwards;
   position:relative;
   z-index:1;
   text-align:center;
 }
-.hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .3s .5s forwards;position:relative;z-index:1}
+.hero-cta{margin-top:2.6rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1}
 .hero-stats{
   width:min(860px,100%);
   margin:4rem auto 0;
@@ -293,6 +293,8 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .btn-primary:hover{box-shadow:0 0 32px var(--rg);transform:translateY(-2px)}
 .btn-primary:hover::before{transform:translateX(100%)}
+.btn-glow{animation:btn-pulse 2.5s ease-in-out infinite;box-shadow:0 0 18px var(--rg)}
+@keyframes btn-pulse{0%,100%{box-shadow:0 0 14px var(--rg),0 0 0 0 rgba(224,32,32,.4)}50%{box-shadow:0 0 32px var(--rg),0 0 18px 6px rgba(224,32,32,.18)}}
 .btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.15);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;transition:border-color .2s,transform .15s,background .2s;white-space:nowrap}
 .btn-outline:hover{border-color:var(--red);transform:translateY(-2px);background:var(--rs)}
 
@@ -516,12 +518,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 </div>
 
 <!-- ==================== NAV ==================== -->
-<nav id="main-nav">
-  <a href="#" class="logo" id="logo-link">
-    <div class="logo-anim-wrap" id="logoWrap">
-      <img class="logo-gif" src="dadawfa2231314.gif" alt="Cut & Hire">
-    </div>
-  </a>
+<div></div>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#services">Services</a></li>
@@ -539,56 +536,25 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="sc-bg" id="sc-bg"></div>
   <div class="cut-line"></div>
   <div id="particles"></div>
-  <p class="eyebrow">✦ Video Editing Network ✦</p>
+  <div style="margin-bottom:1.8rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1;">
+  <img src="dadawfa2231314.gif" alt="Cut & Hire" style="width:220px;height:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(224,32,32,.5));mix-blend-mode:lighten;">
+</div>
   <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>
   <p class="hero-sub">Need a video edited but don’t know who to trust? Cut &amp; Hire connects you with vetted video editors and designers for YouTube videos, Shorts, ads, thumbnails, and clean professional content.</p>
 <div class="hero-cta">
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag">Start a Project →</a>
-    <a href="#work" class="btn-outline mag">View Our Work</a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-primary mag btn-glow">Start a Project</a>
   </div>
-  <div class="hero-stats" id="hero-stats">
-  <div class="stat">
-    <div class="stat-number-wrap">
-      <div class="stat-n">
-        <span class="stat-number stat-value" data-target="48" data-suffix="+">0<span class="stat-suffix">+</span></span>
-      </div>
+<!-- ==================== STATS ==================== -->
+<section style="padding:3rem 2rem;background:var(--bg)">
+  <div class="con">
+    <div id="hero-stats" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;text-align:center;">
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="48" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Clients Served</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="35" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors on Team</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="M+">0<span class="stat-suffix">M+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
     </div>
-    <div class="stat-l">Clients Served</div>
-    <div class="stat-bar"></div>
   </div>
-
-  <div class="stat">
-    <div class="stat-number-wrap">
-      <div class="stat-n">
-        <span class="stat-number stat-value" data-target="35" data-suffix="+">0<span class="stat-suffix">+</span></span>
-      </div>
-    </div>
-    <div class="stat-l">Editors on Team</div>
-    <div class="stat-bar"></div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-number-wrap">
-      <div class="stat-n">
-        <span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span>
-      </div>
-    </div>
-    <div class="stat-l">Projects Done</div>
-    <div class="stat-bar"></div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-number-wrap">
-      <div class="stat-n">
-        <span class="stat-number stat-value" data-target="15" data-suffix="M+">0.0M<span class="stat-suffix">+</span></span>
-      </div>
-    </div>
-    <div class="stat-l">Views Generated</div>
-    <div class="stat-bar"></div>
-  </div>
-</div>
 </section>
-
 <!-- ==================== WORK ==================== -->
 <section id="work">
   <div class="con">

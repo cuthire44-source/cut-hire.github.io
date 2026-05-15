@@ -47,10 +47,11 @@ nav{
   left:0;
   right:0;
   z-index:500;
-  display:grid;
-  grid-template-columns:1fr 1fr 220px;
+  display:flex;
   align-items:center;
+  justify-content:center;
   padding:1.15rem 3rem;
+  position:relative;
   background:linear-gradient(to bottom,rgba(20,20,20,.97) 60%,transparent);
   transition:padding .3s,background .3s;
   animation:nav-drop .5s .6s both;
@@ -63,8 +64,8 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 .logo{justify-self:start;}
 .logo-anim-wrap{
   position:relative;
-  width:150px;
-  height:86px;
+  width:190px;
+  height:110px;
   flex-shrink:0;
   background:transparent;
 }
@@ -82,14 +83,14 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
   filter:contrast(1.1) brightness(1.15);
 }
 
-.nav-links{display:flex;gap:2.2rem;list-style:none;justify-self:center;align-items:center}
+.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center}
 .nav-links a{color:var(--m);text-decoration:none;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transition:transform .3s;transform-origin:left}
 .nav-links a:hover{color:var(--w)}.nav-links a:hover::after{transform:scaleX(1)}
 .nav-joinus{color:var(--red)!important;border:1px solid rgba(224,32,32,.25);padding:.28rem .75rem;transition:all .25s!important;background:rgba(224,32,32,.05)}
 .nav-joinus:hover{background:rgba(224,32,32,.12)!important;border-color:rgba(224,32,32,.5)!important;color:var(--w)!important}
 .nav-joinus::after{display:none!important}
-.hire-nav{background:var(--red);color:#fff;border:none;padding:.5rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:box-shadow .2s,transform .15s;justify-self:end}
+.hire-nav{background:var(--red);color:#fff;border:none;padding:.5rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;position:absolute;right:3rem;overflow:hidden;transition:box-shadow .2s,transform .15s;}
 .hire-nav::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .hire-nav:hover{box-shadow:0 0 28px var(--rg);transform:translateY(-1px)}
 .hire-nav:hover::before{transform:translateX(100%)}
@@ -121,7 +122,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 .eyebrow{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1}
 .hero-h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.8rem,6vw,6rem);
+  font-size:clamp(3.5rem,7.5vw,8rem);
   font-weight:900;
   line-height:.9;
   letter-spacing:-.04em;
@@ -290,7 +291,7 @@ nav.shrunk{padding:.75rem 3rem;background:rgba(20,20,20,.98)}
 }
 
 /* FIX: Smaller "Start a Project" button */
-.btn-primary{background:var(--red);color:#fff;border:none;padding:.75rem 2rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
+.btn-primary{background:var(--red);color:#fff;border:none;padding:1.1rem 3rem;font-family:'DM Sans',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;position:relative;overflow:hidden;transition:box-shadow .25s,transform .15s;white-space:nowrap}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .5s}
 .btn-primary:hover{box-shadow:0 0 32px var(--rg);transform:translateY(-2px)}
 .btn-primary:hover::before{transform:translateX(100%)}
@@ -517,13 +518,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div class="scroll-hint-label">Scroll</div>
 </div>
 
-<!-- ==================== NAV — FIXED: proper opening tag restored ==================== -->
+<!-- ==================== NAV ==================== -->
 <nav id="main-nav">
-  <a href="#" class="logo">
-    <div class="logo-anim-wrap" id="navLogoWrap">
-      <img class="logo-gif" src="dadawfa2231314.gif" alt="Cut & Hire">
-    </div>
-  </a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#services">Services</a></li>
@@ -544,7 +540,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
   <!-- FIX: GIF sits above the headline, replacing the old eyebrow label -->
   <div style="margin-bottom:0.6rem;opacity:0;animation:fup .8s .2s forwards;position:relative;z-index:1;">
-    <img src="dadawfa2231314.gif" alt="Cut & Hire" style="width:160px;height:auto;object-fit:contain;filter:drop-shadow(0 0 18px rgba(224,32,32,.5));mix-blend-mode:lighten;">
+    <img src="dadawfa2231314.gif" alt="Cut & Hire" style="width:260px;height:auto;object-fit:contain;filter:drop-shadow(0 0 24px rgba(224,32,32,.6));mix-blend-mode:lighten;">
   </div>
 
   <h1 class="hero-h1">We Make<br><span class="italic">Frames Matter.</span></h1>

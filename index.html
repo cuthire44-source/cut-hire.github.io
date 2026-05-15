@@ -572,8 +572,11 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     </div>
     <div class="cat-tabs rv stagger" id="cat-tabs">
       <button class="cat-tab on" onclick="filterWork('all',this)"><span>All</span></button>
-      <button class="cat-tab" onclick="filterWork('longform',this)"><span>Long Form</span></button>
-      <button class="cat-tab" onclick="filterWork('shortform',this)"><span>Short Form</span></button>
+      <button class="cat-tab" onclick="filterWork('youtube',this)"><span>YouTube Editing</span></button>
+      <button class="cat-tab" onclick="filterWork('shorts',this)"><span>Shorts / Reels</span></button>
+      <button class="cat-tab" onclick="filterWork('motion',this)"><span>Motion Graphics</span></button>
+      <button class="cat-tab" onclick="filterWork('documentary',this)"><span>Documentary</span></button>
+      <button class="cat-tab" onclick="filterWork('gaming',this)"><span>Gaming</span></button>
       <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
     </div>
     <div class="work-grid" id="work-grid"></div>
@@ -896,39 +899,41 @@ document.addEventListener('visibilitychange', () => {
 
 /* ===================== WORKS DATA ===================== */
 const works = [
-  // SHORT FORM (11) — 9:16
-  { cat: 'shortform', title: 'Short 1',  src: 'short1.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 2',  src: 'short2.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 3',  src: 'short3.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 4',  src: 'short4.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 5',  src: 'short5.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 6',  src: 'short6.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 7',  src: 'short7.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 8',  src: 'short8.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 9',  src: 'short9.mp4',  isPhoto: false },
-  { cat: 'shortform', title: 'Short 10', src: 'short10.mp4', isPhoto: false },
-  { cat: 'shortform', title: 'Short 11', src: 'short11.mp4', isPhoto: false },
-  // LONG FORM (14)
-  { cat: 'longform', title: 'Long Form 1',  size: 'tall', src: 'longform1.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 2',  size: '',     src: 'longform2.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 3',  size: '',     src: 'longform3.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 5',  size: 'wide', src: 'longform5.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 6',  size: '',     src: 'longform6.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 7',  size: '',     src: 'longform7.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 8',  size: 'tall', src: 'longform8.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 9',  size: '',     src: 'longform9.mp4',  isPhoto: false },
-  { cat: 'longform', title: 'Long Form 10', size: '',     src: 'longform10.mp4', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 11', size: '',     src: 'longform11.mp4', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
-  { cat: 'longform', title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
+  // SHORTS / REELS (11) — 9:16
+  { cat: ['shorts', 'motion'], title: 'Short 1',  src: 'short1.mp4',  isPhoto: false },
+  { cat: ['shorts', 'motion'], title: 'Short 2',  src: 'short2.mp4',  isPhoto: false },
+  { cat: ['shorts', 'motion'], title: 'Short 3',  src: 'short3.mp4',  isPhoto: false },
+  { cat: ['shorts', 'gaming'], title: 'Short 4',  src: 'short4.mp4',  isPhoto: false },
+  { cat: ['shorts', 'gaming'], title: 'Short 5',  src: 'short5.mp4',  isPhoto: false },
+  { cat: ['shorts', 'youtube'], title: 'Short 6',  src: 'short6.mp4',  isPhoto: false },
+  { cat: ['shorts', 'motion'], title: 'Short 7',  src: 'short7.mp4',  isPhoto: false },
+  { cat: ['shorts', 'documentary'], title: 'Short 8',  src: 'short8.mp4',  isPhoto: false },
+  { cat: ['shorts', 'documentary'], title: 'Short 9',  src: 'short9.mp4',  isPhoto: false },
+  { cat: ['shorts', 'motion'], title: 'Short 10', src: 'short10.mp4', isPhoto: false },
+  { cat: ['shorts', 'documentary'], title: 'Short 11', src: 'short11.mp4', isPhoto: false },
+
+  // LONG FORM — longform4 removed
+  { cat: ['motion', 'youtube'], title: 'Long Form 1',  size: 'tall', src: 'longform1.mp4',  isPhoto: false },
+  { cat: ['motion', 'youtube'], title: 'Long Form 2',  size: '',     src: 'longform2.mp4',  isPhoto: false },
+  { cat: ['youtube', 'motion'], title: 'Long Form 3',  size: '',     src: 'longform3.mp4',  isPhoto: false },
+  { cat: ['gaming', 'documentary'], title: 'Long Form 5',  size: 'wide', src: 'longform5.mp4',  isPhoto: false },
+  { cat: ['documentary', 'youtube'], title: 'Long Form 6',  size: '',     src: 'longform6.mp4',  isPhoto: false },
+  { cat: ['documentary', 'youtube'], title: 'Long Form 7',  size: '',     src: 'longform7.mp4',  isPhoto: false },
+  { cat: ['youtube', 'documentary'], title: 'Long Form 8',  size: 'tall', src: 'longform8.mp4',  isPhoto: false },
+  { cat: ['youtube', 'motion'], title: 'Long Form 9',  size: '',     src: 'longform9.mp4',  isPhoto: false },
+  { cat: ['youtube', 'documentary'], title: 'Long Form 10', size: '',     src: 'longform10.mp4', isPhoto: false },
+  { cat: ['youtube', 'gaming'], title: 'Long Form 11', size: '',     src: 'longform11.mp4', isPhoto: false },
+  { cat: ['youtube', 'documentary'], title: 'Long Form 12', size: 'wide', src: 'longform12.mp4', isPhoto: false },
+  { cat: ['documentary', 'youtube'], title: 'Long Form 13', size: '',     src: 'longform13.mp4', isPhoto: false },
+  { cat: ['gaming', 'youtube'], title: 'Long Form 14', size: '',     src: 'longform14.mp4', isPhoto: false },
+
   // THUMBNAILS (6)
-  { cat: 'thumbnail', title: 'Thumbnail 1', src: '', isPhoto: true, img: 'thumbnail1.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 2', src: '', isPhoto: true, img: 'thumbnail2.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 3', src: '', isPhoto: true, img: 'thumbnail3.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 4', src: '', isPhoto: true, img: 'thumbnail4.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 5', src: '', isPhoto: true, img: 'thumbnail5.jpg' },
-  { cat: 'thumbnail', title: 'Thumbnail 6', src: '', isPhoto: true, img: 'thumbnail6.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 1', src: '', isPhoto: true, img: 'thumbnail1.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 2', src: '', isPhoto: true, img: 'thumbnail2.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 3', src: '', isPhoto: true, img: 'thumbnail3.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 4', src: '', isPhoto: true, img: 'thumbnail4.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 5', src: '', isPhoto: true, img: 'thumbnail5.jpg' },
+  { cat: ['thumbnail'], title: 'Thumbnail 6', src: '', isPhoto: true, img: 'thumbnail6.jpg' },
 ];
 
 /* ===================== VIDEO FRAME CAPTURE ===================== */
@@ -982,11 +987,11 @@ function processFrameQueue(){
   if(!card){ frameBusy = false; return; }
   const idx = card.dataset.idx;
   const src = card.dataset.src;
-  const cat = card.dataset.cat;
+  const isShort = card.dataset.short === 'true';
   const imgEl = document.getElementById('ft' + idx);
   const phEl = document.getElementById('ph' + idx);
   if(imgEl && phEl && src){
-    grabVideoFrame(imgEl, phEl, src, cat === 'shortform' ? 0.5 : 1);
+    grabVideoFrame(imgEl, phEl, src, isShort ? 0.5 : 1);
   }
   setTimeout(() => {
     frameBusy = false;
@@ -997,21 +1002,27 @@ function processFrameQueue(){
 const playSVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
 const camSVG  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>`;
 
+function hasCat(w, cat) {
+  return Array.isArray(w.cat) ? w.cat.includes(cat) : w.cat === cat;
+}
+
 function renderWork(list) {
   const g = document.getElementById('work-grid');
   g.innerHTML = list.map((w, i) => {
-    const isShort = w.cat === 'shortform';
+    const isShort = hasCat(w, 'shorts');
+    const isThumb = hasCat(w, 'thumbnail');
     const sizeClass = isShort ? 'shortform-card' : (w.size || '');
     const badge = isShort ? '<div class="wc-badge">9:16</div>' : '';
-    const phClass = isShort ? 'shortform-ph' : w.cat === 'thumbnail' ? 'thumbnail-ph' : '';
+    const phClass = isShort ? 'shortform-ph' : isThumb ? 'thumbnail-ph' : '';
+
     if (w.isPhoto && w.img) {
-      return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" style="transition-delay:${i*.04}s">
+      return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" data-short="${isShort}" style="transition-delay:${i*.04}s">
         <img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="lazy">
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     } else {
-      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${w.cat}" style="transition-delay:${i*.04}s">
+      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-short="${isShort}" style="transition-delay:${i*.04}s">
         <div class="wc-placeholder ${phClass}" id="ph${i}"><div class="wc-placeholder-spinner"></div></div>
         <img class="wc-thumb" id="ft${i}" src="" alt="${w.title}" style="opacity:0;">
         ${badge}
@@ -1024,18 +1035,21 @@ function renderWork(list) {
 
   g.querySelectorAll('.wc').forEach(card => {
     card.addEventListener('click', () => {
-      const w = list[parseInt(card.dataset.idx)];
+      const w = list[parseInt(card.dataset.idx, 10)];
       if (w.isPhoto) photoOpen(w.img || '', w.title);
-      else vpOpen(w.src || '', w.title, w.cat === 'shortform');
+      else vpOpen(w.src || '', w.title, hasCat(w, 'shorts'));
     });
   });
   setTimeout(() => document.querySelectorAll('.wc.rv:not(.vis)').forEach(el => obs.observe(el)), 40);
 }
 
 function filterWork(cat, el) {
-  document.querySelectorAll('.cat-tab').forEach(c => c.classList.remove('on')); el.classList.add('on');
+  document.querySelectorAll('.cat-tab').forEach(c => c.classList.remove('on'));
+  if (el) el.classList.add('on');
   document.querySelectorAll('.wc').forEach(c => { c.style.opacity = '0'; c.style.transform = 'scale(.95)'; });
-  setTimeout(() => renderWork(cat === 'all' ? works : works.filter(w => w.cat === cat)), 200);
+
+  const filtered = cat === 'all' ? works : works.filter(w => hasCat(w, cat));
+  setTimeout(() => renderWork(filtered), 200);
 }
 (window.requestIdleCallback || function(cb){return setTimeout(cb,250);})(() => renderWork(works));
 

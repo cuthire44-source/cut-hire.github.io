@@ -567,6 +567,62 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   letter-spacing:.02em;
 }
 
+
+
+/* ===================== TOGETHER INTRO + SCROLL REVEAL UPDATE ===================== */
+/* Hero title/subtitle + divider + two big cards now enter as ONE section. */
+.join-h1,
+.join-sub{
+  opacity:1 !important;
+  transform:none !important;
+  animation:none !important;
+}
+
+.join-hero,
+.divider,
+.paths{
+  opacity:0;
+  transform:translate3d(0,34px,0);
+  transition:
+    opacity 1.05s cubic-bezier(.22,1,.36,1),
+    transform 1.05s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+
+body.intro-visible .join-hero,
+body.intro-visible .divider,
+body.intro-visible .paths{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+
+/* Keeps the two cards together instead of staggered one-by-one. */
+.path-card{
+  opacity:1;
+}
+
+/* Everything under the first cards waits for scroll, then fades up smoothly. */
+.reveal-on-scroll{
+  opacity:0;
+  transform:translate3d(0,38px,0);
+  transition:
+    opacity .95s cubic-bezier(.22,1,.36,1),
+    transform .95s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+
+.reveal-on-scroll.visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .join-hero,.divider,.paths,.reveal-on-scroll{
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -721,21 +777,42 @@ window.addEventListener('load',()=>document.body.style.overflow='visible');
   // tracking only
 })();
 
-// Subtle staggered card reveal on load, deferred until first paint is done
+// First visible group: hero + divider + two path cards all appear together.
 window.addEventListener('load', () => {
-  (window.requestIdleCallback || function(cb){return setTimeout(cb,90);})(() => {
-    document.querySelectorAll('.path-card').forEach((c, i) => {
-      c.style.opacity = '0';
-      c.style.transform = 'translate3d(0,28px,0)';
-      c.style.transition = `opacity .6s ${0.1 + i * 0.12}s, transform .6s ${0.1 + i * 0.12}s`;
-    });
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.path-card').forEach(c => {
-        c.style.opacity = '1';
-        c.style.transform = 'none';
-      });
-    });
+  requestAnimationFrame(() => {
+    document.body.classList.add('intro-visible');
   });
+});
+
+// Scroll reveal: every section after the top cards appears only when reached.
+window.addEventListener('DOMContentLoaded', () => {
+  const revealSections = [
+    document.getElementById('how-strip'),
+    document.getElementById('network-section'),
+    document.getElementById('faq-section'),
+    document.getElementById('discord-strip')
+  ].filter(Boolean);
+
+  revealSections.forEach(section => section.classList.add('reveal-on-scroll'));
+
+  if(!('IntersectionObserver' in window)){
+    revealSections.forEach(section => section.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold:0.18,
+    rootMargin:'0px 0px -12% 0px'
+  });
+
+  revealSections.forEach(section => observer.observe(section));
 });
 
 // FAQs

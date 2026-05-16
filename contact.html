@@ -138,6 +138,74 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 .join-content,.contact-content{content-visibility:auto;contain-intrinsic-size:900px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+
+
+/* ===================== CENTERED CONTACT SECTION + TOGETHER REVEAL ===================== */
+.contact-stage{
+  min-height:100vh;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:7rem 2rem 5rem;
+  position:relative;
+  z-index:1;
+  opacity:0;
+  transform:translate3d(0,34px,0);
+  transition:opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1);
+}
+.contact-stage.in-view{
+  opacity:1;
+  transform:none;
+}
+.contact-hero{
+  min-height:0;
+  width:100%;
+  padding:0 2rem 4.4rem;
+}
+.contact-h1,
+.contact-sub{
+  opacity:1;
+  animation:none;
+}
+.divider{
+  display:none;
+}
+.contact-content{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  padding:0 2rem;
+}
+.contact-methods{
+  width:100%;
+}
+.contact-card,
+.contact-main-btn{
+  opacity:1;
+  transform:none;
+  transition:border-color .3s, box-shadow .3s, transform .3s;
+}
+.contact-card:hover{
+  border-color:rgba(224,32,32,.18);
+  transform:translateY(-2px);
+}
+.cc-icon{
+  width:2.65rem;
+  height:2.65rem;
+}
+.btn-discord{
+  min-width:310px;
+  justify-content:center;
+}
+@media(max-width:640px){
+  .contact-stage{padding:6rem 1.2rem 4rem;justify-content:flex-start;}
+  .contact-hero{padding:0 1rem 3rem;}
+  .contact-content{padding:0;}
+  .btn-discord{width:100%;min-width:0;}
+}
+
 </style>
 </head>
 <body>
@@ -151,6 +219,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   Back to Site
 </a>
 
+<main class="contact-stage" id="contact-stage">
 <div class="contact-hero">
   <h1 class="contact-h1">Contact <em>Us</em></h1>
   <p class="contact-sub">The fastest way to reach us is through Discord. Every project and inquiry is handled through private tickets — no wait, no middlemen.</p>
@@ -182,29 +251,28 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
 </div>
 
+</main>
+
 <script>
 window.addEventListener('load', () => {
-  (window.requestIdleCallback || function(cb){return setTimeout(cb,80);})(() => {
-    // Cards animate in staggered
-    document.querySelectorAll('.contact-card').forEach((c, i) => {
-      c.style.transition = `opacity .6s ${0.1 + i * 0.14}s, transform .6s ${0.1 + i * 0.14}s`;
-    });
+  const section = document.getElementById('contact-stage');
+  if(!section) return;
 
-    // Button animates in after cards
-    const btn = document.getElementById('discord-btn');
-    if(btn) btn.style.transition = 'opacity .6s .42s, transform .6s .42s';
+  const reveal = () => section.classList.add('in-view');
 
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.contact-card').forEach(c => {
-        c.style.opacity = '1';
-        c.style.transform = 'none';
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          reveal();
+          obs.disconnect();
+        }
       });
-      if(btn){
-        btn.style.opacity = '1';
-        btn.style.transform = 'none';
-      }
-    });
-  });
+    }, { threshold: 0.28 });
+    obs.observe(section);
+  } else {
+    reveal();
+  }
 });
 </script>
 </body>

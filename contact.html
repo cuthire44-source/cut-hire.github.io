@@ -29,6 +29,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   padding:.5rem 1.3rem;
   border:1px solid rgba(224,32,32,.45);
+  border-radius:999px;
   background:rgba(224,32,32,.1);
   backdrop-filter:blur(10px);
   transition:all .25s;
@@ -45,11 +46,11 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .o2{width:500px;height:500px;background:rgba(58,123,213,.06);bottom:-10%;right:-10%}
 
 /* HERO */
-.contact-hero{min-height:36vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:1}
-.contact-eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;opacity:0;animation:fup .4s .05s forwards}
-.contact-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fup .4s .15s forwards}
+.contact-hero{min-height:34vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:1}
+.contact-eyebrow{display:none}
+.contact-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fup .4s .08s forwards}
 .contact-h1 em{font-style:italic;color:var(--red)}
-.contact-sub{max-width:500px;margin:1.4rem auto 0;color:var(--m);font-size:.9rem;line-height:1.9;opacity:0;animation:fup .4s .25s forwards}
+.contact-sub{max-width:500px;margin:1.4rem auto 0;color:var(--m);font-size:.9rem;line-height:1.9;opacity:0;animation:fup .4s .18s forwards}
 @keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
 /* DIVIDER */
@@ -77,7 +78,22 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 }
 .contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(1);opacity:.4}
 
-.cc-icon{font-size:1.6rem;margin-bottom:.9rem;display:block}
+.cc-icon{
+  width:2.35rem;
+  height:2.35rem;
+  margin-bottom:1.05rem;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.cc-icon img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  filter:brightness(0) invert(1);
+  opacity:.96;
+}
 .cc-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
 .cc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
 .cc-value{font-size:.82rem;color:var(--m);line-height:1.75;flex:1}
@@ -102,6 +118,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   font-weight:600;
   font-size:1rem;
   padding:1.1rem 2.8rem;
+  border-radius:999px;
   letter-spacing:.04em;
   position:relative;
   overflow:hidden;
@@ -135,7 +152,6 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 </a>
 
 <div class="contact-hero">
-  <p class="contact-eyebrow">✦ Get in Touch ✦</p>
   <h1 class="contact-h1">Contact <em>Us</em></h1>
   <p class="contact-sub">The fastest way to reach us is through Discord. Every project and inquiry is handled through private tickets — no wait, no middlemen.</p>
 </div>
@@ -146,14 +162,14 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
   <div class="contact-methods">
     <div class="contact-card" id="card-1">
-      <span class="cc-icon">💬</span>
+      <span class="cc-icon"><img src="chat.png" alt="" aria-hidden="true"></span>
       <div class="cc-label">Primary</div>
       <div class="cc-title">Discord Server</div>
       <div class="cc-value">Join our server and open a private ticket. This is the fastest way to start a project, ask a question, or apply as an editor.</div>
     </div>
 
     <div class="contact-card" id="card-2">
-      <span class="cc-icon">🎫</span>
+      <span class="cc-icon"><img src="ticket.png" alt="" aria-hidden="true"></span>
       <div class="cc-label">Projects &amp; Hiring</div>
       <div class="cc-title">Clients — Open a Ticket</div>
       <div class="cc-value">Join the Discord, open a ticket channel. Tell us your project details, style, and deadline and we'll match you with the right editor fast.</div>
@@ -161,7 +177,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   </div>
 
   <div class="contact-main-btn" id="discord-btn">
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-discord">Join Discord &amp; Open a Ticket →</a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-discord">Join Discord &amp; Open a Ticket</a>
   </div>
 
 </div>

@@ -87,7 +87,61 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .path-badge.cl{color:var(--red);border-color:rgba(224,32,32,.28);background:rgba(224,32,32,.05)}
 .path-badge.ed{color:var(--blue);border-color:rgba(58,123,213,.28);background:rgba(58,123,213,.05)}
 
-.path-icon{font-size:2.4rem;margin-bottom:1rem;display:block;transition:transform .4s}
+
+.icon-img{
+  display:inline-block;
+  width:1em;
+  height:1em;
+  object-fit:contain;
+  object-position:center;
+  vertical-align:-0.12em;
+  flex-shrink:0;
+}
+
+.badge-icon{
+  width:.78rem;
+  height:.78rem;
+}
+
+.path-icon{
+  width:2.4rem;
+  height:2.4rem;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .4s;
+}
+
+.path-icon img{
+  width:2.35rem;
+  height:2.35rem;
+  object-fit:contain;
+  display:block;
+}
+
+.how-step-icon{
+  width:1.2rem;
+  height:1.2rem;
+  margin-bottom:.55rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.how-step-icon img{
+  width:1.15rem;
+  height:1.15rem;
+  object-fit:contain;
+  display:block;
+}
+
+.ns-icon{
+  width:.78rem;
+  height:.78rem;
+}
+
+
 .path-card:hover .path-icon{transform:scale(1.12) rotate(-4deg)}
 
 .path-card h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
@@ -131,7 +185,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .how-step:hover::before{height:40px}
 .how-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(224,32,32,.35);line-height:1;margin-bottom:.5rem;transition:color .3s}
 .how-step:hover .how-num{color:rgba(224,32,32,.55)}
-.how-step-icon{font-size:1.2rem;margin-bottom:.55rem;display:block}
+
 .how-step h4{font-family:'Playfair Display',serif;font-size:.9rem;margin-bottom:.35rem;transition:color .3s}
 .how-step:hover h4{color:var(--red)}
 .how-step p{font-size:.72rem;color:var(--m);line-height:1.75}
@@ -454,8 +508,8 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   <div class="paths" id="paths">
     <!-- CLIENT CARD -->
     <div class="path-card client">
-      <div class="path-badge cl">🎬 For Clients</div>
-      <span class="path-icon">🎯</span>
+      <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Clients</div>
+      <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Outsource to Our <em>Editors</em></h2>
       <p class="path-desc">Tell us your vision, style, and deadline. We help match you with an editor who fits your project. Work directly with no agency middleman. You can request a free sample first. If the style fits, you can agree on the project and move forward. If the editor’s sample doesn’t fit, we can bring in another editor for your project.</p>
       <ul class="path-perks">
@@ -472,8 +526,8 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
     <!-- EDITOR CARD -->
     <div class="path-card editor">
-      <div class="path-badge ed">✂️ For Editors</div>
-      <span class="path-icon">🎬</span>
+      <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors</div>
+      <span class="path-icon"><img src="film-reel.png" alt=""></span>
       <h2>Apply as an <em>Editor</em></h2>
       <p class="path-desc">We're actively looking for exceptional video editors to join our network. Submit your portfolio, pass our quality review, and start getting real clients from day one — on your own schedule.</p>
       <ul class="path-perks">
@@ -493,25 +547,25 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     <div class="how-steps">
       <div class="how-step">
         <div class="how-num">01</div>
-        <span class="how-step-icon">💬</span>
+        <span class="how-step-icon"><img src="bubble-chat.png" alt=""></span>
         <h4>Join the Server</h4>
         <p>Hit the Discord link, join our community, and open a ticket with your project details.</p>
       </div>
       <div class="how-step">
         <div class="how-num">02</div>
-        <span class="how-step-icon">📋</span>
+        <span class="how-step-icon"><img src="clipboard.png" alt=""></span>
         <h4>Share Your Brief</h4>
         <p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p>
       </div>
       <div class="how-step">
         <div class="how-num">03</div>
-        <span class="how-step-icon">🎬</span>
+        <span class="how-step-icon"><img src="film-reel.png" alt=""></span>
         <h4>We Get to Work</h4>
         <p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p>
       </div>
       <div class="how-step">
         <div class="how-num">04</div>
-        <span class="how-step-icon">✅</span>
+        <span class="how-step-icon"><img src="check-circle.png" alt=""></span>
         <h4>Approve &amp; Deliver</h4>
         <p>Review the sample first. If it fits, agree on the project details and receive the final polished edit.</p>
       </div>
@@ -520,7 +574,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
   <!-- NETWORK INFO -->
   <div class="network-section" id="network-section">
-    <div class="ns-badge">🌐 Our Network</div>
+    <div class="ns-badge"><img class="icon-img ns-icon" src="world-wide-web.png" alt=""> Our Network</div>
     <div class="ns-body">
       <div>
         <h3>Built on <em>Trust</em> &amp; <em>Quality</em></h3>

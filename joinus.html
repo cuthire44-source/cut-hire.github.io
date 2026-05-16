@@ -148,6 +148,27 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   filter: brightness(0) invert(1);
 }
 
+/* Make film-reel.png a little bigger everywhere it appears */
+img[src="film-reel.png"]{
+  transform:scale(1.18);
+  transform-origin:center;
+}
+
+.path-badge img[src="film-reel.png"]{
+  width:.9rem;
+  height:.9rem;
+}
+
+.path-icon img[src="film-reel.png"]{
+  width:2.65rem;
+  height:2.65rem;
+}
+
+.how-step-icon img[src="film-reel.png"]{
+  width:1.35rem;
+  height:1.35rem;
+}
+
 
 .path-card:hover .path-icon{transform:scale(1.12) rotate(-4deg)}
 

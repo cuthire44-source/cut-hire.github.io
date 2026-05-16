@@ -60,15 +60,12 @@ nav{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:2.2rem 2rem 2.4rem;
+  padding:2.15rem 2rem 1.25rem;
   background:var(--bg);
   border:none!important;
   box-shadow:none!important;
-  animation:none;
 }
-@keyframes nav-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
-nav.shrunk{background:transparent;}
-
+@keyframes nav-drop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
 /* ===================== LOGO ===================== */
 .logo{text-decoration:none;color:var(--w);display:flex;align-items:center}
 .logo{justify-self:start;}
@@ -93,12 +90,41 @@ nav.shrunk{background:transparent;}
   filter:contrast(1.1) brightness(1.15);
 }
 
-.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center;justify-content:center;position:relative;padding:0;border:none!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
-.nav-links a{color:var(--m);text-decoration:none!important;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links{
+  display:flex;
+  gap:2.2rem;
+  list-style:none;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:0;
+  border:none!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.nav-links::before{display:none!important}
+.nav-links a{
+  color:var(--m);
+  text-decoration:none;
+  font-size:.75rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  transition:color .2s;
+  position:relative;
+}
 .nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transition:transform .3s;transform-origin:left}
-.nav-links a:hover{color:var(--w)}.nav-links a:hover::after{transform:scaleX(1)}
-.nav-joinus{color:var(--red)!important;border:1px solid rgba(224,32,32,.45);padding:.28rem .75rem;transition:all .25s!important;background:rgba(224,32,32,.04);box-shadow:none!important;text-decoration:none!important}
-.nav-joinus:hover{background:rgba(224,32,32,.08)!important;color:var(--red)!important;border-color:rgba(224,32,32,.7)!important}
+.nav-links a:hover{color:var(--w)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-joinus{
+  color:var(--red)!important;
+  border:1px solid rgba(224,32,32,.45);
+  padding:.28rem .75rem;
+  transition:color .25s,border-color .25s,background .25s!important;
+  background:rgba(224,32,32,.03);
+  box-shadow:none!important;
+  animation:none!important;
+}
+.nav-joinus:hover{background:rgba(224,32,32,.08)!important;color:var(--w)!important;border-color:rgba(224,32,32,.75)!important}
 .nav-joinus::after{display:none!important}
 /* ===================== HERO ===================== */
 #hero{
@@ -121,6 +147,13 @@ nav.shrunk{background:transparent;}
   align-items:center;
   justify-content:center;
 }
+.hero-logo-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  cursor:pointer;
+}
 .hero-logo-gif{
   width:180px;
   height:auto;
@@ -131,10 +164,12 @@ nav.shrunk{background:transparent;}
   opacity:.9;
   backface-visibility:hidden;
   transform:translateZ(0);
-  transition:transform .25s ease,opacity .25s ease;
+  transition:transform .28s cubic-bezier(.22,1,.36,1),opacity .25s;
 }
-.hero-logo-wrap{cursor:pointer;text-decoration:none}
-.hero-logo-wrap:hover .hero-logo-gif{transform:translateZ(0) scale(.96);opacity:.95}
+.hero-logo-link:hover .hero-logo-gif{
+  transform:translateZ(0) scale(.965);
+  opacity:.96;
+}
 .orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
 .o1{width:500px;height:500px;background:rgba(224,32,32,.07);top:-8%;left:-12%;animation:od1 14s ease-in-out infinite}
 .o2{width:420px;height:420px;background:rgba(58,123,213,.05);bottom:-8%;right:-8%;animation:od2 17s ease-in-out infinite}
@@ -182,22 +217,20 @@ nav.shrunk{background:transparent;}
 @keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes ug{to{width:100%}}
 .hero-sub{
-  max-width:920px;
-  margin:1.2rem auto 0;
-  color:rgba(245,240,235,.88);
-  font-family:'Playfair Display',serif;
-  font-style:italic;
-  font-size:clamp(1.7rem,2.55vw,3.05rem);
-  line-height:1.12;
-  font-weight:700;
+  max-width:760px;
+  margin:1.15rem auto 0;
+  color:rgba(245,240,235,.78);
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(1.35rem,2.1vw,2rem);
+  line-height:1.35;
+  font-weight:600;
   letter-spacing:-.015em;
   position:relative;
   z-index:1;
   text-align:center;
-  text-shadow:0 2px 18px rgba(0,0,0,.25);
 }
 .hero-cta{
-  margin-top:2.15rem;
+  margin-top:2.35rem;
   display:flex;
   gap:1rem;
   flex-wrap:wrap;
@@ -341,37 +374,38 @@ nav.shrunk{background:transparent;}
   width:80%;
 }
 
-/* Main CTA button — smaller smooth white border sweep */
+/* Main CTA button — rounded button with soft seamless white border sweep */
 .btn-primary{
   background:linear-gradient(135deg,#e02020,#f12a2a);
   color:#fff;
   border:1px solid rgba(255,255,255,.12);
-  min-width:215px;
-  padding:1rem 2.35rem;
+  border-radius:999px;
+  min-width:230px;
+  padding:1rem 2.55rem;
   font-family:'DM Sans',sans-serif;
   font-weight:700;
-  font-size:.96rem;
+  font-size:1rem;
   cursor:pointer;
   text-decoration:none;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  letter-spacing:.04em;
+  letter-spacing:.035em;
   position:relative;
   overflow:hidden;
   transition:transform .15s,filter .25s;
   white-space:nowrap;
   box-shadow:none;
   isolation:isolate;
-  z-index:0;
 }
 .btn-primary::before{
   content:'';
   position:absolute;
   inset:-2px;
-  background:conic-gradient(from 0deg,transparent 0deg,transparent 58deg,rgba(255,255,255,.68) 82deg,rgba(255,255,255,.35) 100deg,transparent 130deg,transparent 360deg);
-  animation:cta-border-spin 2.9s linear infinite;
+  border-radius:inherit;
+  background:conic-gradient(from 0deg,transparent 0deg,transparent 48deg,rgba(255,255,255,.72) 72deg,rgba(255,255,255,.38) 93deg,transparent 122deg,transparent 360deg);
+  animation:cta-border-spin 3.2s linear infinite;
   pointer-events:none;
   z-index:1;
 }
@@ -379,11 +413,15 @@ nav.shrunk{background:transparent;}
   content:'';
   position:absolute;
   inset:2px;
+  border-radius:inherit;
   background:linear-gradient(135deg,#e02020,#f12a2a);
   z-index:2;
   pointer-events:none;
 }
-.btn-primary > *{position:relative;z-index:3}
+.btn-primary > span{
+  position:relative;
+  z-index:3;
+}
 .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.03)}
 .btn-primary:active{transform:translateY(0) scale(.99)}
 .btn-glow{animation:none}
@@ -420,6 +458,31 @@ section{padding:6rem 2rem}
 .wc-placeholder.thumbnail-ph{background:linear-gradient(135deg,#130c04 0%,#221508 100%);}
 .wc-placeholder-spinner{width:28px;height:28px;border:2px solid rgba(224,32,32,.2);border-top-color:rgba(224,32,32,.7);border-radius:50%;animation:spin .9s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
+.video-fake-thumb{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  padding:1rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(224,32,32,.22), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(58,123,213,.16), transparent 30%),
+    linear-gradient(135deg,#101010,#1c1c1c);
+  opacity:1!important;
+}
+.video-fake-thumb span{
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(245,240,235,.78);
+  text-shadow:0 0 14px rgba(224,32,32,.25);
+}
+.wc.is-video .wc-icon-circle{opacity:.92}
+
 .wc-placeholder.loaded{opacity:0;pointer-events:none;}
 .wc:hover{transform:scale(1.015)}
 .wc-overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);opacity:0;transition:opacity .4s;display:flex;align-items:center;justify-content:center}
@@ -442,8 +505,9 @@ section{padding:6rem 2rem}
 .sv::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 110%,var(--rs),transparent 65%);opacity:0;transition:opacity .4s}
 .sv:hover{border-color:rgba(224,32,32,.25);transform:translateY(-3px)}
 .sv:hover::after{transform:scaleX(1)}.sv:hover::before{opacity:1}
-.sv-i{font-size:1.5rem;margin-bottom:.7rem;display:inline-block;transition:transform .4s}
-.sv:hover .sv-i{transform:scale(1.18) rotate(-5deg)}
+.sv-i{width:30px;height:30px;margin-bottom:.8rem;display:inline-flex;align-items:center;justify-content:center;transition:transform .35s,opacity .3s;opacity:.78}
+.sv-icon{width:26px;height:26px;object-fit:contain;display:block;filter:invert(1);opacity:.82}
+.sv:hover .sv-i{transform:translateY(-2px) scale(1.08);opacity:1}
 .sv-n{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;margin-bottom:.45rem;transition:color .3s}
 .sv:hover .sv-n{color:var(--red)}
 .sv-p{font-size:.76rem;color:var(--m);line-height:1.75}
@@ -575,7 +639,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
 /* ===================== RESPONSIVE ===================== */
 @media(max-width:960px){
-  nav{padding:2rem 1.6rem;}
+  nav{top:1rem;padding:0 1.6rem;}
   .logo-anim-wrap,.logo-gif{width:125px;height:72px;}
   .nav-links{gap:1.2rem;}
   .work-grid{grid-template-columns:repeat(2,1fr);grid-auto-flow:dense;}
@@ -584,7 +648,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   .proc-steps{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
-  nav{display:none;}
+  nav{top:1rem;display:flex;justify-content:space-between;padding:0 1.4rem;}
   .nav-links{display:none}
   .logo-anim-wrap,.logo-gif{width:118px;height:68px;}
   .hero-h1{font-size:clamp(3rem,15vw,4.8rem);line-height:.95;}
@@ -601,7 +665,6 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 </style>
 </head>
 <body>
-
 
 <div class="scroll-hint left" id="scroll-left">
   <div class="scroll-hint-circle">
@@ -625,20 +688,21 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   <div id="particles"></div>
 
   <!-- Hero logo -->
-  <a href="/" class="hero-logo-wrap" aria-label="Cut & Hire home">
-    <img src="dadawfa2231314.gif" alt="Cut & Hire" class="hero-logo-gif" draggable="false">
-  </a>
+  <div class="hero-logo-wrap">
+    <a href="/" class="hero-logo-link" aria-label="Cut & Hire home">
+      <img src="dadawfa2231314.gif" alt="Cut & Hire" class="hero-logo-gif">
+    </a>
+  </div>
 
-  <h1 class="hero-h1">We Do the<br><span class="italic">Impossible.</span></h1>
-  <p class="hero-sub">Make viral content with viral editors.</p>
+  <h1 class="hero-h1">We do the<br><span class="italic">impossible.</span></h1>
+  <p class="hero-sub">make viral content with elite editors</p>
 
-  <!-- FIX: Only "Start a Project", no "View Our Work" -->
   <div class="hero-cta">
-    <a href="#discord" class="btn-primary mag btn-glow"><span>Start a Project</span></a>
+    <a href="#discord" class="btn-primary btn-glow"><span>start a project</span></a>
   </div>
 </section>
 
-<!-- ==================== NAV / SECTION LINKS ==================== -->
+<!-- ==================== NAV ==================== -->
 <nav id="main-nav">
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
@@ -648,6 +712,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     <li><a href="/joinus" class="nav-joinus">Join Us ✦</a></li>
   </ul>
 </nav>
+
 
 <!-- ==================== STATS ==================== -->
 <section style="padding:3rem 2rem;background:var(--bg)">
@@ -690,12 +755,12 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <h2 class="sec-h2">Every <em>Style</em>, Every <em>Platform</em></h2>
     </div>
     <div class="serv-grid stagger">
-      <div class="sv rv"><div class="sv-i">🎬</div><div class="sv-n">Cinematic Editing</div><p class="sv-p">Film-level color grading, pacing, and storytelling for your most important projects.</p></div>
-      <div class="sv rv"><div class="sv-i">🎮</div><div class="sv-n">Gaming Content</div><p class="sv-p">Highlight reels, montages, and stream VOD edits built for engagement and retention.</p></div>
-      <div class="sv rv"><div class="sv-i">📱</div><div class="sv-n">Short Form / Reels</div><p class="sv-p">Hook-first vertical content engineered for TikTok, Reels, and YouTube Shorts virality.</p></div>
-      <div class="sv rv"><div class="sv-i">🎵</div><div class="sv-n">Music Videos</div><p class="sv-p">Sync, color, and visual storytelling that makes your music hit different on screen.</p></div>
-      <div class="sv rv"><div class="sv-i">🎥</div><div class="sv-n">Documentary</div><p class="sv-p">Long-form narrative editing that finds the story hidden inside your raw footage.</p></div>
-      <div class="sv rv"><div class="sv-i">🏢</div><div class="sv-n">Brand & Corporate</div><p class="sv-p">Polished brand films, ads, and internal videos that represent you professionally.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="cinema-projector.png" alt=""></div><div class="sv-n">Cinematic Editing</div><p class="sv-p">Film-level color grading, pacing, and storytelling for your most important projects.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="console.png" alt=""></div><div class="sv-n">Gaming Content</div><p class="sv-p">Highlight reels, montages, and stream VOD edits built for engagement and retention.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="smartphone-call.png" alt=""></div><div class="sv-n">Short Form / Reels</div><p class="sv-p">Hook-first vertical content engineered for TikTok, Reels, and YouTube Shorts virality.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="musical-note.png" alt=""></div><div class="sv-n">Music Videos</div><p class="sv-p">Sync, color, and visual storytelling that makes your music hit different on screen.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="photograph.png" alt=""></div><div class="sv-n">Documentary</div><p class="sv-p">Long-form narrative editing that finds the story hidden inside your raw footage.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="brand.png" alt=""></div><div class="sv-n">Brand & Corporate</div><p class="sv-p">Polished brand films, ads, and internal videos that represent you professionally.</p></div>
     </div>
   </div>
 </section>
@@ -711,7 +776,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <div class="ps rv"><div class="ps-n">01</div><div class="ps-i">💬</div><h3>Join the Server</h3><p>Hit the Discord link, join our community, and open a ticket with your project details.</p></div>
       <div class="ps rv"><div class="ps-n">02</div><div class="ps-i">📋</div><h3>Share Your Brief</h3><p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p></div>
       <div class="ps rv"><div class="ps-n">03</div><div class="ps-i">🎬</div><h3>We Get to Work</h3><p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p></div>
-      <div class="ps rv"><div class="ps-n">04</div><div class="ps-i">✅</div><h3>Approve & Deliver</h3><p>Final file in your preferred format. You only pay when you're happy with the result.</p></div>
+      <div class="ps rv"><div class="ps-n">04</div><div class="ps-i">✅</div><h3>Approve & Deliver</h3><p>Once the project is delivered, payment is completed according to the agreed terms.</p></div>
     </div>
   </div>
 </section>
@@ -877,7 +942,6 @@ let hintsEnabled = false, hintsVisible = false;
 function showHints(){ if(hintsVisible) return; hintsVisible = true; scrollHints.forEach(h => { h.classList.add('visible'); h.classList.remove('hidden'); }); }
 function hideHints(){ if(!hintsVisible) return; hintsVisible = false; scrollHints.forEach(h => { h.classList.remove('visible'); h.classList.add('hidden'); }); }
 
-const progressEl = document.getElementById('progress');
 const mainNav = document.getElementById('main-nav');
 const navAnchors = Array.from(document.querySelectorAll('.nav-links a'));
 let scrollTicking = false;
@@ -886,7 +950,6 @@ function updateScrollUI(){
   scrollTicking = false;
   const y = window.scrollY || document.documentElement.scrollTop || 0;
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  if(progressEl) progressEl.style.width = (y / max * 100) + '%';
   // Navbar is absolute, not fixed. It only stays at the top of the page and scrolls away naturally.
   // if(mainNav) mainNav.classList.toggle('shrunk', y > 80);
   if(hintsEnabled) y > 80 ? hideHints() : showHints();
@@ -906,7 +969,11 @@ function requestScrollUI(){
   scrollTicking = true;
   requestAnimationFrame(updateScrollUI);
 }
-setTimeout(() => { hintsEnabled = true; requestScrollUI(); }, 3000);
+setTimeout(() => {
+  hintsEnabled = true;
+  if ((window.scrollY || document.documentElement.scrollTop || 0) < 80) showHints();
+  requestScrollUI();
+}, 900);
 window.addEventListener('scroll', requestScrollUI, {passive:true});
 window.addEventListener('resize', requestScrollUI, {passive:true});
 requestScrollUI();
@@ -1064,69 +1131,7 @@ const works = [
   { cat: ['thumbnail'], title: 'Thumbnail 6', src: '', isPhoto: true, img: 'thumbnail6.jpg' },
 ];
 
-/* ===================== VIDEO FRAME CAPTURE ===================== */
-function grabVideoFrame(imgEl, placeholderEl, src, seekTime) {
-  const vid = document.createElement('video');
-  vid.src = src; vid.muted = true; vid.playsInline = true; vid.preload = 'metadata';
-  vid.addEventListener('loadedmetadata', () => { vid.currentTime = Math.min(seekTime, vid.duration * 0.08); });
-  vid.addEventListener('seeked', () => {
-    try {
-      const cv = document.createElement('canvas');
-      cv.width = vid.videoWidth || 640; cv.height = vid.videoHeight || 360;
-      cv.getContext('2d').drawImage(vid, 0, 0, cv.width, cv.height);
-      imgEl.src = cv.toDataURL('image/jpeg', 0.85);
-      imgEl.style.opacity = '1';
-      placeholderEl.classList.add('loaded');
-    } catch(e) { console.warn('Frame grab failed for', src, e); }
-    finally { vid.src = ''; }
-  });
-  vid.addEventListener('error', () => { vid.src = ''; });
-  vid.load();
-}
-
-const frameQueue = [];
-let frameBusy = false;
-const seenFrameCards = new WeakSet();
-const lazyFrameObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(!entry.isIntersecting) return;
-    const card = entry.target;
-    lazyFrameObserver.unobserve(card);
-    if(seenFrameCards.has(card)) return;
-    seenFrameCards.add(card);
-    frameQueue.push(card);
-    requestFrameQueue();
-  });
-}, {rootMargin:'450px 0px', threshold:.01});
-
-function scheduleLazyFrameGrabs(root){
-  if(!root) return;
-  root.querySelectorAll('.wc.is-video').forEach(card => lazyFrameObserver.observe(card));
-}
-
-function requestFrameQueue(){
-  if(frameBusy) return;
-  frameBusy = true;
-  (window.requestIdleCallback || function(cb){ return setTimeout(cb, 80); })(processFrameQueue, {timeout:700});
-}
-
-function processFrameQueue(){
-  const card = frameQueue.shift();
-  if(!card){ frameBusy = false; return; }
-  const idx = card.dataset.idx;
-  const src = card.dataset.src;
-  const cat = card.dataset.cat;
-  const imgEl = document.getElementById('ft' + idx);
-  const phEl = document.getElementById('ph' + idx);
-  if(imgEl && phEl && src){
-    grabVideoFrame(imgEl, phEl, src, cat === 'shortform' ? 0.5 : 1);
-  }
-  setTimeout(() => {
-    frameBusy = false;
-    requestFrameQueue();
-  }, 110);
-}
-
+/* ===================== OPTIMIZED WORK PREVIEWS ===================== */
 const playSVG = `<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
 const camSVG  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>`;
 
@@ -1151,21 +1156,19 @@ function renderWork(list) {
 
     if (w.isPhoto && w.img) {
       return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
-        <img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="lazy">
+        <img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="lazy" decoding="async">
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     } else {
-      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
-        <div class="wc-placeholder ${phClass}" id="ph${i}"><div class="wc-placeholder-spinner"></div></div>
-        <img class="wc-thumb" id="ft${i}" src="" alt="${w.title}" style="opacity:0;">
+      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
+        <div class="wc-placeholder ${phClass} loaded"></div>
+        <div class="wc-thumb video-fake-thumb"><span>${w.title}</span></div>
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${playSVG}</div></div>
       </div>`;
     }
   }).join('');
-
-  scheduleLazyFrameGrabs(g);
 
   g.querySelectorAll('.wc').forEach(card => {
     card.addEventListener('click', () => {
@@ -1184,7 +1187,7 @@ function filterWork(cat, el) {
   const filtered = cat === 'all' ? works : works.filter(w => getCats(w).includes(cat));
   setTimeout(() => renderWork(filtered), 200);
 }
-(window.requestIdleCallback || function(cb){return setTimeout(cb,250);})(() => renderWork(works));
+setTimeout(() => renderWork(works), 60);
 
 /* ===================== VIDEO PLAYER ===================== */
 const vpEl = document.getElementById('vp-wrap'), video = document.getElementById('vp-video');
@@ -1315,17 +1318,13 @@ const obs = new IntersectionObserver(entries => entries.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
 }), { threshold: .07 });
 document.querySelectorAll('.rv,.rv-scale').forEach(el => obs.observe(el));
-new MutationObserver(() => document.querySelectorAll('.rv:not(.vis)').forEach(el => obs.observe(el)))
-  .observe(document.getElementById('work-grid'), { childList: true });
+const workGridEl = document.getElementById('work-grid');
+if (workGridEl) {
+  new MutationObserver(() => document.querySelectorAll('.rv:not(.vis)').forEach(el => obs.observe(el)))
+    .observe(workGridEl, { childList: true });
+}
 
-/* ===================== MAGNETIC BUTTONS ===================== */
-document.querySelectorAll('.mag').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r = btn.getBoundingClientRect();
-    btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px,${(e.clientY - r.top - r.height / 2) * .22}px)`;
-  });
-  btn.addEventListener('mouseleave', () => btn.style.transform = '');
-});
+/* Magnetic movement removed for cleaner centering. */
 </script>
 </body>
 </html>

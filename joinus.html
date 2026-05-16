@@ -505,6 +505,41 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 .join-content,.contact-content{content-visibility:auto;contain-intrinsic-size:900px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+
+/* ===================== REQUESTED CLEANUP: NO EYEBROW/TICKET + PILL BUTTONS ===================== */
+.join-hero{
+  min-height:36vh;
+  padding:6.2rem 2rem 3.4rem;
+}
+.join-h1{
+  margin-top:0;
+}
+.btn-red,.btn-blu,.path-btn{
+  border-radius:999px !important;
+}
+.btn-red,.btn-blu{
+  padding:.95rem 2.35rem;
+}
+.back-btn{
+  border-radius:999px;
+}
+.discord-strip{
+  align-items:center;
+  padding:2.55rem 2.6rem;
+}
+.ds-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.ds-text p{
+  margin-bottom:0;
+}
+@media(max-width:520px){
+  .join-hero{padding:5.8rem 1.2rem 3rem}
+  .discord-strip{padding:2.2rem 1.4rem}
+}
+
 </style>
 </head>
 <body>
@@ -523,7 +558,6 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
 <!-- HERO -->
 <div class="join-hero">
-  <p class="join-eyebrow" id="join-eyebrow">✦ Work With Us ✦</p>
   <h1 class="join-h1" id="join-h1">Join <em>Us</em></h1>
   <p class="join-sub" id="join-sub">We connect skilled video editors with clients who need them. Whether you need your content edited or you're an editor looking for steady work — there's a place for you here. Everything is managed through our Discord server via private tickets.</p>
 </div>
@@ -549,7 +583,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
         <li>All communication inside private Discord channels</li>
         <li>If the sample fits, agree on pricing and continue</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn">Apply as Outsourcer →</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn">Apply as Outsourcer</a>
     </div>
 
     <!-- EDITOR CARD -->
@@ -566,7 +600,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
         <li>Join a network of 35+ professional editors</li>
         <li>Steady stream of clients without self-promotion</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn">Apply as Editor →</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn">Apply as Editor</a>
     </div>
   </div>
   <!-- HOW IT WORKS -->
@@ -645,9 +679,8 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     <div class="ds-text">
       <h3>Ready? <em>Let's Talk.</em></h3>
       <p>Join our Discord, open a ticket, and tell us about your project or portfolio. We respond fast and keep things simple.</p>
-      <div class="disc-ticket"><span>→</span> All work starts with a Discord ticket</div>
     </div>
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red" style="flex-shrink:0">Join Discord →</a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red" style="flex-shrink:0">Join Discord</a>
   </div>
 
 </div>

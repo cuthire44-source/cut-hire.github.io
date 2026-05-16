@@ -481,7 +481,50 @@ section{padding:6rem 2rem}
   color:rgba(245,240,235,.78);
   text-shadow:0 0 14px rgba(224,32,32,.25);
 }
+.wc-video-thumb{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:1;
+  transition:transform .5s,opacity .35s,filter .35s;
+  background:#111;
+}
+.wc-video-thumb.is-missing{display:none}
+.wc.is-video::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,.08),rgba(0,0,0,.25));
+  pointer-events:none;
+}
+.wc.is-video .wc-overlay,.wc.is-video .wc-badge{z-index:4}
+.wc.is-video:hover .wc-video-thumb{transform:scale(1.04);filter:brightness(.86)}
+.wc.is-video.has-thumb .video-fake-thumb{opacity:0;pointer-events:none}
+.wc.is-video:not(.has-thumb) .video-fake-thumb{opacity:1}
+
 .wc.is-video .wc-icon-circle{opacity:.92}
+
+.wc-preview-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:0;
+  transition:opacity .35s,transform .5s,filter .35s;
+  background:#111;
+  pointer-events:none;
+}
+.wc.has-moving-thumb .wc-preview-video{opacity:1}
+.wc.has-moving-thumb .wc-video-thumb{opacity:0}
+.wc.is-video:hover .wc-preview-video{transform:scale(1.04);filter:brightness(.86)}
+.wc.preview-loading .wc-video-thumb{filter:brightness(.78)}
+
 
 .wc-placeholder.loaded{opacity:0;pointer-events:none;}
 .wc:hover{transform:scale(1.015)}
@@ -530,8 +573,9 @@ section{padding:6rem 2rem}
   text-shadow:0 0 10px rgba(224,32,32,.65),0 0 24px rgba(224,32,32,.35);
 }
 .ps:hover .ps-n{color:#ff3b3b;text-shadow:0 0 14px rgba(224,32,32,.85),0 0 34px rgba(224,32,32,.55)}
-.ps-i{font-size:1.4rem;margin-bottom:.8rem;display:inline-block;transition:transform .4s}
-.ps:hover .ps-i{transform:scale(1.2) rotate(5deg)}
+.ps-i{width:28px;height:28px;margin-bottom:.8rem;display:inline-block;transition:transform .4s,filter .35s,opacity .35s}
+.process-img-icon{object-fit:contain;filter:brightness(0) invert(1);opacity:.88;drop-shadow:none}
+.ps:hover .ps-i{transform:scale(1.18) rotate(5deg);filter:brightness(0) invert(1) drop-shadow(0 0 10px rgba(224,32,32,.55));opacity:1}
 .ps h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.45rem;transition:color .3s}
 .ps:hover h3{color:var(--red)}
 .ps p{font-size:.78rem;color:var(--m);line-height:1.75}
@@ -547,6 +591,122 @@ section{padding:6rem 2rem}
 .disc-ticket:hover{border-color:rgba(224,32,32,.28);color:var(--w)}
 .disc-ticket span{color:var(--red);animation:ab .8s ease-in-out infinite}
 @keyframes ab{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+
+
+/* ===================== LAZY 2–5 SECOND MOVING VIDEO THUMBNAILS ===================== */
+let movingPreviewObserver = null;
+let movingPreviewQueue = [];
+const movingPreviewActive = new Set();
+const MOVING_PREVIEW_MAX_ACTIVE = 3;
+
+function initMovingPreviews(root){
+  if(movingPreviewObserver) movingPreviewObserver.disconnect();
+  movingPreviewQueue = [];
+  movingPreviewActive.forEach(v => stopMovingPreview(v, true));
+  movingPreviewActive.clear();
+
+  const videos = Array.from((root || document).querySelectorAll('.wc-preview-video'));
+  if(!videos.length) return;
+
+  movingPreviewObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const v = entry.target;
+      if(entry.isIntersecting){
+        queueMovingPreview(v);
+      }else{
+        stopMovingPreview(v, true);
+      }
+    });
+  }, { root:null, rootMargin:'520px 0px', threshold:.12 });
+
+  videos.forEach(v => movingPreviewObserver.observe(v));
+}
+
+function queueMovingPreview(videoEl){
+  if(!videoEl || movingPreviewActive.has(videoEl) || movingPreviewQueue.includes(videoEl)) return;
+  movingPreviewQueue.push(videoEl);
+  runMovingPreviewQueue();
+}
+
+function runMovingPreviewQueue(){
+  while(movingPreviewActive.size < MOVING_PREVIEW_MAX_ACTIVE && movingPreviewQueue.length){
+    const next = movingPreviewQueue.shift();
+    if(next && next.isConnected) startMovingPreview(next);
+  }
+}
+
+function startMovingPreview(videoEl){
+  const card = videoEl.closest('.wc');
+  const src = videoEl.dataset.src;
+  if(!src) return;
+
+  movingPreviewActive.add(videoEl);
+  if(card) card.classList.add('preview-loading');
+
+  const startAt = Number(videoEl.dataset.start || 2);
+  const endAt = Number(videoEl.dataset.end || 5);
+
+  function playPreview(){
+    try{
+      if(videoEl.duration && videoEl.currentTime < startAt) videoEl.currentTime = Math.min(startAt, Math.max(0, videoEl.duration - .25));
+    }catch(e){}
+    videoEl.play().then(() => {
+      if(card){
+        card.classList.add('has-moving-thumb');
+        card.classList.remove('preview-loading');
+      }
+    }).catch(() => {
+      if(card) card.classList.remove('preview-loading');
+    });
+  }
+
+  videoEl.onloadedmetadata = () => {
+    try{ videoEl.currentTime = Math.min(startAt, Math.max(0, videoEl.duration - .25)); }catch(e){}
+  };
+
+  videoEl.oncanplay = playPreview;
+
+  videoEl.ontimeupdate = () => {
+    if(!videoEl.duration) return;
+    const safeEnd = Math.min(endAt, Math.max(0.5, videoEl.duration - .15));
+    if(videoEl.currentTime >= safeEnd){
+      try{ videoEl.currentTime = Math.min(startAt, safeEnd - .1); }catch(e){}
+    }
+  };
+
+  if(!videoEl.getAttribute('src')){
+    videoEl.src = src;
+    videoEl.load();
+  }else{
+    playPreview();
+  }
+}
+
+function stopMovingPreview(videoEl, unload){
+  if(!videoEl) return;
+  movingPreviewQueue = movingPreviewQueue.filter(v => v !== videoEl);
+  if(movingPreviewActive.has(videoEl)) movingPreviewActive.delete(videoEl);
+
+  const card = videoEl.closest('.wc');
+  videoEl.pause();
+  if(card){
+    card.classList.remove('has-moving-thumb');
+    card.classList.remove('preview-loading');
+  }
+
+  if(unload){
+    videoEl.removeAttribute('src');
+    videoEl.load();
+  }
+  runMovingPreviewQueue();
+}
+
+document.addEventListener('visibilitychange', () => {
+  document.querySelectorAll('.wc-preview-video').forEach(v => {
+    if(document.hidden) v.pause();
+    else if(v.closest('.wc')) queueMovingPreview(v);
+  });
+});
 
 /* ===================== VIDEO PLAYER ===================== */
 .vp-wrap{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
@@ -773,10 +933,10 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       <h2 class="sec-h2">Simple <em>Process</em>, Great <em>Results</em></h2>
     </div>
     <div class="proc-steps stagger">
-      <div class="ps rv"><div class="ps-n">01</div><div class="ps-i">💬</div><h3>Join the Server</h3><p>Hit the Discord link, join our community, and open a ticket with your project details.</p></div>
-      <div class="ps rv"><div class="ps-n">02</div><div class="ps-i">📋</div><h3>Share Your Brief</h3><p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p></div>
-      <div class="ps rv"><div class="ps-n">03</div><div class="ps-i">🎬</div><h3>We Get to Work</h3><p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p></div>
-      <div class="ps rv"><div class="ps-n">04</div><div class="ps-i">✅</div><h3>Approve & Deliver</h3><p>Once the project is delivered, payment is completed according to the agreed terms.</p></div>
+      <div class="ps rv"><div class="ps-n">01</div><img class="ps-i process-img-icon" src="bubble-chat.png" alt="Join the Server"><h3>Join the Server</h3><p>Hit the Discord link, join our community, and open a ticket with your project details.</p></div>
+      <div class="ps rv"><div class="ps-n">02</div><img class="ps-i process-img-icon" src="clipboard.png" alt="Share Your Brief"><h3>Share Your Brief</h3><p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p></div>
+      <div class="ps rv"><div class="ps-n">03</div><img class="ps-i process-img-icon" src="film-reel.png" alt="We Get to Work"><h3>We Get to Work</h3><p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p></div>
+      <div class="ps rv"><div class="ps-n">04</div><img class="ps-i process-img-icon" src="check-circle.png" alt="Approve and Deliver"><h3>Approve &amp; Deliver</h3><p>Once the project is delivered, payment is completed according to the agreed terms.</p></div>
     </div>
   </div>
 </section>
@@ -1143,6 +1303,16 @@ function isShortVideo(w) {
   return /^short\d+\.mp4$/i.test(w.src || '');
 }
 
+function videoThumbFromSrc(src) {
+  if (!src) return '';
+  const clean = src.split('/').pop().replace(/\.[^/.]+$/, '');
+  return `video-thumbs/${clean}.jpg`;
+}
+
+function getVideoThumb(w) {
+  return w.thumb || videoThumbFromSrc(w.src || '');
+}
+
 function renderWork(list) {
   const g = document.getElementById('work-grid');
   g.innerHTML = list.map((w, i) => {
@@ -1161,8 +1331,13 @@ function renderWork(list) {
         <div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     } else {
-      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
+      const thumb = getVideoThumb(w);
+      const previewStart = w.previewStart ?? 2;
+      const previewEnd = w.previewEnd ?? 5;
+      return `<div class="wc ${sizeClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-thumb="${thumb}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
         <div class="wc-placeholder ${phClass} loaded"></div>
+        <img class="wc-video-thumb" src="${thumb}" alt="${w.title} thumbnail" loading="lazy" decoding="async" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="this.classList.add('is-missing');this.closest('.wc')?.classList.remove('has-thumb')">
+        <video class="wc-preview-video" data-src="${w.src}" data-start="${previewStart}" data-end="${previewEnd}" muted loop playsinline preload="none" poster="${thumb}" disablepictureinpicture controlsList="nodownload noplaybackrate"></video>
         <div class="wc-thumb video-fake-thumb"><span>${w.title}</span></div>
         ${badge}
         <div class="wc-overlay"><div class="wc-icon-circle">${playSVG}</div></div>
@@ -1174,9 +1349,10 @@ function renderWork(list) {
     card.addEventListener('click', () => {
       const w = list[parseInt(card.dataset.idx)];
       if (w.isPhoto) photoOpen(w.img || '', w.title);
-      else vpOpen(w.src || '', w.title, isShortVideo(w));
+      else vpOpen(w.src || '', w.title, isShortVideo(w), getVideoThumb(w));
     });
   });
+  initMovingPreviews(g);
   setTimeout(() => document.querySelectorAll('.wc.rv:not(.vis)').forEach(el => obs.observe(el)), 40);
 }
 
@@ -1189,6 +1365,122 @@ function filterWork(cat, el) {
 }
 setTimeout(() => renderWork(works), 60);
 
+
+/* ===================== LAZY 2–5 SECOND MOVING VIDEO THUMBNAILS ===================== */
+let movingPreviewObserver = null;
+let movingPreviewQueue = [];
+const movingPreviewActive = new Set();
+const MOVING_PREVIEW_MAX_ACTIVE = 3;
+
+function initMovingPreviews(root){
+  if(movingPreviewObserver) movingPreviewObserver.disconnect();
+  movingPreviewQueue = [];
+  movingPreviewActive.forEach(v => stopMovingPreview(v, true));
+  movingPreviewActive.clear();
+
+  const videos = Array.from((root || document).querySelectorAll('.wc-preview-video'));
+  if(!videos.length) return;
+
+  movingPreviewObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const v = entry.target;
+      if(entry.isIntersecting){
+        queueMovingPreview(v);
+      }else{
+        stopMovingPreview(v, true);
+      }
+    });
+  }, { root:null, rootMargin:'520px 0px', threshold:.12 });
+
+  videos.forEach(v => movingPreviewObserver.observe(v));
+}
+
+function queueMovingPreview(videoEl){
+  if(!videoEl || movingPreviewActive.has(videoEl) || movingPreviewQueue.includes(videoEl)) return;
+  movingPreviewQueue.push(videoEl);
+  runMovingPreviewQueue();
+}
+
+function runMovingPreviewQueue(){
+  while(movingPreviewActive.size < MOVING_PREVIEW_MAX_ACTIVE && movingPreviewQueue.length){
+    const next = movingPreviewQueue.shift();
+    if(next && next.isConnected) startMovingPreview(next);
+  }
+}
+
+function startMovingPreview(videoEl){
+  const card = videoEl.closest('.wc');
+  const src = videoEl.dataset.src;
+  if(!src) return;
+
+  movingPreviewActive.add(videoEl);
+  if(card) card.classList.add('preview-loading');
+
+  const startAt = Number(videoEl.dataset.start || 2);
+  const endAt = Number(videoEl.dataset.end || 5);
+
+  function playPreview(){
+    try{
+      if(videoEl.duration && videoEl.currentTime < startAt) videoEl.currentTime = Math.min(startAt, Math.max(0, videoEl.duration - .25));
+    }catch(e){}
+    videoEl.play().then(() => {
+      if(card){
+        card.classList.add('has-moving-thumb');
+        card.classList.remove('preview-loading');
+      }
+    }).catch(() => {
+      if(card) card.classList.remove('preview-loading');
+    });
+  }
+
+  videoEl.onloadedmetadata = () => {
+    try{ videoEl.currentTime = Math.min(startAt, Math.max(0, videoEl.duration - .25)); }catch(e){}
+  };
+
+  videoEl.oncanplay = playPreview;
+
+  videoEl.ontimeupdate = () => {
+    if(!videoEl.duration) return;
+    const safeEnd = Math.min(endAt, Math.max(0.5, videoEl.duration - .15));
+    if(videoEl.currentTime >= safeEnd){
+      try{ videoEl.currentTime = Math.min(startAt, safeEnd - .1); }catch(e){}
+    }
+  };
+
+  if(!videoEl.getAttribute('src')){
+    videoEl.src = src;
+    videoEl.load();
+  }else{
+    playPreview();
+  }
+}
+
+function stopMovingPreview(videoEl, unload){
+  if(!videoEl) return;
+  movingPreviewQueue = movingPreviewQueue.filter(v => v !== videoEl);
+  if(movingPreviewActive.has(videoEl)) movingPreviewActive.delete(videoEl);
+
+  const card = videoEl.closest('.wc');
+  videoEl.pause();
+  if(card){
+    card.classList.remove('has-moving-thumb');
+    card.classList.remove('preview-loading');
+  }
+
+  if(unload){
+    videoEl.removeAttribute('src');
+    videoEl.load();
+  }
+  runMovingPreviewQueue();
+}
+
+document.addEventListener('visibilitychange', () => {
+  document.querySelectorAll('.wc-preview-video').forEach(v => {
+    if(document.hidden) v.pause();
+    else if(v.closest('.wc')) queueMovingPreview(v);
+  });
+});
+
 /* ===================== VIDEO PLAYER ===================== */
 const vpEl = document.getElementById('vp-wrap'), video = document.getElementById('vp-video');
 const vpScreen = document.getElementById('vp-screen'), vpControls = document.getElementById('vp-controls');
@@ -1197,9 +1489,11 @@ const vpBigplay = document.getElementById('vp-bigplay'), vpBigplayImg = document
 const vpProg = document.getElementById('vp-prog'), vpThumb = document.getElementById('vp-thumb'), vpBuf = document.getElementById('vp-buf'), vpTime = document.getElementById('vp-time');
 let vpIsFS = false;
 
-function vpOpen(src, title, isPortrait) {
+function vpOpen(src, title, isPortrait, poster) {
+  document.querySelectorAll('.wc-preview-video').forEach(v => v.pause());
   if (isPortrait) { vpScreen.className = 'vp-screen portrait'; vpControls.className = 'vp-controls portrait'; }
   else { vpScreen.className = 'vp-screen landscape'; vpControls.className = 'vp-controls landscape'; }
+  video.poster = poster || '';
   video.src = src || '';
   document.getElementById('vp-placeholder').style.display = src ? 'none' : 'flex';
   video.style.display = src ? 'block' : 'none';
@@ -1209,6 +1503,7 @@ function vpOpen(src, title, isPortrait) {
 }
 function vpClose() {
   vpEl.classList.remove('open'); video.pause(); video.src = ''; document.body.style.overflow = '';
+  setTimeout(() => document.querySelectorAll('.wc-preview-video').forEach(v => queueMovingPreview(v)), 250);
   if (vpIsFS)(document.exitFullscreen || document.webkitExitFullscreen).call(document);
   vpIsFS = false; vpFsImg.src = 'fullscreen.png';
 }

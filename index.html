@@ -1063,6 +1063,118 @@ body::before{
   opacity:.34 !important;
 }
 
+
+
+/* =========================================================
+   MOBILE REVIEW POPUP CENTER FIX
+   Keeps the Discord review proof window centered on phones.
+========================================================= */
+@media(max-width:640px){
+  .review-modal{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    min-height:100dvh!important;
+    height:100dvh!important;
+    display:grid!important;
+    place-items:center!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:14px!important;
+    overflow:hidden!important;
+  }
+
+  .review-modal-card{
+    width:min(94vw,560px)!important;
+    max-width:94vw!important;
+    max-height:78dvh!important;
+    height:auto!important;
+    margin:auto!important;
+    padding:.8rem!important;
+    overflow:auto!important;
+    transform:none!important;
+    border-radius:18px!important;
+  }
+
+  .review-modal-grid{
+    width:100%!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:0!important;
+    padding:0!important;
+  }
+
+  .review-proof-window{
+    width:100%!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:70dvh!important;
+    border-radius:15px!important;
+  }
+
+  .review-proof-titlebar{
+    min-height:40px!important;
+    height:auto!important;
+    padding:.75rem 3.1rem .75rem .85rem!important;
+    line-height:1.35!important;
+    white-space:normal!important;
+  }
+
+  .review-proof-content{
+    min-height:0!important;
+    padding:.85rem!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .review-discord-shot{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 auto!important;
+  }
+
+  .review-discord-message{
+    align-items:flex-start!important;
+    gap:.7rem!important;
+    padding:.9rem .75rem 1rem!important;
+  }
+
+  .review-discord-avatar{
+    width:38px!important;
+    height:38px!important;
+  }
+
+  .review-discord-text{
+    font-size:clamp(.86rem,3.8vw,.98rem)!important;
+    line-height:1.65!important;
+  }
+
+  .review-discord-attachment{
+    font-size:clamp(.62rem,3vw,.76rem)!important;
+    padding:.75rem!important;
+  }
+
+  .review-modal-close{
+    top:50%!important;
+    right:18px!important;
+    transform:translateY(-50%)!important;
+    position:fixed!important;
+    z-index:9000!important;
+    width:44px!important;
+    height:44px!important;
+  }
+}
+
+@media(max-width:390px){
+  .review-modal{padding:10px!important}
+  .review-modal-card{width:96vw!important;max-width:96vw!important;max-height:80dvh!important;padding:.65rem!important}
+  .review-proof-titlebar{font-size:.58rem!important;padding-right:2.7rem!important}
+  .review-discord-channel{font-size:.78rem!important;padding:0 .75rem!important}
+  .review-discord-message{padding:.8rem .65rem .9rem!important}
+  .review-discord-avatar{width:34px!important;height:34px!important}
+}
+
 </style>
 </head>
 <body>

@@ -311,16 +311,32 @@ section{padding:6rem 2rem}
 .stat-l{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-top:.8rem;text-align:center;white-space:nowrap}
 .stat-bar{height:1.5px;width:0;background:linear-gradient(to right,transparent,var(--red),transparent);margin-top:.55rem;border-radius:1px;transition:width .6s cubic-bezier(.22,1,.36,1)}
 .stat:hover .stat-bar{width:80%}
-.views-stat .stat-n{
-  font-size:clamp(3.25rem,5.75vw,5.05rem);
-  letter-spacing:.005em;
+.views-stat .stat-number-wrap{
+  height:clamp(3rem,5.5vw,4.5rem);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  transform:translateY(-10px);
 }
+
+.views-stat .stat-n{
+  font-size:clamp(3rem,5.5vw,4.5rem);
+  line-height:.92;
+  letter-spacing:.015em;
+  transform:none;
+}
+
 .views-stat .stat-suffix{
   font-size:1em;
   margin-left:.01em;
   color:var(--red);
 }
 
+.views-stat .stat-l{
+  margin-top:.8rem;
+  position:relative;
+  top:-20px;
+}
 
 /* ===== WORK GRID ===== */
 #work{background:var(--bg)}
@@ -703,8 +719,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 .review-proof-window{border:1px solid rgba(255,255,255,.1);background:#202225;box-shadow:inset 0 1px 0 rgba(255,255,255,.04);min-height:390px;overflow:hidden;display:flex;flex-direction:column}
 .review-proof-titlebar{height:42px;background:#18191c;border-bottom:1px solid rgba(0,0,0,.35);display:flex;align-items:center;gap:.6rem;padding:0 .9rem;color:rgba(245,240,235,.75);font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase}
 .review-window-dot{width:9px;height:9px;border-radius:50%;background:rgba(224,32,32,.78);box-shadow:15px 0 0 rgba(245,240,235,.26),30px 0 0 rgba(88,101,242,.72);margin-right:2rem}
-.review-proof-content{position:relative;flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2b2d31,#25272b);padding:1.2rem}
-.review-proof-img{max-width:100%;max-height:65vh;display:block;border-radius:8px;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 55px rgba(0,0,0,.42)}
+.review-proof-content{position:relative;flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2b2d31,#25272b);padding:1.2rem 0}
+.review-proof-img{width:100%;display:block;border-radius:8px;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 55px rgba(0,0,0,.42);object-fit:contain;}
 .review-discord-shot{width:min(560px,100%);background:#313338;border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.35);text-align:left}
 .review-discord-channel{height:44px;display:flex;align-items:center;padding:0 1rem;background:#2b2d31;border-bottom:1px solid rgba(0,0,0,.24);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:800;color:#f2f3f5}
 .review-discord-channel span{color:#80848e;margin-right:.35rem}.review-discord-message{display:flex;gap:.85rem;padding:1.05rem 1rem 1.15rem;background:#313338}.review-discord-avatar{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,rgba(224,32,32,.65),rgba(88,101,242,.45)),#151515}.review-discord-body{min-width:0}.review-discord-user{font-weight:800;color:#f2f3f5;font-size:.9rem;margin-bottom:.2rem}.review-discord-time{font-family:'DM Mono',monospace;color:#949ba4;font-size:.62rem;font-weight:400;margin-left:.4rem}.review-discord-text{color:#dbdee1;font-size:.88rem;line-height:1.65;white-space:pre-wrap}.review-discord-attachment{margin-top:.8rem;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:#2b2d31;padding:.75rem;color:#b5bac1;font-family:'DM Mono',monospace;font-size:.63rem;line-height:1.6}
@@ -716,6 +732,54 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 /* Keeps hero thumbnails visible under the restored intro fade. */
 .hero-grid-bg,.hero-grid-row,.hero-grid-thumb,.hero-grid-thumb img{visibility:visible!important;}
 .hero-grid-thumb img{opacity:1;}
+
+/* Keeps hero thumbnails visible under the restored intro fade. */
+.hero-grid-bg,.hero-grid-row,.hero-grid-thumb,.hero-grid-thumb img{visibility:visible!important;}
+.hero-grid-thumb img{opacity:1;}
+
+
+/* ===== REVIEW OPENED WINDOW - BIG HORIZONTAL PROOF ONLY ===== */
+.review-modal-card{
+  width:min(1280px,96vw)!important;
+  max-height:90vh!important;
+  padding:1.15rem!important;
+  overflow:hidden!important;
+}
+
+.review-modal-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:0!important;
+  padding-right:0!important;
+}
+
+.review-modal-info{
+  display:none!important;
+}
+
+.review-proof-window{
+  width:100%!important;
+  min-height:min(72vh,720px)!important;
+}
+
+.review-proof-content{
+  padding:1rem!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+.review-proof-img{
+  width:100%!important;
+  max-width:1180px!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  border-radius:8px!important;
+}
+
+.review-discord-shot{
+  width:min(1100px,100%)!important;
+}
 
 </style>
 </head>
@@ -868,18 +932,21 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
     <div class="reviews-track">
       <button class="review-card rv" type="button"
-        data-name="VoidCreator"
-        data-tag="10M+ views"
-        data-full="Cut & Hire helped me turn messy footage into a clean, fast-paced video that actually felt watchable from start to finish. The editor understood the style fast, kept the pacing sharp, and made the final video feel way more professional than what I expected."
-        data-proof-img=""
-        data-proof="This is where the real Discord screenshot for VoidCreator will show. Put the image path in data-proof-img, for example: reviews/voidcreator.png">
-        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
-        <div class="review-name">VoidCreator</div>
-        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
-        <p class="review-quote">“Clean edit, strong pacing, and the final video felt way more professional...”</p>
-        <div class="review-tag">✦ 10M+ views</div>
-        <span class="review-proof-hint">Click to open message proof</span>
-      </button>
+  data-name="Tiffany"
+  data-tag="10/10 rating"
+  data-full="@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10"
+  data-proof-img="tiffany.png"
+  data-proof="Discord message from Tiffany">
+ <div class="review-avatar" style="overflow:hidden">
+    <div class="review-avatar-img" style="filter:blur(6px);transform:scale(1.1)"></div>
+    <div class="review-discord-dot">⌁</div>
+</div>
+  <div class="review-name">Tiffany</div>
+  <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+  <p class="review-quote">"@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10"</p>
+  <div class="review-tag">✦ 10/10 rating</div>
+  <span class="review-proof-hint">Click to open message proof</span>
+</button>
 
       <button class="review-card rv" type="button"
         data-name="Up_Arrow"
@@ -948,7 +1015,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
           </div>
         </div>
         <p class="review-modal-text" id="review-modal-text"></p>
-        <div class="review-modal-note">The right side is the specific Discord message proof window. Later, replace the placeholder by adding a real screenshot path inside <b>data-proof-img</b> on each review card.</div>
+        <div class="review-modal-note"></div>
       </div>
       <div class="review-proof-window">
         <div class="review-proof-titlebar"><span class="review-window-dot"></span><span id="review-proof-title">Discord message screenshot</span></div>

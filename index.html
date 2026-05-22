@@ -15,15 +15,33 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.cutandhire.com/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="hero-thumbnails/image.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_5.png.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_3.png.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_7.png.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/5.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/bvcvcbvcbvcb43541.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_4.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/Illustrator_vid.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_1_.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumnbail_by_lokesh_2.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp" fetchpriority="high">
 <style>
 :root{
+  --hero-reveal-delay:1.5s;
+  --hero-reveal-duration:1.8s;
   --bg:#141414;--card:#1a1a1a;
   --red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.12);
   --blue:#3a7bd5;--w:#f5f0eb;--m:#7a7a7a;--b:rgba(255,255,255,.08);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overflow-x:hidden;opacity:0;animation:siteFadeIn .25s ease-out 0s forwards}
+@keyframes siteFadeIn{from{opacity:0}to{opacity:1}}
+.site-fade-cover{position:fixed;inset:0;background:#000;z-index:99999;pointer-events:none;animation:siteCoverOut .45s ease-out .15s forwards;opacity:1;visibility:visible}
+.site-fade-cover.site-cover-hide{animation:none!important;opacity:0!important;visibility:hidden!important;transition:opacity .45s ease,visibility 0s linear .45s}
+@keyframes siteCoverOut{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden}}
 body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.5}
 
@@ -75,7 +93,18 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
 .particle{position:absolute;border-radius:50%;pointer-events:none;animation:pf linear infinite}
 @keyframes pf{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:.3}100%{transform:translateY(-20vh) rotate(720deg);opacity:0}}
 
-/* ===== HERO CENTER STACK — absolute + transform = always dead center ===== */
+/* ===== HERO INTRO LAYER — gradient + hero use the SAME bottom-up animation ===== */
+.hero-intro-layer{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+@keyframes hero-intro-rise{
+  from{opacity:0;transform:translateY(42px);filter:blur(1.2px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+/* TRUE CENTER: keep your original position/size, only remove separate fade timing */
 .hero-center-stack{
   position:absolute;
   top:50%;
@@ -90,6 +119,13 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   align-items:center;
   justify-content:center;
   text-align:center;
+  opacity:0;
+  will-change:opacity,transform,filter;
+  animation:hero-stack-rise var(--hero-reveal-duration) cubic-bezier(.22,1,.36,1) var(--hero-reveal-delay) both;
+}
+@keyframes hero-stack-rise{
+  from{opacity:0;transform:translate(-50%, calc(-50% - 18px));filter:blur(1.2px)}
+  to{opacity:1;transform:translate(-50%, calc(-50% - 58px));filter:blur(0)}
 }
 
 .hero-logo-wrap{
@@ -97,8 +133,6 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   align-items:center;
   justify-content:center;
   margin-bottom:-.35rem;
-  opacity:0;
-  animation:hero-in 1s cubic-bezier(.22,1,.36,1) .1s forwards;
 }
 .hero-logo-link{
   display:inline-flex;
@@ -127,8 +161,6 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   letter-spacing:-.04em;
   text-align:center;
   width:100%;
-  opacity:0;
-  animation:hero-in 1s cubic-bezier(.22,1,.36,1) .2s forwards;
 }
 .hero-h1 .italic{
   font-style:italic;
@@ -159,8 +191,6 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   line-height:1.22;
   text-align:center;
   margin-top:1.2rem;
-  opacity:0;
-  animation:hero-in 1s cubic-bezier(.22,1,.36,1) .3s forwards;
 }
 
 .hero-cta{
@@ -170,15 +200,26 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   justify-content:center;
   align-items:center;
   margin-top:2.2rem;
-  opacity:0;
-  animation:hero-in 1s cubic-bezier(.22,1,.36,1) .4s forwards;
 }
-@keyframes hero-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Force the logo, title, subtitle, and button to appear as ONE group.
+   This prevents any old/staggered child animations from overriding the stack fade. */
+.hero-center-stack > *,
+.hero-center-stack .hero-logo-wrap,
+.hero-center-stack .hero-h1,
+.hero-center-stack .hero-sub,
+.hero-center-stack .hero-cta{
+  opacity:1!important;
+  filter:none!important;
+}
+.orbit-ring{
+  animation:orbit-spin 4.5s linear infinite!important;
+}
 
 .btn-primary{
+  position:relative;
   background:linear-gradient(135deg,#e02020,#f12a2a);
   color:#fff;
-  border:1px solid rgba(255,255,255,.12);
   border-radius:999px;
   min-width:230px;
   padding:1rem 2.55rem;
@@ -193,11 +234,46 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   letter-spacing:.035em;
   transition:transform .15s,filter .25s;
   white-space:nowrap;
+  isolation:isolate;
+  border:2.5px solid rgba(0,0,0,.78);
+  outline:none;
+  overflow:visible;
+  box-shadow:none;
 }
-.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.06)}
-.btn-primary:active{transform:translateY(0) scale(.99)}
+/* Small reflective shine that follows the black button stroke smoothly. */
+.btn-primary::before,
+.btn-primary::after{display:none!important;content:none!important}
+.btn-primary .btn-stroke-light{
+  position:absolute;
+  inset:-6px;
+  width:calc(100% + 12px);
+  height:calc(100% + 12px);
+  pointer-events:none;
+  overflow:visible;
+  z-index:0;
+}
+.btn-primary .btn-stroke-light path{fill:none;stroke:none}
+.btn-primary .btn-stroke-light .shine-core,
+.btn-primary .btn-stroke-light .shine-soft{
+  transform-box:fill-box;
+  transform-origin:center;
+}
+.btn-primary .btn-stroke-light .shine-core{
+  fill:rgba(255,255,255,.70);
+  filter:url(#btnShineBlur);
+}
+.btn-primary .btn-stroke-light .shine-soft{
+  fill:rgba(255,255,255,.18);
+  filter:url(#btnShineBigBlur);
+}
+.btn-primary:hover{transform:translateY(-1px) scale(.975);filter:brightness(1.04)}
+.btn-primary:active{transform:translateY(0) scale(.96)}
+.btn-primary span{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.btn-primary .btn-stroke-light animateMotion{display:none!important}}
 .btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.15);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;transition:border-color .2s,transform .15s,background .2s;white-space:nowrap;border-radius:999px}
 .btn-outline:hover{border-color:var(--red);transform:translateY(-2px);background:var(--rs)}
+
+
 
 /* ===== SECTIONS ===== */
 section{padding:6rem 2rem}
@@ -388,10 +464,118 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 .rv-scale.vis{opacity:1;transform:scale(1)}
 .stagger>*:nth-child(1){transition-delay:.05s}.stagger>*:nth-child(2){transition-delay:.11s}.stagger>*:nth-child(3){transition-delay:.17s}.stagger>*:nth-child(4){transition-delay:.23s}.stagger>*:nth-child(5){transition-delay:.29s}.stagger>*:nth-child(6){transition-delay:.35s}
 
+
+
+/* ===== HERO THUMBNAIL GRID BACKGROUND (imported from first file, scoped only to hero) ===== */
+#hero{
+  background:#000;
+}
+#hero .orb,
+#hero .sc-bg,
+#hero .cut-line,
+#hero #particles{
+  display:none!important;
+}
+.hero-grid-bg{
+  position:absolute;
+  top:-60px;
+  left:-100px;
+  right:-100px;
+  bottom:-60px;
+  z-index:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  gap:8px;
+  opacity:1;
+  transform:scale(2.4) rotate(12deg);
+  animation:heroGridZoomOut 5s cubic-bezier(0,0,.15,1) 0s forwards;
+  pointer-events:auto;
+  overflow:hidden;
+  will-change:transform,opacity;
+}
+@keyframes heroGridZoomOut{
+  0%{opacity:1;transform:scale(2.4) rotate(12deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
+}
+.hero-grid-row{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+  width:max-content;
+  will-change:transform;
+}
+.hero-grid-row-1{animation:heroGridScrollLeft 55s linear infinite}
+.hero-grid-row-2{animation:heroGridScrollLeft 80s linear infinite}
+.hero-grid-row-3{animation:heroGridScrollLeft 65s linear infinite}
+.hero-grid-row-4{animation:heroGridScrollLeft 95s linear infinite}
+@keyframes heroGridScrollLeft{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.hero-grid-thumb{
+  height:260px;
+  width:480px;
+  flex-shrink:0;
+  border-radius:12px;
+  overflow:hidden;
+  background:#111;
+  cursor:pointer;
+}
+.hero-grid-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(.4);
+  transition:filter .15s ease;
+}
+.hero-grid-thumb.lit img{
+  filter:brightness(.9);
+  transition:filter .15s ease;
+}
+.hero-grid-thumb.fading img{
+  filter:brightness(.4);
+  transition:filter 1.8s ease;
+}
+.hero-grid-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:0;
+  will-change:opacity,transform,filter;
+  animation:hero-intro-rise var(--hero-reveal-duration) cubic-bezier(.22,1,.36,1) var(--hero-reveal-delay) both!important;
+  background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.15) 30%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.55) 80%,rgba(0,0,0,.8) 100%);
+}
+@media(max-width:640px){
+  .hero-grid-bg{top:-40px;left:-70px;right:-70px;bottom:-40px;gap:6px}
+  .hero-grid-row{gap:6px}
+  .hero-grid-thumb{width:280px;height:155px;border-radius:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-grid-bg{opacity:1!important;transform:none!important;animation:none!important}
+  .hero-grid-row{animation:none!important}
+  .hero-grid-overlay{opacity:1!important;animation:none!important}
+}
+
+
+/* ===== FAST THUMBNAIL LOADING ===== */
+/* Hero thumbnails must NEVER be deferred by content-visibility during the slow infinite scroll. */
+.hero-grid-thumb img{
+  content-visibility:visible!important;
+  visibility:visible!important;
+  opacity:1!important;
+  background:#101010;
+}
+.wc-thumb,.wc-video-thumb{content-visibility:auto;}
+.hero-grid-thumb{contain:layout paint style; background:#101010;}
+.wc img{background:#101010;}
+
 /* ===== PERFORMANCE ===== */
 #hero,#work,#services,#process,#discord,footer{isolation:isolate}
 .orb,.sc-item,.particle,.cut-line,.scroll-hint-circle,.wc-thumb{will-change:transform,opacity;backface-visibility:hidden;transform:translateZ(0)}
-.wc,.sv,.ps,.cat-tab,.btn-primary,.btn-outline{contain:layout paint}
+.wc,.sv,.ps,.cat-tab,.btn-outline{contain:layout paint}
 @media(prefers-reduced-motion:reduce){.particle,.sc-item,.cut-line,.orb,.scroll-hint-circle,.scroll-hint-circle svg{animation:none!important}}
 
 /* ===== RESPONSIVE ===== */
@@ -413,9 +597,105 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   .hero-center-stack{padding:0 1.25rem;width:calc(100% - 0px)}
   .hero-logo-gif{width:clamp(100px,30vw,140px)}
 }
+
+
+/* ===== REVIEWS / DISCORD PROOF WINDOW ===== */
+#reviews{
+  background:var(--bg);
+  position:relative;
+  overflow:hidden;
+  padding:6.6rem 2rem 6.4rem;
+}
+#reviews::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(224,32,32,.08),transparent 42%),
+    radial-gradient(circle at 10% 70%,rgba(88,101,242,.05),transparent 34%),
+    linear-gradient(to bottom,transparent,rgba(255,255,255,.016),transparent);
+  pointer-events:none;
+}
+.reviews-shell{position:relative;z-index:1}
+.reviews-head{text-align:center;max-width:760px;margin:0 auto 3.4rem}
+.reviews-head .sec-lbl{justify-content:center}
+.reviews-head .sec-lbl::before{display:none}
+.reviews-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.45rem,5.7vw,5.25rem);
+  font-weight:900;
+  line-height:.92;
+  letter-spacing:-.045em;
+  margin-bottom:1rem;
+}
+.reviews-title em{font-style:italic;color:var(--red)}
+.reviews-sub{color:rgba(245,240,235,.62);font-size:1rem;line-height:1.75;max-width:570px;margin:0 auto}
+.reviews-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
+.review-card{
+  position:relative;
+  min-height:362px;
+  padding:2.15rem 1.35rem 1.35rem;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  border:1px solid var(--b);
+  color:var(--w);
+  text-align:center;
+  cursor:pointer;
+  overflow:hidden;
+  font-family:'DM Sans',sans-serif;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s,background .35s,box-shadow .35s;
+}
+.review-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(224,32,32,.13),transparent 55%);opacity:0;transition:opacity .35s}
+.review-card::after{content:'';position:absolute;top:0;left:50%;width:0;height:2px;transform:translateX(-50%);background:linear-gradient(to right,transparent,var(--red),transparent);transition:width .45s cubic-bezier(.22,1,.36,1)}
+.review-card:hover{transform:translateY(-7px);border-color:rgba(224,32,32,.32);background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.review-card:hover::before{opacity:1}.review-card:hover::after{width:72%}
+.review-avatar{position:relative;width:86px;height:86px;margin:0 auto 1rem;border-radius:50%;border:1.5px solid rgba(224,32,32,.9);padding:3px;background:#111;box-shadow:0 0 0 6px rgba(224,32,32,.035),0 0 28px rgba(224,32,32,.18)}
+.review-avatar-img{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.015)),radial-gradient(circle at 35% 35%,rgba(224,32,32,.32),transparent 38%),radial-gradient(circle at 70% 70%,rgba(88,101,242,.2),transparent 42%),#171717}
+.review-discord-dot{position:absolute;right:-2px;bottom:8px;width:24px;height:24px;border-radius:50%;background:#5865f2;border:4px solid var(--bg);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.68rem;font-weight:900;line-height:1}
+.review-name{position:relative;z-index:1;font-weight:800;color:var(--w);font-size:1.02rem;letter-spacing:.01em;margin-bottom:.35rem}
+.review-verified{position:relative;z-index:1;font-family:'DM Mono',monospace;font-size:.63rem;color:rgba(245,240,235,.45);display:flex;align-items:center;justify-content:center;gap:.35rem;margin-bottom:1rem}
+.review-verified span{color:#5865f2}
+.review-quote{position:relative;z-index:1;color:rgba(245,240,235,.72);font-size:.88rem;line-height:1.78;min-height:95px;margin-bottom:1rem}
+.review-tag{position:relative;z-index:1;display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgba(224,32,32,.24);background:rgba(224,32,32,.09);color:rgba(245,240,235,.88);border-radius:999px;padding:.38rem .75rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.04em}
+.review-proof-hint{position:relative;z-index:1;display:block;margin-top:.85rem;color:rgba(245,240,235,.38);font-size:.76rem}
+.reviews-bottom{display:flex;align-items:center;justify-content:center;gap:1.1rem;margin-top:2.6rem;color:rgba(245,240,235,.48);font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.08em}
+.reviews-bottom-line{width:min(280px,35vw);height:2px;background:linear-gradient(to right,transparent,var(--red),transparent)}
+.review-divider{opacity:.35}
+.review-modal{position:fixed;inset:0;z-index:8500;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:1.3rem;opacity:0;pointer-events:none;transition:opacity .28s ease}
+.review-modal.open{opacity:1;pointer-events:all}
+.review-modal-card{position:relative;width:min(1080px,96vw);max-height:88vh;overflow:auto;background:linear-gradient(180deg,#1b1b1b,#101010);border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 110px rgba(0,0,0,.62);padding:1.6rem}
+.review-modal-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(224,32,32,.13),transparent 45%);pointer-events:none}
+.review-modal-close{position:absolute;top:1rem;right:1rem;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:var(--w);cursor:pointer;z-index:3;font-size:1.2rem;transition:transform .2s,border-color .2s,background .2s}
+.review-modal-close:hover{transform:scale(1.06);border-color:rgba(224,32,32,.5);background:rgba(224,32,32,.12)}
+.review-modal-grid{position:relative;z-index:1;display:grid;grid-template-columns:.86fr 1.14fr;gap:1.35rem;align-items:stretch;padding-right:2.4rem}
+.review-modal-info{border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.025);padding:1.35rem;display:flex;flex-direction:column;justify-content:center}
+.review-modal-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.35rem}
+.review-modal-avatar{width:68px;height:68px;border-radius:50%;border:1.5px solid rgba(224,32,32,.9);padding:3px;background:#111;flex-shrink:0}
+.review-modal-avatar div{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,rgba(224,32,32,.28),rgba(255,255,255,.05)),#181818}
+.review-modal-name{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,3.5vw,2.55rem);font-weight:900;line-height:1}
+.review-modal-meta{margin-top:.35rem;font-family:'DM Mono',monospace;color:rgba(245,240,235,.45);font-size:.68rem;letter-spacing:.06em}
+.review-modal-text{color:rgba(245,240,235,.78);font-size:1rem;line-height:1.9;margin-bottom:1.2rem}
+.review-modal-note{font-family:'DM Mono',monospace;color:rgba(245,240,235,.38);font-size:.66rem;line-height:1.7;border-top:1px solid rgba(255,255,255,.07);padding-top:1rem}
+.review-proof-window{border:1px solid rgba(255,255,255,.1);background:#202225;box-shadow:inset 0 1px 0 rgba(255,255,255,.04);min-height:390px;overflow:hidden;display:flex;flex-direction:column}
+.review-proof-titlebar{height:42px;background:#18191c;border-bottom:1px solid rgba(0,0,0,.35);display:flex;align-items:center;gap:.6rem;padding:0 .9rem;color:rgba(245,240,235,.75);font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase}
+.review-window-dot{width:9px;height:9px;border-radius:50%;background:rgba(224,32,32,.78);box-shadow:15px 0 0 rgba(245,240,235,.26),30px 0 0 rgba(88,101,242,.72);margin-right:2rem}
+.review-proof-content{position:relative;flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2b2d31,#25272b);padding:1.2rem}
+.review-proof-img{max-width:100%;max-height:65vh;display:block;border-radius:8px;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 55px rgba(0,0,0,.42)}
+.review-discord-shot{width:min(560px,100%);background:#313338;border:1px solid rgba(255,255,255,.06);border-radius:10px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.35);text-align:left}
+.review-discord-channel{height:44px;display:flex;align-items:center;padding:0 1rem;background:#2b2d31;border-bottom:1px solid rgba(0,0,0,.24);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:800;color:#f2f3f5}
+.review-discord-channel span{color:#80848e;margin-right:.35rem}.review-discord-message{display:flex;gap:.85rem;padding:1.05rem 1rem 1.15rem;background:#313338}.review-discord-avatar{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,rgba(224,32,32,.65),rgba(88,101,242,.45)),#151515}.review-discord-body{min-width:0}.review-discord-user{font-weight:800;color:#f2f3f5;font-size:.9rem;margin-bottom:.2rem}.review-discord-time{font-family:'DM Mono',monospace;color:#949ba4;font-size:.62rem;font-weight:400;margin-left:.4rem}.review-discord-text{color:#dbdee1;font-size:.88rem;line-height:1.65;white-space:pre-wrap}.review-discord-attachment{margin-top:.8rem;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:#2b2d31;padding:.75rem;color:#b5bac1;font-family:'DM Mono',monospace;font-size:.63rem;line-height:1.6}
+@media(max-width:960px){.reviews-track{grid-template-columns:repeat(2,minmax(0,1fr))}.review-modal-grid{grid-template-columns:1fr;padding-right:0}.review-proof-window{min-height:330px}}
+@media(max-width:640px){#reviews{padding:5rem 1rem}.reviews-track{grid-template-columns:1fr}.review-card{min-height:auto;padding:1.8rem 1.15rem}.reviews-bottom{flex-wrap:wrap;gap:.65rem}.reviews-bottom-line{width:100%}.review-modal{padding:.75rem}.review-modal-card{padding:1rem}.review-modal-close{top:.65rem;right:.65rem}.review-modal-info{padding:1rem}.review-proof-content{padding:.75rem}.review-discord-message{padding:.9rem .75rem}.review-modal-top{align-items:flex-start}}
+
+
+
+/* Keeps hero thumbnails visible under the restored intro fade. */
+.hero-grid-bg,.hero-grid-row,.hero-grid-thumb,.hero-grid-thumb img{visibility:visible!important;}
+.hero-grid-thumb img{opacity:1;}
+
 </style>
 </head>
 <body>
+<div class="site-fade-cover" aria-hidden="true"></div>
 
 <!-- Scroll hints -->
 <div class="scroll-hint left" id="scroll-left">
@@ -433,14 +713,19 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 
 <!-- ==================== HERO ==================== -->
 <section id="hero">
+  <div class="hero-grid-bg" id="hero-grid-bg"></div>
   <div class="orb o1"></div>
   <div class="orb o2"></div>
   <div class="sc-bg" id="sc-bg"></div>
   <div class="cut-line"></div>
   <div id="particles"></div>
 
-  <!-- TRUE CENTER: #hero is display:flex + align/justify center. Stack is relative, no absolute positioning. -->
-  <div class="hero-center-stack">
+  <!-- ONE SHARED INTRO: gradient and hero content fade/slide together, impossible to desync -->
+  <div class="hero-intro-layer">
+    <div class="hero-grid-overlay"></div>
+
+    <!-- TRUE CENTER: original hero stack position is unchanged. -->
+    <div class="hero-center-stack">
     <div class="hero-logo-wrap">
       <a href="/" class="hero-logo-link" aria-label="Cut & Hire home">
         <img src="dadawfa2231314.gif" data-fallback="1000011657.gif" alt="Cut & Hire" class="hero-logo-gif"
@@ -448,10 +733,23 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
       </a>
     </div>
     <h1 class="hero-h1">We do the<br><span class="italic">impossible.</span></h1>
-    <p class="hero-sub">Make viral content with elite editors</p>
+    <p class="hero-sub">Make viral content with viral editors</p>
     <div class="hero-cta">
-      <a href="#discord" class="btn-primary"><span>Start a Project</span></a>
-    </div>
+  <a href="#discord" class="btn-primary"><svg class="btn-stroke-light" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <filter id="btnShineBlur" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="0.9"/></filter>
+      <filter id="btnShineBigBlur" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="2.4"/></filter>
+      <path id="btnShinePath" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+    </defs>
+    <ellipse class="shine-soft" rx="10" ry="3">
+      <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath"/></animateMotion>
+    </ellipse>
+    <ellipse class="shine-core" rx="5" ry="1.15">
+      <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath"/></animateMotion>
+    </ellipse>
+  </svg><span>Start a Project</span></a>
+</div>
+  </div>
   </div>
 </section>
 
@@ -464,6 +762,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     <nav id="main-nav" class="rv">
       <ul class="nav-links">
         <li><a href="#work">Work</a></li>
+        <li><a href="#reviews">Reviews</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="/contact">Contact</a></li>
@@ -472,10 +771,10 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     </nav>
     <div id="hero-stats" class="about-stats rv">
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="48" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Clients Served</div><div class="stat-bar"></div></div>
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="35" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors on Team</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="50" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors on Team</div><div class="stat-bar"></div></div>
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
       <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="M+">0<span class="stat-suffix">M+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="10" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Niches Covered</div><div class="stat-bar"></div></div>
+      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Niches Covered</div><div class="stat-bar"></div></div>
     </div>
   </div>
 </section>
@@ -531,6 +830,109 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
     </div>
   </div>
 </section>
+
+
+
+<!-- ==================== REVIEWS ==================== -->
+<section id="reviews">
+  <div class="con reviews-shell">
+    <div class="reviews-head rv">
+      <p class="sec-lbl">Verified Reviews</p>
+      <h2 class="reviews-title">What Clients <em>Say</em></h2>
+      <p class="reviews-sub">Real Discord feedback from creators. Click any review to open the full message and its proof window.</p>
+    </div>
+
+    <div class="reviews-track">
+      <button class="review-card rv" type="button"
+        data-name="VoidCreator"
+        data-tag="10M+ views"
+        data-full="Cut & Hire helped me turn messy footage into a clean, fast-paced video that actually felt watchable from start to finish. The editor understood the style fast, kept the pacing sharp, and made the final video feel way more professional than what I expected."
+        data-proof-img=""
+        data-proof="This is where the real Discord screenshot for VoidCreator will show. Put the image path in data-proof-img, for example: reviews/voidcreator.png">
+        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
+        <div class="review-name">VoidCreator</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Clean edit, strong pacing, and the final video felt way more professional...”</p>
+        <div class="review-tag">✦ 10M+ views</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card rv" type="button"
+        data-name="Up_Arrow"
+        data-tag="Style mastered"
+        data-full="Really easy to work with. They mastered my editing style quickly and delivered exactly what I needed without making the process stressful. Communication was simple, changes were handled properly, and the video came out clean."
+        data-proof-img=""
+        data-proof="This is where the real Discord screenshot for Up_Arrow will show. Put the image path in data-proof-img, for example: reviews/up-arrow.png">
+        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
+        <div class="review-name">Up_Arrow</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Really easy to work with. They mastered my editing style quickly...”</p>
+        <div class="review-tag">✦ Style mastered</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card rv" type="button"
+        data-name="Sebizoid"
+        data-tag="Million-view content"
+        data-full="Very trustworthy and hardworking. Never late with a video and always gave updates when needed. The edits were consistent, sharp, and helped the content feel much more engaging for viewers."
+        data-proof-img=""
+        data-proof="This is where the real Discord screenshot for Sebizoid will show. Put the image path in data-proof-img, for example: reviews/sebizoid.png">
+        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
+        <div class="review-name">Sebizoid</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Very trustworthy and hardworking. Never late with a video...”</p>
+        <div class="review-tag">✦ Million-view content</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card rv" type="button"
+        data-name="JuhoBG"
+        data-tag="Consistent delivery"
+        data-full="They deliver consistently and understand what creators need. The edits helped the videos feel smoother, more entertaining, and easier to watch. I would trust them with more long-form and short-form content."
+        data-proof-img=""
+        data-proof="This is where the real Discord screenshot for JuhoBG will show. Put the image path in data-proof-img, for example: reviews/juhobg.png">
+        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
+        <div class="review-name">JuhoBG</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Delivers consistently and understands what creators need...”</p>
+        <div class="review-tag">✦ Consistent delivery</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+    </div>
+
+    <div class="reviews-bottom rv">
+      <span>Verified Reviews</span>
+      <span class="review-divider">|</span>
+      <div class="reviews-bottom-line"></div>
+      <span class="review-divider">|</span>
+      <span>Discord Message Proof</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== REVIEW PROOF MODAL ==================== -->
+<div class="review-modal" id="review-modal" aria-hidden="true">
+  <div class="review-modal-card" role="dialog" aria-modal="true" aria-label="Review proof window">
+    <button class="review-modal-close" type="button" onclick="closeReviewModal()" aria-label="Close review proof">×</button>
+    <div class="review-modal-grid">
+      <div class="review-modal-info">
+        <div class="review-modal-top">
+          <div class="review-modal-avatar"><div></div></div>
+          <div>
+            <div class="review-modal-name" id="review-modal-name">Client</div>
+            <div class="review-modal-meta" id="review-modal-meta">Verified on Discord</div>
+          </div>
+        </div>
+        <p class="review-modal-text" id="review-modal-text"></p>
+        <div class="review-modal-note">The right side is the specific Discord message proof window. Later, replace the placeholder by adding a real screenshot path inside <b>data-proof-img</b> on each review card.</div>
+      </div>
+      <div class="review-proof-window">
+        <div class="review-proof-titlebar"><span class="review-window-dot"></span><span id="review-proof-title">Discord message screenshot</span></div>
+        <div class="review-proof-content" id="review-proof-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ==================== DISCORD CTA ==================== -->
 <section id="discord">
@@ -618,6 +1020,213 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 </div>
 
 <script>
+
+/* ===== REVIEWS PROOF WINDOW ===== */
+const reviewModal=document.getElementById('review-modal');
+const reviewModalName=document.getElementById('review-modal-name');
+const reviewModalMeta=document.getElementById('review-modal-meta');
+const reviewModalText=document.getElementById('review-modal-text');
+const reviewProofContent=document.getElementById('review-proof-content');
+const reviewProofTitle=document.getElementById('review-proof-title');
+function escapeHtmlReview(value){
+  return String(value).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+}
+function openReviewModal(card){
+  if(!reviewModal||!card)return;
+  const name=card.dataset.name||'Client';
+  const tag=card.dataset.tag||'Verified Review';
+  const full=card.dataset.full||'Full review text goes here.';
+  const proof=card.dataset.proof||'Add the real Discord screenshot path to data-proof-img for this review.';
+  const proofImg=(card.dataset.proofImg||'').trim();
+  reviewModalName.textContent=name;
+  reviewModalMeta.textContent=`Verified on Discord · ${tag}`;
+  reviewModalText.textContent=`“${full}”`;
+  reviewProofTitle.textContent=`Discord message proof · ${name}`;
+  reviewProofContent.innerHTML='';
+  if(proofImg){
+    const img=document.createElement('img');
+    img.className='review-proof-img';
+    img.src=proofImg;
+    img.alt=`Discord screenshot proof from ${name}`;
+    img.onerror=()=>{
+      reviewProofContent.innerHTML=`<div class="review-discord-shot"><div class="review-discord-channel"><span>#</span> client-reviews</div><div class="review-discord-message"><div class="review-discord-avatar"></div><div class="review-discord-body"><div class="review-discord-user">${escapeHtmlReview(name)} <span class="review-discord-time">screenshot path not found</span></div><div class="review-discord-text">${escapeHtmlReview(full)}</div><div class="review-discord-attachment">${escapeHtmlReview(proof)}</div></div></div></div>`;
+    };
+    reviewProofContent.appendChild(img);
+  }else{
+    reviewProofContent.innerHTML=`<div class="review-discord-shot"><div class="review-discord-channel"><span>#</span> client-reviews</div><div class="review-discord-message"><div class="review-discord-avatar"></div><div class="review-discord-body"><div class="review-discord-user">${escapeHtmlReview(name)} <span class="review-discord-time">placeholder proof</span></div><div class="review-discord-text">${escapeHtmlReview(full)}</div><div class="review-discord-attachment">${escapeHtmlReview(proof)}</div></div></div></div>`;
+  }
+  reviewModal.classList.add('open');
+  reviewModal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeReviewModal(){
+  if(!reviewModal)return;
+  reviewModal.classList.remove('open');
+  reviewModal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('.review-card').forEach(card=>card.addEventListener('click',()=>openReviewModal(card)));
+if(reviewModal){reviewModal.addEventListener('click',e=>{if(e.target===reviewModal)closeReviewModal()})}
+window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewModal.classList.contains('open'))closeReviewModal()});
+
+
+
+/* ===== HERO THUMBNAIL GRID BACKGROUND ===== */
+(function(){
+  const IMAGES=[
+    "hero-thumbnails/image.webp",
+    "hero-thumbnails/thumbnail_by_lokesh_5.png.webp",
+    "hero-thumbnails/thumbnail_by_lokesh_3.png.webp",
+    "hero-thumbnails/thumbnail_by_lokesh_7.png.webp",
+    "hero-thumbnails/5.webp",
+    "hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp",
+    "hero-thumbnails/bvcvcbvcbvcb43541.webp",
+    "hero-thumbnails/thumbnail_by_lokesh_4.webp",
+    "hero-thumbnails/Illustrator_vid.webp",
+    "hero-thumbnails/thumbnail_by_lokesh_1_.webp",
+    "hero-thumbnails/thumnbail_by_lokesh_2.webp",
+    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp",
+    "hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp",
+    "hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp",
+    "hero-thumbnails/5 (1).webp",
+    "hero-thumbnails/4_2.webp",
+    "hero-thumbnails/IMG-20251116-WA0014.webp",
+    "hero-thumbnails/1.webp",
+    "hero-thumbnails/4_1.webp",
+    "hero-thumbnails/6_1.webp",
+    "hero-thumbnails/8.webp",
+    "hero-thumbnails/descarga_1.webp",
+    "hero-thumbnails/descarga_2.webp",
+    "hero-thumbnails/7.webp",
+    "hero-thumbnails/20260314_051758.webp",
+    "hero-thumbnails/3_2.webp",
+    "hero-thumbnails/1_1.webp",
+    "hero-thumbnails/3.webp",
+    "hero-thumbnails/20260312_052641.webp",
+    "hero-thumbnails/image (1).webp"
+  ];
+
+  const HERO_THUMB_CACHE=new Map();
+
+  function addHeadPreload(src, priority='high'){
+    if(document.head.querySelector(`link[rel="preload"][as="image"][href="${CSS.escape(src)}"]`))return;
+    const link=document.createElement('link');
+    link.rel='preload';
+    link.as='image';
+    link.href=src;
+    link.fetchPriority=priority;
+    document.head.appendChild(link);
+  }
+
+  function preloadImages(urls, concurrent=4, priority='low', addPreloadLinks=false){
+    let i=0, active=0;
+    return new Promise(resolve=>{
+      function next(){
+        if(i>=urls.length && active===0){resolve();return;}
+        while(active<concurrent && i<urls.length){
+          const src=urls[i++];
+          if(HERO_THUMB_CACHE.has(src)){continue;}
+          active++;
+          if(addPreloadLinks)addHeadPreload(src,priority);
+          const img=new Image();
+          img.decoding='async';
+          img.loading='eager';
+          img.fetchPriority=priority;
+          img.onload=img.onerror=function(){
+            if(img.decode){img.decode().catch(()=>{}).finally(()=>{active--;next();});}
+            else{active--;next();}
+          };
+          img.src=src;
+          HERO_THUMB_CACHE.set(src,img);
+        }
+        if(i>=urls.length && active===0)resolve();
+      }
+      next();
+    });
+  }
+
+  // Preload all hero thumbnails immediately, but do NOT pause/hide the hero.
+  // This restores the original intro timing while still preparing every looping thumbnail.
+  const HERO_CRITICAL_IMAGES=IMAGES.slice(0,12);
+  const HERO_REST_IMAGES=IMAGES.slice(12);
+  const HERO_CRITICAL_READY=preloadImages(HERO_CRITICAL_IMAGES,6,'high',true);
+  const HERO_THUMBS_READY=Promise.all([
+    HERO_CRITICAL_READY,
+    preloadImages(HERO_REST_IMAGES,6,'auto',false)
+  ]);
+
+  function makeThumb(idx){
+    const thumb=document.createElement('div');
+    thumb.className='hero-grid-thumb';
+    const realIndex=idx%IMAGES.length;
+    const img=document.createElement('img');
+    img.src=IMAGES[realIndex];
+    img.onerror=function(){if(!this.dataset.fallbackTried&&this.src.includes('/')){this.dataset.fallbackTried='1';this.src=this.src.split('/').pop();}};
+    img.alt='';
+    img.width=480;
+    img.height=260;
+    img.loading='eager';
+    img.decoding='async';
+    img.fetchPriority=realIndex<12?'high':'low';
+    thumb.appendChild(img);
+    return thumb;
+  }
+  function buildRow(cls,count,offset){
+    const row=document.createElement('div');
+    row.className=`hero-grid-row ${cls}`;
+    const frag=document.createDocumentFragment();
+    const tiles=[];
+    for(let i=0;i<count;i++){
+      const tile=makeThumb(i+offset);
+      tiles.push(tile);
+      frag.appendChild(tile);
+    }
+    tiles.forEach(tile=>frag.appendChild(tile.cloneNode(true)));
+    row.appendChild(frag);
+    return row;
+  }
+  const grid=document.getElementById('hero-grid-bg');
+  if(!grid||grid.dataset.ready)return;
+  grid.dataset.ready='1';
+
+  const fragment=document.createDocumentFragment();
+  fragment.appendChild(buildRow('hero-grid-row-1',8,0));
+  fragment.appendChild(buildRow('hero-grid-row-2',8,6));
+  fragment.appendChild(buildRow('hero-grid-row-3',8,12));
+  fragment.appendChild(buildRow('hero-grid-row-4',8,18));
+  grid.appendChild(fragment);
+
+  // Restore original timing: hero grid starts immediately.
+  // Still force eager decode/preload so later loop thumbnails are ready as early as possible.
+  grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
+    img.loading='eager';
+    img.decoding='async';
+    img.fetchPriority=index<16?'high':'auto';
+    if(img.complete && img.decode)img.decode().catch(()=>{});
+  });
+
+  HERO_THUMBS_READY.then(()=>{
+    grid.classList.add('hero-thumbnails-preloaded');
+    grid.querySelectorAll('.hero-grid-thumb img').forEach(img=>{
+      if(img.decode)img.decode().catch(()=>{});
+    });
+  });
+
+  grid.addEventListener('mouseenter',e=>{
+    const thumb=e.target.closest('.hero-grid-thumb');
+    if(!thumb)return;
+    thumb.classList.remove('fading');
+    thumb.classList.add('lit');
+  },true);
+  grid.addEventListener('mouseleave',e=>{
+    const thumb=e.target.closest('.hero-grid-thumb');
+    if(!thumb)return;
+    thumb.classList.remove('lit');
+    thumb.classList.add('fading');
+    setTimeout(()=>thumb.classList.remove('fading'),2000);
+  },true);
+})();
+
 /* ===== NO COPY / NO DRAG ===== */
 (function(){
   document.addEventListener('contextmenu',e=>e.preventDefault());
@@ -663,11 +1272,20 @@ function updateScrollUI(){
   if(hintsEnabled)y>80?hideHints():showHints();
   const navAnchors=Array.from(document.querySelectorAll('.nav-links a'));
   let cur='';
-  ['work','services','process'].forEach(id=>{const s=document.getElementById(id);if(s&&y>=s.offsetTop-220)cur=id});
+  ['work','services','process','reviews'].forEach(id=>{const s=document.getElementById(id);if(s&&y>=s.offsetTop-220)cur=id});
   navAnchors.forEach(a=>{const h=a.getAttribute('href');if(h&&h.startsWith('#'))a.style.color=h==='#'+cur?'var(--w)':''});
 }
 function requestScrollUI(){if(scrollTicking)return;scrollTicking=true;requestAnimationFrame(updateScrollUI)}
-setTimeout(()=>{hintsEnabled=true;if((window.scrollY||0)<80)showHints();requestScrollUI()},900);
+/* Intro timeline:
+   - grid images are visible immediately when the site opens
+   - grid zoom starts immediately and lasts 5s
+   - gradient + whole hero stack are inside ONE shared layer, start at 1.5s, and use one continuous 1.8s entrance timing with no pause/stall
+   - scroll hints appear 1s after zoom ends, at 6s */
+setTimeout(()=>{
+  hintsEnabled=true;
+  if((window.scrollY||0)<80)showHints();
+  requestScrollUI();
+},6000);
 window.addEventListener('scroll',requestScrollUI,{passive:true});
 window.addEventListener('resize',requestScrollUI,{passive:true});
 requestScrollUI();
@@ -727,7 +1345,6 @@ const works=[
   {cat:['motion','explainer','shorts'],title:'Short 2',src:'short2.mp4',isPhoto:false},
   {cat:['motion','explainer','shorts'],title:'Short 3',src:'short3.mp4',isPhoto:false},
   {cat:['explainer','shorts'],title:'Short 4',src:'short4.mp4',isPhoto:false},
-  {cat:['gaming','shorts'],title:'Short 5',src:'short5.mp4',isPhoto:false},
   {cat:['motion'],title:'Short 6',src:'short6.mp4',isPhoto:false},
   {cat:['motion','documentary','shorts'],title:'Short 7',src:'short7.mp4',isPhoto:false},
   {cat:['motion','documentary','shorts'],title:'Short 8',src:'short8.mp4',isPhoto:false},
@@ -746,14 +1363,31 @@ const works=[
   {cat:['explainer','youtube'],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
   {cat:['explainer','youtube'],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
   {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',isPhoto:false},
-  {cat:['gaming','youtube'],title:'Long Form 14',size:'',src:'longform14.mp4',isPhoto:false},
-  {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'thumbnail1.jpg'},
-  {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'thumbnail2.jpg'},
-  {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'thumbnail3.jpg'},
-  {cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'thumbnail4.jpg'},
-  {cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'thumbnail5.jpg'},
-  {cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'thumbnail6.jpg'},
+  {cat:['motion','explainer','youtube'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',isPhoto:false},
+  {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'portfolio-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'portfolio-thumbnails/5.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'portfolio-thumbnails/image.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 7',src:'',isPhoto:true,img:'portfolio-thumbnails/bvcvcbvcbvcb43541.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 8',src:'',isPhoto:true,img:'portfolio-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 9',src:'',isPhoto:true,img:'portfolio-thumbnails/Illustrator_vid.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 10',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_4.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 11',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 12',src:'',isPhoto:true,img:'portfolio-thumbnails/thumnbail_by_lokesh_2.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 13',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_1_.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_5.png.webp'},
+  {cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp'}
 ];
+
+
+// Preload portfolio thumbnail tab images too, so opening the Thumbnails tab feels instant.
+(function(){
+  const portfolioThumbs=works.filter(w=>w.isPhoto&&w.img).map(w=>w.img);
+  const run=()=>portfolioThumbs.forEach(src=>{const img=new Image();img.decoding='async';img.loading='eager';img.fetchPriority='high';img.src=src;});
+  if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900}); else setTimeout(run,300);
+})();
 
 const playSVG=`<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
 const camSVG=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>`;
@@ -772,7 +1406,7 @@ function renderWork(list){
     const dataCats=cats.join(' ');
 
     if(w.isPhoto&&w.img){
-      return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s"><img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="lazy" decoding="async">${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div></div>`;
+      return `<div class="wc ${sizeClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s"><img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onerror="if(!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div></div>`;
     }
 
     const ps=w.previewStart??2,pe=w.previewEnd??5;
@@ -1098,6 +1732,55 @@ const workGridEl=document.getElementById('work-grid');
 if(workGridEl)new MutationObserver(()=>document.querySelectorAll('.rv:not(.vis)').forEach(el=>obs.observe(el))).observe(workGridEl,{childList:true});
 
 window.addEventListener('load',()=>document.body.style.overflow='visible');
+
+/* ===== ORBIT RING ANIMATION ===== */
+(function(){
+  function spinOrbit(){
+    const ring = document.querySelector('.orbit-ring');
+    if(!ring) return;
+    let angle = 0;
+    function frame(){
+      angle = (angle + 0.08) % 360;
+      ring.style.transform = 'rotate(' + angle + 'deg)';
+ring.style.display = 'block';
+ring.style.opacity = '1';
+ring.style.visibility = 'visible';
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', spinOrbit);
+  } else {
+    spinOrbit();
+  }
+})();
+
 </script>
+
+<script>
+// Safe intro restore: keeps the original black fade-in cover, but it can never trap the page blank.
+(function(){
+  function releaseIntro(){
+    if(document.body){
+      document.body.style.opacity='1';
+      document.body.style.visibility='visible';
+      document.body.style.overflowX='hidden';
+    }
+    document.querySelectorAll('.site-fade-cover').forEach(function(el){
+      el.classList.add('site-cover-hide');
+      setTimeout(function(){ if(el && el.parentNode){ el.parentNode.removeChild(el); } }, 650);
+    });
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(releaseIntro, 450); });
+  } else {
+    setTimeout(releaseIntro, 450);
+  }
+  window.addEventListener('load', function(){ setTimeout(releaseIntro, 350); });
+  setTimeout(releaseIntro, 1800);
+})();
+</script>
+
 </body>
 </html>

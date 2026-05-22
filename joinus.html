@@ -1356,5 +1356,30 @@ function toggleFaq(el){
   if(!wasOpen)el.classList.add('open');
 }
 </script>
+
+<script>
+/* ===== BACK TO SITE WITHOUT RESTARTING HOME POSITION ===== */
+(function(){
+  const HOME_SCROLL_KEY = 'cnh_home_scroll_y';
+  const backBtn = document.querySelector('.back-btn');
+  if(!backBtn) return;
+
+  backBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    let hasSavedSpot = false;
+    try{ hasSavedSpot = sessionStorage.getItem(HOME_SCROLL_KEY) !== null; }catch(err){}
+
+    // Best case: go back to the already-open home page, so it stays exactly where it was.
+    if(hasSavedSpot && document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1){
+      history.back();
+      return;
+    }
+
+    // Fallback: open home page; the home page script restores the saved scroll position.
+    window.location.href = '/';
+  });
+})();
+</script>
+
 </body>
 </html>

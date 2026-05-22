@@ -2337,5 +2337,61 @@ ring.style.visibility = 'visible';
 })();
 </script>
 
+
+<script>
+/* ===== RETURN TO SAME HOME SPOT FROM CONTACT / JOIN US ===== */
+(function(){
+  const HOME_SCROLL_KEY = 'cnh_home_scroll_y';
+  const HOME_TIME_KEY = 'cnh_home_scroll_time';
+
+  function saveHomeSpot(){
+    try{
+      sessionStorage.setItem(HOME_SCROLL_KEY, String(window.scrollY || document.documentElement.scrollTop || 0));
+      sessionStorage.setItem(HOME_TIME_KEY, String(Date.now()));
+    }catch(e){}
+  }
+
+  // Save the exact home-page scroll position before opening Contact / Join Us.
+  document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href]');
+    if(!link) return;
+    const href = link.getAttribute('href') || '';
+    if(href === '/contact' || href === 'contact' || href === './contact' || href.includes('/contact') ||
+       href === '/joinus' || href === 'joinus' || href === './joinus' || href.includes('/joinus')){
+      saveHomeSpot();
+    }
+  }, true);
+
+  // Also keep updating while scrolling, so refresh/back still lands correctly.
+  let ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      saveHomeSpot();
+      ticking = false;
+    });
+  }, {passive:true});
+
+  // Fallback restore if the browser reloads the home page instead of using bfcache/history.
+  window.addEventListener('pageshow', function(){
+    let y = 0;
+    let age = 999999999;
+    try{
+      y = parseInt(sessionStorage.getItem(HOME_SCROLL_KEY) || '0', 10);
+      age = Date.now() - parseInt(sessionStorage.getItem(HOME_TIME_KEY) || '0', 10);
+    }catch(e){}
+    if(y > 20 && age < 1000 * 60 * 60){
+      if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      requestAnimationFrame(function(){
+        window.scrollTo(0, y);
+        setTimeout(function(){ window.scrollTo(0, y); }, 80);
+        setTimeout(function(){ window.scrollTo(0, y); }, 350);
+      });
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

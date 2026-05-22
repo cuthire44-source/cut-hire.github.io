@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Contact — Cut & Hire</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0a;
-  --card:#0f0f0f;
+  --bg:#000000;
+  --card:#050505;
   --red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.12);
   --blue:#3a7bd5;
   --w:#f5f0eb;--m:#5c5c5c;--b:rgba(255,255,255,.06);
@@ -263,6 +263,249 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 }
 @media(prefers-reduced-motion:reduce){
   .stroke-glow-btn .btn-stroke-light animateMotion{display:none!important}
+}
+
+
+/* ===================== FABRI-STYLE MOBILE RESPONSIVE PATCH ===================== */
+/* Desktop stays the same. This only fixes tablet/phone layout, spacing and touch sizing. */
+html,body{
+  width:100%;
+  max-width:100%;
+}
+
+img,svg{
+  max-width:100%;
+}
+
+a,button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+@supports(padding:max(0px)){
+  body{
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+}
+
+@media(max-width:900px){
+  .orb{
+    filter:blur(105px);
+    opacity:.75;
+  }
+
+  .o1{
+    width:430px;
+    height:430px;
+    top:-130px;
+    left:-210px;
+  }
+
+  .o2{
+    width:360px;
+    height:360px;
+    right:-190px;
+    bottom:-120px;
+  }
+
+  .back-btn{
+    top:max(1rem,env(safe-area-inset-top));
+    left:1.2rem;
+    padding:.62rem 1.05rem;
+    font-size:.62rem;
+    letter-spacing:.12em;
+  }
+
+  .contact-stage{
+    min-height:100svh;
+    padding:6.4rem 1.35rem 4rem;
+  }
+
+  .contact-hero{
+    padding:0 0 2.6rem;
+  }
+
+  .contact-h1{
+    font-size:clamp(2.7rem,12vw,4.7rem);
+    line-height:.94;
+    letter-spacing:-.045em;
+  }
+
+  .contact-sub{
+    max-width:620px;
+    margin-top:1.15rem;
+    font-size:.94rem;
+    line-height:1.72;
+    color:rgba(245,240,235,.68);
+  }
+
+  .contact-content{
+    max-width:720px;
+    padding:0;
+  }
+
+  .contact-methods{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .contact-card{
+    border-radius:24px;
+    padding:1.75rem 1.35rem 1.45rem;
+    box-shadow:0 18px 44px rgba(0,0,0,.24);
+  }
+
+  .contact-card::after{
+    left:18px;
+    right:18px;
+    border-radius:999px;
+  }
+
+  .cc-icon{
+    width:2.35rem;
+    height:2.35rem;
+    margin-bottom:.9rem;
+  }
+
+  .cc-title{
+    font-size:1.15rem;
+  }
+
+  .cc-value{
+    font-size:.86rem;
+    line-height:1.72;
+  }
+
+  .contact-main-btn{
+    margin-top:1.35rem;
+  }
+
+  .btn-discord{
+    min-height:52px;
+    min-width:0;
+    width:100%;
+    max-width:420px;
+    padding:1rem 1.2rem;
+    font-size:.92rem;
+    text-align:center;
+  }
+}
+
+@media(max-width:560px){
+  body::before{
+    opacity:.38;
+    background-size:180px 180px;
+  }
+
+  .back-btn{
+    left:1rem;
+    max-width:calc(100vw - 2rem);
+  }
+
+  .contact-stage{
+    justify-content:flex-start;
+    min-height:100svh;
+    padding:6.1rem 1rem 3rem;
+  }
+
+  .contact-h1{
+    font-size:clamp(2.55rem,15vw,4.15rem);
+  }
+
+  .contact-sub{
+    font-size:.88rem;
+    line-height:1.68;
+  }
+
+  .contact-card{
+    border-radius:22px;
+    padding:1.45rem 1.15rem 1.25rem;
+  }
+
+  .cc-label{
+    font-size:.53rem;
+    letter-spacing:.17em;
+  }
+
+  .cc-title{
+    font-size:1.06rem;
+  }
+
+  .cc-value{
+    font-size:.82rem;
+  }
+
+  .btn-discord{
+    width:100%;
+    min-height:54px;
+    padding:.98rem 1rem;
+    font-size:.86rem;
+    white-space:normal;
+    line-height:1.25;
+  }
+
+  .stroke-glow-btn .btn-stroke-light{
+    inset:-5px;
+    width:calc(100% + 10px);
+    height:calc(100% + 10px);
+  }
+}
+
+@media(max-width:380px){
+  .contact-stage{
+    padding-left:.82rem;
+    padding-right:.82rem;
+  }
+
+  .contact-h1{
+    font-size:2.45rem;
+  }
+
+  .contact-card{
+    padding:1.25rem 1rem;
+  }
+
+  .btn-discord{
+    font-size:.8rem;
+  }
+}
+
+
+
+
+/* ===================== TRUE BLACK BACKGROUND UPDATE ===================== */
+:root{
+  --bg:#000000 !important;
+  --card:#050505 !important;
+  --b:rgba(255,255,255,.075) !important;
+}
+html,body{
+  background:#000000 !important;
+}
+section,
+.about-section,
+#work,
+#services,
+#process,
+#discord,
+.contact-stage,
+.join-hero,
+.join-content{
+  background:#000000 !important;
+}
+.contact-card,
+.path-card,
+.how-step,
+.network-section,
+.discord-strip,
+.faq-item,
+.sv,
+.ps,
+.wc{
+  background:#050505 !important;
+}
+body::before{
+  opacity:.34 !important;
 }
 
 </style>

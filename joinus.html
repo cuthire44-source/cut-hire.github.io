@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Join Us — Cut & Hire</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0a;
-  --card:#0f0f0f;
+  --bg:#000000;
+  --card:#050505;
   --red:#e02020;--rg:rgba(224,32,32,.55);--rs:rgba(224,32,32,.12);
   --blue:#3a7bd5;
   --w:#f5f0eb;--m:#5c5c5c;--b:rgba(255,255,255,.06);
@@ -680,6 +680,445 @@ body.intro-visible .paths{
 }
 @media(prefers-reduced-motion:reduce){
   .stroke-glow-btn .btn-stroke-light animateMotion{display:none!important}
+}
+
+
+/* ===================== FABRI-STYLE MOBILE RESPONSIVE PATCH ===================== */
+/* Desktop stays the same. This only fixes tablet/phone layout, spacing and touch sizing. */
+html,body{
+  width:100%;
+  max-width:100%;
+}
+
+img,svg{
+  max-width:100%;
+}
+
+a,button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+@supports(padding:max(0px)){
+  body{
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+}
+
+@media(max-width:900px){
+  .orb{
+    filter:blur(105px);
+    opacity:.7;
+  }
+
+  .o1{
+    width:430px;
+    height:430px;
+    top:-135px;
+    left:-215px;
+  }
+
+  .o2{
+    width:360px;
+    height:360px;
+    right:-190px;
+    bottom:-125px;
+  }
+
+  .o3{
+    width:270px;
+    height:270px;
+    right:-140px;
+    top:32%;
+  }
+
+  .back-btn{
+    top:max(1rem,env(safe-area-inset-top));
+    left:1.2rem;
+    padding:.62rem 1.05rem;
+    font-size:.62rem;
+    letter-spacing:.12em;
+    border-radius:999px;
+  }
+
+  .join-hero{
+    min-height:auto;
+    padding:6.8rem 1.35rem 2.45rem;
+  }
+
+  .join-h1{
+    font-size:clamp(2.7rem,12vw,4.9rem);
+    line-height:.94;
+    letter-spacing:-.045em;
+  }
+
+  .join-sub{
+    max-width:680px;
+    margin-top:1.1rem;
+    font-size:.94rem;
+    line-height:1.72;
+    color:rgba(245,240,235,.68);
+  }
+
+  .divider{
+    max-width:calc(100% - 2.4rem);
+  }
+
+  .join-content{
+    width:100%;
+    max-width:720px;
+    padding:2.2rem 1.2rem 4.6rem;
+  }
+
+  .paths{
+    grid-template-columns:1fr !important;
+    gap:14px;
+    margin-bottom:3rem;
+  }
+
+  .path-card{
+    min-height:auto !important;
+    border-radius:26px;
+    padding:1.85rem 1.35rem;
+    box-shadow:0 18px 44px rgba(0,0,0,.24);
+  }
+
+  .path-card::after{
+    left:18px;
+    right:18px;
+    bottom:0;
+    border-radius:999px;
+  }
+
+  .path-badge{
+    border-radius:999px;
+    padding:.4rem .82rem;
+    margin-bottom:1.05rem;
+  }
+
+  .path-icon{
+    width:2.15rem;
+    height:2.15rem;
+    margin-bottom:.8rem;
+  }
+
+  .path-icon img{
+    width:2.1rem;
+    height:2.1rem;
+  }
+
+  .path-card h2{
+    font-size:clamp(1.65rem,7vw,2.45rem);
+    line-height:1.02;
+  }
+
+  .path-desc{
+    min-height:0 !important;
+    font-size:.88rem;
+    line-height:1.72;
+    margin-bottom:1.15rem;
+  }
+
+  .path-perks{
+    gap:.48rem;
+    margin-bottom:1.35rem;
+  }
+
+  .path-perks li{
+    font-size:.82rem;
+    line-height:1.62;
+  }
+
+  .path-btn{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:52px;
+    padding:.98rem 1.1rem;
+    border-radius:999px;
+    font-size:.86rem;
+    white-space:normal;
+    line-height:1.22;
+  }
+
+  .how-strip,
+  .network-section,
+  .faq-section,
+  .discord-strip{
+    max-width:100%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .how-strip{
+    margin-bottom:3rem;
+  }
+
+  .strip-label{
+    font-size:.54rem;
+    letter-spacing:.18em;
+    margin-bottom:1.2rem;
+  }
+
+  .how-steps{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:12px;
+  }
+
+  .how-step{
+    min-height:auto;
+    border-radius:22px;
+    padding:1.35rem 1.05rem;
+  }
+
+  .how-num{
+    font-size:2.45rem;
+  }
+
+  .how-step h4{
+    font-size:.96rem;
+  }
+
+  .how-step p{
+    font-size:.76rem;
+    line-height:1.62;
+  }
+
+  .network-section{
+    border-radius:26px;
+    padding:2rem 1.35rem;
+    margin-top:3rem;
+  }
+
+  .ns-body{
+    grid-template-columns:1fr !important;
+    gap:1.65rem;
+  }
+
+  .ns-body h3{
+    font-size:clamp(1.55rem,6.5vw,2.2rem);
+    line-height:1.06;
+  }
+
+  .ns-body p{
+    font-size:.86rem;
+    line-height:1.72;
+  }
+
+  .ns-stat{
+    border-radius:20px;
+    min-height:auto;
+    align-items:flex-start;
+  }
+
+  .ns-stat-n{
+    font-size:2rem;
+    min-width:54px;
+  }
+
+  .faq-section{
+    margin-top:3rem;
+  }
+
+  .faq-item{
+    padding:1rem 0;
+  }
+
+  .faq-q{
+    font-size:1rem;
+    line-height:1.35;
+    gap:1rem;
+  }
+
+  .faq-a{
+    font-size:.84rem;
+    line-height:1.72;
+  }
+
+  .discord-strip{
+    border-radius:26px;
+    padding:2rem 1.35rem;
+    gap:1.2rem;
+    justify-content:center;
+    text-align:center;
+  }
+
+  .ds-text h3{
+    font-size:clamp(1.45rem,6vw,2rem);
+  }
+
+  .ds-text p{
+    font-size:.84rem;
+    line-height:1.65;
+  }
+
+  .discord-strip .btn-red{
+    width:100%;
+    min-height:52px;
+    justify-content:center;
+    text-align:center;
+  }
+}
+
+@media(max-width:560px){
+  body::before{
+    opacity:.38;
+    background-size:180px 180px;
+  }
+
+  .back-btn{
+    left:1rem;
+    max-width:calc(100vw - 2rem);
+  }
+
+  .join-hero{
+    padding:6.25rem 1rem 2rem;
+  }
+
+  .join-h1{
+    font-size:clamp(2.55rem,15vw,4.1rem);
+  }
+
+  .join-sub{
+    font-size:.88rem;
+    line-height:1.68;
+  }
+
+  .join-content{
+    padding:1.8rem 1rem 3.5rem;
+  }
+
+  .paths{
+    gap:12px;
+    margin-bottom:2.65rem;
+  }
+
+  .path-card{
+    border-radius:22px;
+    padding:1.45rem 1.08rem;
+  }
+
+  .path-badge{
+    font-size:.5rem;
+    letter-spacing:.16em;
+  }
+
+  .path-card h2{
+    font-size:1.72rem;
+  }
+
+  .path-desc,
+  .path-perks li{
+    font-size:.8rem;
+  }
+
+  .how-steps{
+    grid-template-columns:1fr !important;
+    gap:10px;
+  }
+
+  .how-step{
+    border-radius:20px;
+    padding:1.22rem 1rem;
+  }
+
+  .network-section,
+  .discord-strip{
+    border-radius:22px;
+    padding:1.55rem 1rem;
+  }
+
+  .ns-stat{
+    gap:.85rem;
+    padding:.95rem 1rem;
+  }
+
+  .ns-stat-n{
+    font-size:1.75rem;
+    min-width:48px;
+  }
+
+  .ns-stat-l{
+    font-size:.72rem;
+  }
+
+  .faq-q{
+    font-size:.94rem;
+  }
+
+  .path-btn,
+  .discord-strip .btn-red{
+    min-height:54px;
+    font-size:.82rem;
+  }
+
+  .stroke-glow-btn .btn-stroke-light{
+    inset:-5px;
+    width:calc(100% + 10px);
+    height:calc(100% + 10px);
+  }
+}
+
+@media(max-width:380px){
+  .join-content,
+  .join-hero{
+    padding-left:.82rem;
+    padding-right:.82rem;
+  }
+
+  .join-h1{
+    font-size:2.45rem;
+  }
+
+  .path-card{
+    padding:1.25rem .95rem;
+  }
+
+  .path-card h2{
+    font-size:1.52rem;
+  }
+
+  .path-btn,
+  .discord-strip .btn-red{
+    font-size:.78rem;
+  }
+}
+
+
+
+
+/* ===================== TRUE BLACK BACKGROUND UPDATE ===================== */
+:root{
+  --bg:#000000 !important;
+  --card:#050505 !important;
+  --b:rgba(255,255,255,.075) !important;
+}
+html,body{
+  background:#000000 !important;
+}
+section,
+.about-section,
+#work,
+#services,
+#process,
+#discord,
+.contact-stage,
+.join-hero,
+.join-content{
+  background:#000000 !important;
+}
+.contact-card,
+.path-card,
+.how-step,
+.network-section,
+.discord-strip,
+.faq-item,
+.sv,
+.ps,
+.wc{
+  background:#050505 !important;
+}
+body::before{
+  opacity:.34 !important;
 }
 
 </style>

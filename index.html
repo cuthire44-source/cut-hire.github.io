@@ -235,25 +235,26 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   align-items:center;
   justify-content:center;
   letter-spacing:.035em;
-  transition:transform .15s,filter .25s;
+  transition:transform .18s cubic-bezier(.22,1,.36,1),filter .25s ease;
   white-space:nowrap;
   isolation:isolate;
   border:2.5px solid rgba(0,0,0,.78);
   outline:none;
-  overflow:visible;
+  overflow:hidden;
   box-shadow:none;
 }
-/* Small reflective shine that follows the black button stroke smoothly. */
+/* Small reflective shine that follows the exact button stroke. */
 .btn-primary::before,
 .btn-primary::after{display:none!important;content:none!important}
 .btn-primary .btn-stroke-light{
   position:absolute;
-  inset:-6px;
-  width:calc(100% + 12px);
-  height:calc(100% + 12px);
+  inset:0;
+  width:100%;
+  height:100%;
   pointer-events:none;
   overflow:visible;
-  z-index:0;
+  z-index:2;
+  border-radius:inherit;
 }
 .btn-primary .btn-stroke-light path{fill:none;stroke:none}
 .btn-primary .btn-stroke-light .shine-core,
@@ -262,16 +263,16 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.scr
   transform-origin:center;
 }
 .btn-primary .btn-stroke-light .shine-core{
-  fill:rgba(255,255,255,.70);
-  filter:url(#btnShineBlur);
+  fill:rgba(255,255,255,.78);
+  filter:blur(1.15px);
 }
 .btn-primary .btn-stroke-light .shine-soft{
-  fill:rgba(255,255,255,.18);
-  filter:url(#btnShineBigBlur);
+  fill:rgba(255,255,255,.30);
+  filter:blur(2.8px);
 }
-.btn-primary:hover{transform:translateY(-1px) scale(.975);filter:brightness(1.04)}
+.btn-primary:hover{transform:translateY(-1px) scale(.975);filter:brightness(1.045)}
 .btn-primary:active{transform:translateY(0) scale(.96)}
-.btn-primary span{position:relative;z-index:1}
+.btn-primary span{position:relative;z-index:3}
 @media(prefers-reduced-motion:reduce){.btn-primary .btn-stroke-light animateMotion{display:none!important}}
 .btn-outline{background:transparent;color:var(--w);border:1px solid rgba(255,255,255,.15);padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;letter-spacing:.04em;transition:border-color .2s,transform .15s,background .2s;white-space:nowrap;border-radius:999px}
 .btn-outline:hover{border-color:var(--red);transform:translateY(-2px);background:var(--rs)}
@@ -700,7 +701,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 .review-card:hover{transform:translateY(-7px);border-color:rgba(224,32,32,.32);background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));box-shadow:0 24px 70px rgba(0,0,0,.28)}
 .review-card:hover::before{opacity:1}.review-card:hover::after{width:72%}
 .review-avatar{position:relative;width:86px;height:86px;margin:0 auto 1rem;border-radius:50%;border:1.5px solid rgba(224,32,32,.9);padding:3px;background:#050505;box-shadow:0 0 0 6px rgba(224,32,32,.035),0 0 28px rgba(224,32,32,.18)}
-.review-avatar-img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.015)),radial-gradient(circle at 35% 35%,rgba(224,32,32,.32),transparent 38%),radial-gradient(circle at 70% 70%,rgba(88,101,242,.2),transparent 42%),#171717}
+.review-avatar-img{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.015)),radial-gradient(circle at 35% 35%,rgba(224,32,32,.32),transparent 38%),radial-gradient(circle at 70% 70%,rgba(88,101,242,.2),transparent 42%),#171717}
 .review-discord-dot{position:absolute;right:-2px;bottom:8px;width:24px;height:24px;border-radius:50%;background:#5865f2;border:4px solid var(--bg);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.68rem;font-weight:900;line-height:1}
 .review-name{position:relative;z-index:1;font-weight:800;color:var(--w);font-size:1.02rem;letter-spacing:.01em;margin-bottom:.35rem}
 .review-verified{position:relative;z-index:1;font-family:'DM Mono',monospace;font-size:.63rem;color:rgba(245,240,235,.45);display:flex;align-items:center;justify-content:center;gap:.35rem;margin-bottom:1rem}
@@ -1222,12 +1223,12 @@ body::before{
     <defs>
       <filter id="btnShineBlur" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="0.9"/></filter>
       <filter id="btnShineBigBlur" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="2.4"/></filter>
-      <path id="btnShinePath" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+      <path id="btnShinePath" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
     </defs>
-    <ellipse class="shine-soft" rx="10" ry="3">
+    <ellipse class="shine-soft" rx="8.5" ry="2.8">
       <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath"/></animateMotion>
     </ellipse>
-    <ellipse class="shine-core" rx="5" ry="1.15">
+    <ellipse class="shine-core" rx="4.7" ry="1.15">
       <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath"/></animateMotion>
     </ellipse>
   </svg><span>Start a Project</span></a>
@@ -1291,7 +1292,7 @@ body::before{
       <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="cinema-projector.png" alt=""></div><div class="sv-n">Cinematic Editing</div><p class="sv-p">Film-level color grading, pacing, and storytelling for your most important projects.</p></div>
       <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="console.png" alt=""></div><div class="sv-n">Gaming Content</div><p class="sv-p">Highlight reels, montages, and stream VOD edits built for engagement and retention.</p></div>
       <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="smartphone-call.png" alt=""></div><div class="sv-n">Short Form / Reels</div><p class="sv-p">Hook-first vertical content engineered for TikTok, Reels, and YouTube Shorts virality.</p></div>
-      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="youtube(1).png" alt="YouTube"></div><div class="sv-n">YouTube Long Form</div><p class="sv-p">Clean pacing, retention-focused cuts, sound design, and storytelling for full YouTube videos.</p></div>
+      <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="youtube.png" alt="YouTube"></div><div class="sv-n">YouTube Long Form</div><p class="sv-p">Clean pacing, retention-focused cuts, sound design, and storytelling for full YouTube videos.</p></div>
       <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="photograph.png" alt=""></div><div class="sv-n">Documentary</div><p class="sv-p">Long-form narrative editing that finds the story hidden inside your raw footage.</p></div>
       <div class="sv rv"><div class="sv-i"><img class="sv-icon" src="brand.png" alt=""></div><div class="sv-n">Brand & Corporate</div><p class="sv-p">Polished brand films, ads, and internal videos that represent you professionally.</p></div>
     </div>
@@ -1333,9 +1334,9 @@ body::before{
   data-proof-img="tiffany.png"
   data-proof="Discord message from Tiffany">
  <div class="review-avatar" style="overflow:hidden">
-    <img class="review-avatar-img" src="tiffany-pfp.png" alt="Tiffany">
+    <div class="review-avatar-img" style="filter:blur(6px);transform:scale(1.1)"></div>
     <div class="review-discord-dot">⌁</div>
- </div>
+</div>
   <div class="review-name">Tiffany</div>
   <div class="review-verified"><span>⌁</span> Verified on Discord</div>
   <p class="review-quote">"@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10"</p>

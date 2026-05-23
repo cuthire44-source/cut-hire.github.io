@@ -628,7 +628,7 @@ body.intro-visible .paths{
 /* ===================== SHARED MOVING STROKE LIGHT FOR CTA BUTTONS ===================== */
 .stroke-glow-btn{
   position:relative !important;
-  overflow:visible !important;
+  overflow:hidden !important;
   isolation:isolate;
   border:2.5px solid rgba(0,0,0,.72) !important;
   box-shadow:none !important;
@@ -644,12 +644,13 @@ body.intro-visible .paths{
 }
 .stroke-glow-btn .btn-stroke-light{
   position:absolute;
-  inset:-6px;
-  width:calc(100% + 12px);
-  height:calc(100% + 12px);
+  inset:0;
+  width:100%;
+  height:100%;
   pointer-events:none;
   overflow:visible;
-  z-index:0;
+  z-index:2;
+  border-radius:inherit;
 }
 .stroke-glow-btn .btn-stroke-light path{fill:none;stroke:none}
 .stroke-glow-btn .shine-core,
@@ -658,17 +659,17 @@ body.intro-visible .paths{
   transform-origin:center;
 }
 .stroke-glow-btn .shine-core{
-  fill:rgba(255,255,255,.70);
-  filter:url(#btnShineBlur);
+  fill:rgba(255,255,255,.78);
+  filter:blur(1.15px);
 }
 .stroke-glow-btn .shine-soft{
-  fill:rgba(255,255,255,.18);
-  filter:url(#btnShineBigBlur);
+  fill:rgba(255,255,255,.30);
+  filter:blur(2.8px);
 }
 .stroke-glow-btn > span,
 .stroke-glow-btn > svg + span{
   position:relative;
-  z-index:1;
+  z-index:3;
 }
 .stroke-glow-btn:hover{
   transform:scale(.975) !important;
@@ -1168,12 +1169,12 @@ body::before{
         <defs>
           <filter id="btnShineBlur1" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
           <filter id="btnShineBigBlur1" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath1" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+          <path id="btnShinePath1" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
         </defs>
-        <ellipse class="shine-soft" rx="10" ry="3.2">
+        <ellipse class="shine-soft" rx="8.5" ry="2.8">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
         </ellipse>
-        <ellipse class="shine-core" rx="5.4" ry="1.35">
+        <ellipse class="shine-core" rx="4.7" ry="1.15">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
         </ellipse>
       </svg><span>Apply as Outsourcer</span></a>
@@ -1197,12 +1198,12 @@ body::before{
         <defs>
           <filter id="btnShineBlur2" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
           <filter id="btnShineBigBlur2" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath2" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+          <path id="btnShinePath2" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
         </defs>
-        <ellipse class="shine-soft" rx="10" ry="3.2">
+        <ellipse class="shine-soft" rx="8.5" ry="2.8">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath2"/></animateMotion>
         </ellipse>
-        <ellipse class="shine-core" rx="5.4" ry="1.35">
+        <ellipse class="shine-core" rx="4.7" ry="1.15">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath2"/></animateMotion>
         </ellipse>
       </svg><span>Apply as Editor</span></a>
@@ -1289,12 +1290,12 @@ body::before{
         <defs>
           <filter id="btnShineBlur3" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
           <filter id="btnShineBigBlur3" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath3" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+          <path id="btnShinePath3" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
         </defs>
-        <ellipse class="shine-soft" rx="10" ry="3.2">
+        <ellipse class="shine-soft" rx="8.5" ry="2.8">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath3"/></animateMotion>
         </ellipse>
-        <ellipse class="shine-core" rx="5.4" ry="1.35">
+        <ellipse class="shine-core" rx="4.7" ry="1.15">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath3"/></animateMotion>
         </ellipse>
       </svg><span>Join Discord</span></a>

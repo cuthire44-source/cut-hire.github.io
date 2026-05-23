@@ -1190,6 +1190,94 @@ body::before{
   background:#050505;
 }
 
+
+
+/* =========================================================
+   CLEAN PORTFOLIO CATEGORY STRUCTURE PATCH
+   Short-form videos = vertical 9:16.
+   Long-form / motion / gaming / documentary / vlogs = horizontal 16:9.
+   Thumbnail category keeps its existing photo look.
+========================================================= */
+#work .work-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:auto;
+  grid-auto-flow:row;
+  align-items:start;
+  gap:3px;
+}
+
+#work .wc.is-video{
+  width:100%;
+  min-height:0;
+  grid-column:span 1 !important;
+  grid-row:span 1 !important;
+  border-radius:0;
+}
+
+#work .wc.is-video.longform-card{
+  aspect-ratio:16 / 9;
+}
+
+#work .wc.is-video.shortform-card{
+  aspect-ratio:9 / 16;
+}
+
+#work .wc.is-video.motion-featured-card,
+#work .wc.is-video.wide,
+#work .wc.is-video.tall{
+  grid-column:span 1 !important;
+  grid-row:span 1 !important;
+}
+
+#work .wc.is-video .wc-video-thumb,
+#work .wc.is-video .wc-preview-video,
+#work .wc.is-video .wc-thumb{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+#work .wc.is-video.longform-card .wc-video-thumb,
+#work .wc.is-video.longform-card .wc-preview-video,
+#work .wc.is-video.longform-card .wc-thumb{
+  object-fit:cover;
+}
+
+#work .wc.is-video.shortform-card .wc-video-thumb,
+#work .wc.is-video.shortform-card .wc-preview-video,
+#work .wc.is-video.shortform-card .wc-thumb{
+  object-fit:cover;
+}
+
+/* Keep the thumbnail tab/photo cards unchanged except normal responsive behavior. */
+#work .wc.is-photo{
+  aspect-ratio:auto;
+}
+
+@media(max-width:960px){
+  #work .work-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-auto-rows:auto;
+  }
+}
+
+@media(max-width:640px){
+  #work .work-grid{
+    grid-template-columns:1fr;
+    grid-auto-rows:auto;
+    gap:14px;
+  }
+
+  #work .wc.is-video.longform-card{
+    aspect-ratio:16 / 9;
+  }
+
+  #work .wc.is-video.shortform-card{
+    aspect-ratio:9 / 16;
+    width:min(100%,360px);
+    justify-self:center;
+  }
+}
 </style>
 </head>
 <body>
@@ -1882,7 +1970,7 @@ const works=[
   {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',isPhoto:false},
   {cat:['motion','explainer','youtube'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
 
-  // Thumbnails: Thumbnail 14 replaced with the new uploaded image.
+  // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
   {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
   {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
   {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
@@ -1896,7 +1984,7 @@ const works=[
   {cat:['thumbnail'],title:'Thumbnail 11',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp'},
   {cat:['thumbnail'],title:'Thumbnail 12',src:'',isPhoto:true,img:'portfolio-thumbnails/thumnbail_by_lokesh_2.webp'},
   {cat:['thumbnail'],title:'Thumbnail 13',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_1_.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'portfolio-thumbnails/3(2).webp'},
+  {cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'portfolio-thumbnails/3(3).webp'},
   {cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp'}
 ];
 
@@ -1939,8 +2027,12 @@ function renderWork(list){
   const g=document.getElementById('work-grid');
   g.innerHTML=list.map((w,i)=>{
     const cats=getCats(w),isShort=isShortVideo(w),isThumb=cats.includes('thumbnail');
-    const sizeClass=isShort?'shortform-card':(w.size||'');
-    const featuredClass=w.featured?' motion-featured-card':'';
+    // Clean portfolio structure:
+    // - Short-form videos stay vertical 9:16.
+    // - Long-form / motion / gaming / documentary / vlogs stay horizontal 16:9.
+    // - Thumbnail tab keeps its existing thumbnail layout.
+    const sizeClass=w.isPhoto?(w.size||''):(isShort?'shortform-card':'longform-card');
+    const featuredClass=(w.featured&&w.isPhoto)?' motion-featured-card':'';
     const autoplayClass=w.autoplayPreview?' autoplay-preview':'';
     const badge=isShort?'<div class="wc-badge">9:16</div>':'';
     const phClass=isShort?'shortform-ph':isThumb?'thumbnail-ph':'';

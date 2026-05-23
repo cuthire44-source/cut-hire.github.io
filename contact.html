@@ -211,7 +211,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 /* ===================== SHARED MOVING STROKE LIGHT FOR CTA BUTTONS ===================== */
 .stroke-glow-btn{
   position:relative !important;
-  overflow:visible !important;
+  overflow:hidden !important;
   isolation:isolate;
   border:2.5px solid rgba(0,0,0,.72) !important;
   box-shadow:none !important;
@@ -227,12 +227,13 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 }
 .stroke-glow-btn .btn-stroke-light{
   position:absolute;
-  inset:-6px;
-  width:calc(100% + 12px);
-  height:calc(100% + 12px);
+  inset:0;
+  width:100%;
+  height:100%;
   pointer-events:none;
   overflow:visible;
-  z-index:0;
+  z-index:2;
+  border-radius:inherit;
 }
 .stroke-glow-btn .btn-stroke-light path{fill:none;stroke:none}
 .stroke-glow-btn .shine-core,
@@ -241,17 +242,16 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   transform-origin:center;
 }
 .stroke-glow-btn .shine-core{
-  fill:rgba(255,255,255,.70);
-  filter:url(#btnShineBlur);
+  fill:rgba(255,255,255,.78);
+  filter:url(#btnShineBlur1);
 }
 .stroke-glow-btn .shine-soft{
-  fill:rgba(255,255,255,.18);
-  filter:url(#btnShineBigBlur);
+  fill:rgba(255,255,255,.30);
+  filter:url(#btnShineBigBlur1);
 }
-.stroke-glow-btn > span,
-.stroke-glow-btn > svg + span{
+.stroke-glow-btn > span{
   position:relative;
-  z-index:1;
+  z-index:3;
 }
 .stroke-glow-btn:hover{
   transform:scale(.975) !important;
@@ -445,9 +445,9 @@ a,button{
   }
 
   .stroke-glow-btn .btn-stroke-light{
-    inset:-5px;
-    width:calc(100% + 10px);
-    height:calc(100% + 10px);
+    inset:0;
+    width:100%;
+    height:100%;
   }
 }
 
@@ -550,14 +550,15 @@ body::before{
   <div class="contact-main-btn" id="discord-btn">
     <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-discord stroke-glow-btn"><svg class="btn-stroke-light" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
         <defs>
-          <filter id="btnShineBlur1" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
-          <filter id="btnShineBigBlur1" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath1" d="M180 6 H206 Q234 6 234 32 Q234 58 206 58 H34 Q6 58 6 32 Q6 6 34 6 H180 Z"/>
+          <filter id="btnShineBlur1" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.1"/></filter>
+          <filter id="btnShineBigBlur1" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="2.6"/></filter>
+          <!-- This path is the exact center-line of the button border, so the white light rides on the stroke instead of floating inside the button. -->
+          <path id="btnShinePath1" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
         </defs>
-        <ellipse class="shine-soft" rx="10" ry="3.2">
+        <ellipse class="shine-soft" rx="8.5" ry="2.8">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
         </ellipse>
-        <ellipse class="shine-core" rx="5.4" ry="1.35">
+        <ellipse class="shine-core" rx="4.7" ry="1.15">
           <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
         </ellipse>
       </svg><span>Join Discord &amp; Open a Ticket</span></a>

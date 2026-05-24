@@ -1190,6 +1190,23 @@ body::before{
   background:#050505;
 }
 
+/* Uploaded review proof screenshot: force clean 700x80 banner sizing when requested. */
+.review-proof-img.proof-700x80{
+  width:min(700px,100%)!important;
+  height:80px!important;
+  max-height:80px!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+.review-avatar-img-real{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  border-radius:50%;
+}
+
 
 
 /* =========================================================
@@ -1505,9 +1522,10 @@ body::before{
         data-name="JuhoBG"
         data-tag="Consistent delivery"
         data-full="They deliver consistently and understand what creators need. The edits helped the videos feel smoother, more entertaining, and easier to watch. I would trust them with more long-form and short-form content."
-        data-proof-img=""
-        data-proof="This is where the real Discord screenshot for JuhoBG will show. Put the image path in data-proof-img, for example: reviews/juhobg.png">
-        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
+        data-proof-img="review-screenshot-700x80.png"
+        data-proof-size="700x80"
+        data-proof="Discord screenshot proof uploaded in chat">
+        <div class="review-avatar" style="overflow:hidden"><img class="review-avatar-img-real" src="review-pfp.png" alt="JuhoBG profile picture" onerror="this.style.display='none';this.parentElement.querySelector('.review-avatar-img').style.display='block';"><div class="review-avatar-img" style="display:none"></div><div class="review-discord-dot">⌁</div></div>
         <div class="review-name">JuhoBG</div>
         <div class="review-verified"><span>⌁</span> Verified on Discord</div>
         <p class="review-quote">“Delivers consistently and understands what creators need...”</p>
@@ -1978,6 +1996,8 @@ const works=[
   {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',isPhoto:false},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',isPhoto:false},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',isPhoto:false},

@@ -1870,7 +1870,7 @@ body.video-modal-locked > *:not(.vp-wrap):not(.site-fade-cover){
 
 /* ===== FINAL VIDEO CLOSE + LIGHT OVERLAY FIX ===== */
 .vp-wrap.open{
-  background:rgba(0,0,0,.15)!important;
+  background:rgba(0,0,0,.55)!important;
   backdrop-filter:none!important;
   pointer-events:all!important;
   z-index:99999!important;
@@ -1914,6 +1914,60 @@ body.video-modal-locked > *:not(.vp-wrap):not(.site-fade-cover){
     width:50px!important;
     height:50px!important;
     font-size:30px!important;
+  }
+}
+
+
+/* ===== FINAL 15% VIDEO OVERLAY + NO SCROLL JUMP ===== */
+.vp-wrap.open{
+  background:rgba(0,0,0,.55)!important;
+  backdrop-filter:none!important;
+}
+.vp-wrap.open.is-fullscreen,
+.vp-wrap.open:fullscreen{
+  background:#000!important;
+}
+html.video-modal-locked,
+body.video-modal-locked{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+
+
+/* ===== FINAL 55% VIDEO OVERLAY + FULLER 9:16 PLAYER ===== */
+.vp-wrap.open{
+  background:rgba(0,0,0,.55)!important;
+  backdrop-filter:none!important;
+}
+
+.vp-screen.portrait{
+  width:min(92vw, calc((100svh - 116px) * 9 / 16))!important;
+  max-height:calc(100svh - 116px)!important;
+  aspect-ratio:9 / 16!important;
+  border-radius:12px 12px 0 0!important;
+}
+
+.vp-controls.portrait{
+  width:min(92vw, calc((100svh - 116px) * 9 / 16))!important;
+  border-radius:0 0 12px 12px!important;
+}
+
+.vp-screen.portrait video{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  background:#000!important;
+}
+
+@media(max-width:640px){
+  .vp-screen.portrait{
+    width:min(96vw, calc((100svh - 96px) * 9 / 16))!important;
+    max-height:calc(100svh - 96px)!important;
+    border-radius:10px 10px 0 0!important;
+  }
+  .vp-controls.portrait{
+    width:min(96vw, calc((100svh - 96px) * 9 / 16))!important;
+    border-radius:0 0 10px 10px!important;
   }
 }
 
@@ -3020,29 +3074,17 @@ let vpIsFS=false;
 let __vpLockedScrollY = 0;
 
 function lockPageForVideo(){
-  try{
-    __vpLockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    document.documentElement.classList.add('video-modal-locked');
-    document.body.classList.add('video-modal-locked');
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${__vpLockedScrollY}px`;
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
-  }catch(e){}
+  window.__videoSavedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.documentElement.classList.add('video-modal-locked');
+  document.body.classList.add('video-modal-locked');
+  document.body.style.overflow='hidden';
 }
 
 function unlockPageForVideo(){
-  try{
-    document.documentElement.classList.remove('video-modal-locked');
-    document.body.classList.remove('video-modal-locked');
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
-    window.scrollTo(0, __vpLockedScrollY || 0);
-  }catch(e){}
+  document.documentElement.classList.remove('video-modal-locked');
+  document.body.classList.remove('video-modal-locked');
+  document.body.style.overflow='';
+  requestAnimationFrame(function(){ window.scrollTo(0, window.__videoSavedScrollY || 0); });
 }
 
 function vpOpen(src,title,isPortrait,poster){
@@ -3349,11 +3391,6 @@ ring.style.visibility = 'visible';
       lockedY = window.scrollY || document.documentElement.scrollTop || 0;
       document.documentElement.classList.add('video-modal-locked');
       document.body.classList.add('video-modal-locked');
-      document.body.style.position = 'fixed';
-      document.body.style.top = '-' + lockedY + 'px';
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     }catch(e){}
   };
@@ -3362,11 +3399,6 @@ ring.style.visibility = 'visible';
     try{
       document.documentElement.classList.remove('video-modal-locked');
       document.body.classList.remove('video-modal-locked');
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
       document.body.style.overflow = '';
       window.scrollTo(0, lockedY || 0);
     }catch(e){}
@@ -3452,6 +3484,30 @@ ring.style.visibility = 'visible';
   }else{
     bindFinalVideoClose();
   }
+})();
+</script>
+
+
+<script>
+/* ===== FINAL NO-JUMP VIDEO MODAL SCROLL LOCK ===== */
+(function(){
+  let savedScrollY = 0;
+
+  window.lockPageForVideo = function(){
+    savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add('video-modal-locked');
+    document.body.classList.add('video-modal-locked');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.unlockPageForVideo = function(){
+    document.documentElement.classList.remove('video-modal-locked');
+    document.body.classList.remove('video-modal-locked');
+    document.body.style.overflow = '';
+    requestAnimationFrame(function(){
+      window.scrollTo(0, savedScrollY || 0);
+    });
+  };
 })();
 </script>
 

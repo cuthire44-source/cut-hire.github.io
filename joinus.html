@@ -625,62 +625,185 @@ body.intro-visible .paths{
 
 
 
-/* ===================== SHARED MOVING STROKE LIGHT FOR CTA BUTTONS ===================== */
+/* ===================== MRBEAST-STYLE BLACK BORDER GLINT — REAL FRAMER VALUES ===================== */
+/*
+  Shared CTA effect:
+  - keeps each button's original red/blue background
+  - adds the black MrBeast-style rim
+  - uses the real Framer conic-gradient shape: transparent 317deg -> white 335deg -> transparent 351deg
+  - animates the shine center from 83.9783% to 16.0217% like the MrBeast button
+  - straight parts keep a visible short streak, not a dot
+  - corners stay smooth with no huge long glow
+*/
+@property --stroke-angle{
+  syntax:"<angle>";
+  inherits:false;
+  initial-value:103.678deg;
+}
+
+@property --stroke-x{
+  syntax:"<percentage>";
+  inherits:false;
+  initial-value:83.9783%;
+}
+
 .stroke-glow-btn{
   position:relative !important;
-  overflow:hidden !important;
   isolation:isolate;
-  border:2.5px solid rgba(0,0,0,.72) !important;
-  box-shadow:none !important;
+  overflow:hidden !important;
+
+  /* dark MrBeast-style rim */
+  border:2.8px solid rgba(0,0,0,.74) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -2px 0 rgba(0,0,0,.38),
+    0 0 0 1px rgba(255,255,255,.03),
+    0 12px 28px rgba(0,0,0,.38) !important;
+
+  transform:translateZ(0) scale(1);
+  transform-origin:center;
+  backface-visibility:hidden;
+
   transition:
-    transform .18s cubic-bezier(.22,1,.36,1),
-    filter .25s ease,
-    box-shadow .25s ease !important;
+    transform .46s cubic-bezier(.16,1,.3,1),
+    filter .46s ease,
+    box-shadow .46s ease !important;
 }
+
+/* remove old linear/sweep shine from existing button styles */
 .stroke-glow-btn::before,
 .stroke-glow-btn::after{
   display:none !important;
   content:none !important;
 }
-.stroke-glow-btn .btn-stroke-light{
+
+/* keep text above all shine layers */
+.stroke-glow-btn > span:not(.stroke-spin-mask):not(.stroke-inner-gloss){
+  position:relative;
+  z-index:7;
+}
+
+/* subtle glossy highlight on the button body */
+.stroke-inner-gloss{
+  position:absolute;
+  inset:2px;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:3;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.18) 0%,
+      rgba(255,255,255,.07) 28%,
+      rgba(255,255,255,0) 66%
+    );
+  opacity:.62;
+}
+
+/* conic-gradient shine clipped to the border only */
+.stroke-spin-mask{
+  position:absolute;
+  inset:-1px;
+  z-index:6;
+  pointer-events:none;
+  border-radius:inherit;
+  padding:2.8px;
+
+  background:
+    conic-gradient(
+      from var(--stroke-angle) at var(--stroke-x) 50%,
+      rgba(0,0,0,0) 309deg,
+      rgba(255,255,255,.06) 313deg,
+      rgba(255,255,255,.20) 319deg,
+      rgba(245,245,245,.54) 328deg,
+      rgba(255,255,255,.98) 335deg,
+      rgba(245,245,245,.54) 342deg,
+      rgba(255,255,255,.20) 349deg,
+      rgba(255,255,255,.06) 354deg,
+      rgba(0,0,0,0) 359deg
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.48),
+      rgba(0,0,0,.84)
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+
+  animation:strokeSpin 5.55s linear infinite;
+  will-change:background;
+}
+
+/* tiny reflection bloom only; prevents giant long corner glows */
+.stroke-spin-mask::after{
+  content:"";
   position:absolute;
   inset:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  overflow:visible;
-  z-index:2;
   border-radius:inherit;
+  background:
+    conic-gradient(
+      from var(--stroke-angle) at var(--stroke-x) 50%,
+      rgba(0,0,0,0) 316deg,
+      rgba(255,255,255,.08) 323deg,
+      rgba(255,255,255,.26) 335deg,
+      rgba(255,255,255,.08) 347deg,
+      rgba(0,0,0,0) 354deg
+    );
+  filter:blur(.85px);
+  opacity:.34;
 }
-.stroke-glow-btn .btn-stroke-light path{fill:none;stroke:none}
-.stroke-glow-btn .shine-core,
-.stroke-glow-btn .shine-soft{
-  transform-box:fill-box;
-  transform-origin:center;
+
+@keyframes strokeSpin{
+  /* right rounded corner hold */
+  0%{--stroke-angle:103.678deg;--stroke-x:83.9783%;}
+  7%{--stroke-angle:123.411deg;--stroke-x:83.9783%;}
+
+  /* straight part, slowed down so it does not fly across */
+  14%{--stroke-angle:134.133deg;--stroke-x:77.0819%;}
+  21%{--stroke-angle:154.99deg;--stroke-x:61.3336%;}
+  28%{--stroke-angle:175.37deg;--stroke-x:45.9454%;}
+  35%{--stroke-angle:195.749deg;--stroke-x:30.5573%;}
+  42%{--stroke-angle:217.176deg;--stroke-x:16.0217%;}
+
+  /* left rounded corner hold */
+  57%{--stroke-angle:300.634deg;--stroke-x:16.0217%;}
+
+  /* second straight part, visible streak instead of dot */
+  61%{--stroke-angle:310.93deg;--stroke-x:20.4992%;}
+  68%{--stroke-angle:331.241deg;--stroke-x:35.8359%;}
+  75%{--stroke-angle:351.621deg;--stroke-x:51.224%;}
+  82%{--stroke-angle:372deg;--stroke-x:66.6%;}
+  89%{--stroke-angle:392deg;--stroke-x:81.6%;}
+
+  /* right rounded corner again */
+  94%{--stroke-angle:412deg;--stroke-x:83.9783%;}
+  100%{--stroke-angle:463.678deg;--stroke-x:83.9783%;}
 }
-.stroke-glow-btn .shine-core{
-  fill:rgba(255,255,255,.78);
-  filter:blur(1.15px);
-}
-.stroke-glow-btn .shine-soft{
-  fill:rgba(255,255,255,.30);
-  filter:blur(2.8px);
-}
-.stroke-glow-btn > span,
-.stroke-glow-btn > svg + span{
-  position:relative;
-  z-index:3;
-}
+
+/* smooth zoom OUT on hover */
 .stroke-glow-btn:hover{
-  transform:scale(.975) !important;
+  transform:translateZ(0) scale(.982) !important;
   filter:brightness(1.045);
-  box-shadow:none !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -2px 0 rgba(0,0,0,.40),
+    0 0 0 1px rgba(255,255,255,.035),
+    0 0 18px rgba(255,255,255,.065),
+    0 12px 28px rgba(0,0,0,.38) !important;
 }
+
 .stroke-glow-btn:active{
-  transform:scale(.955) !important;
+  transform:translateZ(0) scale(.968) !important;
+  transition-duration:.18s !important;
 }
+
 @media(prefers-reduced-motion:reduce){
-  .stroke-glow-btn .btn-stroke-light animateMotion{display:none!important}
+  .stroke-spin-mask{animation:none!important;}
 }
 
 
@@ -1165,19 +1288,11 @@ body::before{
         <li>All communication inside private Discord channels</li>
         <li>If the sample fits, agree on pricing and continue</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn"><svg class="btn-stroke-light" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <filter id="btnShineBlur1" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
-          <filter id="btnShineBigBlur1" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath1" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
-        </defs>
-        <ellipse class="shine-soft" rx="8.5" ry="2.8">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
-        </ellipse>
-        <ellipse class="shine-core" rx="4.7" ry="1.15">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath1"/></animateMotion>
-        </ellipse>
-      </svg><span>Apply as Outsourcer</span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn">
+      <span class="stroke-spin-mask" aria-hidden="true"></span>
+      <span class="stroke-inner-gloss" aria-hidden="true"></span>
+      <span>Apply as Outsourcer</span>
+    </a>
     </div>
 
     <!-- EDITOR CARD -->
@@ -1194,19 +1309,11 @@ body::before{
         <li>Join a network of 35+ professional editors</li>
         <li>Steady stream of clients without self-promotion</li>
       </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn"><svg class="btn-stroke-light" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <filter id="btnShineBlur2" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
-          <filter id="btnShineBigBlur2" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath2" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
-        </defs>
-        <ellipse class="shine-soft" rx="8.5" ry="2.8">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath2"/></animateMotion>
-        </ellipse>
-        <ellipse class="shine-core" rx="4.7" ry="1.15">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath2"/></animateMotion>
-        </ellipse>
-      </svg><span>Apply as Editor</span></a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
+      <span class="stroke-spin-mask" aria-hidden="true"></span>
+      <span class="stroke-inner-gloss" aria-hidden="true"></span>
+      <span>Apply as Editor</span>
+    </a>
     </div>
   </div>
   <!-- HOW IT WORKS -->
@@ -1286,19 +1393,11 @@ body::before{
       <h3>Ready? <em>Let's Talk.</em></h3>
       <p>Join our Discord, open a ticket, and tell us about your project or portfolio. We respond fast and keep things simple.</p>
     </div>
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red stroke-glow-btn" style="flex-shrink:0"><svg class="btn-stroke-light" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <filter id="btnShineBlur3" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="1.35"/></filter>
-          <filter id="btnShineBigBlur3" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="3"/></filter>
-          <path id="btnShinePath3" d="M32 2.5 H208 Q237.5 2.5 237.5 32 Q237.5 61.5 208 61.5 H32 Q2.5 61.5 2.5 32 Q2.5 2.5 32 2.5 Z"/>
-        </defs>
-        <ellipse class="shine-soft" rx="8.5" ry="2.8">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath3"/></animateMotion>
-        </ellipse>
-        <ellipse class="shine-core" rx="4.7" ry="1.15">
-          <animateMotion dur="8.2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#btnShinePath3"/></animateMotion>
-        </ellipse>
-      </svg><span>Join Discord</span></a>
+    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red stroke-glow-btn" style="flex-shrink:0">
+      <span class="stroke-spin-mask" aria-hidden="true"></span>
+      <span class="stroke-inner-gloss" aria-hidden="true"></span>
+      <span>Join Discord</span>
+    </a>
   </div>
 
 </div>

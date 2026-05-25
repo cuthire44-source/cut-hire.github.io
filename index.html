@@ -26,6 +26,7 @@
 <link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
+<link rel="preload" as="image" href="vlog583.png?v20260525b" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
 <link rel="preload" as="image" href="ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
 <link rel="preload" as="image" href="longform1.png" fetchpriority="high">
@@ -2417,7 +2418,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     img.decoding='async';
     img.loading='eager';
     img.fetchPriority=index<12?'high':'auto';
-    img.src=src;
+    img.src=cacheBustAsset(src);
     if(img.decode)img.decode().catch(()=>{});
   }
 
@@ -2429,7 +2430,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
     const img=document.createElement('img');
     const src=IMAGES[idx%IMAGES.length];
-    img.src=src;
+    img.src=cacheBustAsset(src);
     img.alt='';
     img.width=480;
     img.height=260;
@@ -2613,6 +2614,16 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
 })();
 
 /* ===== WORKS DATA ===== */
+
+const THUMB_CACHE_VERSION='v20260525b';
+function cacheBustAsset(src){
+  if(!src)return src;
+  const clean=String(src).trim();
+  if(clean==='Sequence 075.png')return 'Sequence 075.png';
+  if(clean.startsWith('data:')||clean.startsWith('blob:')||clean.includes('?'))return clean;
+  if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${THUMB_CACHE_VERSION}`;
+  return clean;
+}
 const works=[
   // Shorts/Reels: removed old 1st + 3rd shorts, added short44.
   {cat:['motion'],title:'Short 44',src:'short44.mp4',thumb:'short44.png',isPhoto:false},
@@ -2635,6 +2646,7 @@ const works=[
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Vlog 47',src:'Vlog47.mp4',thumb:'Vlog47.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
+  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
   {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false},
@@ -2698,7 +2710,7 @@ const works=[
     img.decoding = 'async';
     img.loading = 'eager';
     img.fetchPriority = i < 16 ? 'high' : 'auto';
-    img.src = src;
+    img.src = cacheBustAsset(src);
   });
 })();
 
@@ -2711,14 +2723,14 @@ const works=[
     img.decoding='async';
     img.loading='eager';
     img.fetchPriority=i<18?'high':'auto';
-    img.src=src;
+    img.src=cacheBustAsset(src);
   });
 })();
 
 // Preload portfolio thumbnail tab images too, so opening the Thumbnails tab feels instant.
 (function(){
   const portfolioThumbs=works.filter(w=>w.isPhoto&&w.img).map(w=>w.img);
-  const run=()=>portfolioThumbs.forEach(src=>{const img=new Image();img.decoding='async';img.loading='eager';img.fetchPriority='high';img.src=src;});
+  const run=()=>portfolioThumbs.forEach(src=>{const img=new Image();img.decoding='async';img.loading='eager';img.fetchPriority='high';img.src=cacheBustAsset(src);});
   if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900}); else setTimeout(run,300);
 })();
 
@@ -2800,14 +2812,14 @@ function renderWork(list, activeCat){
     const dataCats=cats.join(' ');
 
     if(w.isPhoto&&w.img){
-      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s"><img class="wc-thumb" src="${w.img}" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onerror="if(!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div></div>`;
+      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s"><img class="wc-thumb" src="${cacheBustAsset(w.img)}" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onerror="if(!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div></div>`;
     }
 
     const ps=w.previewStart??2,pe=w.previewEnd??5;
     const eager=i<6?'eager':'lazy';
     const priority=i<6?' fetchpriority="high"':'';
 
-    const explicitThumb=(w.thumb||'').trim();
+    const explicitThumb=cacheBustAsset((w.thumb||'').trim());
     const explicitThumbAttr=explicitThumb ? ` src="${explicitThumb}" data-explicit-thumb="1"` : ` src=""`;
     const explicitThumbClass=explicitThumb ? ' has-thumb placeholder-hidden' : '';
 

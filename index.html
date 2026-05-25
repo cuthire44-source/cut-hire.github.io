@@ -2383,6 +2383,11 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
 
 
+
+/* Hard guard: never show broken-image icons or empty black hero tiles. */
+.hero-grid-thumb img[src=""],
+.hero-grid-thumb img:not([src]){visibility:hidden!important}
+.hero-grid-thumb{background:#050505!important}
 /* ===== HERO THUMBNAIL GRID BACKGROUND ===== */
 (function(){
   const IMAGES=[
@@ -2397,25 +2402,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     "hero-thumbnails/Illustrator_vid.webp",
     "hero-thumbnails/thumbnail_by_lokesh_1_.webp",
     "hero-thumbnails/thumnbail_by_lokesh_2.webp",
-    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp",
-    "hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp",
-    "hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp",
-    "hero-thumbnails/5 (1).webp",
-    "hero-thumbnails/4_2.webp",
-    "hero-thumbnails/IMG-20251116-WA0014.webp",
-    "hero-thumbnails/1.webp",
-    "hero-thumbnails/4_1.webp",
-    "hero-thumbnails/6_1.webp",
-    "hero-thumbnails/8.webp",
-    "hero-thumbnails/descarga_1.webp",
-    "hero-thumbnails/descarga_2.webp",
-    "hero-thumbnails/7.webp",
-    "hero-thumbnails/20260314_051758.webp",
-    "hero-thumbnails/3_2.webp",
-    "hero-thumbnails/1_1.webp",
-    "hero-thumbnails/3.webp",
-    "hero-thumbnails/20260312_052641.webp",
-    "hero-thumbnails/image (1).webp"
+    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp"
   ];
 
   const HERO_THUMB_CACHE=new Map();
@@ -2459,8 +2446,8 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
   // Preload all hero thumbnails immediately, but do NOT pause/hide the hero.
   // This restores the original intro timing while still preparing every looping thumbnail.
-  const HERO_CRITICAL_IMAGES=IMAGES.slice(0,12);
-  const HERO_REST_IMAGES=IMAGES.slice(12);
+  const HERO_CRITICAL_IMAGES=IMAGES;
+  const HERO_REST_IMAGES=[];
   const HERO_CRITICAL_READY=preloadImages(HERO_CRITICAL_IMAGES,6,'high',true);
   const HERO_THUMBS_READY=Promise.all([
     HERO_CRITICAL_READY,
@@ -2476,22 +2463,29 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     img.dataset.heroIndex=String(index);
     img.loading='eager';
     img.decoding='async';
-    img.fetchPriority=index<16?'high':'auto';
+    img.fetchPriority='high';
     img.referrerPolicy='no-referrer';
-    img.onerror=function(){
-      const tries=Number(this.dataset.heroFallbackTries||0);
-      this.dataset.heroFallbackTries=String(tries+1);
+
+    const fallback=()=>{
+      const tries=Number(img.dataset.heroFallbackTries||0);
+      img.dataset.heroFallbackTries=String(tries+1);
       const safe=heroSafeSrc(index+tries+1);
-      if(this.getAttribute('src')!==safe){
-        this.src=safe;
-      }else{
-        this.style.visibility='hidden';
+      if(img.getAttribute('src')!==safe){
+        img.style.visibility='visible';
+        img.src=safe;
       }
     };
+
+    img.onerror=fallback;
     img.onload=function(){
       this.style.visibility='visible';
       this.classList.add('hero-img-loaded');
     };
+
+    // If the browser keeps a failed animated-grid image as a black tile, replace it fast.
+    setTimeout(()=>{
+      if(img.complete && img.naturalWidth===0)fallback();
+    },900);
   }
 
   function makeThumb(idx){
@@ -2517,7 +2511,9 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
       tiles.push(tile);
       frag.appendChild(tile);
     }
-    tiles.forEach(tile=>frag.appendChild(tile.cloneNode(true)));
+    for(let i=0;i<count;i++){
+      frag.appendChild(makeThumb(i+offset));
+    }
     row.appendChild(frag);
     return row;
   }
@@ -2552,7 +2548,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
         img.src=heroSafeSrc(index+1);
       }
     });
-  },2500);
+  },1000);
 
   HERO_THUMBS_READY.then(()=>{
     grid.classList.add('hero-thumbnails-preloaded');

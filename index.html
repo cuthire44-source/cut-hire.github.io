@@ -1488,6 +1488,66 @@ body::before{
   }
 }
 
+
+
+/* ===== TWO-REVIEW TEMP LAYOUT ===== */
+#reviews .reviews-shell{
+  max-width:1180px;
+}
+
+#reviews .reviews-track{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  max-width:980px;
+  margin:0 auto;
+}
+
+#reviews .review-card{
+  min-height:420px;
+  padding:2.8rem 2rem 1.8rem;
+}
+
+#reviews .review-avatar{
+  width:104px;
+  height:104px;
+  margin-bottom:1.25rem;
+}
+
+#reviews .review-name{
+  font-size:1.18rem;
+}
+
+#reviews .review-quote{
+  font-size:1rem;
+  line-height:1.85;
+  min-height:112px;
+  max-width:360px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#reviews .review-tag{
+  padding:.45rem .95rem;
+  font-size:.68rem;
+}
+
+@media(max-width:820px){
+  #reviews .reviews-track{
+    grid-template-columns:1fr;
+    max-width:520px;
+  }
+  #reviews .review-card{
+    min-height:auto;
+    padding:2rem 1.35rem 1.45rem;
+  }
+  #reviews .review-avatar{
+    width:90px;
+    height:90px;
+  }
+  #reviews .review-quote{
+    min-height:0;
+  }
+}
 </style>
 </head>
 <body>
@@ -1663,33 +1723,6 @@ body::before{
         <span class="review-proof-hint">Click to open message proof</span>
       </button>
 
-      <button class="review-card rv" type="button"
-        data-name="Sebizoid"
-        data-tag="Million-view content"
-        data-full="Very trustworthy and hardworking. Never late with a video and always gave updates when needed. The edits were consistent, sharp, and helped the content feel much more engaging for viewers."
-        data-proof-img=""
-        data-proof="This is where the real Discord screenshot for Sebizoid will show. Put the image path in data-proof-img, for example: reviews/sebizoid.png">
-        <div class="review-avatar"><div class="review-avatar-img"></div><div class="review-discord-dot">⌁</div></div>
-        <div class="review-name">Sebizoid</div>
-        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
-        <p class="review-quote">“Very trustworthy and hardworking. Never late with a video...”</p>
-        <div class="review-tag">✦ Million-view content</div>
-        <span class="review-proof-hint">Click to open message proof</span>
-      </button>
-
-      <button class="review-card rv" type="button"
-        data-name="JuhoBG"
-        data-tag="Consistent delivery"
-        data-full="They deliver consistently and understand what creators need. The edits helped the videos feel smoother, more entertaining, and easier to watch. I would trust them with more long-form and short-form content."
-        data-proof-img=""
-        data-proof="Discord screenshot proof uploaded in chat">
-        <div class="review-avatar" style="overflow:hidden"><img class="review-avatar-img-real" src="" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.review-avatar-img').style.display='block';"><div class="review-avatar-img" style="display:none"></div><div class="review-discord-dot">⌁</div></div>
-        <div class="review-name">JuhoBG</div>
-        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
-        <p class="review-quote">“Delivers consistently and understands what creators need...”</p>
-        <div class="review-tag">✦ Consistent delivery</div>
-        <span class="review-proof-hint">Click to open message proof</span>
-      </button>
     </div>
 
     <div class="reviews-bottom rv">
@@ -2143,11 +2176,11 @@ const works=[
   {cat:['documentary'],title:'Short 8',src:'short8.mp4',isPhoto:false},
   {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
   {cat:['explainer'],title:'Short 10',src:'short10.mp4',isPhoto:false},
-  {cat:['shorts'],title:'Short 11',src:'short11.mp4',isPhoto:false},
+  {cat:['shorts'],title:'Short 45',src:'short45.mp4',isPhoto:false},
   {cat:['shorts'],title:'Short 488',src:'short488.mp4',isPhoto:false},
   {cat:['shorts'],title:'Short 82',src:'short82.mp4',isPhoto:false},
   {cat:['shorts'],title:'Short 849',src:'short849.mp4',isPhoto:false},
-  {cat:['shorts'],title:'Short 45',src:'short45.mp4',isPhoto:false},
+  {cat:['shorts'],title:'Short 11',src:'short11.mp4',isPhoto:false},
 
   // Youtube Long Form / Explainer additions.
   {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',isPhoto:false},
@@ -2162,6 +2195,8 @@ const works=[
   {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',isPhoto:false},
+  {cat:['youtube','gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',isPhoto:false},
+  {cat:['youtube','gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',isPhoto:false},
   {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',isPhoto:false},
@@ -2179,7 +2214,7 @@ const works=[
   {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
   {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
   {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',isPhoto:false},
-  {cat:['motion','youtube'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
+  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
 
   // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
   {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},

@@ -597,6 +597,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   to{transform:translateX(-50%)}
 }
 .hero-grid-thumb{
+  position:relative;
   height:260px;
   width:480px;
   flex-shrink:0;
@@ -612,6 +613,15 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   display:block;
   filter:brightness(.2);
   transition:filter .15s ease;
+  background:#050505;
+  color:transparent;
+}
+.hero-grid-thumb::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:#050505;
+  z-index:-1;
 }
 .hero-grid-thumb.lit img{
   filter:brightness(.9);
@@ -2457,19 +2467,43 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     preloadImages(HERO_REST_IMAGES,6,'auto',false)
   ]);
 
+  const HERO_SAFE_IMAGES=IMAGES.slice(0,12);
+  function heroSafeSrc(index){
+    return HERO_SAFE_IMAGES[index%HERO_SAFE_IMAGES.length] || IMAGES[0];
+  }
+  function keepHeroImgAlive(img,index){
+    if(!img)return;
+    img.dataset.heroIndex=String(index);
+    img.loading='eager';
+    img.decoding='async';
+    img.fetchPriority=index<16?'high':'auto';
+    img.referrerPolicy='no-referrer';
+    img.onerror=function(){
+      const tries=Number(this.dataset.heroFallbackTries||0);
+      this.dataset.heroFallbackTries=String(tries+1);
+      const safe=heroSafeSrc(index+tries+1);
+      if(this.getAttribute('src')!==safe){
+        this.src=safe;
+      }else{
+        this.style.visibility='hidden';
+      }
+    };
+    img.onload=function(){
+      this.style.visibility='visible';
+      this.classList.add('hero-img-loaded');
+    };
+  }
+
   function makeThumb(idx){
     const thumb=document.createElement('div');
     thumb.className='hero-grid-thumb';
     const realIndex=idx%IMAGES.length;
     const img=document.createElement('img');
     img.src=IMAGES[realIndex];
-    img.onerror=function(){if(!this.dataset.fallbackTried&&this.src.includes('/')){this.dataset.fallbackTried='1';this.src=this.src.split('/').pop();}};
     img.alt='';
     img.width=480;
     img.height=260;
-    img.loading='eager';
-    img.decoding='async';
-    img.fetchPriority=realIndex<12?'high':'low';
+    keepHeroImgAlive(img,realIndex);
     thumb.appendChild(img);
     return thumb;
   }
@@ -2501,11 +2535,24 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
   // Restore original timing: hero grid starts immediately.
   // Still force eager decode/preload so later loop thumbnails are ready as early as possible.
   grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
-    img.loading='eager';
-    img.decoding='async';
-    img.fetchPriority=index<16?'high':'auto';
+    keepHeroImgAlive(img,index);
+    if(img.complete && img.naturalWidth===0){
+      img.src=heroSafeSrc(index+1);
+    }
     if(img.complete && img.decode)img.decode().catch(()=>{});
   });
+
+  // Some browsers unload/keep broken off-screen animated images during a long infinite hero scroll.
+  // This guard keeps every hero tile alive and replaces any failed image with a known working thumbnail.
+  setInterval(()=>{
+    grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
+      const broken=img.complete && img.naturalWidth===0;
+      if(broken || !img.getAttribute('src')){
+        img.style.visibility='visible';
+        img.src=heroSafeSrc(index+1);
+      }
+    });
+  },2500);
 
   HERO_THUMBS_READY.then(()=>{
     grid.classList.add('hero-thumbnails-preloaded');

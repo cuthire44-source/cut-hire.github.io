@@ -14,7 +14,7 @@
 <link rel="preload" as="image" href="Longform39.png" fetchpriority="high">
 <link rel="preload" as="image" href="Longform58(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="MInecraft LongForm.png" fetchpriority="high">
-<link rel="preload" as="image" href="/MInecraft LongForm2.png" fetchpriority="high">
+<link rel="preload" as="image" href="MInecraft LongForm2.png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01 1(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01 2.png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01 4(1).png" fetchpriority="high">
@@ -1595,6 +1595,135 @@ body::before{
   pointer-events:none!important;
 }
 
+
+/* ===== FILE-NAME VIDEO THUMBNAIL FIX ===== */
+.wc .video-fake-thumb,
+.wc .video-fake-thumb span{
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+.wc-video-thumb[data-explicit-thumb="1"]{
+  content-visibility:visible!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:0;
+}
+.wc.has-thumb .wc-placeholder,
+.wc.placeholder-hidden .wc-placeholder{
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+
+/* ===== CLEAN WORK CATEGORY LAYOUT FIX =====
+   Makes every category look organized instead of messy masonry.
+   Videos use a clean equal-card grid; Shorts stay vertical only in Shorts/Reels.
+*/
+#work .work-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  grid-auto-rows:auto!important;
+  grid-auto-flow:row!important;
+  align-items:start!important;
+}
+
+#work .wc,
+#work .wc.wide,
+#work .wc.tall,
+#work .wc.longform-card,
+#work .wc.motion-featured-card{
+  grid-column:auto!important;
+  grid-row:auto!important;
+  width:100%!important;
+  min-height:0!important;
+  aspect-ratio:16 / 9!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:#050505!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.32)!important;
+}
+
+#work .wc.is-video .wc-video-thumb,
+#work .wc.is-video .wc-preview-video,
+#work .wc.is-video .wc-thumb,
+#work .wc.is-photo .wc-thumb{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+
+#work .wc.is-video::before{
+  background:linear-gradient(to top,rgba(0,0,0,.30),rgba(0,0,0,.04))!important;
+}
+
+#work .wc .video-fake-thumb,
+#work .wc .video-fake-thumb span{
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+/* Shorts/Reels tab: keep them clean vertical cards instead of mixing sizes. */
+#work .work-grid[data-cat="shorts"]{
+  grid-template-columns:repeat(4,minmax(160px,1fr))!important;
+  gap:18px!important;
+  justify-items:center!important;
+}
+
+#work .work-grid[data-cat="shorts"] .wc,
+#work .work-grid[data-cat="shorts"] .wc.shortform-card{
+  aspect-ratio:9 / 16!important;
+  max-width:260px!important;
+  width:100%!important;
+}
+
+/* Thumbnail tab: keep photo thumbnails as a clean 3-column grid too. */
+#work .work-grid[data-cat="thumbnail"]{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+}
+
+#work .work-grid[data-cat="thumbnail"] .wc,
+#work .work-grid[data-cat="thumbnail"] .wc.is-photo{
+  aspect-ratio:16 / 9!important;
+}
+
+/* Smoother hover without breaking alignment. */
+#work .wc:hover{
+  transform:translateY(-3px) scale(1.01)!important;
+  border-color:rgba(224,32,32,.28)!important;
+}
+
+/* Better tablet/mobile layout. */
+@media(max-width:1000px){
+  #work .work-grid,
+  #work .work-grid[data-cat="thumbnail"]{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #work .work-grid[data-cat="shorts"]{
+    grid-template-columns:repeat(3,minmax(140px,1fr))!important;
+  }
+}
+
+@media(max-width:640px){
+  #work .work-grid,
+  #work .work-grid[data-cat="thumbnail"]{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  #work .work-grid[data-cat="shorts"]{
+    grid-template-columns:repeat(2,minmax(120px,1fr))!important;
+    gap:14px!important;
+  }
+  #work .work-grid[data-cat="shorts"] .wc,
+  #work .work-grid[data-cat="shorts"] .wc.shortform-card{
+    max-width:210px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2299,6 +2428,19 @@ const works=[
   });
 })();
 
+
+/* ===== FAST PRELOAD EXACT FILE-NAME VIDEO THUMBNAILS ===== */
+(function preloadExactVideoThumbs(){
+  const thumbs=[...new Set(works.map(w=>w&&w.thumb).filter(Boolean))];
+  thumbs.forEach((src,i)=>{
+    const img=new Image();
+    img.decoding='async';
+    img.loading='eager';
+    img.fetchPriority=i<18?'high':'auto';
+    img.src=src;
+  });
+})();
+
 // Preload portfolio thumbnail tab images too, so opening the Thumbnails tab feels instant.
 (function(){
   const portfolioThumbs=works.filter(w=>w.isPhoto&&w.img).map(w=>w.img);
@@ -2393,12 +2535,13 @@ function renderWork(list, activeCat){
 
     const explicitThumb=(w.thumb||'').trim();
     const explicitThumbAttr=explicitThumb ? ` src="${explicitThumb}" data-explicit-thumb="1"` : ` src=""`;
+    const explicitThumbClass=explicitThumb ? ' has-thumb placeholder-hidden' : '';
 
-    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
+    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${explicitThumbClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
       <div class="wc-placeholder ${phClass}"><div class="wc-placeholder-spinner"></div></div>
-      <img class="wc-video-thumb"${explicitThumbAttr} data-video-src="${w.src}" data-thumb-time-min="2" data-thumb-time-max="5" alt="${w.title} thumbnail" loading="${eager}" decoding="async"${priority} onload="if(this.dataset.explicitThumb==='1'){const c=this.closest('.wc');if(c){c.classList.add('has-thumb');const p=c.querySelector('.wc-placeholder');if(p)p.classList.add('loaded');}}">
+      <img class="wc-video-thumb"${explicitThumbAttr} data-video-src="${w.src}" data-thumb-time-min="2" data-thumb-time-max="5" alt="${w.title} thumbnail" loading="${eager}" decoding="async"${priority} onload="if(this.dataset.explicitThumb==='1'){const c=this.closest('.wc');if(c){c.classList.add('has-thumb');const p=c.querySelector('.wc-placeholder');if(p)p.classList.add('loaded');}}" onerror="if(this.dataset.explicitThumb==='1'&&!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">
       <video class="wc-preview-video" data-src="${w.src}" data-start="${ps}" data-end="${pe}" muted loop playsinline preload="none" disablepictureinpicture controlsList="nodownload noplaybackrate"></video>
-      <div class="wc-thumb video-fake-thumb"><span>${w.title}</span></div>${badge}<div class="wc-overlay"><div class="wc-icon-circle">${playSVG}</div></div>
+      ${badge}<div class="wc-overlay"><div class="wc-icon-circle">${playSVG}</div></div>
     </div>`;
   }).join('');
 

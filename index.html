@@ -22,11 +22,11 @@
 <link rel="preload" as="image" href="Sequence 01 6.png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01 7(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01(2).png" fetchpriority="high">
-<link rel="preload" as="image" href="Sequence 075.png" fetchpriority="high">
+<link rel="preload" as="image" href="Sequence 075.png?v=20260525c" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
-<link rel="preload" as="image" href="vlog583.png" fetchpriority="high">
+<link rel="preload" as="image" href="vlog583.png?v20260525b" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
 <link rel="preload" as="image" href="ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
 <link rel="preload" as="image" href="longform1.png" fetchpriority="high">
@@ -2615,16 +2615,13 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
 
 /* ===== WORKS DATA ===== */
 
-window.THUMB_CACHE_VERSION = window.THUMB_CACHE_VERSION || 'v20260525b';
+const THUMB_CACHE_VERSION='v20260525b';
 function cacheBustAsset(src){
   if(!src)return src;
   const clean=String(src).trim();
-  // These two must stay as exact filenames because the files are named exactly like this.
-  if(clean==='Sequence 075.png')return 'Sequence 075.png';
-  if(clean==='vlog583.png')return 'vlog583.png';
+  if(clean==='Sequence 075.png')return 'Sequence 075.png?v=20260525c';
   if(clean.startsWith('data:')||clean.startsWith('blob:')||clean.includes('?'))return clean;
-  const version = window.THUMB_CACHE_VERSION || 'v20260525b';
-  if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${version}`;
+  if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${THUMB_CACHE_VERSION}`;
   return clean;
 }
 const works=[
@@ -2650,7 +2647,7 @@ const works=[
   {cat:['youtube','vlogs'],title:'Vlog 47',src:'Vlog47.mp4',thumb:'Vlog47.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false},
-  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
+  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png?v=20260525c',isPhoto:false},
   {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false},

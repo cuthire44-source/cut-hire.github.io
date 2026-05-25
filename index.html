@@ -1790,6 +1790,83 @@ body::before{
   }
 }
 
+
+/* ===== VIDEO PLAYER CLOSE FIX ===== */
+.vp-close{
+  display:flex!important;
+  position:fixed!important;
+  top:18px!important;
+  right:18px!important;
+  z-index:9005!important;
+  width:44px!important;
+  height:44px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  background:rgba(0,0,0,.68)!important;
+  color:#fff!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:28px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  backdrop-filter:blur(8px)!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.45)!important;
+}
+.vp-close:hover{
+  border-color:rgba(224,32,32,.7)!important;
+  background:rgba(224,32,32,.22)!important;
+}
+@media(max-width:640px){
+  .vp-close{
+    top:calc(12px + env(safe-area-inset-top))!important;
+    right:calc(12px + env(safe-area-inset-right))!important;
+    width:48px!important;
+    height:48px!important;
+    font-size:30px!important;
+  }
+}
+
+
+/* ===== VIDEO MODAL PAGE LOCK FIX ===== */
+html.video-modal-locked,
+body.video-modal-locked{
+  overflow:hidden!important;
+  height:100%!important;
+  touch-action:none!important;
+  overscroll-behavior:none!important;
+}
+
+body.video-modal-locked > *:not(.vp-wrap):not(.site-fade-cover){
+  pointer-events:none!important;
+}
+
+.vp-wrap.open{
+  pointer-events:all!important;
+  z-index:99999!important;
+}
+
+.vp-wrap.open .vp-screen,
+.vp-wrap.open .vp-controls,
+.vp-wrap.open .vp-close{
+  pointer-events:auto!important;
+}
+
+
+/* ===== UNIVERSAL OUTSIDE-VIDEO CLICK AREA ===== */
+.vp-wrap.open{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  pointer-events:all!important;
+  cursor:default!important;
+}
+.vp-wrap.open .vp-screen,
+.vp-wrap.open .vp-controls,
+.vp-wrap.open .vp-close{
+  cursor:auto!important;
+}
+
 </style>
 </head>
 <body>
@@ -2888,8 +2965,38 @@ function hardStopVideoPlayer(){
   }catch(e){}
 }
 let vpIsFS=false;
+
+/* ===== HARD LOCK PAGE WHILE VIDEO MODAL IS OPEN ===== */
+let __vpLockedScrollY = 0;
+
+function lockPageForVideo(){
+  try{
+    __vpLockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add('video-modal-locked');
+    document.body.classList.add('video-modal-locked');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${__vpLockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }catch(e){}
+}
+
+function unlockPageForVideo(){
+  try{
+    document.documentElement.classList.remove('video-modal-locked');
+    document.body.classList.remove('video-modal-locked');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, __vpLockedScrollY || 0);
+  }catch(e){}
+}
+
 function vpOpen(src,title,isPortrait,poster){
-  hardStopVideoPlayer(); hardStopVideoPlayer();
+  lockPageForVideo();hardStopVideoPlayer(); hardStopVideoPlayer(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
@@ -2909,6 +3016,7 @@ function vpClose(){
   hardStopVideoPlayer();
   if(vpWrap)vpWrap.classList.remove('open','is-fullscreen');
   document.body.style.overflow='';
+  unlockPageForVideo();
 }
 function vpTogglePlay(){if(!video.src)return;if(video.paused){video.play();vpShowBig('play-buttton.png')}else{video.pause();vpShowBig('pause.png')}}
 function vpUpdatePlay(p){vpPlayImg.src=p?'pause.png':'play-buttton.png'}
@@ -3096,5 +3204,81 @@ ring.style.visibility = 'visible';
 })();
 </script>
 
+<script>
+
+/* Close video when clicking outside the player. Also fixes mobile X close. */
+(function installVideoCloseHandlers(){
+  function ready(){
+    const wrap = document.getElementById('vp-wrap');
+    const closeBtn = document.getElementById('vp-close') || document.querySelector('.vp-close');
+    if(!wrap)return;
+
+    if(closeBtn && !closeBtn.dataset.closeBound){
+      closeBtn.dataset.closeBound='1';
+      closeBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        vpClose();
+      });
+    }
+
+    if(!wrap.dataset.outsideCloseBound){
+      wrap.dataset.outsideCloseBound='1';
+      wrap.addEventListener('click', function(e){
+        const clickedInsidePlayer = e.target.closest('.vp-screen') || e.target.closest('.vp-controls');
+        const clickedClose = e.target.closest('.vp-close');
+        if(clickedClose)return;
+        if(!clickedInsidePlayer){
+          vpClose();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && wrap.classList.contains('open')){
+        vpClose();
+      }
+    });
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready);
+  else ready();
+})();
+
+</script>
+<script>
+
+/* ===== UNIVERSAL OUTSIDE-VIDEO CLOSE FIX ===== */
+(function installUniversalOutsideVideoClose(){
+  function isVideoOpen(){
+    const wrap = document.getElementById('vp-wrap');
+    return wrap && wrap.classList.contains('open');
+  }
+
+  function clickedInsideVideoUI(target){
+    return !!(
+      target.closest('.vp-screen') ||
+      target.closest('.vp-controls') ||
+      target.closest('.vp-close')
+    );
+  }
+
+  function handleOutsideVideoPointer(e){
+    if(!isVideoOpen())return;
+    if(clickedInsideVideoUI(e.target))return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    if(typeof vpClose === 'function') vpClose();
+  }
+
+  // Capture phase means it works even if another element tries to catch the click first.
+  document.addEventListener('pointerdown', handleOutsideVideoPointer, true);
+  document.addEventListener('mousedown', handleOutsideVideoPointer, true);
+  document.addEventListener('touchstart', handleOutsideVideoPointer, true);
+  document.addEventListener('click', handleOutsideVideoPointer, true);
+})();
+
+</script>
 </body>
 </html>

@@ -2153,7 +2153,7 @@ const works=[
   {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',isPhoto:false},
-  {cat:['youtube','explainer'],title:'Sequence 01 (1)',src:'Sequence 075.mp4',isPhoto:false},
+  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',isPhoto:false},
   {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',isPhoto:false},
@@ -2220,9 +2220,43 @@ function orderWorkList(list){
 }
 function getVideoCandidates(src){
   if(!src)return [];
-  const clean=String(src);
+  const clean=String(src).trim();
   const file=clean.split('/').pop();
-  const candidates=[clean];
+  const encodedClean=encodeURI(clean);
+  const encodedFile=encodeURI(file);
+
+  // Robust fallback list:
+  // - normal path
+  // - URL-encoded path for filenames with spaces like "Sequence 075.mp4"
+  // - root filename fallback if a folder path is wrong
+  // - common MP4 case variants for hosts that are case-sensitive
+  const candidates=[
+    clean,
+    encodedClean,
+    file,
+    encodedFile,
+    './'+file,
+    './'+encodedFile
+  ];
+
+  const extMatch=file.match(/\.mp4$/i);
+  if(extMatch){
+    const base=file.replace(/\.mp4$/i,'');
+    candidates.push(base+'.mp4',base+'.MP4',base+'.Mp4');
+    candidates.push('./'+base+'.mp4','./'+base+'.MP4','./'+base+'.Mp4');
+    candidates.push(encodeURI(base+'.mp4'),encodeURI(base+'.MP4'),encodeURI(base+'.Mp4'));
+  }
+
+  // Exact extra fallbacks for the video that was not showing.
+  if(file.toLowerCase()==='sequence 075.mp4'){
+    candidates.push(
+      'Sequence 075.mp4',
+      'Sequence%20075.mp4',
+      './Sequence 075.mp4',
+      './Sequence%20075.mp4'
+    );
+  }
+
   if(clean.includes('YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p')){
     candidates.push(
       file,

@@ -1867,6 +1867,56 @@ body.video-modal-locked > *:not(.vp-wrap):not(.site-fade-cover){
   cursor:auto!important;
 }
 
+
+/* ===== FINAL VIDEO CLOSE + LIGHT OVERLAY FIX ===== */
+.vp-wrap.open{
+  background:rgba(0,0,0,.15)!important;
+  backdrop-filter:none!important;
+  pointer-events:all!important;
+  z-index:99999!important;
+}
+
+.vp-wrap.open.is-fullscreen,
+.vp-wrap.open:fullscreen{
+  background:#000!important;
+}
+
+.vp-close{
+  display:flex!important;
+  position:fixed!important;
+  top:18px!important;
+  right:18px!important;
+  z-index:100000!important;
+  width:46px!important;
+  height:46px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.25)!important;
+  background:rgba(0,0,0,.72)!important;
+  color:#fff!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:28px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  pointer-events:auto!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.45)!important;
+}
+
+.vp-close:hover{
+  background:rgba(224,32,32,.35)!important;
+  border-color:rgba(224,32,32,.75)!important;
+}
+
+@media(max-width:640px){
+  .vp-close{
+    top:calc(12px + env(safe-area-inset-top))!important;
+    right:calc(12px + env(safe-area-inset-right))!important;
+    width:50px!important;
+    height:50px!important;
+    font-size:30px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2124,7 +2174,7 @@ body.video-modal-locked > *:not(.vp-wrap):not(.site-fade-cover){
 
 <!-- ==================== VIDEO PLAYER ==================== -->
 <div class="vp-wrap" id="vp-wrap">
-  <button class="vp-close" onclick="vpClose()">✕</button>
+  <button class="vp-close" id="vp-close" type="button" onclick="vpClose(event)" aria-label="Close video">✕</button>
   <div class="vp-screen landscape" id="vp-screen">
     <video id="vp-video" preload="metadata" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
     <div class="vp-placeholder" id="vp-placeholder">
@@ -2996,7 +3046,7 @@ function unlockPageForVideo(){
 }
 
 function vpOpen(src,title,isPortrait,poster){
-  lockPageForVideo();hardStopVideoPlayer(); hardStopVideoPlayer(); hardStopVideoPlayer();
+  lockPageForVideo(); lockPageForVideo();hardStopVideoPlayer(); hardStopVideoPlayer(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
@@ -3280,5 +3330,130 @@ ring.style.visibility = 'visible';
 })();
 
 </script>
+
+<script>
+/* ===== FINAL ROBUST VIDEO CLOSE OVERRIDE ===== */
+(function(){
+  let lockedY = 0;
+
+  function getVideoEls(){
+    return {
+      wrap: document.getElementById('vp-wrap'),
+      video: document.getElementById('vp-video'),
+      close: document.getElementById('vp-close') || document.querySelector('.vp-close')
+    };
+  }
+
+  window.lockPageForVideo = function(){
+    try{
+      lockedY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.documentElement.classList.add('video-modal-locked');
+      document.body.classList.add('video-modal-locked');
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + lockedY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    }catch(e){}
+  };
+
+  window.unlockPageForVideo = function(){
+    try{
+      document.documentElement.classList.remove('video-modal-locked');
+      document.body.classList.remove('video-modal-locked');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, lockedY || 0);
+    }catch(e){}
+  };
+
+  window.hardStopVideoPlayer = function(){
+    const els = getVideoEls();
+    try{
+      if(els.video){
+        els.video.pause();
+        els.video.removeAttribute('src');
+        els.video.load();
+      }
+    }catch(e){}
+    try{
+      document.querySelectorAll('.wc-preview-video').forEach(function(v){
+        v.pause();
+        v.removeAttribute('src');
+        v.load();
+        const card = v.closest('.wc');
+        if(card) card.classList.remove('has-moving-thumb','preview-loading');
+      });
+    }catch(e){}
+  };
+
+  window.vpClose = function(e){
+    if(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const els = getVideoEls();
+    hardStopVideoPlayer();
+    if(els.wrap){
+      els.wrap.classList.remove('open','is-fullscreen');
+    }
+    unlockPageForVideo();
+  };
+
+  function isOpen(){
+    const wrap = document.getElementById('vp-wrap');
+    return wrap && wrap.classList.contains('open');
+  }
+
+  function isInsideVideoUI(target){
+    return !!(
+      target.closest('.vp-screen') ||
+      target.closest('.vp-controls') ||
+      target.closest('.vp-close')
+    );
+  }
+
+  function closeFromOutside(e){
+    if(!isOpen()) return;
+    if(isInsideVideoUI(e.target)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    window.vpClose(e);
+  }
+
+  function bindFinalVideoClose(){
+    const els = getVideoEls();
+    if(els.close && !els.close.dataset.finalCloseBound){
+      els.close.dataset.finalCloseBound = '1';
+      els.close.addEventListener('click', window.vpClose, true);
+      els.close.addEventListener('pointerdown', function(e){ e.stopPropagation(); }, true);
+      els.close.addEventListener('touchstart', function(e){ e.stopPropagation(); }, true);
+    }
+
+    if(!document.documentElement.dataset.finalOutsideCloseBound){
+      document.documentElement.dataset.finalOutsideCloseBound = '1';
+      document.addEventListener('pointerdown', closeFromOutside, true);
+      document.addEventListener('mousedown', closeFromOutside, true);
+      document.addEventListener('touchstart', closeFromOutside, true);
+      document.addEventListener('click', closeFromOutside, true);
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && isOpen()) window.vpClose(e);
+      }, true);
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindFinalVideoClose);
+  }else{
+    bindFinalVideoClose();
+  }
+})();
+</script>
+
 </body>
 </html>

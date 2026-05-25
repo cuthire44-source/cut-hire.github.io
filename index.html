@@ -1616,14 +1616,14 @@ body::before{
 }
 
 
-/* ===== CLEAN WORK CATEGORY LAYOUT FIX =====
-   Makes every category look organized instead of messy masonry.
-   Videos use a clean equal-card grid; Shorts stay vertical only in Shorts/Reels.
+
+/* ===== CLEAN WORK CATEGORY LAYOUT FIX V2 =====
+   Clean row-by-row cards. No masonry gaps. No weird stacked columns.
 */
 #work .work-grid{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:16px!important;
+  gap:18px!important;
   grid-auto-rows:auto!important;
   grid-auto-flow:row!important;
   align-items:start!important;
@@ -1633,17 +1633,21 @@ body::before{
 #work .wc.wide,
 #work .wc.tall,
 #work .wc.longform-card,
-#work .wc.motion-featured-card{
+#work .wc.shortform-card,
+#work .wc.motion-featured-card,
+#work .wc.is-photo{
   grid-column:auto!important;
   grid-row:auto!important;
   width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
   min-height:0!important;
   aspect-ratio:16 / 9!important;
   border-radius:12px!important;
   overflow:hidden!important;
-  border:1px solid rgba(255,255,255,.07)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
   background:#050505!important;
-  box-shadow:0 18px 45px rgba(0,0,0,.32)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.30)!important;
 }
 
 #work .wc.is-video .wc-video-thumb,
@@ -1656,7 +1660,7 @@ body::before{
 }
 
 #work .wc.is-video::before{
-  background:linear-gradient(to top,rgba(0,0,0,.30),rgba(0,0,0,.04))!important;
+  background:linear-gradient(to top,rgba(0,0,0,.26),rgba(0,0,0,.03))!important;
 }
 
 #work .wc .video-fake-thumb,
@@ -1666,61 +1670,50 @@ body::before{
   visibility:hidden!important;
 }
 
-/* Shorts/Reels tab: keep them clean vertical cards instead of mixing sizes. */
+/* Shorts/Reels are vertical, but still clean and evenly aligned. */
 #work .work-grid[data-cat="shorts"]{
-  grid-template-columns:repeat(4,minmax(160px,1fr))!important;
+  grid-template-columns:repeat(5,minmax(130px,1fr))!important;
   gap:18px!important;
-  justify-items:center!important;
 }
 
 #work .work-grid[data-cat="shorts"] .wc,
 #work .work-grid[data-cat="shorts"] .wc.shortform-card{
   aspect-ratio:9 / 16!important;
-  max-width:260px!important;
-  width:100%!important;
 }
 
-/* Thumbnail tab: keep photo thumbnails as a clean 3-column grid too. */
-#work .work-grid[data-cat="thumbnail"]{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:16px!important;
-}
-
-#work .work-grid[data-cat="thumbnail"] .wc,
-#work .work-grid[data-cat="thumbnail"] .wc.is-photo{
+/* Keep every non-shorts category clean horizontal cards. */
+#work .work-grid:not([data-cat="shorts"]) .wc,
+#work .work-grid:not([data-cat="shorts"]) .wc.shortform-card{
   aspect-ratio:16 / 9!important;
 }
 
-/* Smoother hover without breaking alignment. */
 #work .wc:hover{
   transform:translateY(-3px) scale(1.01)!important;
   border-color:rgba(224,32,32,.28)!important;
 }
 
-/* Better tablet/mobile layout. */
-@media(max-width:1000px){
-  #work .work-grid,
-  #work .work-grid[data-cat="thumbnail"]{
+/* Prevent preview videos from remaining visible after closing/clicking around. */
+#work .wc:not(.has-moving-thumb) .wc-preview-video{
+  opacity:0!important;
+}
+
+@media(max-width:1050px){
+  #work .work-grid{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
   #work .work-grid[data-cat="shorts"]{
-    grid-template-columns:repeat(3,minmax(140px,1fr))!important;
+    grid-template-columns:repeat(3,minmax(130px,1fr))!important;
   }
 }
 
 @media(max-width:640px){
-  #work .work-grid,
-  #work .work-grid[data-cat="thumbnail"]{
+  #work .work-grid{
     grid-template-columns:1fr!important;
     gap:14px!important;
   }
   #work .work-grid[data-cat="shorts"]{
     grid-template-columns:repeat(2,minmax(120px,1fr))!important;
     gap:14px!important;
-  }
-  #work .work-grid[data-cat="shorts"] .wc,
-  #work .work-grid[data-cat="shorts"] .wc.shortform-card{
-    max-width:210px!important;
   }
 }
 
@@ -2801,8 +2794,29 @@ const vpScreen=document.getElementById('vp-screen'),vpControls=document.getEleme
 const vpPlayImg=document.getElementById('vp-play-img'),vpVolImg=document.getElementById('vp-vol-img'),vpFsImg=document.getElementById('vp-fs-img');
 const vpBigplay=document.getElementById('vp-bigplay'),vpBigplayImg=document.getElementById('vp-bigplay-img');
 const vpProg=document.getElementById('vp-prog'),vpThumb=document.getElementById('vp-thumb'),vpBuf=document.getElementById('vp-buf'),vpTime=document.getElementById('vp-time');
+
+function hardStopVideoPlayer(){
+  try{
+    if(vpVid){
+      vpVid.pause();
+      vpVid.removeAttribute('src');
+      vpVid.load();
+      vpVid.currentTime = 0;
+    }
+  }catch(e){}
+  try{
+    document.querySelectorAll('.wc-preview-video').forEach(v=>{
+      v.pause();
+      v.removeAttribute('src');
+      v.load();
+      const c=v.closest('.wc');
+      if(c)c.classList.remove('has-moving-thumb','preview-loading');
+    });
+  }catch(e){}
+}
 let vpIsFS=false;
 function vpOpen(src,title,isPortrait,poster){
+  hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
@@ -2819,10 +2833,9 @@ function vpOpen(src,title,isPortrait,poster){
   vpUpdatePlay(src?!video.paused:false);
 }
 function vpClose(){
-  vpEl.classList.remove('open');video.pause();video.src='';document.body.style.overflow='';
-  setTimeout(()=>document.querySelectorAll('.wc-preview-video').forEach(v=>queueMovingPreview(v)),250);
-  if(vpIsFS)(document.exitFullscreen||document.webkitExitFullscreen).call(document);
-  vpIsFS=false;vpFsImg.src='fullscreen.png';
+  hardStopVideoPlayer();
+  if(vpWrap)vpWrap.classList.remove('open','is-fullscreen');
+  document.body.style.overflow='';
 }
 function vpTogglePlay(){if(!video.src)return;if(video.paused){video.play();vpShowBig('play-buttton.png')}else{video.pause();vpShowBig('pause.png')}}
 function vpUpdatePlay(p){vpPlayImg.src=p?'pause.png':'play-buttton.png'}

@@ -23,9 +23,6 @@
 <link rel="preload" as="image" href="Sequence 01 7(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01(2).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 075.png" fetchpriority="high">
-<link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
-<link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
-<link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
 <link rel="preload" as="image" href="ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
 <link rel="preload" as="image" href="longform1.png" fetchpriority="high">
@@ -45,6 +42,9 @@
 <link rel="preload" as="image" href="short8.png" fetchpriority="high">
 <link rel="preload" as="image" href="short82.png" fetchpriority="high">
 <link rel="preload" as="image" href="short849.png" fetchpriority="high">
+<link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
+<link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
+<link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -597,7 +597,6 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   to{transform:translateX(-50%)}
 }
 .hero-grid-thumb{
-  position:relative;
   height:260px;
   width:480px;
   flex-shrink:0;
@@ -613,15 +612,6 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   display:block;
   filter:brightness(.2);
   transition:filter .15s ease;
-  background:#050505;
-  color:transparent;
-}
-.hero-grid-thumb::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:#050505;
-  z-index:-1;
 }
 .hero-grid-thumb.lit img{
   filter:brightness(.9);
@@ -2035,6 +2025,12 @@ body.video-modal-locked{
   }
 }
 
+
+/* HERO GRID SAFETY: keep successfully loaded hero thumbnails visible. */
+.hero-grid-bg.hero-thumbnails-preloaded .hero-grid-thumb img{
+  display:block!important;
+  opacity:1!important;
+}
 </style>
 </head>
 <body>
@@ -2383,11 +2379,6 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
 
 
-
-/* Hard guard: never show broken-image icons or empty black hero tiles. */
-.hero-grid-thumb img[src=""],
-.hero-grid-thumb img:not([src]){visibility:hidden!important}
-.hero-grid-thumb{background:#050505!important}
 /* ===== HERO THUMBNAIL GRID BACKGROUND ===== */
 (function(){
   const IMAGES=[
@@ -2402,13 +2393,35 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     "hero-thumbnails/Illustrator_vid.webp",
     "hero-thumbnails/thumbnail_by_lokesh_1_.webp",
     "hero-thumbnails/thumnbail_by_lokesh_2.webp",
-    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp"
+    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp",
+    "hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp",
+    "hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp",
+    "hero-thumbnails/5 (1).webp",
+    "hero-thumbnails/4_2.webp",
+    "hero-thumbnails/IMG-20251116-WA0014.webp",
+    "hero-thumbnails/1.webp",
+    "hero-thumbnails/4_1.webp",
+    "hero-thumbnails/6_1.webp",
+    "hero-thumbnails/8.webp",
+    "hero-thumbnails/descarga_1.webp",
+    "hero-thumbnails/descarga_2.webp",
+    "hero-thumbnails/7.webp",
+    "hero-thumbnails/20260314_051758.webp",
+    "hero-thumbnails/3_2.webp",
+    "hero-thumbnails/1_1.webp",
+    "hero-thumbnails/3.webp",
+    "hero-thumbnails/20260312_052641.webp",
+    "hero-thumbnails/image (1).webp"
   ];
 
-  const HERO_THUMB_CACHE=new Map();
+  const grid=document.getElementById('hero-grid-bg');
+  if(!grid||grid.dataset.ready)return;
+  grid.dataset.ready='1';
 
   function addHeadPreload(src, priority='high'){
-    if(document.head.querySelector(`link[rel="preload"][as="image"][href="${CSS.escape(src)}"]`))return;
+    if(!src)return;
+    const escaped=(window.CSS&&CSS.escape)?CSS.escape(src):src.replace(/"/g,'\\"');
+    if(document.head.querySelector(`link[rel="preload"][as="image"][href="${escaped}"]`))return;
     const link=document.createElement('link');
     link.rel='preload';
     link.as='image';
@@ -2417,143 +2430,102 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     document.head.appendChild(link);
   }
 
-  function preloadImages(urls, concurrent=4, priority='low', addPreloadLinks=false){
-    let i=0, active=0;
+  function testImage(src, timeout=4500){
     return new Promise(resolve=>{
-      function next(){
-        if(i>=urls.length && active===0){resolve();return;}
-        while(active<concurrent && i<urls.length){
-          const src=urls[i++];
-          if(HERO_THUMB_CACHE.has(src)){continue;}
-          active++;
-          if(addPreloadLinks)addHeadPreload(src,priority);
-          const img=new Image();
-          img.decoding='async';
-          img.loading='eager';
-          img.fetchPriority=priority;
-          img.onload=img.onerror=function(){
-            if(img.decode){img.decode().catch(()=>{}).finally(()=>{active--;next();});}
-            else{active--;next();}
-          };
-          img.src=src;
-          HERO_THUMB_CACHE.set(src,img);
-        }
-        if(i>=urls.length && active===0)resolve();
-      }
-      next();
+      const img=new Image();
+      let done=false;
+      const finish=(ok)=>{
+        if(done)return;
+        done=true;
+        resolve(ok?src:null);
+      };
+      img.onload=()=>finish(true);
+      img.onerror=()=>finish(false);
+      img.decoding='async';
+      img.loading='eager';
+      img.fetchPriority='high';
+      img.src=src;
+      setTimeout(()=>finish(false),timeout);
     });
   }
 
-  // Preload all hero thumbnails immediately, but do NOT pause/hide the hero.
-  // This restores the original intro timing while still preparing every looping thumbnail.
-  const HERO_CRITICAL_IMAGES=IMAGES;
-  const HERO_REST_IMAGES=[];
-  const HERO_CRITICAL_READY=preloadImages(HERO_CRITICAL_IMAGES,6,'high',true);
-  const HERO_THUMBS_READY=Promise.all([
-    HERO_CRITICAL_READY,
-    preloadImages(HERO_REST_IMAGES,6,'auto',false)
-  ]);
-
-  const HERO_SAFE_IMAGES=IMAGES.slice(0,12);
-  function heroSafeSrc(index){
-    return HERO_SAFE_IMAGES[index%HERO_SAFE_IMAGES.length] || IMAGES[0];
-  }
-  function keepHeroImgAlive(img,index){
-    if(!img)return;
-    img.dataset.heroIndex=String(index);
-    img.loading='eager';
-    img.decoding='async';
-    img.fetchPriority='high';
-    img.referrerPolicy='no-referrer';
-
-    const fallback=()=>{
-      const tries=Number(img.dataset.heroFallbackTries||0);
-      img.dataset.heroFallbackTries=String(tries+1);
-      const safe=heroSafeSrc(index+tries+1);
-      if(img.getAttribute('src')!==safe){
-        img.style.visibility='visible';
-        img.src=safe;
-      }
-    };
-
-    img.onerror=fallback;
-    img.onload=function(){
-      this.style.visibility='visible';
-      this.classList.add('hero-img-loaded');
-    };
-
-    // If the browser keeps a failed animated-grid image as a black tile, replace it fast.
-    setTimeout(()=>{
-      if(img.complete && img.naturalWidth===0)fallback();
-    },900);
+  function preloadWorking(urls){
+    urls.forEach((src,index)=>{
+      addHeadPreload(src,index<16?'high':'auto');
+      const img=new Image();
+      img.decoding='async';
+      img.loading='eager';
+      img.fetchPriority=index<16?'high':'auto';
+      img.src=src;
+      if(img.decode)img.decode().catch(()=>{});
+    });
   }
 
-  function makeThumb(idx){
+  function makeThumb(idx,working){
     const thumb=document.createElement('div');
     thumb.className='hero-grid-thumb';
-    const realIndex=idx%IMAGES.length;
     const img=document.createElement('img');
-    img.src=IMAGES[realIndex];
+    const src=working[idx%working.length];
+    img.src=src;
     img.alt='';
     img.width=480;
     img.height=260;
-    keepHeroImgAlive(img,realIndex);
+    img.loading='eager';
+    img.decoding='async';
+    img.fetchPriority=idx<16?'high':'auto';
+
+    img.onerror=function(){
+      const current=decodeURIComponent((this.currentSrc||this.src||'').split('/').pop());
+      const fallback=working.find(s=>decodeURIComponent(s.split('/').pop())!==current)||working[0];
+      if(fallback && this.src!==fallback)this.src=fallback;
+      else this.style.visibility='hidden';
+    };
+
     thumb.appendChild(img);
     return thumb;
   }
-  function buildRow(cls,count,offset){
+
+  function buildRow(cls,count,offset,working){
     const row=document.createElement('div');
     row.className=`hero-grid-row ${cls}`;
     const frag=document.createDocumentFragment();
     const tiles=[];
     for(let i=0;i<count;i++){
-      const tile=makeThumb(i+offset);
+      const tile=makeThumb(i+offset,working);
       tiles.push(tile);
       frag.appendChild(tile);
     }
-    for(let i=0;i<count;i++){
-      frag.appendChild(makeThumb(i+offset));
-    }
+    tiles.forEach(tile=>frag.appendChild(tile.cloneNode(true)));
     row.appendChild(frag);
     return row;
   }
-  const grid=document.getElementById('hero-grid-bg');
-  if(!grid||grid.dataset.ready)return;
-  grid.dataset.ready='1';
 
-  const fragment=document.createDocumentFragment();
-  fragment.appendChild(buildRow('hero-grid-row-1',8,0));
-  fragment.appendChild(buildRow('hero-grid-row-2',8,6));
-  fragment.appendChild(buildRow('hero-grid-row-3',8,12));
-  fragment.appendChild(buildRow('hero-grid-row-4',8,18));
-  grid.appendChild(fragment);
+  Promise.all(IMAGES.map(src=>testImage(src))).then(results=>{
+    const working=results.filter(Boolean);
 
-  // Restore original timing: hero grid starts immediately.
-  // Still force eager decode/preload so later loop thumbnails are ready as early as possible.
-  grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
-    keepHeroImgAlive(img,index);
-    if(img.complete && img.naturalWidth===0){
-      img.src=heroSafeSrc(index+1);
+    // Build the animated background ONLY from files that really loaded.
+    // This prevents black empty boxes/broken-image icons after the infinite scroll loops.
+    if(!working.length){
+      grid.style.display='none';
+      return;
     }
-    if(img.complete && img.decode)img.decode().catch(()=>{});
-  });
 
-  // Some browsers unload/keep broken off-screen animated images during a long infinite hero scroll.
-  // This guard keeps every hero tile alive and replaces any failed image with a known working thumbnail.
-  setInterval(()=>{
-    grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
-      const broken=img.complete && img.naturalWidth===0;
-      if(broken || !img.getAttribute('src')){
-        img.style.visibility='visible';
-        img.src=heroSafeSrc(index+1);
-      }
-    });
-  },1000);
+    preloadWorking(working);
+    grid.textContent='';
 
-  HERO_THUMBS_READY.then(()=>{
+    const fragment=document.createDocumentFragment();
+    fragment.appendChild(buildRow('hero-grid-row-1',8,0,working));
+    fragment.appendChild(buildRow('hero-grid-row-2',8,6,working));
+    fragment.appendChild(buildRow('hero-grid-row-3',8,12,working));
+    fragment.appendChild(buildRow('hero-grid-row-4',8,18,working));
+    grid.appendChild(fragment);
     grid.classList.add('hero-thumbnails-preloaded');
-    grid.querySelectorAll('.hero-grid-thumb img').forEach(img=>{
-      if(img.decode)img.decode().catch(()=>{});
+
+    grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
+      img.loading='eager';
+      img.decoding='async';
+      img.fetchPriority=index<16?'high':'auto';
+      if(img.complete && img.decode)img.decode().catch(()=>{});
     });
   });
 
@@ -2563,6 +2535,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     thumb.classList.remove('fading');
     thumb.classList.add('lit');
   },true);
+
   grid.addEventListener('mouseleave',e=>{
     const thumb=e.target.closest('.hero-grid-thumb');
     if(!thumb)return;
@@ -2707,9 +2680,9 @@ const works=[
   {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Vlog 47',src:'Vlog47.mp4',thumb:'Vlog47.png',isPhoto:false},
+  {cat:['explainer'],title:'Informative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
-  {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false},

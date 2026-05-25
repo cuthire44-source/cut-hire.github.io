@@ -26,7 +26,7 @@
 <link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
-<link rel="preload" as="image" href="vlog583.png?v20260525b" fetchpriority="high">
+<link rel="preload" as="image" href="vlog583.png" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
 <link rel="preload" as="image" href="ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
 <link rel="preload" as="image" href="longform1.png" fetchpriority="high">
@@ -2615,13 +2615,16 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
 
 /* ===== WORKS DATA ===== */
 
-const THUMB_CACHE_VERSION='v20260525b';
+window.THUMB_CACHE_VERSION = window.THUMB_CACHE_VERSION || 'v20260525b';
 function cacheBustAsset(src){
   if(!src)return src;
   const clean=String(src).trim();
+  // These two must stay as exact filenames because the files are named exactly like this.
   if(clean==='Sequence 075.png')return 'Sequence 075.png';
+  if(clean==='vlog583.png')return 'vlog583.png';
   if(clean.startsWith('data:')||clean.startsWith('blob:')||clean.includes('?'))return clean;
-  if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${THUMB_CACHE_VERSION}`;
+  const version = window.THUMB_CACHE_VERSION || 'v20260525b';
+  if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${version}`;
   return clean;
 }
 const works=[

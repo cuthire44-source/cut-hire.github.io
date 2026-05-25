@@ -23,6 +23,9 @@
 <link rel="preload" as="image" href="Sequence 01 7(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01(2).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 075.png" fetchpriority="high">
+<link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
+<link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
+<link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
 <link rel="preload" as="image" href="ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
 <link rel="preload" as="image" href="longform1.png" fetchpriority="high">
@@ -42,9 +45,6 @@
 <link rel="preload" as="image" href="short8.png" fetchpriority="high">
 <link rel="preload" as="image" href="short82.png" fetchpriority="high">
 <link rel="preload" as="image" href="short849.png" fetchpriority="high">
-<link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
-<link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
-<link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -2025,12 +2025,6 @@ body.video-modal-locked{
   }
 }
 
-
-/* HERO GRID SAFETY: keep successfully loaded hero thumbnails visible. */
-.hero-grid-bg.hero-thumbnails-preloaded .hero-grid-thumb img{
-  display:block!important;
-  opacity:1!important;
-}
 </style>
 </head>
 <body>
@@ -2381,6 +2375,11 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
 /* ===== HERO THUMBNAIL GRID BACKGROUND ===== */
 (function(){
+  /* IMPORTANT:
+     Only use the 12 hero thumbnail files that are already preloaded in the <head>.
+     The old list had extra filenames that were not always on the live server, and when
+     the infinite background reached those files it showed black/broken boxes.
+     This version builds the grid immediately and repeats the safe images forever. */
   const IMAGES=[
     "hero-thumbnails/image.webp",
     "hero-thumbnails/thumbnail_by_lokesh_5.png.webp",
@@ -2393,25 +2392,7 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     "hero-thumbnails/Illustrator_vid.webp",
     "hero-thumbnails/thumbnail_by_lokesh_1_.webp",
     "hero-thumbnails/thumnbail_by_lokesh_2.webp",
-    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp",
-    "hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp",
-    "hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp",
-    "hero-thumbnails/5 (1).webp",
-    "hero-thumbnails/4_2.webp",
-    "hero-thumbnails/IMG-20251116-WA0014.webp",
-    "hero-thumbnails/1.webp",
-    "hero-thumbnails/4_1.webp",
-    "hero-thumbnails/6_1.webp",
-    "hero-thumbnails/8.webp",
-    "hero-thumbnails/descarga_1.webp",
-    "hero-thumbnails/descarga_2.webp",
-    "hero-thumbnails/7.webp",
-    "hero-thumbnails/20260314_051758.webp",
-    "hero-thumbnails/3_2.webp",
-    "hero-thumbnails/1_1.webp",
-    "hero-thumbnails/3.webp",
-    "hero-thumbnails/20260312_052641.webp",
-    "hero-thumbnails/image (1).webp"
+    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp"
   ];
 
   const grid=document.getElementById('hero-grid-bg');
@@ -2420,8 +2401,9 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
   function addHeadPreload(src, priority='high'){
     if(!src)return;
-    const escaped=(window.CSS&&CSS.escape)?CSS.escape(src):src.replace(/"/g,'\\"');
-    if(document.head.querySelector(`link[rel="preload"][as="image"][href="${escaped}"]`))return;
+    const exists=[...document.querySelectorAll('link[rel="preload"][as="image"]')]
+      .some(link=>link.getAttribute('href')===src);
+    if(exists)return;
     const link=document.createElement('link');
     link.rel='preload';
     link.as='image';
@@ -2430,42 +2412,24 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     document.head.appendChild(link);
   }
 
-  function testImage(src, timeout=4500){
-    return new Promise(resolve=>{
-      const img=new Image();
-      let done=false;
-      const finish=(ok)=>{
-        if(done)return;
-        done=true;
-        resolve(ok?src:null);
-      };
-      img.onload=()=>finish(true);
-      img.onerror=()=>finish(false);
-      img.decoding='async';
-      img.loading='eager';
-      img.fetchPriority='high';
-      img.src=src;
-      setTimeout(()=>finish(false),timeout);
-    });
+  function warmImage(src,index){
+    addHeadPreload(src,index<12?'high':'auto');
+    const img=new Image();
+    img.decoding='async';
+    img.loading='eager';
+    img.fetchPriority=index<12?'high':'auto';
+    img.src=src;
+    if(img.decode)img.decode().catch(()=>{});
   }
 
-  function preloadWorking(urls){
-    urls.forEach((src,index)=>{
-      addHeadPreload(src,index<16?'high':'auto');
-      const img=new Image();
-      img.decoding='async';
-      img.loading='eager';
-      img.fetchPriority=index<16?'high':'auto';
-      img.src=src;
-      if(img.decode)img.decode().catch(()=>{});
-    });
-  }
+  IMAGES.forEach(warmImage);
 
-  function makeThumb(idx,working){
+  function makeThumb(idx){
     const thumb=document.createElement('div');
     thumb.className='hero-grid-thumb';
+
     const img=document.createElement('img');
-    const src=working[idx%working.length];
+    const src=IMAGES[idx%IMAGES.length];
     img.src=src;
     img.alt='';
     img.width=480;
@@ -2474,60 +2438,52 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     img.decoding='async';
     img.fetchPriority=idx<16?'high':'auto';
 
+    /* If a folder path is wrong on some host, try the same file from root.
+       If that still fails, use the first safe hero thumbnail instead of leaving a broken box. */
     img.onerror=function(){
-      const current=decodeURIComponent((this.currentSrc||this.src||'').split('/').pop());
-      const fallback=working.find(s=>decodeURIComponent(s.split('/').pop())!==current)||working[0];
-      if(fallback && this.src!==fallback)this.src=fallback;
-      else this.style.visibility='hidden';
+      if(!this.dataset.rootTried && this.src.includes('/')){
+        this.dataset.rootTried='1';
+        this.src=this.src.split('/').pop();
+        return;
+      }
+      if(!this.dataset.safeTried){
+        this.dataset.safeTried='1';
+        this.src=IMAGES[0];
+        return;
+      }
+      this.style.opacity='0';
     };
 
     thumb.appendChild(img);
     return thumb;
   }
 
-  function buildRow(cls,count,offset,working){
+  function buildRow(cls,count,offset){
     const row=document.createElement('div');
     row.className=`hero-grid-row ${cls}`;
     const frag=document.createDocumentFragment();
     const tiles=[];
+
     for(let i=0;i<count;i++){
-      const tile=makeThumb(i+offset,working);
+      const tile=makeThumb(i+offset);
       tiles.push(tile);
       frag.appendChild(tile);
     }
+
+    // Duplicate tiles so the -50% infinite scroll loops cleanly with no empty gap.
     tiles.forEach(tile=>frag.appendChild(tile.cloneNode(true)));
     row.appendChild(frag);
     return row;
   }
 
-  Promise.all(IMAGES.map(src=>testImage(src))).then(results=>{
-    const working=results.filter(Boolean);
-
-    // Build the animated background ONLY from files that really loaded.
-    // This prevents black empty boxes/broken-image icons after the infinite scroll loops.
-    if(!working.length){
-      grid.style.display='none';
-      return;
-    }
-
-    preloadWorking(working);
-    grid.textContent='';
-
-    const fragment=document.createDocumentFragment();
-    fragment.appendChild(buildRow('hero-grid-row-1',8,0,working));
-    fragment.appendChild(buildRow('hero-grid-row-2',8,6,working));
-    fragment.appendChild(buildRow('hero-grid-row-3',8,12,working));
-    fragment.appendChild(buildRow('hero-grid-row-4',8,18,working));
-    grid.appendChild(fragment);
-    grid.classList.add('hero-thumbnails-preloaded');
-
-    grid.querySelectorAll('.hero-grid-thumb img').forEach((img,index)=>{
-      img.loading='eager';
-      img.decoding='async';
-      img.fetchPriority=index<16?'high':'auto';
-      if(img.complete && img.decode)img.decode().catch(()=>{});
-    });
-  });
+  grid.textContent='';
+  const fragment=document.createDocumentFragment();
+  fragment.appendChild(buildRow('hero-grid-row-1',8,0));
+  fragment.appendChild(buildRow('hero-grid-row-2',8,6));
+  fragment.appendChild(buildRow('hero-grid-row-3',8,12));
+  fragment.appendChild(buildRow('hero-grid-row-4',8,18));
+  grid.appendChild(fragment);
+  grid.classList.add('hero-thumbnails-preloaded');
 
   grid.addEventListener('mouseenter',e=>{
     const thumb=e.target.closest('.hero-grid-thumb');
@@ -2680,9 +2636,9 @@ const works=[
   {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Vlog 47',src:'Vlog47.mp4',thumb:'Vlog47.png',isPhoto:false},
-  {cat:['explainer'],title:'Informative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
+  {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false},

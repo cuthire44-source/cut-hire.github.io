@@ -7,6 +7,41 @@
 <title>Cut & Hire</title>
 <meta name="description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more. Join our Discord and start your project today.">
 <link rel="icon" type="image/png" href="logo.png">
+<link rel="preload" as="image" href="video-thumbs/7xLgtMa0Xb5M3IAu.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Lily Sample.Mp4.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Longform23(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Longform37(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Longform39.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Longform58(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/MInecraft LongForm.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/MInecraft LongForm2.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 1(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 2.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 4(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 5.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 6.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01 7(1).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 01(2).png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/Sequence 075.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/ZR-sJOwRe2iWBSUF.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/longform1.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/longform13.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/longform3.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/longform6.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/longform7.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short10.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short11.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short2.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short4.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short43.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short44.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short45.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short488.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short7.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short8.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short82.png" fetchpriority="high">
+<link rel="preload" as="image" href="video-thumbs/short849.png" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -1548,6 +1583,18 @@ body::before{
     min-height:0;
   }
 }
+
+/* ===== FAST MAPPED VIDEO THUMBNAILS ===== */
+.wc-video-thumb[data-explicit-thumb="1"]{
+  content-visibility:visible!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.wc.has-thumb .wc-placeholder{
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
 </style>
 </head>
 <body>
@@ -2234,6 +2281,23 @@ const works=[
   {cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp'}
 ];
 
+
+
+/* ===== PRELOAD ALL MAPPED VIDEO THUMBNAILS FAST ===== */
+(function preloadMappedVideoThumbs(){
+  const thumbs = works
+    .map(w => w && w.thumb)
+    .filter(Boolean)
+    .filter((v, i, a) => a.indexOf(v) === i);
+
+  thumbs.forEach((src, i) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.loading = 'eager';
+    img.fetchPriority = i < 16 ? 'high' : 'auto';
+    img.src = src;
+  });
+})();
 
 // Preload portfolio thumbnail tab images too, so opening the Thumbnails tab feels instant.
 (function(){

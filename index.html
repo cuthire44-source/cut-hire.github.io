@@ -2083,30 +2083,22 @@ body.hero-start-boost
 }
 </style>
 
-<style>
-/* ===== RESTORE ORIGINAL BIG HERO INTRO ZOOM =====
-   Keeps the big zoom exactly like before, while the row-speed keyframes stay active. */
-.hero-grid-bg{
-  transform:scale(2.4) rotate(12deg);
-  animation:heroGridZoomOut 8s cubic-bezier(0,0,.15,1) 0s forwards!important;
-}
-@keyframes heroGridZoomOut{
-  0%{opacity:1;transform:scale(2.4) rotate(12deg)}
-  100%{opacity:1;transform:scale(1) rotate(0deg)}
-}
-</style>
-
 
 <style>
-/* ===== FINAL NO BLACK GAP HERO PATCH ===== */
+/* ===== V40 HERO GRID FINAL LAYOUT FIX =====
+   Top row fully visible, bottom row kept visible, smaller MrBeast-like cards,
+   darker original Cut & Hire feel restored, and big intro zoom preserved. */
 .hero-grid-bg{
-  top:-120px!important;
+  top:12px!important;
   left:-220px!important;
   right:-220px!important;
-  bottom:-140px!important;
+  bottom:-40px!important;
+  gap:18px!important;
   overflow:hidden!important;
   background:#000!important;
+  transform:scale(2.4) rotate(12deg);
   animation:heroGridZoomOut 8s cubic-bezier(0,0,.15,1) 0s forwards!important;
+  justify-content:flex-start!important;
 }
 @keyframes heroGridZoomOut{
   0%{opacity:1;transform:scale(2.4) rotate(12deg)}
@@ -2115,19 +2107,131 @@ body.hero-start-boost
 .hero-grid-row{
   animation:none!important;
   display:flex!important;
+  gap:18px!important;
   width:max-content!important;
-  min-width:360vw!important;
+  min-width:460vw!important;
   will-change:transform!important;
   transform:translate3d(0,0,0);
+  flex-shrink:0!important;
 }
 .hero-grid-thumb{
+  width:360px!important;
+  height:202px!important;
+  border-radius:9px!important;
   flex:0 0 auto!important;
+  overflow:hidden!important;
+  background:#000!important;
 }
-.hero-grid-row::after{
-  content:"";
-  display:block;
-  flex:0 0 120vw;
-  height:1px;
+.hero-grid-thumb img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:brightness(.34)!important;
+}
+.hero-grid-thumb.lit img{filter:brightness(.9)!important;}
+.hero-grid-thumb.fading img{filter:brightness(.34)!important;}
+
+/* Darker than V39, but not the broken fully-black look.
+   This is closer to the original Cut & Hire darkness while keeping thumbnails visible. */
+.hero-grid-overlay{
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0,0,0,.22), rgba(0,0,0,.46) 58%, rgba(0,0,0,.78) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.08) 0%, rgba(0,0,0,.16) 24%, rgba(0,0,0,.40) 72%, rgba(0,0,0,.88) 100%)!important;
+}
+
+@media(max-width:640px){
+  .hero-grid-bg{top:8px!important;left:-120px!important;right:-120px!important;bottom:-70px!important;gap:10px!important;}
+  .hero-grid-row{gap:10px!important;min-width:520vw!important;}
+  .hero-grid-thumb{width:250px!important;height:140px!important;border-radius:8px!important;}
+}
+</style>
+
+
+<style>
+/* ===== V42 ONLY DARK HERO-TO-ABOUT FADE =====
+   Only adds the dark fade/transition area like the reference.
+   Does NOT change About text, fonts, underline, nav, or section content. */
+
+/* Softer bottom fade from hero thumbnails into black */
+.hero-grid-overlay{
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0,0,0,.24), rgba(0,0,0,.52) 60%, rgba(0,0,0,.82) 100%),
+    linear-gradient(to bottom,
+      rgba(0,0,0,.08) 0%,
+      rgba(0,0,0,.15) 22%,
+      rgba(0,0,0,.42) 66%,
+      rgba(0,0,0,.96) 100%
+    )!important;
+}
+
+/* Add only the dark transition layer at the top of About */
+.about-section{
+  position:relative!important;
+  overflow:hidden!important;
+  background:#000!important;
+}
+
+/* This is the only MrBeast-style part: the dark fade bridge */
+.about-section::before{
+  content:''!important;
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:260px!important;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,.96) 0%,
+      rgba(0,0,0,.82) 28%,
+      rgba(0,0,0,.52) 58%,
+      rgba(0,0,0,0) 100%
+    )!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+
+/* Keep all About content exactly in its normal design */
+.about-section .con{
+  position:relative!important;
+  z-index:1!important;
+}
+
+/* Keep original About title styling */
+.about-title{
+  font-family:'Playfair Display',serif!important;
+  text-align:left!important;
+}
+.about-title em{
+  font-style:italic!important;
+  color:var(--red)!important;
+}
+.about-title::after{
+  display:none!important;
+  content:none!important;
+}
+</style>
+
+
+<style>
+/* ===== V43 HERO THUMBNAIL HOVER BRIGHTNESS =====
+   Hovering a hero/background thumbnail makes it much more visible. */
+.hero-grid-thumb{
+  transition:transform .22s ease, box-shadow .22s ease!important;
+}
+.hero-grid-thumb:hover{
+  transform:scale(1.018)!important;
+  z-index:5!important;
+  box-shadow:0 0 24px rgba(255,255,255,.08), 0 0 34px rgba(224,32,32,.14)!important;
+}
+.hero-grid-thumb:hover img{
+  filter:brightness(.98) contrast(1.08) saturate(1.08)!important;
+}
+.hero-grid-thumb.lit:hover img,
+.hero-grid-thumb.fading:hover img{
+  filter:brightness(1) contrast(1.08) saturate(1.08)!important;
 }
 </style>
 
@@ -3795,16 +3899,17 @@ ring.style.visibility = 'visible';
 
 
 
+
 <script>
 (function(){
   const ROW_SETTINGS = [
-    { direction: -1, duration: 301, offset: 0.00 },
-    { direction:  1, duration: 344, offset: 0.28 },
-    { direction: -1, duration: 323, offset: 0.56 },
-    { direction:  1, duration: 378, offset: 0.84 }
+    { direction: -1, duration: 315, offset: 0.00 }, // row 1: left, 125% slower
+    { direction:  1, duration: 392, offset: 0.22 }, // row 2: right, 145% slower
+    { direction:  1, duration: 459, offset: 0.47 }, // row 3: right, 170% slower
+    { direction: -1, duration: 600, offset: 0.71 }  // row 4: left, 200% slower
   ];
 
-  const START_BOOST = 1.08;       // intro/start = 8% faster
+  const START_BOOST = 1.08; // intro/start = 8% faster
   const FAST_MS = 3000;
   const SLOWDOWN_MS = 3000;
 
@@ -3828,9 +3933,9 @@ ring.style.visibility = 'visible';
       const original = Array.from(row.children);
       if(!original.length) return;
 
-      // Keep enough copies so black gaps never appear.
-      const targetCopies = 5;
+      const targetCopies = 8;
       const originalCount = original.length;
+
       while(row.children.length < originalCount * targetCopies){
         original.forEach(function(node){
           const clone = node.cloneNode(true);
@@ -3852,10 +3957,11 @@ ring.style.visibility = 'visible';
   function startMovement(rows){
     let startTime = null;
     let lastTime = null;
+
     const offsets = rows.map((row, i) => {
-      const base = row.scrollWidth / 5 || 1;
       const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
-      return base * cfg.offset;
+      const loopWidth = row.scrollWidth / 8 || 1;
+      return loopWidth * cfg.offset;
     });
 
     function frame(now){
@@ -3872,8 +3978,7 @@ ring.style.visibility = 'visible';
 
       rows.forEach(function(row, i){
         const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
-
-        const loopWidth = row.scrollWidth / 5;
+        const loopWidth = row.scrollWidth / 8;
         if(!loopWidth || loopWidth < 10) return;
 
         const pxPerSecond = loopWidth / cfg.duration;
@@ -3902,17 +4007,6 @@ ring.style.visibility = 'visible';
   }
 })();
 </script>
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

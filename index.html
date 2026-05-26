@@ -46,6 +46,8 @@
 <link rel="preload" as="image" href="short82.png" fetchpriority="high">
 <link rel="preload" as="image" href="short849.png" fetchpriority="high">
 <link rel="preload" as="image" href="motion graphics92.png" fetchpriority="high">
+<link rel="preload" as="image" href="mdm-pfp-original.png" fetchpriority="high">
+<link rel="preload" as="image" href="review-mdm-full-original.png" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -1269,6 +1271,34 @@ body::before{
 }
 
 
+/* MDM review: keep the ORIGINAL screenshot visible, never cropped. */
+.review-proof-img.proof-mdm-full{
+  width:min(1180px,100%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:6px!important;
+}
+.review-card.mdm-review-card .review-quote{
+  min-height:125px;
+  font-size:.82rem;
+  line-height:1.58;
+}
+.review-card.mdm-review-card .review-avatar{
+  background:#050505;
+}
+@media(min-width:961px){
+  #reviews .reviews-track{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    max-width:980px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+}
+
+
+
 
 /* =========================================================
    CLEAN PORTFOLIO CATEGORY STRUCTURE PATCH V2
@@ -2071,6 +2101,53 @@ body.hero-start-boost
 
 /* Keep the rows visually active immediately during the hero zoom-out. */
 .hero-grid-row{animation-play-state:running!important;}
+
+
+/* ===== THREE REVIEWS IN ONE DESKTOP ROW PATCH ===== */
+@media(min-width:821px){
+  #reviews .reviews-shell{
+    max-width:1260px !important;
+  }
+
+  #reviews .reviews-track{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:14px !important;
+    max-width:1120px !important;
+    margin:0 auto !important;
+  }
+
+  #reviews .review-card{
+    min-height:390px !important;
+    padding:2.25rem 1.35rem 1.45rem !important;
+  }
+
+  #reviews .review-avatar{
+    width:86px !important;
+    height:86px !important;
+    margin-bottom:1rem !important;
+  }
+
+  #reviews .review-name{
+    font-size:1.02rem !important;
+  }
+
+  #reviews .review-quote{
+    max-width:300px !important;
+    font-size:.84rem !important;
+    line-height:1.58 !important;
+    min-height:116px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  #reviews .review-card.mdm-review-card .review-quote{
+    font-size:.73rem !important;
+    line-height:1.45 !important;
+    min-height:132px !important;
+  }
+}
+
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -2410,6 +2487,25 @@ body.hero-start-boost
         <span class="review-proof-hint">Click to open message proof</span>
       </button>
 
+      <button class="review-card rv mdm-review-card" type="button"
+        data-name="mdm2210"
+        data-tag="10/10 rating"
+        data-full="Absolutely outstanding work! @Valie The delivery was incredibly fast, communication was smooth and professional throughout, and the editing quality exceeded my expectations. Everything was polished, creative, and matched exactly what I envisioned. Highly recommended!"
+        data-proof-img="review-mdm-full-original.png"
+        data-proof-size="mdm-full"
+        data-proof="Original Discord review screenshot from mdm2210">
+        <div class="review-avatar" style="overflow:hidden">
+          <img class="review-avatar-img-real" src="mdm-pfp-original.png" alt="mdm2210 profile picture">
+          <div class="review-avatar-img" style="display:none"></div>
+          <div class="review-discord-dot">⌁</div>
+        </div>
+        <div class="review-name">mdm2210</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Absolutely outstanding work! @Valie The delivery was incredibly fast, communication was smooth and professional throughout, and the editing quality exceeded my expectations. Everything was polished, creative, and matched exactly what I envisioned. Highly recommended!”</p>
+        <div class="review-tag">✦ 10/10 rating</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
     </div>
 
     <div class="reviews-bottom rv">
@@ -2559,6 +2655,9 @@ function openReviewModal(card){
   if(proofImg){
     const img=document.createElement('img');
     img.className='review-proof-img';
+    const proofSize=(card.dataset.proofSize||'').trim();
+    if(proofSize==='700x80') img.classList.add('proof-700x80');
+    if(proofSize==='mdm-full') img.classList.add('proof-mdm-full');
     img.src=proofImg;
     img.alt=`Discord screenshot proof from ${name}`;
     img.onerror=()=>{

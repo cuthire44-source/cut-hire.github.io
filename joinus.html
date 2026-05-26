@@ -1245,6 +1245,259 @@ body::before{
   opacity:.34 !important;
 }
 
+
+/* ===================== JOIN PAGE CLEANUP: MOVE TOP UP + REMOVE LOWER SECTIONS ===================== */
+.join-hero{
+  min-height:24vh !important;
+  padding:4.45rem 2rem 1.65rem !important;
+}
+.join-sub{
+  max-width:500px !important;
+  margin-top:.85rem !important;
+  font-size:.74rem !important;
+  line-height:1.65 !important;
+  color:rgba(245,240,235,.54) !important;
+}
+.join-content{
+  padding-top:2.35rem !important;
+}
+.paths{
+  margin-bottom:2.6rem !important;
+}
+.how-strip,
+.network-section,
+.discord-strip{
+  display:none !important;
+}
+.faq-section{
+  margin-top:2.8rem !important;
+}
+@media(max-width:900px){
+  .join-hero{padding:5.55rem 1.35rem 1.75rem !important;}
+  .join-sub{font-size:.78rem !important;line-height:1.62 !important;}
+  .join-content{padding-top:1.55rem !important;}
+}
+@media(max-width:560px){
+  .join-hero{padding:5.35rem 1rem 1.45rem !important;}
+  .join-sub{font-size:.76rem !important;}
+}
+
+
+/* ===================== FINAL POSITION PATCH: TITLE UP + CARDS DOWN ===================== */
+/* Keeps the existing intro/scroll animations exactly as they are. */
+.join-hero{
+  min-height:18vh !important;
+  padding:3.15rem 2rem .35rem !important;
+}
+
+.join-h1{
+  margin-top:-.35rem !important;
+}
+
+.join-sub{
+  margin-top:.75rem !important;
+}
+
+.divider{
+  margin-top:.35rem !important;
+}
+
+/* This pushes the whole card block down without touching animation code. */
+.join-content{
+  padding-top:4.95rem !important;
+}
+
+@media(max-width:900px){
+  .join-hero{
+    padding:4.8rem 1.35rem .75rem !important;
+  }
+
+  .join-content{
+    padding-top:3.35rem !important;
+  }
+}
+
+@media(max-width:560px){
+  .join-hero{
+    padding:4.65rem 1rem .6rem !important;
+  }
+
+  .join-content{
+    padding-top:2.85rem !important;
+  }
+}
+
+
+
+/* ===================== FINAL REQUEST: KEEP TITLE HIGH, MOVE SUBTEXT + RED LINE DOWN ===================== */
+/* Do not touch animations. Only spacing: title stays high, small paragraph + divider move lower. */
+.join-hero{
+  padding-top:3.75rem !important;
+  padding-bottom:2.95rem !important;
+}
+.join-h1{
+  transform:translateY(-12px) !important;
+}
+.join-sub{
+  margin-top:2.05rem !important;
+  transform:translateY(12px) !important;
+}
+.divider{
+  margin-top:.65rem !important;
+}
+.join-content{
+  padding-top:3.25rem !important;
+}
+@media(max-width:900px){
+  .join-hero{padding-top:5.1rem !important;padding-bottom:2.6rem !important;}
+  .join-h1{transform:translateY(-8px) !important;}
+  .join-sub{margin-top:1.75rem !important;transform:translateY(10px) !important;}
+  .join-content{padding-top:2.6rem !important;}
+}
+@media(max-width:560px){
+  .join-hero{padding-top:5rem !important;padding-bottom:2.25rem !important;}
+  .join-sub{margin-top:1.55rem !important;}
+}
+
+
+/* ===================== FINAL TINY FIX: SUBTEXT CLOSER TO RED LINE ===================== */
+/* Join Us stays high. Only the small paragraph moves closer to the divider line. */
+.join-sub{
+  transform:translateY(34px) !important;
+}
+.divider{
+  margin-top:.15rem !important;
+}
+@media(max-width:900px){
+  .join-sub{transform:translateY(26px) !important;}
+  .divider{margin-top:.1rem !important;}
+}
+@media(max-width:560px){
+  .join-sub{transform:translateY(20px) !important;}
+}
+
+
+
+/* ===================== FINAL REQUEST PATCH: MOVE TITLE A BIT DOWN + BRING SUBTEXT/LINE/CARDS CLOSER ===================== */
+/* Animations untouched. This only adjusts spacing. */
+.join-hero{
+  padding-top:4.2rem !important;
+  padding-bottom:2.1rem !important;
+}
+.join-h1{
+  transform:translateY(-2px) !important;
+}
+.join-sub{
+  margin-top:1.55rem !important;
+  transform:translateY(22px) !important;
+}
+.divider{
+  margin-top:.05rem !important;
+}
+.join-content{
+  padding-top:1.15rem !important;
+}
+@media(max-width:900px){
+  .join-hero{padding-top:5.25rem !important;padding-bottom:1.8rem !important;}
+  .join-h1{transform:translateY(0) !important;}
+  .join-sub{margin-top:1.35rem !important;transform:translateY(18px) !important;}
+  .join-content{padding-top:1rem !important;}
+}
+@media(max-width:560px){
+  .join-hero{padding-top:5.1rem !important;padding-bottom:1.6rem !important;}
+  .join-sub{margin-top:1.2rem !important;transform:translateY(14px) !important;}
+  .join-content{padding-top:.85rem !important;}
+}
+
+
+
+/* ===================== FINAL PATCH: RESTORE RED LINE + TITLE A LITTLE HIGHER ===================== */
+/* Keeps all animations. Only visibility + spacing adjustments. */
+.join-hero{
+  padding-top:3.95rem !important;
+  padding-bottom:1.95rem !important;
+}
+.join-h1{
+  transform:translateY(-6px) !important;
+}
+.join-sub{
+  margin-top:1.45rem !important;
+  transform:translateY(18px) !important;
+}
+.divider{
+  display:block !important;
+  height:1px !important;
+  opacity:1 !important;
+  position:relative !important;
+  z-index:3 !important;
+  margin-top:.12rem !important;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(224,32,32,.24),
+    rgba(224,32,32,.82),
+    rgba(224,32,32,.24),
+    transparent
+  ) !important;
+  box-shadow:0 0 8px rgba(224,32,32,.16) !important;
+}
+.join-content{
+  padding-top:1rem !important;
+}
+@media(max-width:900px){
+  .join-hero{padding-top:5.05rem !important;padding-bottom:1.7rem !important;}
+  .join-h1{transform:translateY(-4px) !important;}
+  .join-sub{margin-top:1.25rem !important;transform:translateY(15px) !important;}
+  .divider{margin-top:.08rem !important;}
+  .join-content{padding-top:.9rem !important;}
+}
+@media(max-width:560px){
+  .join-hero{padding-top:4.9rem !important;padding-bottom:1.5rem !important;}
+  .join-h1{transform:translateY(-3px) !important;}
+  .join-sub{margin-top:1.12rem !important;transform:translateY(12px) !important;}
+  .join-content{padding-top:.8rem !important;}
+}
+
+
+
+/* ===================== FIX: RED DIVIDER USES ORIGINAL INTRO ANIMATION AGAIN ===================== */
+/* This overrides the forced-visible red line patch and puts the divider back into the same intro animation group. */
+.divider{
+  display:block !important;
+  height:1px !important;
+  position:relative !important;
+  z-index:3 !important;
+  margin-top:.12rem !important;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(224,32,32,.22),
+    rgba(224,32,32,.5),
+    rgba(224,32,32,.22),
+    transparent
+  ) !important;
+  box-shadow:none !important;
+
+  opacity:0 !important;
+  transform:translate3d(0,34px,0) !important;
+  transition:
+    opacity 1.05s cubic-bezier(.22,1,.36,1),
+    transform 1.05s cubic-bezier(.22,1,.36,1) !important;
+  will-change:opacity,transform !important;
+}
+
+body.intro-visible .divider{
+  opacity:1 !important;
+  transform:translate3d(0,0,0) !important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .divider{
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1264,7 +1517,7 @@ body::before{
 <!-- HERO -->
 <div class="join-hero">
   <h1 class="join-h1" id="join-h1">Join <em>Us</em></h1>
-  <p class="join-sub" id="join-sub">We connect skilled video editors with clients who need them. Whether you need your content edited or you're an editor looking for steady work — there's a place for you here. Everything is managed through our Discord server via private tickets.</p>
+  <p class="join-sub" id="join-sub">Need an edit or steady client work? Cut & Hire connects clients with vetted video editors through private Discord tickets. Share the style, deadline, budget, or portfolio, and we match the right people, keep communication organised, and move projects forward fast.</p>
 </div>
 
 <div class="divider"></div>
@@ -1297,10 +1550,10 @@ body::before{
 
     <!-- EDITOR CARD -->
     <div class="path-card editor">
-      <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors</div>
+      <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors/Designers</div>
       <span class="path-icon"><img src="film-reel.png" alt=""></span>
-      <h2>Apply as an <em>Editor</em></h2>
-      <p class="path-desc">We're actively looking for exceptional video editors to join our network. Submit your portfolio, pass our quality review, and start getting real clients from day one — on your own schedule.</p>
+      <h2>Apply as an <em>Editor/Designer</em></h2>
+      <p class="path-desc">We're actively looking for exceptional video editors/designers to join our network. Submit your portfolio, pass our quality review, and start getting real clients from day one — on your own schedule.</p>
       <ul class="path-perks">
         <li>Submit your portfolio through our application form</li>
         <li>Pass our quality review — we have high standards</li>
@@ -1312,56 +1565,11 @@ body::before{
       <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Apply as Editor</span>
+      <span>Apply as Editor/Designer</span>
     </a>
     </div>
   </div>
-  <!-- HOW IT WORKS -->
-  <div class="how-strip" id="how-strip">
-    <p class="strip-label">How It Works</p>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="how-num">01</div>
-        <span class="how-step-icon"><img src="bubble-chat.png" alt=""></span>
-        <h4>Join the Server</h4>
-        <p>Hit the Discord link, join our community, and open a ticket with your project details.</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">02</div>
-        <span class="how-step-icon"><img src="clipboard.png" alt=""></span>
-        <h4>Share Your Brief</h4>
-        <p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">03</div>
-        <span class="how-step-icon"><img src="film-reel.png" alt=""></span>
-        <h4>We Get to Work</h4>
-        <p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">04</div>
-        <span class="how-step-icon"><img src="check-circle.png" alt=""></span>
-        <h4>Approve &amp; Deliver</h4>
-        <p>Review the sample first. If it fits, agree on the project details and receive the final polished edit.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- NETWORK INFO -->
-  <div class="network-section" id="network-section">
-    <div class="ns-badge"><img class="icon-img ns-icon" src="world-wide-web.png" alt=""> Our Network</div>
-    <div class="ns-body">
-      <div>
-        <h3>Built on <em>Trust</em> &amp; <em>Quality</em></h3>
-        <p>Cut &amp; Hire isn't an agency — it's a network. Editors in our roster are reviewed for quality, communication, and reliability. Clients get the right match every time. Editors get consistent work without the hustle of finding their own clients.</p>
-        <p style="margin-top:1rem">All coordination happens through our Discord server. Private ticket channels keep every project organised, confidential, and moving fast.</p>
-      </div>
-      <div class="ns-stats">
-        <div class="ns-stat"><div class="ns-stat-n">35+</div><div class="ns-stat-l">Editors across all styles — gaming, cinematic, short-form, documentary, brand</div></div>
-      </div>
-    </div>
-  </div>
-
+  <!-- FAQs -->
   <!-- FAQs -->
   <div class="faq-section" id="faq-section">
     <p class="strip-label" style="margin-bottom:1.8rem">Common Questions</p>
@@ -1370,8 +1578,8 @@ body::before{
       <div class="faq-a">Join our Discord server and open a ticket. Tell us about your project — what style you want, your deadline, and your budget. We'll match you with the right editor and help you request a free sample before you decide to continue.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How do I apply as a video editor? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Join our Discord and open an editor application ticket. Share your portfolio — showreel, past work, or examples of the style you specialise in. Our team reviews every application and gets back to you within 48 hours.</div>
+      <div class="faq-q">How do I apply as a video editor/designer? <span class="faq-icon">+</span></div>
+      <div class="faq-a">Join our Discord and open an editor/designer application ticket. Share your portfolio — showreel, past work, or examples of the style you specialise in. Our team reviews every application and gets back to you within 48 hours.</div>
     </div>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">What if I'm not happy with the first edit? <span class="faq-icon">+</span></div>
@@ -1387,18 +1595,6 @@ body::before{
     </div>
   </div>
 
-  <!-- DISCORD CTA STRIP -->
-  <div class="discord-strip" id="discord-strip" style="margin-top:3rem">
-    <div class="ds-text">
-      <h3>Ready? <em>Let's Talk.</em></h3>
-      <p>Join our Discord, open a ticket, and tell us about your project or portfolio. We respond fast and keep things simple.</p>
-    </div>
-    <a href="https://discord.gg/dXemseJsDV" target="_blank" class="btn-red stroke-glow-btn" style="flex-shrink:0">
-      <span class="stroke-spin-mask" aria-hidden="true"></span>
-      <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Join Discord</span>
-    </a>
-  </div>
 
 </div>
 
@@ -1421,10 +1617,7 @@ window.addEventListener('load', () => {
 // Scroll reveal: every section after the top cards appears only when reached.
 window.addEventListener('DOMContentLoaded', () => {
   const revealSections = [
-    document.getElementById('how-strip'),
-    document.getElementById('network-section'),
-    document.getElementById('faq-section'),
-    document.getElementById('discord-strip')
+    document.getElementById('faq-section')
   ].filter(Boolean);
 
   revealSections.forEach(section => section.classList.add('reveal-on-scroll'));

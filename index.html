@@ -2096,49 +2096,41 @@ body.hero-start-boost
 }
 </style>
 
-<style>
-/* ===== FINAL HERO SEPARATE ROW MOVEMENT FIX =====
-   All rows move separately:
-   Row 1 left, Row 2 right, Row 3 left, Row 4 right.
-   Each row has different speed and starting offset.
-   First 3 seconds: 45% faster row movement.
-   Seconds 3-6: smooth slowdown.
-   After that: normal speed is 10% faster than original/v8.
-   Big intro zoom is preserved. */
-.hero-grid-row{
-  will-change:transform!important;
-  animation-timing-function:linear!important;
-}
-.hero-grid-row-1{animation:heroGridSeparateRow1 150.000s linear infinite!important;}
-.hero-grid-row-2{animation:heroGridSeparateRow2 186.364s linear infinite!important;}
-.hero-grid-row-3{animation:heroGridSeparateRow3 168.182s linear infinite!important;}
-.hero-grid-row-4{animation:heroGridSeparateRow4 213.636s linear infinite!important;}
 
-@keyframes heroGridSeparateRow1{
-  0%{transform:translate3d(0.0000%,0,0)}
-  2.0000%{transform:translate3d(-1.4500%,0,0)}
-  4.0000%{transform:translate3d(-2.6750%,0,0)}
-  100%{transform:translate3d(-50.0000%,0,0)}
+<style>
+/* ===== FINAL NO BLACK GAP HERO PATCH ===== */
+.hero-grid-bg{
+  top:-120px!important;
+  left:-220px!important;
+  right:-220px!important;
+  bottom:-140px!important;
+  overflow:hidden!important;
+  background:#000!important;
+  animation:heroGridZoomOut 8s cubic-bezier(0,0,.15,1) 0s forwards!important;
 }
-@keyframes heroGridSeparateRow2{
-  0%{transform:translate3d(-14.0000%,0,0)}
-  1.6098%{transform:translate3d(-12.8329%,0,0)}
-  3.2195%{transform:translate3d(-11.8470%,0,0)}
-  100%{transform:translate3d(36.0000%,0,0)}
+@keyframes heroGridZoomOut{
+  0%{opacity:1;transform:scale(2.4) rotate(12deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
 }
-@keyframes heroGridSeparateRow3{
-  0%{transform:translate3d(-28.0000%,0,0)}
-  1.7838%{transform:translate3d(-29.2932%,0,0)}
-  3.5676%{transform:translate3d(-30.3858%,0,0)}
-  100%{transform:translate3d(-78.0000%,0,0)}
+.hero-grid-row{
+  animation:none!important;
+  display:flex!important;
+  width:max-content!important;
+  min-width:360vw!important;
+  will-change:transform!important;
+  transform:translate3d(0,0,0);
 }
-@keyframes heroGridSeparateRow4{
-  0%{transform:translate3d(-42.0000%,0,0)}
-  1.4043%{transform:translate3d(-40.9819%,0,0)}
-  2.8085%{transform:translate3d(-40.1218%,0,0)}
-  100%{transform:translate3d(8.0000%,0,0)}
+.hero-grid-thumb{
+  flex:0 0 auto!important;
+}
+.hero-grid-row::after{
+  content:"";
+  display:block;
+  flex:0 0 120vw;
+  height:1px;
 }
 </style>
+
 </head>
 <body class="hero-start-boost">
 
@@ -2761,7 +2753,6 @@ const works=[
   // Shorts/Reels: removed old 1st + 3rd shorts, added short44.
   {cat:['motion'],title:'Short 44',src:'short44.mp4',thumb:'short44.png',isPhoto:false},
   {cat:['motion'],title:'Short 2',src:'short2.mp4',thumb:'short2.png',isPhoto:false},
-  {cat:['explainer'],title:'Short 4',src:'short4.mp4',thumb:'short4.png',isPhoto:false},
   {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
   {cat:['motion'],title:'Short 7',src:'short7.mp4',thumb:'short7.png',isPhoto:false},
   {cat:['documentary'],title:'Short 8',src:'short8.mp4',thumb:'short8.png',isPhoto:false},
@@ -3787,6 +3778,137 @@ ring.style.visibility = 'visible';
   else bind();
 })();
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  const ROW_SETTINGS = [
+    { direction: -1, duration: 301, offset: 0.00 },
+    { direction:  1, duration: 344, offset: 0.28 },
+    { direction: -1, duration: 323, offset: 0.56 },
+    { direction:  1, duration: 378, offset: 0.84 }
+  ];
+
+  const START_BOOST = 1.08;       // intro/start = 8% faster
+  const FAST_MS = 3000;
+  const SLOWDOWN_MS = 3000;
+
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+  function speedMultiplier(elapsed){
+    if(elapsed <= FAST_MS) return START_BOOST;
+    const t = clamp((elapsed - FAST_MS) / SLOWDOWN_MS, 0, 1);
+    const eased = t * t * (3 - 2 * t);
+    return START_BOOST + (1 - START_BOOST) * eased;
+  }
+
+  function prepareRows(){
+    const rows = Array.from(document.querySelectorAll('.hero-grid-row'));
+    if(!rows.length){
+      requestAnimationFrame(prepareRows);
+      return;
+    }
+
+    rows.forEach(function(row){
+      const original = Array.from(row.children);
+      if(!original.length) return;
+
+      // Keep enough copies so black gaps never appear.
+      const targetCopies = 5;
+      const originalCount = original.length;
+      while(row.children.length < originalCount * targetCopies){
+        original.forEach(function(node){
+          const clone = node.cloneNode(true);
+          const img = clone.querySelector && clone.querySelector('img');
+          if(img){
+            img.loading = 'eager';
+            img.decoding = 'async';
+            img.style.opacity = '1';
+            img.style.visibility = 'visible';
+          }
+          row.appendChild(clone);
+        });
+      }
+    });
+
+    startMovement(rows);
+  }
+
+  function startMovement(rows){
+    let startTime = null;
+    let lastTime = null;
+    const offsets = rows.map((row, i) => {
+      const base = row.scrollWidth / 5 || 1;
+      const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
+      return base * cfg.offset;
+    });
+
+    function frame(now){
+      if(startTime === null){
+        startTime = now;
+        lastTime = now;
+      }
+
+      const dt = Math.min(50, now - lastTime) / 1000;
+      lastTime = now;
+
+      const elapsed = now - startTime;
+      const mult = speedMultiplier(elapsed);
+
+      rows.forEach(function(row, i){
+        const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
+
+        const loopWidth = row.scrollWidth / 5;
+        if(!loopWidth || loopWidth < 10) return;
+
+        const pxPerSecond = loopWidth / cfg.duration;
+        offsets[i] = (offsets[i] + (pxPerSecond * mult * dt)) % loopWidth;
+
+        let x;
+        if(cfg.direction < 0){
+          x = -offsets[i];
+        }else{
+          x = -loopWidth + offsets[i];
+        }
+
+        row.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+      });
+
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', prepareRows);
+  }else{
+    prepareRows();
+  }
+})();
+</script>
+
+
+
+
+
+
+
 
 
 

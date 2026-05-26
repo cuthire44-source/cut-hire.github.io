@@ -2056,22 +2056,21 @@ body.video-modal-locked{
 .hero-grid-thumb img{opacity:1!important;visibility:visible!important;background:transparent!important;}
 
 /* ===== HERO START SPEED BOOST - FINAL FIX =====
-   First 3 seconds: 60% faster.
-   After 3 seconds: normal speed stays 20% faster than v8.
+   First 3 seconds: 80% faster.
+   After 3 seconds: normal speed stays 10% faster than v8.
    IMPORTANT: this replaces the old html.hero-speed-boost patch so nothing overrides it. */
-.hero-grid-row-1{animation:heroGridScrollLeft 137.500s linear infinite!important;}
-.hero-grid-row-2{animation:heroGridScrollLeft 170.833s linear infinite!important;}
-.hero-grid-row-3{animation:heroGridScrollLeft 154.167s linear infinite!important;}
-.hero-grid-row-4{animation:heroGridScrollLeft 195.833s linear infinite!important;}
+.hero-grid-row-1{animation:heroGridScrollLeft 150.000s linear infinite!important;}
+.hero-grid-row-2{animation:heroGridScrollLeft 186.364s linear infinite!important;}
+.hero-grid-row-3{animation:heroGridScrollLeft 168.182s linear infinite!important;}
+.hero-grid-row-4{animation:heroGridScrollLeft 213.636s linear infinite!important;}
 
-body.hero-start-boost .hero-grid-row-1{animation:heroGridScrollLeft 85.938s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-2{animation:heroGridScrollLeft 106.771s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-3{animation:heroGridScrollLeft 96.354s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-4{animation:heroGridScrollLeft 122.396s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-1{animation:heroGridScrollLeft 83.333s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-2{animation:heroGridScrollLeft 103.535s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-3{animation:heroGridScrollLeft 93.434s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-4{animation:heroGridScrollLeft 118.687s linear infinite!important;}
 
 /* Keep the rows visually active immediately during the hero zoom-out. */
 .hero-grid-row{animation-play-state:running!important;}
-
 </style>
 </head>
 <body class="hero-start-boost">

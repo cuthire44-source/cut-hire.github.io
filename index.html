@@ -66,6 +66,26 @@
 <link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_1_.webp" fetchpriority="high">
 <link rel="preload" as="image" href="hero-thumbnails/thumnbail_by_lokesh_2.webp" fetchpriority="high">
 <link rel="preload" as="image" href="hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/8.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/5.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/image.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/bvcvcbvcbvcb43541.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/Illustrator_vid.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_4.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_7.png.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumnbail_by_lokesh_2.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_1_.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_5.png.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_3.png.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/descarga_1.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/descarga_2.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/IMG-20251116-WA0014.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/20260312_052641.webp?v=20260526hero4" fetchpriority="high">
+<link rel="preload" as="image" href="hero-thumbnails/20260314_051758.webp?v=20260526hero4" fetchpriority="high">
 <style>
 :root{
   --hero-reveal-delay:1.5s;
@@ -573,7 +593,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   gap:8px;
   opacity:1;
   transform:scale(2.4) rotate(12deg);
-  animation:heroGridZoomOut 5s cubic-bezier(0,0,.15,1) 0s forwards;
+  animation:heroGridZoomOut 8s cubic-bezier(0,0,.15,1) 0s forwards;
   pointer-events:auto;
   overflow:hidden;
   will-change:transform,opacity;
@@ -589,10 +609,10 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   width:max-content;
   will-change:transform;
 }
-.hero-grid-row-1{animation:heroGridScrollLeft 55s linear infinite}
-.hero-grid-row-2{animation:heroGridScrollLeft 80s linear infinite}
-.hero-grid-row-3{animation:heroGridScrollLeft 65s linear infinite}
-.hero-grid-row-4{animation:heroGridScrollLeft 95s linear infinite}
+.hero-grid-row-1{animation:heroGridScrollLeft 165s linear infinite}
+.hero-grid-row-2{animation:heroGridScrollLeft 205s linear infinite}
+.hero-grid-row-3{animation:heroGridScrollLeft 185s linear infinite}
+.hero-grid-row-4{animation:heroGridScrollLeft 235s linear infinite}
 @keyframes heroGridScrollLeft{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -603,7 +623,7 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   flex-shrink:0;
   border-radius:12px;
   overflow:hidden;
-  background:#050505;
+  background:transparent!important;
   cursor:pointer;
 }
 .hero-grid-thumb img{
@@ -612,6 +632,8 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   object-fit:cover;
   display:block;
   filter:brightness(.2);
+  opacity:1!important;
+  visibility:visible!important;
   transition:filter .15s ease;
 }
 .hero-grid-thumb.lit img{
@@ -657,10 +679,10 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   content-visibility:visible!important;
   visibility:visible!important;
   opacity:1!important;
-  background:#050505;
+  background:transparent!important;
 }
 .wc-thumb,.wc-video-thumb{content-visibility:auto;}
-.hero-grid-thumb{contain:layout paint style; background:#050505;}
+.hero-grid-thumb{contain:layout paint style; background:transparent!important;}
 .wc img{background:#050505;}
 
 /* ===== PERFORMANCE ===== */
@@ -2026,9 +2048,43 @@ body.video-modal-locked{
   }
 }
 
+
+/* ===== HERO V4 SAFETY PATCH ===== */
+.hero-grid-bg{opacity:1!important;visibility:visible!important;}
+.hero-grid-row{visibility:visible!important;}
+.hero-grid-thumb{background:transparent!important;border:0!important;}
+.hero-grid-thumb img{opacity:1!important;visibility:visible!important;background:transparent!important;}
+
+/* ===== HERO START SPEED BOOST - FINAL FIX =====
+   First 3 seconds: 60% faster.
+   After 3 seconds: normal speed stays 20% faster than v8.
+   IMPORTANT: this replaces the old html.hero-speed-boost patch so nothing overrides it. */
+.hero-grid-row-1{animation:heroGridScrollLeft 137.500s linear infinite!important;}
+.hero-grid-row-2{animation:heroGridScrollLeft 170.833s linear infinite!important;}
+.hero-grid-row-3{animation:heroGridScrollLeft 154.167s linear infinite!important;}
+.hero-grid-row-4{animation:heroGridScrollLeft 195.833s linear infinite!important;}
+
+body.hero-start-boost .hero-grid-row-1{animation:heroGridScrollLeft 85.938s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-2{animation:heroGridScrollLeft 106.771s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-3{animation:heroGridScrollLeft 96.354s linear infinite!important;}
+body.hero-start-boost .hero-grid-row-4{animation:heroGridScrollLeft 122.396s linear infinite!important;}
+
+/* Keep the rows visually active immediately during the hero zoom-out. */
+.hero-grid-row{animation-play-state:running!important;}
+
 </style>
 </head>
-<body>
+<body class="hero-start-boost">
+
+<script>
+(function(){
+  /* Start the 3-second boost timer immediately, not on window load.
+     This makes the visible first seconds move faster, then return to normal. */
+  setTimeout(function(){
+    document.body.classList.remove('hero-start-boost');
+  }, 3000);
+})();
+</script>
 <div class="site-fade-cover" aria-hidden="true"></div>
 
 <!-- Scroll hints -->
@@ -2377,115 +2433,133 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
 
 /* ===== HERO THUMBNAIL GRID BACKGROUND ===== */
 (function(){
-  /* IMPORTANT:
-     Only use the 12 hero thumbnail files that are already preloaded in the <head>.
-     The old list had extra filenames that were not always on the live server, and when
-     the infinite background reached those files it showed black/broken boxes.
-     This version builds the grid immediately and repeats the safe images forever. */
-  const IMAGES=[
-    "hero-thumbnails/image.webp",
-    "hero-thumbnails/thumbnail_by_lokesh_5.png.webp",
-    "hero-thumbnails/thumbnail_by_lokesh_3.png.webp",
-    "hero-thumbnails/thumbnail_by_lokesh_7.png.webp",
-    "hero-thumbnails/5.webp",
-    "hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp",
-    "hero-thumbnails/bvcvcbvcbvcb43541.webp",
-    "hero-thumbnails/thumbnail_by_lokesh_4.webp",
-    "hero-thumbnails/Illustrator_vid.webp",
-    "hero-thumbnails/thumbnail_by_lokesh_1_.webp",
-    "hero-thumbnails/thumnbail_by_lokesh_2.webp",
-    "hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp"
+  /* v8: moving rows + root/folder fallback + no cloneNode handler bug. */
+  const HERO_CACHE_VERSION='v=20260526hero8';
+  const FILES=[
+    '8.webp',
+    'f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp',
+    '9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp',
+    'e837326a-3c9d-4142-a663-1d32cff2edef.webp',
+    '5.webp',
+    'image.webp',
+    'bvcvcbvcbvcb43541.webp',
+    'I_tested_10_Spy_Gadgets_Thumbnail.webp',
+    'Illustrator_vid.webp',
+    'thumbnail_by_lokesh_4.webp',
+    'thumbnail_by_lokesh_7.png.webp',
+    'thumnbail_by_lokesh_2.webp',
+    'thumbnail_by_lokesh_1_.webp',
+    'thumbnail_by_lokesh_5.png.webp',
+    'thumbnail_by_lokesh_3.png.webp',
+    'descarga_1.webp',
+    'descarga_2.webp',
+    'IMG-20251116-WA0014.webp',
+    '20260312_052641.webp',
+    '20260314_051758.webp',
+    'image (1).webp',
+    '4_1.webp',
+    '3_2.webp',
+    '4_2.webp',
+    '1_1.webp',
+    '3.webp',
+    '1.webp',
+    '5 (1).webp',
+    '6_1.webp',
+    '7.webp'
   ];
 
   const grid=document.getElementById('hero-grid-bg');
   if(!grid||grid.dataset.ready)return;
   grid.dataset.ready='1';
 
-  function addHeadPreload(src, priority='high'){
-    if(!src)return;
-    const exists=[...document.querySelectorAll('link[rel="preload"][as="image"]')]
-      .some(link=>link.getAttribute('href')===src);
-    if(exists)return;
+  function cache(src){
+    if(!src || src.startsWith('data:') || src.includes('?'))return src;
+    return src + '?' + HERO_CACHE_VERSION;
+  }
+
+  function candidates(file){
+    // Your local screenshots/images are usually beside index.html, so root first.
+    // If you move them into the folder, the second path still works.
+    return [file, 'hero-thumbnails/' + file];
+  }
+
+  function addPreload(src){
+    const href=cache(src);
+    if(document.querySelector('link[rel="preload"][as="image"][href="'+CSS.escape(href)+'"]'))return;
     const link=document.createElement('link');
     link.rel='preload';
     link.as='image';
-    link.href=src;
-    link.fetchPriority=priority;
+    link.href=href;
+    link.fetchPriority='high';
     document.head.appendChild(link);
   }
 
-  function warmImage(src,index){
-    addHeadPreload(src,index<12?'high':'auto');
-    const img=new Image();
-    img.decoding='async';
-    img.loading='eager';
-    img.fetchPriority=index<12?'high':'auto';
-    img.src=cacheBustAsset(src);
-    if(img.decode)img.decode().catch(()=>{});
-  }
+  FILES.forEach(file=>{
+    const c=candidates(file);
+    addPreload(c[0]);
+    addPreload(c[1]);
+  });
 
-  IMAGES.forEach(warmImage);
-
-  function makeThumb(idx){
+  function makeThumb(file){
     const thumb=document.createElement('div');
     thumb.className='hero-grid-thumb';
+    thumb.dataset.file=file;
 
     const img=document.createElement('img');
-    const src=IMAGES[idx%IMAGES.length];
-    img.src=cacheBustAsset(src);
     img.alt='';
     img.width=480;
     img.height=260;
     img.loading='eager';
     img.decoding='async';
-    img.fetchPriority=idx<16?'high':'auto';
+    img.fetchPriority='high';
+    img.style.opacity='1';
+    img.style.visibility='visible';
 
-    /* If a folder path is wrong on some host, try the same file from root.
-       If that still fails, use the first safe hero thumbnail instead of leaving a broken box. */
+    const tries=candidates(file);
+    let attempt=0;
+
     img.onerror=function(){
-      if(!this.dataset.rootTried && this.src.includes('/')){
-        this.dataset.rootTried='1';
-        this.src=this.src.split('/').pop();
+      attempt++;
+      if(attempt<tries.length){
+        img.src=cache(tries[attempt]);
         return;
       }
-      if(!this.dataset.safeTried){
-        this.dataset.safeTried='1';
-        this.src=IMAGES[0];
-        return;
-      }
-      this.style.opacity='0';
+      thumb.remove();
+      console.warn('Missing hero thumbnail:', file, 'Tried:', tries);
     };
 
+    img.onload=function(){
+      thumb.style.display='block';
+      img.style.opacity='1';
+      img.style.visibility='visible';
+    };
+
+    img.src=cache(tries[0]);
     thumb.appendChild(img);
     return thumb;
   }
 
-  function buildRow(cls,count,offset){
+  function buildRow(cls,items){
     const row=document.createElement('div');
-    row.className=`hero-grid-row ${cls}`;
-    const frag=document.createDocumentFragment();
-    const tiles=[];
+    row.className='hero-grid-row ' + cls;
 
-    for(let i=0;i<count;i++){
-      const tile=makeThumb(i+offset);
-      tiles.push(tile);
-      frag.appendChild(tile);
+    // Make two fresh copies. Do NOT clone nodes, because cloned images lose fallback logic.
+    for(let cycle=0; cycle<2; cycle++){
+      items.forEach(file=>row.appendChild(makeThumb(file)));
     }
-
-    // Duplicate tiles so the -50% infinite scroll loops cleanly with no empty gap.
-    tiles.forEach(tile=>frag.appendChild(tile.cloneNode(true)));
-    row.appendChild(frag);
     return row;
   }
 
-  grid.textContent='';
-  const fragment=document.createDocumentFragment();
-  fragment.appendChild(buildRow('hero-grid-row-1',8,0));
-  fragment.appendChild(buildRow('hero-grid-row-2',8,6));
-  fragment.appendChild(buildRow('hero-grid-row-3',8,12));
-  fragment.appendChild(buildRow('hero-grid-row-4',8,18));
-  grid.appendChild(fragment);
-  grid.classList.add('hero-thumbnails-preloaded');
+  const rows=[
+    FILES.slice(0,8),
+    FILES.slice(8,16),
+    FILES.slice(16,23),
+    FILES.slice(23,30)
+  ];
+
+  grid.innerHTML='';
+  rows.forEach((rowFiles,i)=>grid.appendChild(buildRow('hero-grid-row-' + (i+1), rowFiles)));
+  grid.classList.add('hero-thumbnails-rendered');
 
   grid.addEventListener('mouseenter',e=>{
     const thumb=e.target.closest('.hero-grid-thumb');
@@ -3656,6 +3730,7 @@ ring.style.visibility = 'visible';
   else bind();
 })();
 </script>
+
 
 </body>
 </html>

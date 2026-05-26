@@ -609,10 +609,10 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
   width:max-content;
   will-change:transform;
 }
-.hero-grid-row-1{animation:heroGridScrollLeft 165s linear infinite}
-.hero-grid-row-2{animation:heroGridScrollLeft 205s linear infinite}
-.hero-grid-row-3{animation:heroGridScrollLeft 185s linear infinite}
-.hero-grid-row-4{animation:heroGridScrollLeft 235s linear infinite}
+
+
+
+
 @keyframes heroGridScrollLeft{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
@@ -2059,31 +2059,89 @@ body.video-modal-locked{
    First 3 seconds: 80% faster.
    After 3 seconds: normal speed stays 10% faster than v8.
    IMPORTANT: this replaces the old html.hero-speed-boost patch so nothing overrides it. */
-.hero-grid-row-1{animation:heroGridScrollLeft 150.000s linear infinite!important;}
-.hero-grid-row-2{animation:heroGridScrollLeft 186.364s linear infinite!important;}
-.hero-grid-row-3{animation:heroGridScrollLeft 168.182s linear infinite!important;}
-.hero-grid-row-4{animation:heroGridScrollLeft 213.636s linear infinite!important;}
 
-body.hero-start-boost .hero-grid-row-1{animation:heroGridScrollLeft 83.333s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-2{animation:heroGridScrollLeft 103.535s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-3{animation:heroGridScrollLeft 93.434s linear infinite!important;}
-body.hero-start-boost .hero-grid-row-4{animation:heroGridScrollLeft 118.687s linear infinite!important;}
+
+
+
+
+body.hero-start-boost 
+body.hero-start-boost 
+body.hero-start-boost 
+body.hero-start-boost 
 
 /* Keep the rows visually active immediately during the hero zoom-out. */
 .hero-grid-row{animation-play-state:running!important;}
 </style>
+<style>
+/* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
+   Fixes the ugly re-centering/snap caused by switching animation-duration after 3 seconds.
+   JS below controls movement continuously, so the speed changes smoothly without resetting. */
+.hero-grid-row{
+  animation:none!important;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
+</style>
+
+<style>
+/* ===== RESTORE ORIGINAL BIG HERO INTRO ZOOM =====
+   Keeps the big zoom exactly like before, while the row-speed keyframes stay active. */
+.hero-grid-bg{
+  transform:scale(2.4) rotate(12deg);
+  animation:heroGridZoomOut 8s cubic-bezier(0,0,.15,1) 0s forwards!important;
+}
+@keyframes heroGridZoomOut{
+  0%{opacity:1;transform:scale(2.4) rotate(12deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
+}
+</style>
+
+<style>
+/* ===== FINAL HERO SEPARATE ROW MOVEMENT FIX =====
+   All rows move separately:
+   Row 1 left, Row 2 right, Row 3 left, Row 4 right.
+   Each row has different speed and starting offset.
+   First 3 seconds: 45% faster row movement.
+   Seconds 3-6: smooth slowdown.
+   After that: normal speed is 10% faster than original/v8.
+   Big intro zoom is preserved. */
+.hero-grid-row{
+  will-change:transform!important;
+  animation-timing-function:linear!important;
+}
+.hero-grid-row-1{animation:heroGridSeparateRow1 150.000s linear infinite!important;}
+.hero-grid-row-2{animation:heroGridSeparateRow2 186.364s linear infinite!important;}
+.hero-grid-row-3{animation:heroGridSeparateRow3 168.182s linear infinite!important;}
+.hero-grid-row-4{animation:heroGridSeparateRow4 213.636s linear infinite!important;}
+
+@keyframes heroGridSeparateRow1{
+  0%{transform:translate3d(0.0000%,0,0)}
+  2.0000%{transform:translate3d(-1.4500%,0,0)}
+  4.0000%{transform:translate3d(-2.6750%,0,0)}
+  100%{transform:translate3d(-50.0000%,0,0)}
+}
+@keyframes heroGridSeparateRow2{
+  0%{transform:translate3d(-14.0000%,0,0)}
+  1.6098%{transform:translate3d(-12.8329%,0,0)}
+  3.2195%{transform:translate3d(-11.8470%,0,0)}
+  100%{transform:translate3d(36.0000%,0,0)}
+}
+@keyframes heroGridSeparateRow3{
+  0%{transform:translate3d(-28.0000%,0,0)}
+  1.7838%{transform:translate3d(-29.2932%,0,0)}
+  3.5676%{transform:translate3d(-30.3858%,0,0)}
+  100%{transform:translate3d(-78.0000%,0,0)}
+}
+@keyframes heroGridSeparateRow4{
+  0%{transform:translate3d(-42.0000%,0,0)}
+  1.4043%{transform:translate3d(-40.9819%,0,0)}
+  2.8085%{transform:translate3d(-40.1218%,0,0)}
+  100%{transform:translate3d(8.0000%,0,0)}
+}
+</style>
 </head>
 <body class="hero-start-boost">
 
-<script>
-(function(){
-  /* Start the 3-second boost timer immediately, not on window load.
-     This makes the visible first seconds move faster, then return to normal. */
-  setTimeout(function(){
-    document.body.classList.remove('hero-start-boost');
-  }, 3000);
-})();
-</script>
 <div class="site-fade-cover" aria-hidden="true"></div>
 
 <!-- Scroll hints -->
@@ -3729,6 +3787,9 @@ ring.style.visibility = 'visible';
   else bind();
 })();
 </script>
+
+
+
 
 
 </body>

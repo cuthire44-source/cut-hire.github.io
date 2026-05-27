@@ -6,7 +6,7 @@
 <title>Join Us — Cut & Hire</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="videojoinus1.png" fetchpriority="high">
+<link rel="preload" as="image" href="videojoinus21.png" fetchpriority="high">
 <style>
 :root{
   --bg:#000000;
@@ -2123,6 +2123,186 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   .join-hero{padding-bottom:.9rem !important;}
 }
 
+
+
+/* ===================== REAL FIX: RED VIDEO MODAL MUST STAY RED ===================== */
+.vp-wrap.player-red .vp-screen,
+.vp-wrap.player-red .vp-controls{
+  border-color:rgba(224,32,32,.28) !important;
+}
+.vp-wrap.player-red .vp-screen{
+  box-shadow:0 0 60px rgba(224,32,32,.16) !important;
+}
+.vp-wrap.player-red .vp-bigplay::before{
+  background:rgba(224,32,32,.38) !important;
+  box-shadow:0 0 34px rgba(224,32,32,.55) !important;
+}
+.vp-wrap.player-red .vp-bigplay img{
+  filter:drop-shadow(0 0 16px rgba(224,32,32,.9)) !important;
+}
+.vp-wrap.player-red .vp-tl-prog{
+  background:var(--red) !important;
+  box-shadow:0 0 7px rgba(224,32,32,.75) !important;
+}
+.vp-wrap.player-red .vp-btn:hover img{
+  filter:drop-shadow(0 0 6px rgba(224,32,32,.85)) !important;
+}
+.vp-wrap.player-red .vp-close:hover{
+  background:rgba(224,32,32,.35) !important;
+  border-color:rgba(224,32,32,.65) !important;
+}
+
+.vp-wrap.player-blue .vp-screen,
+.vp-wrap.player-blue .vp-controls{
+  border-color:rgba(58,123,213,.28) !important;
+}
+.vp-wrap.player-blue .vp-screen{
+  box-shadow:0 0 60px rgba(58,123,213,.16) !important;
+}
+.vp-wrap.player-blue .vp-bigplay::before{
+  background:rgba(58,123,213,.38) !important;
+  box-shadow:0 0 34px rgba(58,123,213,.55) !important;
+}
+.vp-wrap.player-blue .vp-bigplay img{
+  filter:drop-shadow(0 0 16px rgba(58,123,213,.9)) !important;
+}
+.vp-wrap.player-blue .vp-tl-prog{
+  background:var(--blue) !important;
+  box-shadow:0 0 7px rgba(58,123,213,.75) !important;
+}
+.vp-wrap.player-blue .vp-btn:hover img{
+  filter:drop-shadow(0 0 6px rgba(58,123,213,.85)) !important;
+}
+
+
+
+/* ===================== FINAL PLAYER COLOR CLEANUP =====================
+   - Modal background/blur stays neutral black (not red)
+   - Red player only uses red for border/progress/button glow
+   - Blue placeholder stays blue; red placeholder stays red
+   - Remove duplicate CSS triangle so only the original image icons show
+====================================================================== */
+.vp-wrap.open,
+.vp-wrap.player-red,
+.vp-wrap.player-blue,
+.vp-wrap.placeholder-red,
+.vp-wrap.placeholder-blue{
+  background:rgba(0,0,0,.92) !important;
+  backdrop-filter:blur(8px) !important;
+}
+
+/* Prevent the extra second play triangle from appearing over the original icon image */
+.vp-bigplay::after{
+  display:none !important;
+  content:none !important;
+}
+
+/* Red real video: red controls, but no red blur halo around the modal/player */
+.vp-wrap.player-red .vp-screen,
+.vp-wrap.player-red .vp-controls{
+  border-color:rgba(224,32,32,.32) !important;
+}
+.vp-wrap.player-red .vp-screen{
+  box-shadow:0 0 42px rgba(255,255,255,.045) !important;
+}
+.vp-wrap.player-red .vp-bigplay::before{
+  background:rgba(224,32,32,.34) !important;
+  box-shadow:0 0 22px rgba(224,32,32,.42) !important;
+}
+.vp-wrap.player-red .vp-bigplay img,
+.vp-wrap.player-red .vp-btn:hover img{
+  filter:drop-shadow(0 0 7px rgba(224,32,32,.78)) !important;
+}
+.vp-wrap.player-red .vp-tl-prog{
+  background:var(--red) !important;
+  box-shadow:0 0 7px rgba(224,32,32,.75) !important;
+}
+
+/* Blue real video / blue placeholder: force blue, overriding old generic red placeholder rules */
+.vp-wrap.player-blue .vp-screen,
+.vp-wrap.player-blue .vp-controls,
+.vp-wrap.placeholder-blue .vp-screen,
+.vp-wrap.placeholder-blue .vp-controls{
+  border-color:rgba(58,123,213,.28) !important;
+}
+.vp-wrap.player-blue .vp-screen,
+.vp-wrap.placeholder-blue .vp-screen{
+  box-shadow:0 0 60px rgba(58,123,213,.15) !important;
+}
+.vp-wrap.player-blue .vp-bigplay::before,
+.vp-wrap.placeholder-blue .vp-bigplay::before{
+  background:rgba(58,123,213,.38) !important;
+  box-shadow:0 0 34px rgba(58,123,213,.55) !important;
+}
+.vp-wrap.player-blue .vp-bigplay img,
+.vp-wrap.placeholder-blue .vp-bigplay img,
+.vp-wrap.player-blue .vp-btn:hover img,
+.vp-wrap.placeholder-blue .vp-btn:hover img{
+  filter:drop-shadow(0 0 16px rgba(58,123,213,.9)) !important;
+}
+.vp-wrap.player-blue .vp-tl-prog,
+.vp-wrap.placeholder-blue .vp-tl-prog{
+  background:var(--blue) !important;
+  box-shadow:0 0 7px rgba(58,123,213,.75) !important;
+}
+.vp-wrap.placeholder-blue .vp-placeholder-empty{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(58,123,213,.14),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202 !important;
+}
+
+/* Red placeholder stays red only when the placeholder is actually red */
+.vp-wrap.placeholder-red .vp-screen,
+.vp-wrap.placeholder-red .vp-controls{
+  border-color:rgba(224,32,32,.32) !important;
+}
+.vp-wrap.placeholder-red .vp-screen{
+  box-shadow:0 0 42px rgba(255,255,255,.045) !important;
+}
+.vp-wrap.placeholder-red .vp-bigplay::before{
+  background:rgba(224,32,32,.34) !important;
+  box-shadow:0 0 22px rgba(224,32,32,.42) !important;
+}
+.vp-wrap.placeholder-red .vp-bigplay img,
+.vp-wrap.placeholder-red .vp-btn:hover img{
+  filter:drop-shadow(0 0 7px rgba(224,32,32,.78)) !important;
+}
+.vp-wrap.placeholder-red .vp-tl-prog{
+  background:var(--red) !important;
+  box-shadow:0 0 7px rgba(224,32,32,.75) !important;
+}
+.vp-wrap.placeholder-red .vp-placeholder-empty{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(224,32,32,.14),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202 !important;
+}
+
+/* ===================== FINAL FIX: NO RED/BLUE GLOW FLASH WHILE CLOSING ===================== */
+.vp-wrap.closing-neutral{
+  background:rgba(0,0,0,.92) !important;
+  backdrop-filter:blur(8px) !important;
+}
+.vp-wrap.closing-neutral .vp-screen{
+  box-shadow:none !important;
+  border-color:rgba(255,255,255,.08) !important;
+}
+.vp-wrap.closing-neutral .vp-controls{
+  border-color:rgba(255,255,255,.08) !important;
+}
+.vp-wrap.closing-neutral .vp-bigplay::before{
+  background:rgba(255,255,255,.08) !important;
+  box-shadow:none !important;
+}
+.vp-wrap.closing-neutral .vp-bigplay img,
+.vp-wrap.closing-neutral .vp-btn:hover img{
+  filter:none !important;
+}
+.vp-wrap.closing-neutral .vp-tl-prog{
+  box-shadow:none !important;
+}
+
 </style>
 
 <script>
@@ -2169,8 +2349,8 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Clients</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Outsource to Our <em>Editors</em></h2>
-      <div class="join-video-card client-video-card" data-video-src="Full Video.mp4" data-video-poster="videojoinus1.png" role="button" tabindex="0" aria-label="Play client/outsourcer video">
-        <video class="join-video-preview" src="Full Video.mp4" preload="none" muted playsinline poster="videojoinus1.png"></video>
+      <div class="join-video-card client-video-card" data-video-src="Full Video.mp4" data-video-poster="videojoinus21.png" role="button" tabindex="0" aria-label="Play client/outsourcer video">
+        <video class="join-video-preview" src="Full Video.mp4" preload="none" muted playsinline poster="videojoinus21.png"></video>
         <div class="join-video-shade"></div>
         <div class="join-video-play">
           <span></span>
@@ -2237,7 +2417,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   <button class="vp-close" id="vp-close" type="button" aria-label="Close video">✕</button>
   <div class="vp-screen landscape" id="vp-screen">
     <div class="vp-placeholder-empty" id="vp-placeholder-empty"></div>
-    <video id="vp-video" preload="metadata" playsinline poster="videojoinus1.png" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
+    <video id="vp-video" preload="metadata" playsinline poster="videojoinus21.png" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
     <div class="vp-bigplay" id="vp-bigplay"><img id="vp-bigplay-img" src="play-buttton.png" alt=""></div>
   </div>
   <div class="vp-controls landscape" id="vp-controls">
@@ -2385,10 +2565,13 @@ function toggleFaq(el){
     }catch(e){}
   }
 
-  function openVideo(src, poster, isPlaceholder, placeholderTheme){
+  function openVideo(src, poster, isPlaceholder, playerTheme){
+    wrap.classList.remove('closing-neutral','placeholder-mode','placeholder-blue','placeholder-red','player-blue','player-red');
     wrap.classList.toggle('placeholder-mode', !!isPlaceholder);
-    wrap.classList.toggle('placeholder-blue', placeholderTheme==='blue');
-    wrap.classList.toggle('placeholder-red', placeholderTheme==='red');
+    wrap.classList.toggle('placeholder-blue', !!isPlaceholder && playerTheme==='blue');
+    wrap.classList.toggle('placeholder-red', !!isPlaceholder && playerTheme==='red');
+    wrap.classList.toggle('player-blue', !isPlaceholder && playerTheme==='blue');
+    wrap.classList.toggle('player-red', !isPlaceholder && playerTheme==='red');
     wrap.classList.add('open');
     wrap.setAttribute('aria-hidden','false');
     document.body.classList.add('video-modal-locked');
@@ -2422,13 +2605,23 @@ function toggleFaq(el){
       const exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
       if(exit) exit.call(document);
     }
+
+    // Turn the modal neutral BEFORE the fade-out starts, so no red/blue halo flashes for a second.
+    wrap.classList.add('closing-neutral');
+    wrap.classList.remove('placeholder-mode','placeholder-blue','placeholder-red','player-blue','player-red','is-fullscreen');
+
     video.pause();
     video.removeAttribute('src');
+    video.removeAttribute('poster');
     video.load();
-    wrap.classList.remove('open','is-fullscreen','placeholder-mode','placeholder-blue','placeholder-red');
+    wrap.classList.remove('open');
     wrap.setAttribute('aria-hidden','true');
     document.body.classList.remove('video-modal-locked');
     update();
+
+    window.setTimeout(()=>{
+      wrap.classList.remove('closing-neutral');
+    }, 380);
   }
 
   function toggleFS(){
@@ -2456,10 +2649,10 @@ function toggleFaq(el){
     const src=card.getAttribute('data-video-src');
     const poster=card.getAttribute('data-video-poster');
     const isPlaceholder=card.getAttribute('data-placeholder')==='true';
-    const placeholderTheme=card.closest('.path-card.editor')?'blue':'red';
-    card.addEventListener('click',()=>openVideo(src, poster, isPlaceholder, placeholderTheme));
+    const playerTheme=card.closest('.path-card.client')?'red':'blue';
+    card.addEventListener('click',()=>openVideo(src, poster, isPlaceholder, playerTheme));
     card.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src, poster, isPlaceholder, placeholderTheme)}
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src, poster, isPlaceholder, playerTheme)}
     });
   });
 

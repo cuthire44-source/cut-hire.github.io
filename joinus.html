@@ -1849,9 +1849,16 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   display:none !important;
 }
 
-.join-video-card.is-placeholder{
+.path-card.client .join-video-card.is-placeholder{
   background:
     radial-gradient(circle at 50% 50%,rgba(224,32,32,.16),transparent 34%),
+    linear-gradient(180deg,rgba(255,255,255,.015),rgba(0,0,0,.18)),
+    #030303 !important;
+}
+
+.path-card.editor .join-video-card.is-placeholder{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(58,123,213,.16),transparent 34%),
     linear-gradient(180deg,rgba(255,255,255,.015),rgba(0,0,0,.18)),
     #030303 !important;
 }
@@ -1873,6 +1880,20 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
 
 .vp-wrap.placeholder-mode .vp-placeholder-empty{
   display:block;
+}
+
+
+.vp-wrap.placeholder-blue .vp-placeholder-empty{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(58,123,213,.12),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202;
+}
+.vp-wrap.placeholder-red .vp-placeholder-empty{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(224,32,32,.12),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202;
 }
 
 .vp-wrap.placeholder-mode .vp-bigplay{
@@ -2148,8 +2169,8 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Clients</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Outsource to Our <em>Editors</em></h2>
-      <div class="join-video-card client-video-card is-placeholder" data-video-src="clientjoinus.mp4" data-video-poster="clientjoinus1.png" data-placeholder="true" role="button" tabindex="0" aria-label="Open client video placeholder">
-        <video class="join-video-preview" src="clientjoinus.mp4" preload="none" muted playsinline poster="clientjoinus1.png"></video>
+      <div class="join-video-card client-video-card" data-video-src="Full Video.mp4" data-video-poster="videojoinus1.png" role="button" tabindex="0" aria-label="Play client/outsourcer video">
+        <video class="join-video-preview" src="Full Video.mp4" preload="none" muted playsinline poster="videojoinus1.png"></video>
         <div class="join-video-shade"></div>
         <div class="join-video-play">
           <span></span>
@@ -2167,8 +2188,8 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors/Designers</div>
       <span class="path-icon"><img src="film-reel.png" alt=""></span>
       <h2>Apply as an <em>Editor/Designer</em></h2>
-      <div class="join-video-card" data-video-src="Full Video.mp4" data-video-poster="videojoinus1.png" role="button" tabindex="0" aria-label="Play editor/designer video">
-        <video class="join-video-preview" src="Full Video.mp4" preload="none" muted playsinline poster="videojoinus1.png"></video>
+      <div class="join-video-card editor-video-card is-placeholder" data-video-src="" data-video-poster="" data-placeholder="true" role="button" tabindex="0" aria-label="Open editor/designer video placeholder">
+        <video class="join-video-preview" preload="none" muted playsinline></video>
         <div class="join-video-shade"></div>
         <div class="join-video-play">
           <span></span>
@@ -2364,8 +2385,10 @@ function toggleFaq(el){
     }catch(e){}
   }
 
-  function openVideo(src, poster, isPlaceholder){
+  function openVideo(src, poster, isPlaceholder, placeholderTheme){
     wrap.classList.toggle('placeholder-mode', !!isPlaceholder);
+    wrap.classList.toggle('placeholder-blue', placeholderTheme==='blue');
+    wrap.classList.toggle('placeholder-red', placeholderTheme==='red');
     wrap.classList.add('open');
     wrap.setAttribute('aria-hidden','false');
     document.body.classList.add('video-modal-locked');
@@ -2402,7 +2425,7 @@ function toggleFaq(el){
     video.pause();
     video.removeAttribute('src');
     video.load();
-    wrap.classList.remove('open','is-fullscreen','placeholder-mode');
+    wrap.classList.remove('open','is-fullscreen','placeholder-mode','placeholder-blue','placeholder-red');
     wrap.setAttribute('aria-hidden','true');
     document.body.classList.remove('video-modal-locked');
     update();
@@ -2433,9 +2456,10 @@ function toggleFaq(el){
     const src=card.getAttribute('data-video-src');
     const poster=card.getAttribute('data-video-poster');
     const isPlaceholder=card.getAttribute('data-placeholder')==='true';
-    card.addEventListener('click',()=>openVideo(src, poster, isPlaceholder));
+    const placeholderTheme=card.closest('.path-card.editor')?'blue':'red';
+    card.addEventListener('click',()=>openVideo(src, poster, isPlaceholder, placeholderTheme));
     card.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src, poster, isPlaceholder)}
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src, poster, isPlaceholder, placeholderTheme)}
     });
   });
 

@@ -1504,8 +1504,10 @@ body.intro-visible .divider{
 .join-video-card{
   position:relative;
   width:100%;
-  height:132px;
-  margin:.25rem 0 1.45rem;
+  max-width:100%;
+  aspect-ratio:16/9;
+  height:auto;
+  margin:1.05rem 0 1.8rem;
   border:1px solid rgba(58,123,213,.28);
   background:#020202;
   overflow:hidden;
@@ -1527,16 +1529,16 @@ body.intro-visible .divider{
   height:100%;
   object-fit:cover;
   display:block;
-  opacity:.74;
-  transform:scale(1.015);
+  opacity:1;
+  transform:scale(1.005);
   transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .3s;
   background:#050505;
 }
-.join-video-card:hover .join-video-preview{transform:scale(1.045);opacity:.9}
+.join-video-card:hover .join-video-preview{transform:scale(1.03);opacity:1}
 .join-video-shade{
   position:absolute;
   inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.20) 54%,rgba(0,0,0,.66)),radial-gradient(circle at 72% 40%,rgba(58,123,213,.24),transparent 48%);
+  background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.12)),radial-gradient(circle at 50% 50%,rgba(58,123,213,.14),transparent 55%);
   z-index:1;
 }
 .join-video-play{
@@ -1566,17 +1568,6 @@ body.intro-visible .divider{
   border-left:15px solid #fff;
   margin-left:4px;
   filter:drop-shadow(0 0 8px rgba(255,255,255,.45));
-}
-.join-video-label{
-  position:absolute;
-  left:1rem;
-  bottom:.8rem;
-  z-index:3;
-  font-family:'DM Mono',monospace;
-  font-size:.58rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(245,240,235,.78);
 }
 .join-video-card::after{
   content:'';
@@ -1651,9 +1642,447 @@ body.intro-visible .divider{
 .vp-spacer{flex:1}
 body.video-modal-locked{overflow:hidden!important}
 @media(max-width:640px){
-  .join-video-card{height:160px}
+  .join-video-card{aspect-ratio:16/9;margin:.9rem 0 1.4rem}
   .vp-screen,.vp-controls{width:100%}
   .vp-close{top:.8rem;right:.8rem}
+}
+
+
+
+/* ===================== FINAL VIDEO FIX — MAIN INDEX STYLE PLAYER ===================== */
+.join-video-card{
+  height:auto !important;
+  aspect-ratio:16/9 !important;
+  margin:.45rem 0 2rem !important;
+  border-color:rgba(58,123,213,.34) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035),0 0 34px rgba(58,123,213,.11) !important;
+}
+.join-video-preview{object-fit:cover !important;opacity:.92 !important;}
+.join-video-shade{background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,.08),rgba(0,0,0,.18)) !important;}
+.join-video-label{display:none !important;}
+.path-card.editor .path-perks{display:none !important;}
+.path-card.editor{justify-content:flex-start !important;}
+.path-card.editor .path-btn{margin-top:auto !important;}
+
+.vp-wrap{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:8000 !important;
+  background:rgba(0,0,0,.92) !important;
+  backdrop-filter:blur(8px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s;
+  padding:0 14px !important;
+}
+.vp-wrap.open{opacity:1 !important;pointer-events:all !important;}
+.vp-wrap:fullscreen,
+.vp-wrap.is-fullscreen{
+  background:#000 !important;
+  backdrop-filter:none !important;
+  width:100vw !important;
+  height:100vh !important;
+  padding:0 !important;
+}
+.vp-close{display:none !important;}
+.vp-screen{
+  position:relative !important;
+  background:#000 !important;
+  overflow:hidden !important;
+  cursor:pointer !important;
+  width:min(900px,92vw) !important;
+  aspect-ratio:16/9 !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  box-shadow:0 0 60px rgba(58,123,213,.15) !important;
+}
+.vp-screen.landscape{width:min(900px,92vw) !important;aspect-ratio:16/9 !important;}
+.vp-wrap:fullscreen .vp-screen.landscape,
+.vp-wrap.is-fullscreen .vp-screen.landscape{
+  width:100vw !important;
+  height:calc(100vh - 74px) !important;
+  max-height:none !important;
+  aspect-ratio:auto !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+.vp-screen video{width:100% !important;height:100% !important;object-fit:contain !important;display:block !important;background:#000 !important;}
+.vp-bigplay{position:absolute !important;inset:0 !important;display:flex !important;align-items:center !important;justify-content:center !important;pointer-events:none !important;opacity:0;transition:opacity .3s;}
+.vp-bigplay.show{opacity:1 !important;}
+.vp-bigplay::before{content:'';position:absolute;width:96px;height:96px;border-radius:50%;background:rgba(58,123,213,.38);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);box-shadow:0 0 34px rgba(58,123,213,.55);animation:bpc .35s cubic-bezier(.34,1.56,.64,1)}
+.vp-bigplay img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(58,123,213,.9));animation:bpp .35s cubic-bezier(.34,1.56,.64,1);position:relative;z-index:1;}
+.vp-controls{
+  width:min(900px,92vw) !important;
+  background:rgba(8,8,8,.96) !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  border-top:none !important;
+  padding:.65rem 1rem .75rem !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:.5rem !important;
+}
+.vp-controls.landscape{width:min(900px,92vw) !important;}
+.vp-wrap:fullscreen .vp-controls.landscape,
+.vp-wrap.is-fullscreen .vp-controls.landscape{width:100vw !important;border-left:none !important;border-right:none !important;border-bottom:none !important;}
+.vp-timeline{position:relative !important;height:4px !important;background:rgba(255,255,255,.1) !important;cursor:pointer !important;border-radius:2px !important;transition:height .2s !important;}
+.vp-timeline:hover{height:6px !important;}
+.vp-tl-buf{position:absolute;top:0;left:0;height:100%;width:0;background:rgba(255,255,255,.13);border-radius:2px;pointer-events:none;}
+.vp-tl-prog{position:absolute !important;top:0 !important;left:0 !important;height:100% !important;width:0;background:var(--blue) !important;border-radius:2px !important;pointer-events:none !important;box-shadow:0 0 7px rgba(58,123,213,.75) !important;}
+.vp-tl-thumb{position:absolute !important;top:50% !important;left:0;transform:translate(-50%,-50%) scale(0) !important;width:12px !important;height:12px !important;background:var(--w) !important;border-radius:50% !important;pointer-events:none !important;transition:transform .2s !important;}
+.vp-timeline:hover .vp-tl-thumb{transform:translate(-50%,-50%) scale(1) !important;}
+.vp-row{display:flex !important;align-items:center !important;gap:.7rem !important;}
+.vp-btn{background:none !important;border:none !important;cursor:pointer !important;padding:.28rem !important;display:flex !important;align-items:center !important;justify-content:center !important;transition:transform .2s !important;flex-shrink:0 !important;min-width:28px !important;}
+.vp-btn img{width:20px !important;height:20px !important;object-fit:contain !important;opacity:.55 !important;transition:opacity .2s,filter .2s !important;}
+.vp-btn:hover img{opacity:1 !important;filter:drop-shadow(0 0 6px rgba(58,123,213,.85)) !important;}
+.vp-btn:active{transform:scale(.85) !important;}
+.vp-vol-wrap{display:flex !important;align-items:center !important;gap:.45rem !important;}
+.vp-vol{-webkit-appearance:none !important;appearance:none !important;width:65px !important;height:3px !important;background:rgba(255,255,255,.13) !important;border-radius:2px !important;outline:none !important;cursor:pointer !important;transition:width .25s !important;}
+.vp-vol-wrap:hover .vp-vol{width:85px !important;}
+.vp-vol::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;background:var(--w);border-radius:50%;cursor:pointer;}
+.vp-vol::-moz-range-thumb{width:10px;height:10px;background:var(--w);border-radius:50%;border:none;cursor:pointer;}
+.vp-time{font-family:'DM Mono',monospace !important;font-size:.65rem !important;color:var(--m) !important;margin-left:.15rem !important;white-space:nowrap !important;}
+.vp-spacer{flex:1 !important;}
+body.video-modal-locked{overflow:hidden !important;}
+body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
+@media(max-width:640px){
+  .vp-wrap{padding:0 10px !important;}
+  .vp-screen.landscape,.vp-controls.landscape{width:100% !important;max-width:100% !important;}
+  .vp-controls{border-radius:0 0 16px 16px !important;padding:.62rem .72rem .72rem !important;}
+  .vp-btn img{width:18px !important;height:18px !important;}
+}
+
+
+/* CLIENT VIDEO CARD — red version, same player style */
+.path-card.client .join-video-card{
+  border-color:rgba(224,32,32,.34) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035),0 0 34px rgba(224,32,32,.11) !important;
+}
+.path-card.client .join-video-card:hover{
+  border-color:rgba(224,32,32,.68) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),0 0 34px rgba(224,32,32,.24) !important;
+}
+.path-card.client .join-video-shade{
+  background:linear-gradient(to top,rgba(0,0,0,.45),rgba(0,0,0,.08),rgba(0,0,0,.18)),radial-gradient(circle at 50% 50%,rgba(224,32,32,.12),transparent 56%) !important;
+}
+.path-card.client .join-video-play{
+  background:rgba(224,32,32,.42) !important;
+  box-shadow:0 0 22px rgba(224,32,32,.55),inset 0 0 18px rgba(255,255,255,.08) !important;
+}
+.path-card.client .join-video-card:hover .join-video-play{
+  background:rgba(224,32,32,.62) !important;
+  box-shadow:0 0 32px rgba(224,32,32,.75) !important;
+}
+.path-card.client .join-video-card::after{
+  background:var(--red) !important;
+  box-shadow:0 0 14px rgba(224,32,32,.75) !important;
+}
+.path-card.client{justify-content:flex-start !important;}
+.path-card.client .path-btn{margin-top:auto !important;}
+
+
+/* Keep editor/designer heading on one line */
+.path-card.editor h2{
+  white-space:nowrap;
+  font-size:clamp(1.45rem,2.45vw,2rem);
+}
+@media(max-width:900px){
+  .path-card.editor h2{
+    white-space:normal;
+    font-size:clamp(1.5rem,6vw,2.2rem);
+  }
+}
+
+
+/* ===== EQUAL JOIN VIDEO CARDS + TRUE CLIENT PLACEHOLDER ===== */
+.path-card .join-video-card{
+  width:100% !important;
+  max-width:none !important;
+  aspect-ratio:16 / 9 !important;
+  height:auto !important;
+  min-height:0 !important;
+  margin:1.05rem 0 2.05rem !important;
+  flex:0 0 auto !important;
+}
+
+.path-card.client .join-video-card,
+.path-card.editor .join-video-card{
+  border-width:1px !important;
+}
+
+.path-card.client .join-video-card{
+  border-color:rgba(224,32,32,.65) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 0 22px rgba(224,32,32,.08) !important;
+}
+
+.path-card.client .join-video-card:hover{
+  border-color:rgba(224,32,32,.85) !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),0 0 30px rgba(224,32,32,.24) !important;
+}
+
+.path-card.client .join-video-play{
+  background:rgba(224,32,32,.42) !important;
+  box-shadow:0 0 22px rgba(224,32,32,.55),inset 0 0 18px rgba(255,255,255,.08) !important;
+}
+
+.path-card.client .join-video-card:hover .join-video-play{
+  background:rgba(224,32,32,.62) !important;
+  box-shadow:0 0 32px rgba(224,32,32,.75) !important;
+}
+
+.path-card.client .join-video-card::after{
+  background:var(--red) !important;
+  box-shadow:0 0 14px rgba(224,32,32,.75) !important;
+}
+
+.path-card.client .join-video-shade{
+  background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.20) 54%,rgba(0,0,0,.66)),radial-gradient(circle at 50% 50%,rgba(224,32,32,.20),transparent 48%) !important;
+}
+
+.path-card.editor .join-video-shade{
+  background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.20) 54%,rgba(0,0,0,.66)),radial-gradient(circle at 50% 50%,rgba(58,123,213,.20),transparent 48%) !important;
+}
+
+.join-video-card.is-placeholder .join-video-preview{
+  display:none !important;
+}
+
+.join-video-card.is-placeholder{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(224,32,32,.16),transparent 34%),
+    linear-gradient(180deg,rgba(255,255,255,.015),rgba(0,0,0,.18)),
+    #030303 !important;
+}
+
+.vp-wrap.placeholder-mode .vp-screen video{
+  display:none !important;
+}
+
+.vp-placeholder-empty{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(224,32,32,.10),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202;
+  pointer-events:none;
+}
+
+.vp-wrap.placeholder-mode .vp-placeholder-empty{
+  display:block;
+}
+
+.vp-wrap.placeholder-mode .vp-bigplay{
+  opacity:1 !important;
+}
+
+.vp-wrap.placeholder-mode .vp-tl-buf,
+.vp-wrap.placeholder-mode .vp-tl-prog{
+  width:0 !important;
+}
+
+.vp-wrap.placeholder-mode #vp-time{
+  color:rgba(245,240,235,.45);
+}
+
+@media(max-width:900px){
+  .path-card .join-video-card{
+    width:100% !important;
+    aspect-ratio:16 / 9 !important;
+  }
+}
+
+
+
+/* ===================== USER FIX: NO HERO TEXT + HIGHER TITLE + BIGGER EQUAL PLAYERS ===================== */
+.join-hero{
+  min-height:28vh !important;
+  padding:3.2rem 2rem 1.25rem !important;
+  justify-content:flex-start !important;
+}
+.join-sub{display:none !important;}
+.divider{margin-top:0 !important;}
+.join-content{padding-top:2.1rem !important;}
+.path-card.client,
+.path-card.editor{
+  padding-left:2rem !important;
+  padding-right:2rem !important;
+}
+.path-card.client .join-video-card,
+.path-card.editor .join-video-card,
+.path-card .join-video-card{
+  width:calc(100% + 34px) !important;
+  max-width:none !important;
+  margin-left:-17px !important;
+  margin-right:-17px !important;
+  aspect-ratio:16 / 9 !important;
+  height:auto !important;
+  min-height:0 !important;
+}
+.path-card.client .join-video-card,
+.path-card.editor .join-video-card{
+  margin-top:1rem !important;
+  margin-bottom:2.25rem !important;
+}
+.path-card.client .path-btn,
+.path-card.editor .path-btn{
+  margin-top:auto !important;
+}
+
+/* Client placeholder modal should stay red, but original icon image paths stay untouched. */
+.vp-wrap.placeholder-mode .vp-screen,
+.vp-wrap.placeholder-mode .vp-controls{
+  border-color:rgba(224,32,32,.28) !important;
+}
+.vp-wrap.placeholder-mode .vp-screen{
+  box-shadow:0 0 60px rgba(224,32,32,.16) !important;
+}
+.vp-wrap.placeholder-mode .vp-bigplay::before{
+  background:rgba(224,32,32,.38) !important;
+  box-shadow:0 0 34px rgba(224,32,32,.55) !important;
+}
+.vp-wrap.placeholder-mode .vp-bigplay img,
+.vp-wrap.placeholder-mode .vp-btn:hover img{
+  filter:drop-shadow(0 0 16px rgba(224,32,32,.9)) !important;
+}
+.vp-wrap.placeholder-mode .vp-tl-prog{
+  background:var(--red) !important;
+  box-shadow:0 0 7px rgba(224,32,32,.75) !important;
+}
+.vp-wrap.placeholder-mode .vp-placeholder-empty{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(224,32,32,.14),transparent 36%),
+    linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22)),
+    #020202 !important;
+}
+@media(max-width:900px){
+  .join-hero{min-height:auto !important;padding:3.8rem 1.35rem 1.1rem !important;}
+  .path-card.client .join-video-card,
+  .path-card.editor .join-video-card,
+  .path-card .join-video-card{
+    width:100% !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+}
+
+
+/* ===================== USER FIX: MOVE VIDEO SECTION CLOSER TO JOIN US ===================== */
+.join-hero{
+  min-height:auto !important;
+  padding-top:3.2rem !important;
+  padding-bottom:.45rem !important;
+}
+.divider{
+  margin-top:.15rem !important;
+}
+.join-content{
+  padding-top:.9rem !important;
+}
+.paths{
+  margin-top:0 !important;
+}
+@media(max-width:900px){
+  .join-hero{
+    padding-top:3.35rem !important;
+    padding-bottom:.55rem !important;
+  }
+  .join-content{
+    padding-top:.8rem !important;
+  }
+}
+
+/* ===================== USER FIX: SLIGHTLY LOWER CARDS SECTION ===================== */
+.join-content{
+  padding-top:1.45rem !important;
+}
+@media(max-width:900px){
+  .join-content{
+    padding-top:1.25rem !important;
+  }
+}
+
+
+
+/* ===================== CLEAN PATCH: REAL CARD POSITION FIX ===================== */
+/* This is inside <style>, so it will apply. No visible CSS text on page. */
+.join-content{
+  padding-top:2.7rem !important;
+}
+@media(max-width:900px){
+  .join-content{padding-top:2.25rem !important;}
+}
+@media(max-width:560px){
+  .join-content{padding-top:1.75rem !important;}
+}
+
+/* ===== REMOVE LEFT BACKGROUND RED GLOW ONLY ===== */
+.o1,
+.o3{
+  display:none !important;
+  opacity:0 !important;
+}
+
+.join-content::before,
+.join-content::after,
+.paths::before,
+.paths::after{
+  content:none !important;
+  display:none !important;
+}
+
+
+/* ===== FINAL FIX: KEEP JOIN US TITLE ABOVE ALL ANIMATIONS / OVERLAYS ===== */
+.join-hero{
+  position:relative !important;
+  z-index:9501 !important;
+  isolation:isolate !important;
+}
+.join-h1{
+  position:relative !important;
+  z-index:9502 !important;
+  pointer-events:auto !important;
+}
+.divider{
+  position:relative !important;
+  z-index:2 !important;
+}
+
+
+
+/* ===== FINAL PATCH: RESTORE BACK BUTTON ABOVE TITLE/ANIMATIONS ===== */
+.back-btn{
+  display:inline-flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:fixed !important;
+  top:1.4rem !important;
+  left:2rem !important;
+  z-index:10080 !important;
+  pointer-events:auto !important;
+}
+
+/* Keep Join Us in front of background effects, but below the back button */
+.join-hero{
+  position:relative !important;
+  z-index:9501 !important;
+  isolation:isolate !important;
+}
+.join-h1{
+  position:relative !important;
+  z-index:9502 !important;
+}
+
+/* keep decorative glow layers behind content */
+.orb,
+.o1,
+.o2,
+.o3{
+  z-index:0 !important;
+  pointer-events:none !important;
 }
 
 </style>
@@ -1675,7 +2104,6 @@ body.video-modal-locked{overflow:hidden!important}
 <!-- HERO -->
 <div class="join-hero">
   <h1 class="join-h1" id="join-h1">Join <em>Us</em></h1>
-  <p class="join-sub" id="join-sub">Need an edit or steady client work? Cut & Hire connects clients with vetted video editors through private Discord tickets. Share the style, deadline, budget, or portfolio, and we match the right people, keep communication organised, and move projects forward fast.</p>
 </div>
 
 <div class="divider"></div>
@@ -1689,16 +2117,13 @@ body.video-modal-locked{overflow:hidden!important}
       <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Clients</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Outsource to Our <em>Editors</em></h2>
-      <p class="path-desc">Tell us your vision, style, and deadline. We help match you with an editor who fits your project. Work directly with no agency middleman. You can request a free sample first. If the style fits, you can agree on the project and move forward. If the editor’s sample doesn’t fit, we can bring in another editor for your project.</p>
-      <ul class="path-perks">
-        <li>Tell us your vision, style &amp; deadline</li>
-        <li>We match you with the perfect editor from our vetted roster</li>
-        <li>Work directly — no agency middleman or markups</li>
-        <li>Request a free sample before moving forward</li>
-        <li>If the sample doesn’t fit, we can bring in another editor</li>
-        <li>All communication inside private Discord channels</li>
-        <li>If the sample fits, agree on pricing and continue</li>
-      </ul>
+      <div class="join-video-card client-video-card is-placeholder" data-video-src="clientjoinus.mp4" data-video-poster="clientjoinus1.png" data-placeholder="true" role="button" tabindex="0" aria-label="Open client video placeholder">
+        <video class="join-video-preview" src="clientjoinus.mp4" preload="none" muted playsinline poster="clientjoinus1.png"></video>
+        <div class="join-video-shade"></div>
+        <div class="join-video-play">
+          <span></span>
+        </div>
+      </div>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
@@ -1711,22 +2136,13 @@ body.video-modal-locked{overflow:hidden!important}
       <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors/Designers</div>
       <span class="path-icon"><img src="film-reel.png" alt=""></span>
       <h2>Apply as an <em>Editor/Designer</em></h2>
-      <div class="join-video-card" data-video-src="Full Video.mp4" role="button" tabindex="0" aria-label="Play editor/designer video">
+      <div class="join-video-card" data-video-src="Full Video.mp4" data-video-poster="videojoinus1.png" role="button" tabindex="0" aria-label="Play editor/designer video">
         <video class="join-video-preview" src="Full Video.mp4" preload="none" muted playsinline poster="videojoinus1.png"></video>
         <div class="join-video-shade"></div>
         <div class="join-video-play">
           <span></span>
         </div>
-        <div class="join-video-label">Watch the editor/designer overview</div>
       </div>
-      <ul class="path-perks">
-        <li>Submit your portfolio through our application form</li>
-        <li>Pass our quality review — we have high standards</li>
-        <li>Get matched with real clients from day one</li>
-        <li>Work on your own schedule, set your own rates</li>
-        <li>Join a network of 35+ professional editors</li>
-        <li>Steady stream of clients without self-promotion</li>
-      </ul>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
@@ -1766,23 +2182,27 @@ body.video-modal-locked{overflow:hidden!important}
 
 <!-- ==================== VIDEO PLAYER ==================== -->
 <div class="vp-wrap" id="vp-wrap" aria-hidden="true">
-  <button class="vp-close" id="vp-close" type="button" aria-label="Close video">×</button>
-  <div class="vp-screen" id="vp-screen">
-    <video id="vp-video" preload="metadata" playsinline poster="videojoinus1.png"></video>
-    <div class="vp-bigplay" id="vp-bigplay"></div>
+  <button class="vp-close" id="vp-close" type="button" aria-label="Close video">✕</button>
+  <div class="vp-screen landscape" id="vp-screen">
+    <div class="vp-placeholder-empty" id="vp-placeholder-empty"></div>
+    <video id="vp-video" preload="metadata" playsinline poster="videojoinus1.png" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
+    <div class="vp-bigplay" id="vp-bigplay"><img id="vp-bigplay-img" src="play-buttton.png" alt=""></div>
   </div>
-  <div class="vp-controls" id="vp-controls">
+  <div class="vp-controls landscape" id="vp-controls">
     <div class="vp-timeline" id="vp-timeline">
+      <div class="vp-tl-buf" id="vp-tl-buf"></div>
       <div class="vp-tl-prog" id="vp-tl-prog"></div>
       <div class="vp-tl-thumb" id="vp-tl-thumb"></div>
     </div>
     <div class="vp-row">
-      <button class="vp-btn" id="vp-play" type="button" aria-label="Play or pause">▶</button>
-      <button class="vp-btn" id="vp-mute" type="button" aria-label="Mute or unmute">🔊</button>
-      <input class="vp-vol" id="vp-vol" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+      <button class="vp-btn" id="vp-play" type="button" aria-label="Play or pause"><img id="vp-play-img" src="play-buttton.png" alt="Play"></button>
+      <div class="vp-vol-wrap">
+        <button class="vp-btn" id="vp-mute" type="button" aria-label="Mute or unmute"><img id="vp-vol-img" src="volume.png" alt="Volume"></button>
+        <input class="vp-vol" id="vp-vol" type="range" min="0" max="1" step="0.02" value="1" aria-label="Volume">
+      </div>
       <span class="vp-time" id="vp-time">0:00 / 0:00</span>
       <span class="vp-spacer"></span>
-      <button class="vp-btn" id="vp-full" type="button" aria-label="Fullscreen">⛶</button>
+      <button class="vp-btn" id="vp-full" type="button" aria-label="Fullscreen"><img id="vp-fs-img" src="fullscreen.png" alt="Fullscreen"></button>
     </div>
   </div>
 </div>
@@ -1865,7 +2285,7 @@ function toggleFaq(el){
 
 
 <script>
-/* ===== JOIN US VIDEO PLAYER ===== */
+/* ===== JOIN US VIDEO PLAYER — MATCH MAIN INDEX PLAYER ===== */
 (function(){
   const wrap=document.getElementById('vp-wrap');
   const screen=document.getElementById('vp-screen');
@@ -1876,10 +2296,14 @@ function toggleFaq(el){
   const vol=document.getElementById('vp-vol');
   const timeline=document.getElementById('vp-timeline');
   const prog=document.getElementById('vp-tl-prog');
+  const buf=document.getElementById('vp-tl-buf');
   const thumb=document.getElementById('vp-tl-thumb');
   const time=document.getElementById('vp-time');
   const full=document.getElementById('vp-full');
   const big=document.getElementById('vp-bigplay');
+  const playImg=document.getElementById('vp-play-img');
+  const volImg=document.getElementById('vp-vol-img');
+  const fsImg=document.getElementById('vp-fs-img');
   if(!wrap||!video) return;
 
   const fmt=s=>{
@@ -1889,62 +2313,129 @@ function toggleFaq(el){
     return `${m}:${sec}`;
   };
 
+  function isFS(){return !!(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement)}
+
   function update(){
     const d=video.duration||0;
     const p=d?(video.currentTime/d)*100:0;
     prog.style.width=p+'%';
     thumb.style.left=p+'%';
     time.textContent=`${fmt(video.currentTime)} / ${fmt(d)}`;
-    playBtn.textContent=video.paused?'▶':'❚❚';
-    muteBtn.textContent=video.muted||video.volume===0?'🔇':'🔊';
+    if(playImg) playImg.src=video.paused?'play-buttton.png':'pause.png';
+    if(volImg) volImg.src=(video.muted||video.volume===0)?'mute.png':'volume.png';
+    if(fsImg) fsImg.src=isFS()?'unfullscreen.png':'fullscreen.png';
+
+    try{
+      if(video.buffered && video.buffered.length && d){
+        const end=video.buffered.end(video.buffered.length-1);
+        buf.style.width=Math.min(100,(end/d)*100)+'%';
+      }
+    }catch(e){}
   }
 
-  function openVideo(src){
-    video.src=src;
+  function openVideo(src, poster, isPlaceholder){
+    wrap.classList.toggle('placeholder-mode', !!isPlaceholder);
     wrap.classList.add('open');
     wrap.setAttribute('aria-hidden','false');
     document.body.classList.add('video-modal-locked');
     video.volume=parseFloat(vol.value||'1');
+
+    if(isPlaceholder){
+      video.pause();
+      video.removeAttribute('src');
+      video.removeAttribute('poster');
+      video.load();
+      if(playImg) playImg.src='play-buttton.png';
+      if(volImg) volImg.src='volume.png';
+      if(fsImg) fsImg.src=isFS()?'unfullscreen.png':'fullscreen.png';
+      prog.style.width='0%';
+      thumb.style.left='0%';
+      buf.style.width='0%';
+      time.textContent='0:00 / 0:00';
+      big.classList.add('show');
+      return;
+    }
+
+    if(poster) video.setAttribute('poster', poster);
+    else video.removeAttribute('poster');
+    video.src=src;
     video.play().catch(()=>{});
     update();
   }
 
   function closeVideo(){
+    if(isFS()){
+      const exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
+      if(exit) exit.call(document);
+    }
     video.pause();
     video.removeAttribute('src');
     video.load();
-    wrap.classList.remove('open');
+    wrap.classList.remove('open','is-fullscreen','placeholder-mode');
     wrap.setAttribute('aria-hidden','true');
     document.body.classList.remove('video-modal-locked');
+    update();
+  }
+
+  function toggleFS(){
+    if(!isFS()){
+      const req=wrap.requestFullscreen||wrap.webkitRequestFullscreen||wrap.msRequestFullscreen;
+      if(req){
+        const result=req.call(wrap);
+        wrap.classList.add('is-fullscreen');
+        if(result&&result.catch) result.catch(()=>{
+          wrap.classList.remove('is-fullscreen');
+          if(video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+        });
+      }else if(video.webkitEnterFullscreen){
+        video.webkitEnterFullscreen();
+      }
+    }else{
+      const exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
+      if(exit) exit.call(document);
+      wrap.classList.remove('is-fullscreen');
+    }
+    update();
   }
 
   document.querySelectorAll('.join-video-card').forEach(card=>{
     const src=card.getAttribute('data-video-src');
-    card.addEventListener('click',()=>openVideo(src));
+    const poster=card.getAttribute('data-video-poster');
+    const isPlaceholder=card.getAttribute('data-placeholder')==='true';
+    card.addEventListener('click',()=>openVideo(src, poster, isPlaceholder));
     card.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src)}
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(src, poster, isPlaceholder)}
     });
   });
 
-  closeBtn.addEventListener('click',closeVideo);
-  wrap.addEventListener('click',e=>{ if(e.target===wrap) closeVideo(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&wrap.classList.contains('open')) closeVideo(); });
-  screen.addEventListener('click',()=>{ video.paused?video.play():video.pause(); });
-  playBtn.addEventListener('click',()=>{ video.paused?video.play():video.pause(); });
-  muteBtn.addEventListener('click',()=>{ video.muted=!video.muted; update(); });
-  vol.addEventListener('input',()=>{ video.volume=parseFloat(vol.value); video.muted=video.volume===0; update(); });
+  closeBtn.addEventListener('click',e=>{e.stopPropagation();closeVideo();});
+  wrap.addEventListener('click',e=>{
+    const inside=e.target.closest('.vp-screen')||e.target.closest('.vp-controls')||e.target.closest('.vp-close');
+    if(!inside) closeVideo();
+  });
+  document.addEventListener('keydown',e=>{
+    if(!wrap.classList.contains('open')) return;
+    if(e.key==='Escape') closeVideo();
+    if(e.key.toLowerCase()==='f') toggleFS();
+    if(e.key===' ' && !wrap.classList.contains('placeholder-mode')) {e.preventDefault(); video.paused?video.play():video.pause();}
+  });
+  screen.addEventListener('click',e=>{ if(wrap.classList.contains('placeholder-mode')) return; if(!e.target.closest('.vp-btn')) video.paused?video.play():video.pause(); });
+  playBtn.addEventListener('click',e=>{e.stopPropagation(); if(wrap.classList.contains('placeholder-mode')) return; video.paused?video.play():video.pause();});
+  muteBtn.addEventListener('click',e=>{e.stopPropagation();video.muted=!video.muted;update();});
+  vol.addEventListener('input',()=>{video.volume=parseFloat(vol.value);video.muted=video.volume===0;update();});
   timeline.addEventListener('click',e=>{
     const r=timeline.getBoundingClientRect();
     const pct=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));
-    if(video.duration) video.currentTime=pct*video.duration;
+    if(!wrap.classList.contains('placeholder-mode') && video.duration) video.currentTime=pct*video.duration;
   });
-  full.addEventListener('click',()=>{
-    if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
-    else wrap.requestFullscreen?.().catch(()=>{});
-  });
-  ['timeupdate','loadedmetadata','volumechange','play','pause','ended'].forEach(ev=>video.addEventListener(ev,update));
+  full.addEventListener('click',e=>{e.stopPropagation();toggleFS();});
+  ['timeupdate','loadedmetadata','progress','volumechange','play','pause','ended'].forEach(ev=>video.addEventListener(ev,update));
   video.addEventListener('play',()=>{big.classList.remove('show')});
   video.addEventListener('pause',()=>{big.classList.add('show')});
+  ['fullscreenchange','webkitfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,()=>{
+    wrap.classList.toggle('is-fullscreen',isFS());
+    update();
+  }));
 })();
 </script>
 

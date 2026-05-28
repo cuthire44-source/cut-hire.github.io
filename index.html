@@ -25,6 +25,7 @@
 <link rel="preload" as="image" href="Sequence 075.png?v=20260525d" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
+<link rel="preload" as="image" href="explanitory484.png" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <link rel="preload" as="image" href="vlog583.png?v=20260525d" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
@@ -2312,6 +2313,109 @@ body.hero-start-boost
 .hero-grid-thumb.fading:hover img{
   filter:brightness(1) contrast(1.08) saturate(1.08)!important;
 }
+
+/* ===== ABOUT STATS PATCH — 3 ITEM LEADERBOARD / PODIUM STYLE ===== */
+#hero-stats.about-stats{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.28fr) minmax(0,1fr)!important;
+  gap:clamp(2.2rem,7vw,7rem)!important;
+  align-items:end!important;
+  width:100%!important;
+  max-width:1280px!important;
+  margin:1.15rem auto 0!important;
+  text-align:center!important;
+}
+#hero-stats .stat{
+  min-width:0!important;
+  padding:.9rem .45rem 1rem!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+}
+#hero-stats .views-stat{
+  transform:translateY(-1.25rem)!important;
+}
+#hero-stats .stat-number-wrap,
+#hero-stats .views-stat .stat-number-wrap{
+  height:auto!important;
+  transform:none!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+}
+#hero-stats .stat-n,
+#hero-stats .views-stat .stat-n{
+  line-height:.84!important;
+  transform:none!important;
+  white-space:nowrap!important;
+  font-family:'DM Sans',sans-serif!important;
+  font-weight:900!important;
+  letter-spacing:-.055em!important;
+}
+#hero-stats .projects-stat .stat-n,
+#hero-stats .editors-stat .stat-n{
+  font-size:clamp(4.3rem,8.1vw,8.15rem)!important;
+}
+#hero-stats .views-stat .stat-n{
+  font-size:clamp(6.4rem,13.5vw,13.5rem)!important;
+  line-height:.78!important;
+  letter-spacing:-.075em!important;
+}
+#hero-stats .stat-suffix,
+#hero-stats .views-stat .stat-suffix{
+  color:var(--red)!important;
+  font-size:.36em!important;
+  line-height:1!important;
+  margin-left:.055em!important;
+  letter-spacing:-.025em!important;
+}
+#hero-stats .stat-l,
+#hero-stats .views-stat .stat-l{
+  margin-top:1.05rem!important;
+  top:auto!important;
+  position:relative!important;
+  font-size:clamp(.66rem,1vw,.88rem)!important;
+  letter-spacing:.22em!important;
+  white-space:nowrap!important;
+  color:rgba(245,240,235,.55)!important;
+}
+#hero-stats .views-stat .stat-l{
+  margin-top:1.2rem!important;
+  color:rgba(245,240,235,.68)!important;
+}
+#hero-stats .stat-bar{
+  max-width:240px!important;
+}
+#hero-stats .views-stat .stat-bar{
+  max-width:330px!important;
+}
+#hero-stats .stat:hover .stat-bar{
+  width:92%!important;
+}
+@media(max-width:960px){
+  #hero-stats.about-stats{
+    grid-template-columns:1fr!important;
+    gap:2.15rem!important;
+    margin-top:.65rem!important;
+  }
+  #hero-stats .views-stat{
+    transform:none!important;
+    order:-1!important;
+  }
+  #hero-stats .projects-stat .stat-n,
+  #hero-stats .editors-stat .stat-n{
+    font-size:clamp(3.7rem,15vw,6.5rem)!important;
+  }
+  #hero-stats .views-stat .stat-n{
+    font-size:clamp(5.3rem,22vw,8.4rem)!important;
+  }
+  #hero-stats .stat-l,
+  #hero-stats .views-stat .stat-l{
+    white-space:normal!important;
+    line-height:1.35!important;
+  }
+}
+
 </style>
 
 </head>
@@ -2384,11 +2488,9 @@ body.hero-start-boost
       </ul>
     </nav>
     <div id="hero-stats" class="about-stats rv">
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="48" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Clients Served</div><div class="stat-bar"></div></div>
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="50" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors on Team</div><div class="stat-bar"></div></div>
-      <div class="stat views-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="M+">0<span class="stat-suffix">M+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="200" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
-      <div class="stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="15" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Niches Covered</div><div class="stat-bar"></div></div>
+      <div class="stat projects-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="5184" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
+      <div class="stat views-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="2.1" data-suffix="B+">0<span class="stat-suffix">B+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
+      <div class="stat editors-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="50" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors &amp; Designers</div><div class="stat-bar"></div></div>
     </div>
   </div>
 </section>
@@ -2917,15 +3019,22 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
   let statsGo=false,startAllowed=false;
   function renderStat(el,value,suffix,done){
     const safeValue=Math.max(0,value);
-    if(suffix.toLowerCase()==='m+'){
+    const suffixText=String(suffix||'');
+    if(suffixText.toLowerCase()==='m+'){
       const target=Number(el.dataset.target)||0;
       el.innerHTML=(done||safeValue>=target-.08)?Math.round(target)+'M<span class="stat-suffix">+</span>':safeValue.toFixed(1)+'M<span class="stat-suffix">+</span>';return;
     }
-    if(suffix==='+'){
+    if(suffixText.toLowerCase()==='b+' || suffixText.toLowerCase().includes('billion+')){
       const target=Number(el.dataset.target)||0;
-      el.innerHTML=(done?target:Math.min(target,Math.round(safeValue)))+'<span class="stat-suffix">+</span>';return;
+      const shown=(done||safeValue>=target-.01)?target.toFixed(1):safeValue.toFixed(1);
+      el.innerHTML=shown+'<span class="stat-suffix">B+</span>';return;
     }
-    el.textContent=(done?Math.round(value):Math.round(safeValue))+suffix;
+    if(suffixText==='+'){
+      const target=Number(el.dataset.target)||0;
+      const shown=done?target:Math.min(target,Math.round(safeValue));
+      el.innerHTML=shown.toLocaleString('en-US')+'<span class="stat-suffix">+</span>';return;
+    }
+    el.textContent=(done?Math.round(value):Math.round(safeValue))+suffixText;
   }
   function runStats(){
     if(statsGo||!startAllowed)return;
@@ -2977,6 +3086,7 @@ const works=[
   {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
   {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},
+  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false},
   {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false},

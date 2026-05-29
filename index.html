@@ -26,6 +26,7 @@
 <link rel="preload" as="image" href="Vlog47.png" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
 <link rel="preload" as="image" href="explanitory484.png" fetchpriority="high">
+<link rel="preload" as="image" href="documentary3983.png" fetchpriority="high">
 <link rel="preload" as="image" href="Vlog36.png" fetchpriority="high">
 <link rel="preload" as="image" href="vlog583.png?v=20260525d" fetchpriority="high">
 <link rel="preload" as="image" href="YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png" fetchpriority="high">
@@ -2418,6 +2419,19 @@ body.hero-start-boost
 
 </style>
 
+
+<style>
+/* ===== STATS CLICK FIX =====
+   Keeps the About stats as normal text/cards only, so no hidden fullscreen/player layer can catch clicks there. */
+#hero-stats,
+#hero-stats *{
+  pointer-events:auto!important;
+}
+#hero-stats .stat{
+  cursor:default!important;
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 
@@ -3114,6 +3128,7 @@ const works=[
   {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
   {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
   {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false},
+  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false},
   {cat:['motion'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false},
   {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
 
@@ -3584,7 +3599,7 @@ function vpOpen(src,title,isPortrait,poster){
 }
 function vpClose(){
   hardStopVideoPlayer();
-  if(vpWrap)vpWrap.classList.remove('open','is-fullscreen');
+  if(vpEl)vpEl.classList.remove('open','is-fullscreen');
   document.body.style.overflow='';
   unlockPageForVideo();
 }
@@ -3616,19 +3631,60 @@ video.addEventListener('error',()=>{
 function vpToggleMute(){video.muted=!video.muted;vpVolImg.src=video.muted?'volume-mute.png':'volume.png';document.getElementById('vp-vol').value=video.muted?0:video.volume}
 function vpSetVol(v){video.volume=v;video.muted=v==0;vpVolImg.src=v==0?'volume-mute.png':'volume.png'}
 function vpToggleFS(){
+  // Safety guard: fullscreen can only be triggered from the real video modal.
+  // This prevents accidental black fullscreen when clicking the About stats area.
+  if(!vpEl || !vpEl.classList.contains('open')) return;
+
   const fsEl=document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement;
   if(!fsEl){
     const req=vpEl.requestFullscreen||vpEl.webkitRequestFullscreen||vpEl.msRequestFullscreen;
-    if(req){const result=req.call(vpEl);vpEl.classList.add('is-fullscreen');vpFsImg.src='unfullscreen.png';vpIsFS=true;if(result&&typeof result.catch==='function')result.catch(()=>{vpEl.classList.remove('is-fullscreen');if(video.webkitEnterFullscreen){video.webkitEnterFullscreen();vpFsImg.src='unfullscreen.png';vpIsFS=true}})}
-    else if(video.requestFullscreen||video.webkitRequestFullscreen||video.webkitEnterFullscreen){const vReq=video.requestFullscreen||video.webkitRequestFullscreen;if(vReq)vReq.call(video);else video.webkitEnterFullscreen();vpFsImg.src='unfullscreen.png';vpIsFS=true}
+    if(req){
+      const result=req.call(vpEl);
+      vpEl.classList.add('is-fullscreen');
+      vpFsImg.src='unfullscreen.png';
+      vpIsFS=true;
+      if(result&&typeof result.catch==='function'){
+        result.catch(()=>{
+          vpEl.classList.remove('is-fullscreen');
+          if(video && video.webkitEnterFullscreen){
+            video.webkitEnterFullscreen();
+            vpFsImg.src='unfullscreen.png';
+            vpIsFS=true;
+          }
+        });
+      }
+    }else if(video && (video.requestFullscreen||video.webkitRequestFullscreen||video.webkitEnterFullscreen)){
+      const vReq=video.requestFullscreen||video.webkitRequestFullscreen;
+      if(vReq)vReq.call(video);
+      else video.webkitEnterFullscreen();
+      vpFsImg.src='unfullscreen.png';
+      vpIsFS=true;
+    }
   }else{
     const exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
-    if(exit)exit.call(document);vpEl.classList.remove('is-fullscreen');vpFsImg.src='fullscreen.png';vpIsFS=false;
+    if(exit)exit.call(document);
+    vpEl.classList.remove('is-fullscreen');
+    vpFsImg.src='fullscreen.png';
+    vpIsFS=false;
   }
 }
 ['fullscreenchange','webkitfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,()=>{
-  const fs=!!(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement);
-  vpEl.classList.toggle('is-fullscreen',fs);vpFsImg.src=fs?'unfullscreen.png':'fullscreen.png';vpIsFS=fs;
+  const fsTarget=document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement;
+  const fs=!!fsTarget;
+
+  // If the video wrapper somehow enters fullscreen while the modal is not open, exit immediately.
+  // This fixes the black fullscreen page caused by accidental clicks near the stats section.
+  if(fsTarget===vpEl && (!vpEl || !vpEl.classList.contains('open'))){
+    const exit=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
+    if(exit)exit.call(document);
+    return;
+  }
+
+  if(vpEl){
+    vpEl.classList.toggle('is-fullscreen',fs && fsTarget===vpEl);
+  }
+  if(vpFsImg)vpFsImg.src=(fs && fsTarget===vpEl)?'unfullscreen.png':'fullscreen.png';
+  vpIsFS=fs && fsTarget===vpEl;
 }));
 vpScreen.addEventListener('click',e=>{if(e.target.closest('.vp-btn'))return;vpTogglePlay()});
 const tl=document.getElementById('vp-tl');let scrubbing=false;
@@ -3652,7 +3708,7 @@ function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)+'').padStart(2,'0'
 /* ===== PHOTO LIGHTBOX ===== */
 function photoOpen(src,title){document.getElementById('photo-lb-img').src=src;document.getElementById('photo-lb').classList.add('open');document.body.style.overflow='hidden'}
 function photoClose(){document.getElementById('photo-lb').classList.remove('open');document.body.style.overflow=''}
-function photoFullscreen(){const w=document.getElementById('photo-lb-wrap');(w.requestFullscreen||w.webkitRequestFullscreen).call(w)}
+function photoFullscreen(){const lb=document.getElementById('photo-lb');if(!lb||!lb.classList.contains('open'))return;const w=document.getElementById('photo-lb-wrap');const req=w&&(w.requestFullscreen||w.webkitRequestFullscreen);if(req)req.call(w)}
 document.getElementById('photo-lb').addEventListener('click',e=>{if(e.target===document.getElementById('photo-lb'))photoClose()});
 window.addEventListener('keydown',e=>{
   if(document.getElementById('photo-lb').classList.contains('open')){

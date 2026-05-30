@@ -2543,6 +2543,74 @@ body.hero-start-boost
 @media(prefers-reduced-motion:reduce){
   .about-orb,.about-ghost,.about-streak,.about-spark-field span,.about-kicker span,.about-badge span,.about-red-line,.about-float,.center-stat-glow,#hero-stats .stat-suffix{animation:none!important;}
 }
+
+
+/* ===== CLEAN ABOUT PATCH: remove floating texts/glow, keep ORIGINAL left layout ===== */
+.about-glow-section::before,
+.about-glow-section::after,
+.about-cosmic-bg,
+.about-ghost,
+.about-streak,
+.about-spark-field,
+.about-floating-labels,
+.about-float,
+.center-stat-glow,
+.about-kicker,
+.about-badge,
+.about-red-line,
+.about-mini-process{
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  animation:none!important;
+}
+.about-glow-section{
+  background:#000!important;
+  min-height:100vh!important;
+  padding:7.2rem 2rem 5.7rem!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+.about-glow-con{
+  position:relative!important;
+  z-index:2!important;
+  max-width:1360px!important;
+}
+.about-top-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:2rem!important;
+  align-items:end!important;
+  margin-bottom:1.55rem!important;
+}
+.about-hdr{
+  max-width:560px!important;
+  margin:0!important;
+  text-align:left!important;
+  position:relative!important;
+}
+.about-title{
+  text-align:left!important;
+}
+.about-intro{
+  max-width:520px!important;
+  margin:1.2rem 0 0!important;
+  text-align:left!important;
+}
+#main-nav{
+  margin:0 auto 3.6rem!important;
+}
+#hero-stats.about-stats{
+  z-index:3!important;
+}
+@media(max-width:960px){
+  .about-glow-section{min-height:auto!important;padding:4.6rem 1.1rem 4.4rem!important;}
+  .about-top-row{grid-template-columns:1fr!important;gap:1.3rem!important;text-align:left!important;}
+}
+@media(max-width:640px){
+  .about-hdr,.about-title,.about-intro{text-align:center!important;}
+  .about-intro{margin-left:auto!important;margin-right:auto!important;}
+}
 </style>
 
 </head>
@@ -2601,47 +2669,21 @@ body.hero-start-boost
 <!-- ==================== ABOUT ==================== -->
 <section id="about" class="about-section about-glow-section">
   <div class="about-cosmic-bg" aria-hidden="true">
-    <span class="about-ghost ghost-editing">EDITING</span>
-    <span class="about-ghost ghost-design">DESIGN</span>
-    <span class="about-ghost ghost-creators">CREATORS</span>
-    <span class="about-ghost ghost-scale">SCALE</span>
-
     <span class="about-orb about-orb-left"></span>
     <span class="about-orb about-orb-center"></span>
     <span class="about-orb about-orb-right"></span>
 
-    <span class="about-streak streak-one"></span>
-    <span class="about-streak streak-two"></span>
-    <span class="about-streak streak-three"></span>
-
-    <div class="about-spark-field">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
   </div>
 
   <div class="con about-glow-con">
     <div class="about-top-row">
       <div class="about-hdr rv">
-        <p class="about-kicker"><span></span> Creative network</p>
         <h2 class="sec-h2 about-title">About <em>Us</em></h2>
         <p class="about-intro">
           Cut &amp; Hire connects creators with trusted editors and designers, turning raw ideas into sharp videos, thumbnails, and content built to perform.
         </p>
-        <div class="about-badge"><span></span> Verified editors • designers • motion artists</div>
-        <div class="about-red-line"></div>
       </div>
 
-      <div class="about-mini-process rv" aria-label="Cut and Hire process">
-        <span>brief</span>
-        <i></i>
-        <span>match</span>
-        <i></i>
-        <span>edit</span>
-        <i></i>
-        <span>deliver</span>
-      </div>
     </div>
 
     <nav id="main-nav" class="rv">
@@ -2654,19 +2696,6 @@ body.hero-start-boost
         <li><a href="/joinus" class="nav-joinus">Join Us</a></li>
       </ul>
     </nav>
-
-    <div class="about-floating-labels" aria-hidden="true">
-      <span class="about-float label-a">trusted creators</span>
-      <span class="about-float label-b">verified editors</span>
-      <span class="about-float label-c">thumbnail design</span>
-      <span class="about-float label-d">motion graphics</span>
-      <span class="about-float label-e">fast delivery</span>
-      <span class="about-float label-f">quality checked</span>
-      <span class="about-float label-g">creator network</span>
-      <span class="about-float label-h">clean workflow</span>
-    </div>
-
-    <div class="center-stat-glow" aria-hidden="true"></div>
 
     <div id="hero-stats" class="about-stats rv">
       <div class="stat projects-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-target="5184" data-suffix="+">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>

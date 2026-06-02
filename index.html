@@ -1260,13 +1260,16 @@ body::before{
   background:#050505;
 }
 
-/* Uploaded review proof screenshot: force clean 700x80 banner sizing when requested. */
+/* ElkayEz proof screenshot: enlarge the 700x80 banner so it matches the other opened reviews. */
 .review-proof-img.proof-700x80{
-  width:min(700px,100%)!important;
-  height:80px!important;
-  max-height:80px!important;
-  object-fit:cover!important;
+  width:min(1120px,94%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
   object-position:center!important;
+  border-radius:8px!important;
+  transform:scale(1.08);
+  transform-origin:center;
 }
 .review-avatar-img-real{
   width:100%;
@@ -2162,6 +2165,15 @@ body.hero-start-boost
 .photo-lb.photo-visual-fullscreen .photo-lb-wrap{width:100vw!important;height:calc(100vh - 54px)!important;max-width:100vw!important;max-height:calc(100vh - 54px)!important;border:none!important}
 .photo-lb.photo-visual-fullscreen .photo-lb-wrap img{max-width:100vw!important;max-height:calc(100vh - 54px)!important}
 .wc-thumb.img-missing{opacity:.18!important;filter:grayscale(1)!important}
+
+
+/* Keep ElkayEz proof readable on phones too. */
+@media(max-width:640px){
+  .review-proof-img.proof-700x80{
+    width:96%!important;
+    transform:scale(1.02)!important;
+  }
+}
 
 </style>
 <style>

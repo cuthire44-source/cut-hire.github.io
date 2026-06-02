@@ -53,6 +53,8 @@
 <link rel="preload" as="image" href="review-mdm-full-original.png" fetchpriority="high">
 <link rel="preload" as="image" href="review-screenshot-700x80.png" fetchpriority="high">
 <link rel="preload" as="image" href="review-pfp.png" fetchpriority="high">
+<link rel="preload" as="image" href="review_4.webp" fetchpriority="high">
+<link rel="preload" as="image" href="review_4_pfp.webp" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -2611,6 +2613,105 @@ body.hero-start-boost
   .about-hdr,.about-title,.about-intro{text-align:center!important;}
   .about-intro{margin-left:auto!important;margin-right:auto!important;}
 }
+
+
+/* ===== V45 REVIEWS LOOP MARQUEE + MAS REVIEW ===== */
+#reviews .reviews-shell{
+  max-width:1260px!important;
+}
+#reviews .reviews-marquee{
+  width:100%!important;
+  max-width:1180px!important;
+  margin:0 auto!important;
+  overflow:hidden!important;
+  position:relative!important;
+  padding:4px 0 10px!important;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)!important;
+  mask-image:linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)!important;
+}
+#reviews .reviews-marquee::before,
+#reviews .reviews-marquee::after{
+  content:'';
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:90px;
+  z-index:3;
+  pointer-events:none;
+}
+#reviews .reviews-marquee::before{left:0;background:linear-gradient(to right,#000,transparent)}
+#reviews .reviews-marquee::after{right:0;background:linear-gradient(to left,#000,transparent)}
+#reviews .reviews-track{
+  display:flex!important;
+  grid-template-columns:none!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:18px!important;
+  width:max-content!important;
+  max-width:none!important;
+  margin:0!important;
+  animation:reviewsInfiniteLoop 34s linear infinite!important;
+  will-change:transform!important;
+}
+#reviews .reviews-marquee:hover .reviews-track{
+  animation-play-state:paused!important;
+}
+#reviews .review-card{
+  flex:0 0 342px!important;
+  width:342px!important;
+  min-height:392px!important;
+  padding:2.25rem 1.35rem 1.45rem!important;
+  border-radius:0!important;
+}
+#reviews .review-card-duplicate{
+  opacity:1!important;
+  transform:none!important;
+}
+#reviews .review-avatar{
+  width:86px!important;
+  height:86px!important;
+  margin-bottom:1rem!important;
+}
+#reviews .review-name{font-size:1.02rem!important;}
+#reviews .review-quote{
+  max-width:300px!important;
+  font-size:.84rem!important;
+  line-height:1.58!important;
+  min-height:116px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+#reviews .review-card.mdm-review-card .review-quote{
+  font-size:.73rem!important;
+  line-height:1.45!important;
+  min-height:132px!important;
+}
+#reviews .review-card.mas-review-card .review-quote{
+  font-size:.83rem!important;
+  line-height:1.62!important;
+}
+.review-proof-img.proof-review4-full{
+  width:min(1180px,100%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+@keyframes reviewsInfiniteLoop{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+@media(max-width:820px){
+  #reviews .reviews-marquee{max-width:100%!important;-webkit-mask-image:linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%)!important;mask-image:linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%)!important;}
+  #reviews .reviews-track{gap:14px!important;animation-duration:30s!important;}
+  #reviews .review-card{flex-basis:min(82vw,360px)!important;width:min(82vw,360px)!important;min-height:370px!important;padding:2rem 1.2rem 1.35rem!important;}
+  #reviews .review-quote{min-height:105px!important;font-size:.82rem!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #reviews .reviews-track{animation:none!important;overflow-x:auto!important;width:100%!important;}
+  #reviews .reviews-marquee{overflow-x:auto!important;-webkit-mask-image:none!important;mask-image:none!important;}
+}
 </style>
 
 </head>
@@ -2768,7 +2869,8 @@ body.hero-start-boost
       <p class="reviews-sub">Real Discord feedback from creators. Click any review to open the full message and its proof window.</p>
     </div>
 
-    <div class="reviews-track">
+    <div class="reviews-marquee" aria-label="Scrolling verified client reviews">
+      <div class="reviews-track">
       <button class="review-card rv" type="button"
   data-name="Tiffany"
   data-tag="10/10 rating"
@@ -2791,6 +2893,7 @@ body.hero-start-boost
         data-tag="Style mastered"
         data-full="@Chotuchinnar_editz has heart and is willing to learn and adapt"
         data-proof-img="review-screenshot-700x80.png"
+        data-proof-size="700x80"
         data-proof="Original Discord review screenshot from ElkayEz">
         <div class="review-avatar" style="overflow:hidden"><img class="review-avatar-img-real" src="review-pfp.png" alt="ElkayEz profile picture" onerror="this.style.display='none';this.parentElement.querySelector('.review-avatar-img').style.display='block';"><div class="review-avatar-img" style="display:none"></div><div class="review-discord-dot">⌁</div></div>
         <div class="review-name">ElkayEz</div>
@@ -2819,6 +2922,95 @@ body.hero-start-boost
         <span class="review-proof-hint">Click to open message proof</span>
       </button>
 
+      <button class="review-card rv mas-review-card" type="button"
+        data-name="mas"
+        data-tag="Fast quality delivery"
+        data-full="@outwrld got my video back to me very fast, and it was quality. Will 100% be coming back"
+        data-proof-img="review_4.webp"
+        data-proof-size="review4-full"
+        data-proof="Original Discord review screenshot from mas">
+        <div class="review-avatar" style="overflow:hidden">
+          <img class="review-avatar-img-real" src="review_4_pfp.webp" alt="mas profile picture">
+          <div class="review-avatar-img" style="display:none"></div>
+          <div class="review-discord-dot">⌁</div>
+        </div>
+        <div class="review-name">mas</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“@outwrld got my video back to me very fast, and it was quality. Will 100% be coming back”</p>
+        <div class="review-tag">✦ Fast quality delivery</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card review-card-duplicate" type="button"
+  data-name="Tiffany"
+  data-tag="10/10 rating"
+  data-full="@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10"
+  data-proof-img="tiffany.png"
+  data-proof="Discord message from Tiffany">
+ <div class="review-avatar tiffany-avatar" style="overflow:hidden">
+    <img class="review-avatar-photo" src="tiffany-logo.webp" alt="Tiffany logo">
+    <div class="review-discord-dot">⌁</div>
+  </div>
+  <div class="review-name">Tiffany</div>
+  <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+  <p class="review-quote">"@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10"</p>
+  <div class="review-tag">✦ 10/10 rating</div>
+  <span class="review-proof-hint">Click to open message proof</span>
+</button>
+
+      <button class="review-card review-card-duplicate" type="button"
+        data-name="ElkayEz"
+        data-tag="Style mastered"
+        data-full="@Chotuchinnar_editz has heart and is willing to learn and adapt"
+        data-proof-img="review-screenshot-700x80.png"
+        data-proof-size="700x80"
+        data-proof="Original Discord review screenshot from ElkayEz">
+        <div class="review-avatar" style="overflow:hidden"><img class="review-avatar-img-real" src="review-pfp.png" alt="ElkayEz profile picture" onerror="this.style.display='none';this.parentElement.querySelector('.review-avatar-img').style.display='block';"><div class="review-avatar-img" style="display:none"></div><div class="review-discord-dot">⌁</div></div>
+        <div class="review-name">ElkayEz</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“@Chotuchinnar_editz has heart and is willing to learn and adapt”</p>
+        <div class="review-tag">✦ Style mastered</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card review-card-duplicate mdm-review-card" type="button"
+        data-name="mdm2210"
+        data-tag="10/10 rating"
+        data-full="Absolutely outstanding work! @Valie The delivery was incredibly fast, communication was smooth and professional throughout, and the editing quality exceeded my expectations. Everything was polished, creative, and matched exactly what I envisioned. Highly recommended!"
+        data-proof-img="review-mdm-full-original.png"
+        data-proof-size="mdm-full"
+        data-proof="Original Discord review screenshot from mdm2210">
+        <div class="review-avatar" style="overflow:hidden">
+          <img class="review-avatar-img-real" src="mdm-pfp-original.png" alt="mdm2210 profile picture">
+          <div class="review-avatar-img" style="display:none"></div>
+          <div class="review-discord-dot">⌁</div>
+        </div>
+        <div class="review-name">mdm2210</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“Absolutely outstanding work! @Valie The delivery was incredibly fast, communication was smooth and professional throughout, and the editing quality exceeded my expectations. Everything was polished, creative, and matched exactly what I envisioned. Highly recommended!”</p>
+        <div class="review-tag">✦ 10/10 rating</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+
+      <button class="review-card review-card-duplicate mas-review-card" type="button"
+        data-name="mas"
+        data-tag="Fast quality delivery"
+        data-full="@outwrld got my video back to me very fast, and it was quality. Will 100% be coming back"
+        data-proof-img="review_4.webp"
+        data-proof-size="review4-full"
+        data-proof="Original Discord review screenshot from mas">
+        <div class="review-avatar" style="overflow:hidden">
+          <img class="review-avatar-img-real" src="review_4_pfp.webp" alt="mas profile picture">
+          <div class="review-avatar-img" style="display:none"></div>
+          <div class="review-discord-dot">⌁</div>
+        </div>
+        <div class="review-name">mas</div>
+        <div class="review-verified"><span>⌁</span> Verified on Discord</div>
+        <p class="review-quote">“@outwrld got my video back to me very fast, and it was quality. Will 100% be coming back”</p>
+        <div class="review-tag">✦ Fast quality delivery</div>
+        <span class="review-proof-hint">Click to open message proof</span>
+      </button>
+      </div>
     </div>
 
     <div class="reviews-bottom rv">
@@ -2971,6 +3163,7 @@ function openReviewModal(card){
     const proofSize=(card.dataset.proofSize||'').trim();
     if(proofSize==='700x80') img.classList.add('proof-700x80');
     if(proofSize==='mdm-full') img.classList.add('proof-mdm-full');
+    if(proofSize==='review4-full') img.classList.add('proof-review4-full');
     img.src=proofImg;
     img.alt=`Discord screenshot proof from ${name}`;
     img.onerror=()=>{
@@ -3329,7 +3522,7 @@ const works=[
   {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false},
   {cat:['youtube','vlogs'],title:'Vlog 47',src:'Vlog47.mp4',thumb:'Vlog47.png',isPhoto:false},
-  {cat:['youtube','vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
+  {cat:['vlogs'],title:'Vlog 36',src:'Vlog36.mp4',thumb:'Vlog36.png',isPhoto:false},
   {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false},
   {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false},

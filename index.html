@@ -2146,6 +2146,160 @@ body.hero-start-boost
 #work,#services,#process,#reviews,#discord,footer{content-visibility:auto;contain-intrinsic-size:900px;}
 @media(max-width:640px){#work,#services,#process,#reviews,#discord,footer{contain-intrinsic-size:700px;}}
 
+
+
+/* ===== FABRI FEEDBACK FIX V6: HAND-DRAWN ALIVE UNDERLINE ===== */
+/* V6 uses real inner layers instead of only ::after, so it looks much more custom/alive. */
+.hero-h1 .italic{
+  position:relative!important;
+  display:inline-block!important;
+  width:fit-content!important;
+  margin:.04em auto 0!important;
+  isolation:isolate!important;
+  z-index:0!important;
+  overflow:visible!important;
+  text-shadow:
+    0 10px 28px rgba(0,0,0,.72),
+    0 0 16px rgba(224,32,32,.20)!important;
+}
+.hero-h1 .italic::before,
+.hero-h1 .italic::after{
+  content:none!important;
+  display:none!important;
+}
+.hero-h1 .impossible-text{
+  position:relative!important;
+  z-index:3!important;
+}
+.hero-h1 .impossible-underline{
+  position:absolute!important;
+  left:50%!important;
+  bottom:-.155em!important;
+  width:116%!important;
+  height:.25em!important;
+  min-height:20px!important;
+  transform:translateX(-50%) rotate(-1.2deg)!important;
+  transform-origin:center!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  opacity:1!important;
+}
+.hero-h1 .u-stroke{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:100%!important;
+  height:42%!important;
+  min-height:9px!important;
+  transform:translate(-50%,-50%) scaleX(1)!important;
+  transform-origin:center!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+}
+/* deep red paint body, rough/tapered instead of a flat border */
+.hero-h1 .u-stroke-main{
+  z-index:2!important;
+  clip-path:polygon(0 48%,4% 34%,10% 43%,17% 30%,25% 39%,33% 27%,42% 42%,51% 31%,60% 44%,69% 32%,77% 43%,87% 30%,96% 40%,100% 52%,96% 73%,88% 66%,78% 78%,67% 63%,58% 74%,48% 61%,39% 76%,29% 64%,19% 75%,10% 64%,2% 76%,0 61%)!important;
+  background:
+    linear-gradient(90deg,
+      rgba(120,3,3,0) 0%,
+      rgba(185,13,13,.72) 5%,
+      rgba(255,42,31,1) 18%,
+      rgba(255,93,65,1) 38%,
+      rgba(230,22,22,1) 58%,
+      rgba(255,70,48,.96) 78%,
+      rgba(148,5,5,.58) 94%,
+      rgba(120,3,3,0) 100%)!important;
+  box-shadow:
+    0 0 3px rgba(255,222,211,.80),
+    0 0 12px rgba(255,36,28,.95),
+    0 0 30px rgba(224,32,32,.62),
+    0 9px 18px rgba(0,0,0,.78)!important;
+  animation:underlineBreathV6 2.9s ease-in-out infinite!important;
+}
+/* blurred red smear below it; this is the missing “shadow” feel */
+.hero-h1 .u-stroke-shadow{
+  z-index:1!important;
+  top:59%!important;
+  width:108%!important;
+  height:80%!important;
+  min-height:18px!important;
+  background:radial-gradient(ellipse at center,
+    rgba(255,50,38,.55) 0%,
+    rgba(224,32,32,.28) 35%,
+    rgba(224,32,32,.12) 58%,
+    transparent 82%)!important;
+  filter:blur(12px)!important;
+  opacity:.78!important;
+  animation:underlineGlowV6 2.9s ease-in-out infinite!important;
+}
+/* quick hot highlight travelling across the brush stroke */
+.hero-h1 .u-sweep{
+  position:absolute!important;
+  z-index:4!important;
+  left:-24%!important;
+  top:23%!important;
+  width:22%!important;
+  height:44%!important;
+  min-height:8px!important;
+  border-radius:999px!important;
+  transform:skewX(-18deg) rotate(.5deg)!important;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,.12) 12%,
+    rgba(255,232,218,.92) 48%,
+    rgba(255,88,62,.72) 68%,
+    transparent 100%)!important;
+  filter:blur(.6px)!important;
+  mix-blend-mode:screen!important;
+  opacity:0!important;
+  animation:underlineSweepV6 3.15s cubic-bezier(.16,1,.3,1) infinite!important;
+}
+.hero-h1 .u-spark{
+  position:absolute!important;
+  z-index:5!important;
+  width:5px!important;
+  height:5px!important;
+  border-radius:50%!important;
+  background:#ff3b2f!important;
+  box-shadow:0 0 8px rgba(255,53,42,.95),0 0 18px rgba(224,32,32,.62)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.hero-h1 .u-spark.s1{left:15%;top:30%;animation:underlineSparkV6 2.9s ease-in-out .18s infinite!important}
+.hero-h1 .u-spark.s2{left:55%;top:22%;width:4px!important;height:4px!important;animation:underlineSparkV6 2.9s ease-in-out .72s infinite!important}
+.hero-h1 .u-spark.s3{left:83%;top:52%;width:3px!important;height:3px!important;animation:underlineSparkV6 2.9s ease-in-out 1.05s infinite!important}
+@keyframes underlineBreathV6{
+  0%,100%{transform:translate(-50%,-50%) scaleX(.975) translateY(0);filter:brightness(.94) saturate(1.05)}
+  42%{transform:translate(-50%,-50%) scaleX(1.035) translateY(1px);filter:brightness(1.22) saturate(1.25)}
+  70%{transform:translate(-50%,-50%) scaleX(1.005) translateY(0);filter:brightness(1.04) saturate(1.12)}
+}
+@keyframes underlineGlowV6{
+  0%,100%{opacity:.48;transform:translate(-50%,-50%) scaleX(.92)}
+  42%{opacity:.96;transform:translate(-50%,-50%) scaleX(1.08)}
+  70%{opacity:.66;transform:translate(-50%,-50%) scaleX(1.0)}
+}
+@keyframes underlineSweepV6{
+  0%,18%{left:-26%;opacity:0}
+  33%{opacity:.95}
+  58%{left:104%;opacity:.65}
+  70%,100%{left:112%;opacity:0}
+}
+@keyframes underlineSparkV6{
+  0%,35%,100%{opacity:0;transform:translateY(0) scale(.6)}
+  44%{opacity:.95;transform:translateY(-6px) scale(1)}
+  62%{opacity:0;transform:translateY(-13px) scale(.2)}
+}
+@media(max-width:640px){
+  .hero-h1 .impossible-underline{bottom:-.13em!important;width:112%!important;height:.22em!important;min-height:14px!important}
+  .hero-h1 .u-stroke{min-height:6px!important}
+  .hero-h1 .u-stroke-shadow{min-height:12px!important;filter:blur(9px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-h1 .u-stroke-main,.hero-h1 .u-stroke-shadow,.hero-h1 .u-sweep,.hero-h1 .u-spark{animation:none!important}
+}
+
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -2697,98 +2851,274 @@ body.hero-start-boost
 }
 
 
-/* ===== FABRI FEEDBACK FIX V2: ORIGINAL HERO SIZE + LOWER CINEMATIC UNDERLINE ===== */
-/* This does NOT change the hero title/subtitle/button size. Only the underline style is replaced. */
+/* ===== FABRI FEEDBACK FIX V5: ALIVE CINEMATIC RED BRUSH UNDERLINE ===== */
+/* Keeps hero text/button/thumbnails/video behavior unchanged. Only the underline visual is replaced. */
 .hero-h1 .italic{
   position:relative!important;
   z-index:0!important;
   isolation:isolate!important;
   text-shadow:
-    0 8px 24px rgba(0,0,0,.62),
+    0 10px 26px rgba(0,0,0,.66),
     0 0 18px rgba(224,32,32,.16)!important;
 }
 
-/* soft shadow/glow sitting lower, behind the word */
+/* BIG soft shadow/glow under the word — lower, behind text, red only */
 .hero-h1 .italic::before{
   content:''!important;
   position:absolute!important;
   left:50%!important;
-  bottom:-.055em!important;
-  width:102%!important;
-  height:.075em!important;
-  transform:translateX(-50%) scaleX(.96)!important;
-  z-index:-2!important;
+  bottom:-.155em!important;
+  width:112%!important;
+  height:.18em!important;
+  transform:translateX(-50%) rotate(-1.15deg) scaleX(.94)!important;
+  transform-origin:center!important;
+  z-index:-3!important;
   pointer-events:none!important;
   border-radius:999px!important;
-  background:radial-gradient(ellipse at center,
-    rgba(224,32,32,.55) 0%,
-    rgba(224,32,32,.24) 38%,
-    rgba(224,32,32,.08) 62%,
-    transparent 78%
-  )!important;
-  filter:blur(7px)!important;
-  opacity:.78!important;
-  animation:impossibleUnderlineGlow 3.6s ease-in-out infinite!important;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255,62,48,.42) 0%,
+      rgba(224,32,32,.26) 38%,
+      rgba(224,32,32,.10) 62%,
+      transparent 82%),
+    linear-gradient(90deg,transparent,rgba(224,32,32,.20),transparent)!important;
+  filter:blur(10px)!important;
+  opacity:.75!important;
+  animation:impossibleBrushGlowV5 3.35s ease-in-out infinite!important;
 }
 
-/* main underline: same slim size feel as before, just lower, cleaner, behind text */
+/* Main underline — thicker brush stroke, lower, behind text, with moving light */
 .hero-h1 .italic::after{
   content:''!important;
   position:absolute!important;
   left:50%!important;
-  bottom:.015em!important;
-  width:98%!important;
-  height:3px!important;
-  transform:translateX(-50%) translateY(6px) scaleX(.97)!important;
-  z-index:-1!important;
+  bottom:-.095em!important;
+  width:106%!important;
+  height:.075em!important;
+  min-height:7px!important;
+  transform:translateX(-50%) rotate(-1.15deg) scaleX(.98)!important;
+  transform-origin:center!important;
+  z-index:-2!important;
   pointer-events:none!important;
   border-radius:999px!important;
-  opacity:.98!important;
+  opacity:1!important;
+
+  /* irregular brush feel + animated hot streak */
+  clip-path:polygon(0 52%,6% 42%,14% 48%,27% 34%,41% 43%,55% 32%,70% 44%,84% 36%,95% 43%,100% 54%,96% 72%,82% 66%,68% 75%,52% 65%,36% 76%,20% 66%,8% 74%,0 64%)!important;
   background:
+    linear-gradient(115deg,
+      transparent 0%,
+      transparent 34%,
+      rgba(255,214,198,.95) 42%,
+      rgba(255,118,90,1) 48%,
+      rgba(255,214,198,.75) 54%,
+      transparent 64%,
+      transparent 100%),
     linear-gradient(90deg,
       transparent 0%,
-      rgba(224,32,32,.25) 8%,
-      rgba(255,92,72,.92) 24%,
-      rgba(224,32,32,1) 48%,
-      rgba(255,112,88,.96) 68%,
-      rgba(224,32,32,.28) 91%,
-      transparent 100%
-    )!important;
-  background-size:190% 100%!important;
+      rgba(170,14,14,.40) 5%,
+      rgba(255,48,38,.98) 17%,
+      rgba(255,94,70,1) 36%,
+      rgba(224,32,32,1) 58%,
+      rgba(255,62,48,.94) 78%,
+      rgba(160,8,8,.34) 94%,
+      transparent 100%)!important;
+  background-size:245% 100%,100% 100%!important;
+  background-position:-140% 50%,0 50%!important;
   box-shadow:
-    0 1px 0 rgba(255,140,120,.24),
-    0 0 9px rgba(224,32,32,.72),
-    0 0 22px rgba(224,32,32,.35),
-    0 7px 18px rgba(0,0,0,.62)!important;
-  transform-origin:center!important;
-  animation:impossibleUnderlineMove 3.6s cubic-bezier(.22,1,.36,1) infinite!important;
+    0 0 2px rgba(255,225,215,.72),
+    0 0 10px rgba(255,54,42,.90),
+    0 0 24px rgba(224,32,32,.52),
+    0 7px 18px rgba(0,0,0,.78)!important;
+  animation:impossibleBrushSweepV5 3.35s cubic-bezier(.22,1,.36,1) infinite!important;
 }
 
-@keyframes impossibleUnderlineMove{
+/* tiny red sparks near the underline so it feels alive, not like a flat border */
+.hero-h1 .italic .underline-spark{display:none!important}
+
+@keyframes impossibleBrushSweepV5{
   0%,100%{
-    transform:translateX(-50%) translateY(6px) scaleX(.955);
-    background-position:0% 50%;
-    filter:brightness(.95);
+    transform:translateX(-50%) rotate(-1.15deg) translateY(0) scaleX(.965);
+    background-position:-140% 50%,0 50%;
+    filter:brightness(.92) saturate(1.05);
   }
-  45%{
-    transform:translateX(-50%) translateY(7px) scaleX(1.02);
-    background-position:100% 50%;
-    filter:brightness(1.16);
+  42%{
+    transform:translateX(-50%) rotate(-1.15deg) translateY(1px) scaleX(1.025);
+    background-position:120% 50%,0 50%;
+    filter:brightness(1.18) saturate(1.18);
+  }
+  68%{
+    transform:translateX(-50%) rotate(-1.15deg) translateY(0) scaleX(.99);
+    background-position:180% 50%,0 50%;
+    filter:brightness(1.03) saturate(1.10);
   }
 }
-@keyframes impossibleUnderlineGlow{
-  0%,100%{opacity:.48;transform:translateX(-50%) scaleX(.92)}
-  45%{opacity:.86;transform:translateX(-50%) scaleX(1.04)}
+@keyframes impossibleBrushGlowV5{
+  0%,100%{opacity:.45;transform:translateX(-50%) rotate(-1.15deg) scaleX(.90)}
+  42%{opacity:.92;transform:translateX(-50%) rotate(-1.15deg) scaleX(1.05)}
+  68%{opacity:.62;transform:translateX(-50%) rotate(-1.15deg) scaleX(.98)}
 }
 
 @media(max-width:640px){
-  .hero-h1 .italic::after{height:2.5px!important;bottom:.005em!important;transform:translateX(-50%) translateY(5px) scaleX(.97)!important;width:96%!important}
-  .hero-h1 .italic::before{bottom:-.06em!important;width:100%!important;height:.07em!important}
+  .hero-h1 .italic::after{height:.07em!important;min-height:5px!important;bottom:-.085em!important;width:104%!important}
+  .hero-h1 .italic::before{bottom:-.145em!important;width:110%!important;height:.17em!important}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-h1 .italic::before,.hero-h1 .italic::after{animation:none!important}
 }
 
+</style>
+
+
+<style>
+/* ===== FABRI FEEDBACK FIX V7: STRAIGHT ALIVE UNDERLINE - NO ROTATION ===== */
+/* Keeps the hero/text/thumbnails/video loading from v6, only replaces the underline visual. */
+.hero-h1 .italic{
+  position:relative!important;
+  display:inline-block!important;
+  width:fit-content!important;
+  margin:.04em auto 0!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  z-index:0!important;
+  text-shadow:
+    0 10px 28px rgba(0,0,0,.72),
+    0 0 18px rgba(224,32,32,.22)!important;
+}
+.hero-h1 .italic::before,
+.hero-h1 .italic::after{
+  content:none!important;
+  display:none!important;
+}
+.hero-h1 .impossible-text{
+  position:relative!important;
+  z-index:4!important;
+}
+.hero-h1 .impossible-underline{
+  position:absolute!important;
+  left:50%!important;
+  bottom:-.118em!important;
+  width:108%!important;
+  height:.145em!important;
+  min-height:12px!important;
+  transform:translateX(-50%)!important; /* IMPORTANT: no rotate */
+  transform-origin:center!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  opacity:1!important;
+}
+.hero-h1 .u-stroke{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+  transform:translate(-50%,-50%)!important; /* IMPORTANT: no rotate */
+}
+.hero-h1 .u-stroke-main{
+  z-index:3!important;
+  width:100%!important;
+  height:42%!important;
+  min-height:6px!important;
+  clip-path:none!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 7%,#000 93%,transparent 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 7%,#000 93%,transparent 100%)!important;
+  background:
+    linear-gradient(90deg,
+      rgba(95,0,0,0) 0%,
+      rgba(180,12,12,.82) 8%,
+      rgba(255,38,31,1) 20%,
+      rgba(255,94,68,1) 45%,
+      rgba(230,20,20,1) 62%,
+      rgba(255,55,43,.98) 82%,
+      rgba(95,0,0,0) 100%)!important;
+  box-shadow:
+    0 0 2px rgba(255,235,226,.72),
+    0 0 9px rgba(255,48,38,.96),
+    0 0 22px rgba(224,32,32,.70),
+    0 6px 16px rgba(0,0,0,.78)!important;
+  animation:underlineCoreAliveV7 2.65s ease-in-out infinite!important;
+}
+.hero-h1 .u-stroke-shadow{
+  z-index:1!important;
+  width:111%!important;
+  height:115%!important;
+  min-height:18px!important;
+  top:62%!important;
+  background:radial-gradient(ellipse at center,
+    rgba(255,56,43,.54) 0%,
+    rgba(224,32,32,.31) 34%,
+    rgba(224,32,32,.13) 58%,
+    transparent 82%)!important;
+  filter:blur(11px)!important;
+  opacity:.70!important;
+  animation:underlineShadowAliveV7 2.65s ease-in-out infinite!important;
+}
+.hero-h1 .u-sweep{
+  position:absolute!important;
+  z-index:5!important;
+  left:-18%!important;
+  top:34%!important;
+  width:18%!important;
+  height:34%!important;
+  min-height:5px!important;
+  border-radius:999px!important;
+  transform:none!important; /* no rotate/skew */
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,.10) 18%,
+    rgba(255,245,235,.88) 48%,
+    rgba(255,104,78,.65) 70%,
+    transparent 100%)!important;
+  filter:blur(.65px)!important;
+  mix-blend-mode:screen!important;
+  opacity:0!important;
+  animation:underlineSweepStraightV7 3.05s cubic-bezier(.16,1,.3,1) infinite!important;
+}
+.hero-h1 .u-spark{
+  position:absolute!important;
+  z-index:6!important;
+  width:3px!important;
+  height:3px!important;
+  border-radius:50%!important;
+  background:#ff352c!important;
+  box-shadow:0 0 7px rgba(255,60,48,.9),0 0 15px rgba(224,32,32,.55)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.hero-h1 .u-spark.s1{left:18%!important;top:35%!important;animation:underlineSparkStraightV7 3s ease-in-out .25s infinite!important}
+.hero-h1 .u-spark.s2{left:55%!important;top:30%!important;animation:underlineSparkStraightV7 3s ease-in-out .95s infinite!important}
+.hero-h1 .u-spark.s3{left:84%!important;top:42%!important;animation:underlineSparkStraightV7 3s ease-in-out 1.35s infinite!important}
+@keyframes underlineCoreAliveV7{
+  0%,100%{filter:brightness(.96) saturate(1.05);transform:translate(-50%,-50%) scaleX(.985)}
+  46%{filter:brightness(1.26) saturate(1.22);transform:translate(-50%,-50%) scaleX(1.018)}
+  70%{filter:brightness(1.06) saturate(1.12);transform:translate(-50%,-50%) scaleX(1.005)}
+}
+@keyframes underlineShadowAliveV7{
+  0%,100%{opacity:.48;transform:translate(-50%,-50%) scaleX(.96)}
+  46%{opacity:.94;transform:translate(-50%,-50%) scaleX(1.06)}
+  70%{opacity:.68;transform:translate(-50%,-50%) scaleX(1)}
+}
+@keyframes underlineSweepStraightV7{
+  0%,18%{left:-20%;opacity:0}
+  34%{opacity:.95}
+  58%{left:101%;opacity:.55}
+  70%,100%{left:108%;opacity:0}
+}
+@keyframes underlineSparkStraightV7{
+  0%,38%,100%{opacity:0;transform:translateY(0) scale(.55)}
+  47%{opacity:.9;transform:translateY(-4px) scale(1)}
+  65%{opacity:0;transform:translateY(-10px) scale(.25)}
+}
+@media(max-width:640px){
+  .hero-h1 .impossible-underline{bottom:-.102em!important;width:106%!important;height:.13em!important;min-height:8px!important}
+  .hero-h1 .u-stroke-main{min-height:4px!important}
+  .hero-h1 .u-stroke-shadow{min-height:12px!important;filter:blur(8px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-h1 .u-stroke-main,.hero-h1 .u-stroke-shadow,.hero-h1 .u-sweep,.hero-h1 .u-spark{animation:none!important}
+}
 </style>
 
 </head>
@@ -2831,7 +3161,7 @@ body.hero-start-boost
           onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src=this.dataset.fallback;}else{this.closest('.hero-logo-wrap').style.display='none';}">
       </a>
     </div>
-    <h1 class="hero-h1">We do the<br><span class="italic">impossible.</span></h1>
+    <h1 class="hero-h1">We do the<br><span class="italic"><span class="impossible-text">impossible.</span><span class="impossible-underline" aria-hidden="true"><span class="u-stroke u-stroke-main"></span><span class="u-stroke u-stroke-shadow"></span><span class="u-sweep"></span><span class="u-spark s1"></span><span class="u-spark s2"></span><span class="u-spark s3"></span></span></span></h1>
     <p class="hero-sub">Make viral content with elite editors</p>
     <div class="hero-cta">
   <a href="#discord" class="btn-primary main-mrbeast-glint-btn">

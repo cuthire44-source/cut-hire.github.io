@@ -60,39 +60,10 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.cutandhire.com/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="hero-thumbnails/image.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_5.png.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_3.png.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_7.png.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/5.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/bvcvcbvcbvcb43541.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_4.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/Illustrator_vid.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_1_.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumnbail_by_lokesh_2.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/8.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/5.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/image.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/bvcvcbvcbvcb43541.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/Illustrator_vid.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_4.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_7.png.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumnbail_by_lokesh_2.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_1_.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_5.png.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/thumbnail_by_lokesh_3.png.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/descarga_1.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/descarga_2.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/IMG-20251116-WA0014.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/20260312_052641.webp?v=20260526hero4" fetchpriority="high">
-<link rel="preload" as="image" href="hero-thumbnails/20260314_051758.webp?v=20260526hero4" fetchpriority="high">
+<!-- V2: keeps all start/video thumbnails loading normally; optimizes only modal MP4 playback and hover previews. -->
 <style>
 :root{
   --hero-reveal-delay:1.5s;
@@ -807,10 +778,6 @@ footer{background:var(--card);border-top:1px solid var(--b);padding:3rem 2rem 2r
 @media(max-width:640px){#reviews{padding:5rem 1rem}.reviews-track{grid-template-columns:1fr}.review-card{min-height:auto;padding:1.8rem 1.15rem}.reviews-bottom{flex-wrap:wrap;gap:.65rem}.reviews-bottom-line{width:100%}.review-modal{padding:.75rem}.review-modal-card{padding:1rem}.review-modal-close{top:.65rem;right:.65rem}.review-modal-info{padding:1rem}.review-proof-content{padding:.75rem}.review-discord-message{padding:.9rem .75rem}.review-modal-top{align-items:flex-start}}
 
 
-
-/* Keeps hero thumbnails visible under the restored intro fade. */
-.hero-grid-bg,.hero-grid-row,.hero-grid-thumb,.hero-grid-thumb img{visibility:visible!important;}
-.hero-grid-thumb img{opacity:1;}
 
 /* Keeps hero thumbnails visible under the restored intro fade. */
 .hero-grid-bg,.hero-grid-row,.hero-grid-thumb,.hero-grid-thumb img{visibility:visible!important;}
@@ -2173,6 +2140,12 @@ body.hero-start-boost
   }
 }
 
+
+
+/* ===== V47 PERFORMANCE PATCH: lighter first load ===== */
+#work,#services,#process,#reviews,#discord,footer{content-visibility:auto;contain-intrinsic-size:900px;}
+@media(max-width:640px){#work,#services,#process,#reviews,#discord,footer{contain-intrinsic-size:700px;}}
+
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -3356,11 +3329,15 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     document.head.appendChild(link);
   }
 
+  // Keep the hero/start thumbnails aggressive so the top grid appears immediately.
+  // Only the actual MP4 playback is optimized/lazy.
   FILES.forEach(file=>{
     const c=candidates(file);
     addPreload(c[0]);
-    addPreload(c[1]);
   });
+
+  const HERO_EAGER_LIMIT=12;
+  let heroThumbIndex=0;
 
   function makeThumb(file){
     const thumb=document.createElement('div');
@@ -3371,9 +3348,10 @@ window.addEventListener('keydown',e=>{if(e.code==='Escape'&&reviewModal&&reviewM
     img.alt='';
     img.width=480;
     img.height=260;
-    img.loading='eager';
-    img.decoding='async';
-    img.fetchPriority='high';
+    const isPriorityHeroThumb = heroThumbIndex++ < HERO_EAGER_LIMIT;
+    img.loading = isPriorityHeroThumb ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    img.fetchPriority = isPriorityHeroThumb ? 'high' : 'low';
     img.style.opacity='1';
     img.style.visibility='visible';
 
@@ -3975,6 +3953,7 @@ function initMovingPreviews(root){
       card.addEventListener('mouseleave',()=>stopMovingPreview(v,true),{passive:true});
     }
     card.addEventListener('touchstart',()=>startMovingPreview(v),{passive:true});
+    // Keep marked preview cards alive, but actual videos still use lazy sources/preload metadata.
     if(card.classList.contains('autoplay-preview')){
       startMovingPreview(v);
     }
@@ -4116,7 +4095,7 @@ function unlockPageForVideo(){
 }
 
 function vpOpen(src,title,isPortrait,poster){
-  lockPageForVideo(); lockPageForVideo();hardStopVideoPlayer(); hardStopVideoPlayer(); hardStopVideoPlayer();
+  lockPageForVideo(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
@@ -4913,9 +4892,11 @@ ring.style.visibility = 'visible';
   // Warm on visible category render.
   const grid = document.getElementById('work-grid');
   if(grid){
-    new MutationObserver(function(){
+    // Performance: do not warm category videos automatically on every render.
+    // Warming only happens when the user hovers/touches/clicks a video card.
+    /* new MutationObserver(function(){
       setTimeout(function(){ warmCurrentCards(false); }, 450);
-    }).observe(grid, {childList:true});
+    }).observe(grid, {childList:true}); */
 
     ['pointerenter','touchstart','mousedown'].forEach(function(ev){
       grid.addEventListener(ev, function(e){
@@ -4925,8 +4906,10 @@ ring.style.visibility = 'visible';
     });
   }
 
-  if(document.readyState === 'complete') setTimeout(function(){ warmCurrentCards(true); }, 1400);
-  else window.addEventListener('load', function(){ setTimeout(function(){ warmCurrentCards(true); }, 1400); });
+  // Performance: no automatic background video warming on first page load.
+  // The clicked video is still warmed immediately inside vpOpen().
+  /* if(document.readyState === 'complete') setTimeout(function(){ warmCurrentCards(true); }, 1400);
+  else window.addEventListener('load', function(){ setTimeout(function(){ warmCurrentCards(true); }, 1400); }); */
 
   // Override player open so it reuses warm/preloaded metadata and starts sooner.
   const oldVpOpen = window.vpOpen;

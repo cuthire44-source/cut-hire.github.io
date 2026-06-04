@@ -2722,6 +2722,100 @@ body.hero-start-boost
   #reviews .reviews-track{animation:none!important;overflow-x:auto!important;width:100%!important;}
   #reviews .reviews-marquee{overflow-x:auto!important;-webkit-mask-image:none!important;mask-image:none!important;}
 }
+
+
+/* ===== FABRI FEEDBACK FIX V2: ORIGINAL HERO SIZE + LOWER CINEMATIC UNDERLINE ===== */
+/* This does NOT change the hero title/subtitle/button size. Only the underline style is replaced. */
+.hero-h1 .italic{
+  position:relative!important;
+  z-index:0!important;
+  isolation:isolate!important;
+  text-shadow:
+    0 8px 24px rgba(0,0,0,.62),
+    0 0 18px rgba(224,32,32,.16)!important;
+}
+
+/* soft shadow/glow sitting lower, behind the word */
+.hero-h1 .italic::before{
+  content:''!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-.055em!important;
+  width:102%!important;
+  height:.075em!important;
+  transform:translateX(-50%) scaleX(.96)!important;
+  z-index:-2!important;
+  pointer-events:none!important;
+  border-radius:999px!important;
+  background:radial-gradient(ellipse at center,
+    rgba(224,32,32,.55) 0%,
+    rgba(224,32,32,.24) 38%,
+    rgba(224,32,32,.08) 62%,
+    transparent 78%
+  )!important;
+  filter:blur(7px)!important;
+  opacity:.78!important;
+  animation:impossibleUnderlineGlow 3.6s ease-in-out infinite!important;
+}
+
+/* main underline: same slim size feel as before, just lower, cleaner, behind text */
+.hero-h1 .italic::after{
+  content:''!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:.015em!important;
+  width:98%!important;
+  height:3px!important;
+  transform:translateX(-50%) translateY(6px) scaleX(.97)!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  border-radius:999px!important;
+  opacity:.98!important;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      rgba(224,32,32,.25) 8%,
+      rgba(255,92,72,.92) 24%,
+      rgba(224,32,32,1) 48%,
+      rgba(255,112,88,.96) 68%,
+      rgba(224,32,32,.28) 91%,
+      transparent 100%
+    )!important;
+  background-size:190% 100%!important;
+  box-shadow:
+    0 1px 0 rgba(255,140,120,.24),
+    0 0 9px rgba(224,32,32,.72),
+    0 0 22px rgba(224,32,32,.35),
+    0 7px 18px rgba(0,0,0,.62)!important;
+  transform-origin:center!important;
+  animation:impossibleUnderlineMove 3.6s cubic-bezier(.22,1,.36,1) infinite!important;
+}
+
+@keyframes impossibleUnderlineMove{
+  0%,100%{
+    transform:translateX(-50%) translateY(6px) scaleX(.955);
+    background-position:0% 50%;
+    filter:brightness(.95);
+  }
+  45%{
+    transform:translateX(-50%) translateY(7px) scaleX(1.02);
+    background-position:100% 50%;
+    filter:brightness(1.16);
+  }
+}
+@keyframes impossibleUnderlineGlow{
+  0%,100%{opacity:.48;transform:translateX(-50%) scaleX(.92)}
+  45%{opacity:.86;transform:translateX(-50%) scaleX(1.04)}
+}
+
+@media(max-width:640px){
+  .hero-h1 .italic::after{height:2.5px!important;bottom:.005em!important;transform:translateX(-50%) translateY(5px) scaleX(.97)!important;width:96%!important}
+  .hero-h1 .italic::before{bottom:-.06em!important;width:100%!important;height:.07em!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-h1 .italic::before,.hero-h1 .italic::after{animation:none!important}
+}
+
 </style>
 
 </head>
@@ -4736,6 +4830,135 @@ ring.style.visibility = 'visible';
   }else{
     prepareRows();
   }
+})();
+</script>
+
+
+
+<script>
+/* ===== FABRI FEEDBACK FIX: FASTER VIDEO STARTUP WITHOUT MAKING PAGE HEAVY =====
+   This warms the currently visible portfolio videos in the background, then uses
+   the warmed source when the visitor clicks. It keeps thumbnails instant and
+   avoids forcing every full video to download on first page load. */
+(function(){
+  const warmVideos = new Map();
+  const warming = new Set();
+  const MAX_WARMED = 8;
+
+  function normalizeSrc(src){
+    return String(src || '').trim();
+  }
+
+  function candidatesFor(src){
+    if(typeof window.getVideoCandidates === 'function') return window.getVideoCandidates(src);
+    return [src].filter(Boolean);
+  }
+
+  function warmVideo(src, priority){
+    src = normalizeSrc(src);
+    if(!src || warmVideos.has(src) || warming.has(src)) return;
+    if(warmVideos.size >= MAX_WARMED && !priority) return;
+
+    warming.add(src);
+    const cands = candidatesFor(src);
+    const v = document.createElement('video');
+    v.muted = true;
+    v.playsInline = true;
+    v.preload = priority ? 'auto' : 'metadata';
+    v.controls = false;
+    v.disablePictureInPicture = true;
+    v.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;top:-9999px;';
+
+    let idx = 0;
+    function cleanupFail(){
+      warming.delete(src);
+      try{ v.remove(); }catch(e){}
+    }
+    function tryNext(){
+      idx++;
+      if(idx < cands.length){
+        v.src = cands[idx];
+        try{ v.load(); }catch(e){}
+      }else{
+        cleanupFail();
+      }
+    }
+
+    v.addEventListener('loadedmetadata', function(){
+      warming.delete(src);
+      warmVideos.set(src, v);
+      // Ask the browser for a little more buffer when this is likely to be clicked soon.
+      if(priority){
+        try{ v.currentTime = Math.min(0.05, Math.max(0, (v.duration || 1) - .1)); }catch(e){}
+      }
+    }, {once:true});
+    v.addEventListener('canplay', function(){
+      warming.delete(src);
+      warmVideos.set(src, v);
+    }, {once:true});
+    v.addEventListener('error', tryNext);
+
+    document.body.appendChild(v);
+    v.src = cands[0] || src;
+    try{ v.load(); }catch(e){ cleanupFail(); }
+  }
+
+  function warmCurrentCards(priorityFirst){
+    const cards = Array.from(document.querySelectorAll('#work-grid .wc.is-video[data-src]'));
+    cards.slice(0, priorityFirst ? 6 : 4).forEach(function(card, i){
+      setTimeout(function(){ warmVideo(card.dataset.src, priorityFirst && i < 2); }, i * 260);
+    });
+  }
+
+  // Warm on visible category render.
+  const grid = document.getElementById('work-grid');
+  if(grid){
+    new MutationObserver(function(){
+      setTimeout(function(){ warmCurrentCards(false); }, 450);
+    }).observe(grid, {childList:true});
+
+    ['pointerenter','touchstart','mousedown'].forEach(function(ev){
+      grid.addEventListener(ev, function(e){
+        const card = e.target.closest && e.target.closest('.wc.is-video[data-src]');
+        if(card) warmVideo(card.dataset.src, true);
+      }, true);
+    });
+  }
+
+  if(document.readyState === 'complete') setTimeout(function(){ warmCurrentCards(true); }, 1400);
+  else window.addEventListener('load', function(){ setTimeout(function(){ warmCurrentCards(true); }, 1400); });
+
+  // Override player open so it reuses warm/preloaded metadata and starts sooner.
+  const oldVpOpen = window.vpOpen;
+  window.vpOpen = function(src, title, isPortrait, poster){
+    src = normalizeSrc(src);
+    warmVideo(src, true);
+
+    if(typeof oldVpOpen === 'function'){
+      oldVpOpen(src, title, isPortrait, poster);
+    }
+
+    const player = document.getElementById('vp-video');
+    if(!player || !src) return;
+
+    player.preload = 'auto';
+    player.setAttribute('playsinline','');
+    player.setAttribute('webkit-playsinline','');
+
+    // Make the clicked video high-priority immediately, without touching the hero load.
+    try{ player.fetchPriority = 'high'; }catch(e){}
+
+    const warmed = warmVideos.get(src);
+    if(warmed && warmed.currentSrc && player.src !== warmed.currentSrc){
+      try{
+        player.src = warmed.currentSrc;
+        player.dataset.candidateIndex = '0';
+        player.load();
+        const p = player.play();
+        if(p && p.catch) p.catch(function(){});
+      }catch(e){}
+    }
+  };
 })();
 </script>
 

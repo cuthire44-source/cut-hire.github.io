@@ -4815,132 +4815,173 @@ ring.style.visibility = 'visible';
 
 
 <script>
-/* ===== FABRI FEEDBACK FIX: FASTER VIDEO STARTUP WITHOUT MAKING PAGE HEAVY =====
-   This warms the currently visible portfolio videos in the background, then uses
-   the warmed source when the visitor clicks. It keeps thumbnails instant and
-   avoids forcing every full video to download on first page load. */
+/* ===== CUT & HIRE V3: SMART FAST VIDEO OPENING =====
+   Keeps hero/start thumbnails and video thumbnails loading normally.
+   Optimizes ONLY the real MP4 opening by warming nearby/hovered videos,
+   then the modal player uses the warmed URL directly instead of double-loading. */
 (function(){
-  const warmVideos = new Map();
-  const warming = new Set();
-  const MAX_WARMED = 8;
+  const warmCache = new Map();
+  const warming = new Map();
+  const MAX_METADATA_WARMED = 10;
+  const MAX_AUTO_WARMED = 4;
 
-  function normalizeSrc(src){
-    return String(src || '').trim();
-  }
-
+  function normalizeSrc(src){ return String(src || '').trim(); }
   function candidatesFor(src){
     if(typeof window.getVideoCandidates === 'function') return window.getVideoCandidates(src);
     return [src].filter(Boolean);
   }
+  function countMode(mode){
+    let n = 0;
+    warmCache.forEach(item => { if(item && item.mode === mode) n++; });
+    return n;
+  }
+  function trimWarmCache(){
+    const items = Array.from(warmCache.entries());
+    const autoItems = items.filter(([,v]) => v.mode === 'auto');
+    const metaItems = items.filter(([,v]) => v.mode !== 'auto');
+    while(autoItems.length > MAX_AUTO_WARMED){
+      const [key,item] = autoItems.shift();
+      try{ item.video.pause(); item.video.removeAttribute('src'); item.video.load(); item.video.remove(); }catch(e){}
+      warmCache.delete(key);
+    }
+    while(metaItems.length > MAX_METADATA_WARMED){
+      const [key,item] = metaItems.shift();
+      try{ item.video.pause(); item.video.removeAttribute('src'); item.video.load(); item.video.remove(); }catch(e){}
+      warmCache.delete(key);
+    }
+  }
 
-  function warmVideo(src, priority){
+  function warmVideo(src, mode){
     src = normalizeSrc(src);
-    if(!src || warmVideos.has(src) || warming.has(src)) return;
-    if(warmVideos.size >= MAX_WARMED && !priority) return;
+    mode = mode === 'auto' ? 'auto' : 'metadata';
+    if(!src) return;
 
-    warming.add(src);
+    const existing = warmCache.get(src);
+    if(existing){
+      if(existing.mode === 'auto' || mode === 'metadata') return existing.video;
+      // Upgrade metadata warm to auto warm.
+      existing.mode = 'auto';
+      existing.video.preload = 'auto';
+      try{ existing.video.fetchPriority = 'high'; }catch(e){}
+      try{ existing.video.load(); }catch(e){}
+      trimWarmCache();
+      return existing.video;
+    }
+    if(warming.has(src)) return warming.get(src);
+    if(mode === 'metadata' && countMode('metadata') >= MAX_METADATA_WARMED) return;
+    if(mode === 'auto' && countMode('auto') >= MAX_AUTO_WARMED) trimWarmCache();
+
     const cands = candidatesFor(src);
     const v = document.createElement('video');
     v.muted = true;
     v.playsInline = true;
-    v.preload = priority ? 'auto' : 'metadata';
+    v.preload = mode;
     v.controls = false;
     v.disablePictureInPicture = true;
+    v.setAttribute('webkit-playsinline','');
     v.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;top:-9999px;';
+    try{ v.fetchPriority = mode === 'auto' ? 'high' : 'low'; }catch(e){}
 
     let idx = 0;
-    function cleanupFail(){
-      warming.delete(src);
-      try{ v.remove(); }catch(e){}
+    function setCandidate(){
+      v.src = cands[idx] || src;
+      try{ v.load(); }catch(e){}
     }
-    function tryNext(){
+    function remember(){
+      warming.delete(src);
+      warmCache.set(src, { video:v, mode:mode, source:v.currentSrc || v.src, time:Date.now() });
+      trimWarmCache();
+    }
+    function failNext(){
       idx++;
-      if(idx < cands.length){
-        v.src = cands[idx];
-        try{ v.load(); }catch(e){}
-      }else{
-        cleanupFail();
+      if(idx < cands.length) setCandidate();
+      else{
+        warming.delete(src);
+        try{ v.remove(); }catch(e){}
       }
     }
 
-    v.addEventListener('loadedmetadata', function(){
-      warming.delete(src);
-      warmVideos.set(src, v);
-      // Ask the browser for a little more buffer when this is likely to be clicked soon.
-      if(priority){
-        try{ v.currentTime = Math.min(0.05, Math.max(0, (v.duration || 1) - .1)); }catch(e){}
-      }
-    }, {once:true});
-    v.addEventListener('canplay', function(){
-      warming.delete(src);
-      warmVideos.set(src, v);
-    }, {once:true});
-    v.addEventListener('error', tryNext);
-
+    v.addEventListener('loadedmetadata', remember, {once:true});
+    v.addEventListener('canplay', remember, {once:true});
+    v.addEventListener('error', failNext);
     document.body.appendChild(v);
-    v.src = cands[0] || src;
-    try{ v.load(); }catch(e){ cleanupFail(); }
+    warming.set(src, v);
+    setCandidate();
+    return v;
   }
 
-  function warmCurrentCards(priorityFirst){
-    const cards = Array.from(document.querySelectorAll('#work-grid .wc.is-video[data-src]'));
-    cards.slice(0, priorityFirst ? 6 : 4).forEach(function(card, i){
-      setTimeout(function(){ warmVideo(card.dataset.src, priorityFirst && i < 2); }, i * 260);
-    });
+  function observeVideoCards(root){
+    const cards = Array.from((root || document).querySelectorAll('#work-grid .wc.is-video[data-src]'));
+    if(!cards.length) return;
+
+    if(window.__cutHireVideoObserver) window.__cutHireVideoObserver.disconnect();
+    window.__cutHireVideoObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          const card = entry.target;
+          // Metadata warm only when the card is near the viewport, not on first page load.
+          warmVideo(card.dataset.src, 'metadata');
+        }
+      });
+    }, { root:null, rootMargin:'900px 0px', threshold:.01 });
+
+    cards.forEach(function(card){ window.__cutHireVideoObserver.observe(card); });
   }
 
-  // Warm on visible category render.
   const grid = document.getElementById('work-grid');
   if(grid){
-    // Performance: do not warm category videos automatically on every render.
-    // Warming only happens when the user hovers/touches/clicks a video card.
-    /* new MutationObserver(function(){
-      setTimeout(function(){ warmCurrentCards(false); }, 450);
-    }).observe(grid, {childList:true}); */
+    // Re-observe when categories rerender.
+    new MutationObserver(function(){ setTimeout(function(){ observeVideoCards(grid); }, 120); }).observe(grid, {childList:true});
+    setTimeout(function(){ observeVideoCards(grid); }, 700);
 
-    ['pointerenter','touchstart','mousedown'].forEach(function(ev){
+    // When user is about to click/hover/touch, start high priority warming immediately.
+    ['pointerenter','mouseover','touchstart','mousedown','focusin'].forEach(function(ev){
       grid.addEventListener(ev, function(e){
         const card = e.target.closest && e.target.closest('.wc.is-video[data-src]');
-        if(card) warmVideo(card.dataset.src, true);
+        if(card) warmVideo(card.dataset.src, 'auto');
       }, true);
     });
   }
 
-  // Performance: no automatic background video warming on first page load.
-  // The clicked video is still warmed immediately inside vpOpen().
-  /* if(document.readyState === 'complete') setTimeout(function(){ warmCurrentCards(true); }, 1400);
-  else window.addEventListener('load', function(){ setTimeout(function(){ warmCurrentCards(true); }, 1400); }); */
+  window.__cutHireWarmVideo = warmVideo;
 
-  // Override player open so it reuses warm/preloaded metadata and starts sooner.
-  const oldVpOpen = window.vpOpen;
-  window.vpOpen = function(src, title, isPortrait, poster){
+  // Replace vpOpen so the player does one clean high-priority load, not old load + replacement load.
+  window.vpOpen = function(src,title,isPortrait,poster){
     src = normalizeSrc(src);
-    warmVideo(src, true);
+    if(typeof lockPageForVideo === 'function') lockPageForVideo();
+    if(typeof hardStopVideoPlayer === 'function') hardStopVideoPlayer();
+    document.querySelectorAll('.wc-preview-video').forEach(function(v){ try{ v.pause(); }catch(e){} });
 
-    if(typeof oldVpOpen === 'function'){
-      oldVpOpen(src, title, isPortrait, poster);
+    if(isPortrait){ vpScreen.className='vp-screen portrait'; vpControls.className='vp-controls portrait'; }
+    else{ vpScreen.className='vp-screen landscape'; vpControls.className='vp-controls landscape'; }
+
+    const cands = candidatesFor(src);
+    const warm = warmCache.get(src);
+    let best = (warm && (warm.video.currentSrc || warm.video.src)) || cands[0] || src;
+    const finalCands = [best].concat(cands.filter(function(x){ return x && x !== best; }));
+
+    video.poster = poster || '';
+    video.preload = 'auto';
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    try{ video.fetchPriority = 'high'; }catch(e){}
+    video.dataset.candidates = JSON.stringify(finalCands);
+    video.dataset.candidateIndex = '0';
+    video.src = finalCands[0] || '';
+
+    const ph = document.getElementById('vp-placeholder');
+    if(ph) ph.style.display = src ? 'none' : 'flex';
+    video.style.display = src ? 'block' : 'none';
+    if(vpEl) vpEl.classList.add('open');
+
+    if(src){
+      try{ video.load(); }catch(e){}
+      const p = video.play();
+      if(p && p.catch) p.catch(function(){});
+      // Also keep warming original in background in case browser needs a second request/cache fill.
+      warmVideo(src, 'auto');
     }
-
-    const player = document.getElementById('vp-video');
-    if(!player || !src) return;
-
-    player.preload = 'auto';
-    player.setAttribute('playsinline','');
-    player.setAttribute('webkit-playsinline','');
-
-    // Make the clicked video high-priority immediately, without touching the hero load.
-    try{ player.fetchPriority = 'high'; }catch(e){}
-
-    const warmed = warmVideos.get(src);
-    if(warmed && warmed.currentSrc && player.src !== warmed.currentSrc){
-      try{
-        player.src = warmed.currentSrc;
-        player.dataset.candidateIndex = '0';
-        player.load();
-        const p = player.play();
-        if(p && p.catch) p.catch(function(){});
-      }catch(e){}
-    }
+    if(typeof vpUpdatePlay === 'function') vpUpdatePlay(src ? !video.paused : false);
   };
 })();
 </script>

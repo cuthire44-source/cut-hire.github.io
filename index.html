@@ -3163,6 +3163,206 @@ body.hero-start-boost
 }
 </style>
 
+
+
+<style>
+/* =========================================================
+   MOBILE WORK CATEGORY ARROWS — Cut & Hire style
+   Client requested YouTube-like arrows on phone so the other
+   categories are clearly selectable instead of looking hidden.
+   Desktop stays unchanged.
+========================================================= */
+.mobile-work-helper,
+.mobile-work-count{
+  display:none;
+}
+.mobile-cat-shell{
+  position:relative;
+  width:100%;
+  margin:0 0 2.4rem;
+}
+.cat-arrow{
+  display:none;
+}
+
+@media(max-width:820px){
+  #work{
+    padding-top:4.6rem!important;
+  }
+  #work .work-hdr{
+    margin-bottom:.8rem!important;
+  }
+  #work .sec-h2{
+    margin-bottom:.2rem!important;
+  }
+
+  .mobile-work-helper{
+    display:block;
+    margin:.1rem auto 1rem;
+    text-align:center;
+    font-family:'DM Mono',monospace;
+    font-size:.62rem;
+    line-height:1.45;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:rgba(245,240,235,.46);
+  }
+
+  .mobile-cat-shell{
+    display:flex!important;
+    align-items:center!important;
+    gap:.55rem!important;
+    margin:0 0 .95rem!important;
+    padding:0!important;
+    isolation:isolate;
+  }
+
+  .mobile-cat-shell::before,
+  .mobile-cat-shell::after{
+    content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:44px;
+    z-index:2;
+    pointer-events:none;
+  }
+  .mobile-cat-shell::before{
+    left:42px;
+    background:linear-gradient(to right,#000,rgba(0,0,0,0));
+  }
+  .mobile-cat-shell::after{
+    right:42px;
+    background:linear-gradient(to left,#000,rgba(0,0,0,0));
+  }
+  .mobile-cat-shell.at-start::before,
+  .mobile-cat-shell.at-end::after{
+    opacity:0;
+  }
+
+  .cat-arrow{
+    display:flex!important;
+    flex:0 0 40px!important;
+    width:40px!important;
+    height:40px!important;
+    border-radius:999px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:1px solid rgba(224,32,32,.45)!important;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(255,255,255,.09),transparent 48%),
+      linear-gradient(135deg,rgba(224,32,32,.20),rgba(224,32,32,.055))!important;
+    color:#fff!important;
+    box-shadow:0 0 18px rgba(224,32,32,.16), inset 0 1px 0 rgba(255,255,255,.10)!important;
+    cursor:pointer!important;
+    transition:transform .18s cubic-bezier(.22,1,.36,1),opacity .22s,border-color .22s,background .22s!important;
+    z-index:4!important;
+  }
+  .cat-arrow svg{
+    width:21px!important;
+    height:21px!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+  .cat-arrow svg path{
+    fill:none!important;
+    stroke:currentColor!important;
+    stroke-width:2.5!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+  }
+  .cat-arrow:active{
+    transform:scale(.92)!important;
+  }
+  .cat-arrow.is-disabled{
+    opacity:.28!important;
+    pointer-events:none!important;
+    border-color:rgba(255,255,255,.12)!important;
+    background:rgba(255,255,255,.035)!important;
+    box-shadow:none!important;
+  }
+
+  #cat-tabs.cat-tabs{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    gap:.55rem!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-behavior:smooth!important;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+    margin:0!important;
+    padding:.18rem .05rem .48rem!important;
+    mask-image:none!important;
+  }
+  #cat-tabs.cat-tabs::-webkit-scrollbar{display:none!important;}
+
+  #cat-tabs .cat-tab{
+    flex:0 0 auto!important;
+    border-radius:999px!important;
+    min-height:40px!important;
+    padding:.64rem 1rem!important;
+    border:1px solid rgba(255,255,255,.105)!important;
+    background:rgba(255,255,255,.045)!important;
+    color:rgba(245,240,235,.60)!important;
+    font-size:.62rem!important;
+    letter-spacing:.065em!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.055)!important;
+  }
+  #cat-tabs .cat-tab.on{
+    border-color:rgba(224,32,32,.90)!important;
+    background:linear-gradient(135deg,rgba(224,32,32,.28),rgba(224,32,32,.08))!important;
+    color:#fff!important;
+    box-shadow:0 0 18px rgba(224,32,32,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  }
+
+  .mobile-work-count{
+    display:block;
+    min-height:1.35rem;
+    margin:0 0 1rem;
+    text-align:center;
+    font-family:'DM Mono',monospace;
+    font-size:.58rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:rgba(245,240,235,.42);
+  }
+
+  /* Phone perspective: no endless mixed portfolio feeling.
+     Each category shows its own clean cards only after selection. */
+  #work .work-grid{
+    margin-top:.2rem!important;
+    gap:14px!important;
+  }
+  #work .wc{
+    border-radius:18px!important;
+    border:1px solid rgba(255,255,255,.085)!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.42)!important;
+  }
+}
+
+@media(max-width:420px){
+  .mobile-cat-shell{
+    gap:.45rem!important;
+  }
+  .cat-arrow{
+    flex-basis:38px!important;
+    width:38px!important;
+    height:38px!important;
+  }
+  .mobile-cat-shell::before{left:39px;width:34px;}
+  .mobile-cat-shell::after{right:39px;width:34px;}
+  #cat-tabs .cat-tab{
+    min-height:38px!important;
+    padding:.58rem .82rem!important;
+    font-size:.58rem!important;
+  }
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 
@@ -3259,16 +3459,28 @@ body.hero-start-boost
 <section id="work">
   <div class="con">
     <div class="work-hdr rv"><div><h2 class="sec-h2">Our <em>Work</em></h2></div></div>
-    <div class="cat-tabs rv stagger" id="cat-tabs">
-      <button class="cat-tab on" onclick="filterWork('youtube',this)"><span>Youtube Long Form</span></button>
-      <button class="cat-tab" onclick="filterWork('shorts',this)"><span>Shorts/Reels</span></button>
-      <button class="cat-tab" onclick="filterWork('motion',this)"><span>Motion Graphics</span></button>
-      <button class="cat-tab" onclick="filterWork('gaming',this)"><span>Gaming</span></button>
-      <button class="cat-tab" onclick="filterWork('documentary',this)"><span>Documentary</span></button>
-      <button class="cat-tab" onclick="filterWork('explainer',this)"><span>Explainer/Informative</span></button>
-      <button class="cat-tab" onclick="filterWork('vlogs',this)"><span>Vlogs/IRL Content</span></button>
-      <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
+    <div class="mobile-work-helper rv" aria-hidden="true">Swipe or tap the arrows to browse categories.</div>
+    <div class="mobile-cat-shell rv" id="mobile-cat-shell">
+      <button class="cat-arrow cat-arrow-left" type="button" aria-label="Previous work categories" data-cat-scroll="left">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+
+      <div class="cat-tabs stagger" id="cat-tabs" aria-label="Work categories">
+        <button class="cat-tab on" onclick="filterWork('youtube',this)"><span>Youtube Long Form</span></button>
+        <button class="cat-tab" onclick="filterWork('shorts',this)"><span>Shorts/Reels</span></button>
+        <button class="cat-tab" onclick="filterWork('motion',this)"><span>Motion Graphics</span></button>
+        <button class="cat-tab" onclick="filterWork('gaming',this)"><span>Gaming</span></button>
+        <button class="cat-tab" onclick="filterWork('documentary',this)"><span>Documentary</span></button>
+        <button class="cat-tab" onclick="filterWork('explainer',this)"><span>Explainer/Informative</span></button>
+        <button class="cat-tab" onclick="filterWork('vlogs',this)"><span>Vlogs/IRL Content</span></button>
+        <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
+      </div>
+
+      <button class="cat-arrow cat-arrow-right" type="button" aria-label="Next work categories" data-cat-scroll="right">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
     </div>
+    <div class="mobile-work-count" id="mobile-work-count" aria-live="polite"></div>
     <div class="work-grid" id="work-grid"></div>
   </div>
 </section>
@@ -5418,6 +5630,88 @@ ring.style.visibility = 'visible';
 
 
 
+
+
+
+<script>
+/* ===== MOBILE WORK CATEGORY ARROWS ===== */
+(function(){
+  function setupMobileCategoryArrows(){
+    const shell = document.getElementById('mobile-cat-shell');
+    const tabs = document.getElementById('cat-tabs');
+    const grid = document.getElementById('work-grid');
+    const count = document.getElementById('mobile-work-count');
+    if(!shell || !tabs) return;
+
+    const left = shell.querySelector('[data-cat-scroll="left"]');
+    const right = shell.querySelector('[data-cat-scroll="right"]');
+
+    function updateArrows(){
+      const max = Math.max(0, tabs.scrollWidth - tabs.clientWidth - 2);
+      const x = tabs.scrollLeft;
+      shell.classList.toggle('at-start', x <= 2);
+      shell.classList.toggle('at-end', x >= max);
+      if(left) left.classList.toggle('is-disabled', x <= 2);
+      if(right) right.classList.toggle('is-disabled', x >= max || max <= 2);
+    }
+
+    function scrollTabs(dir){
+      const amount = Math.max(150, Math.floor(tabs.clientWidth * .72));
+      tabs.scrollBy({ left: dir === 'left' ? -amount : amount, behavior:'smooth' });
+      setTimeout(updateArrows, 260);
+    }
+
+    if(left) left.addEventListener('click', function(){ scrollTabs('left'); });
+    if(right) right.addEventListener('click', function(){ scrollTabs('right'); });
+    tabs.addEventListener('scroll', updateArrows, {passive:true});
+    window.addEventListener('resize', updateArrows);
+
+    // Keep selected category visible after tapping it.
+    tabs.addEventListener('click', function(e){
+      const btn = e.target.closest('.cat-tab');
+      if(!btn) return;
+      setTimeout(function(){
+        btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        updateMobileWorkCount();
+        updateArrows();
+      }, 40);
+    });
+
+    function updateMobileWorkCount(){
+      if(!count || !grid) return;
+      if(!window.matchMedia('(max-width:820px)').matches){
+        count.textContent = '';
+        return;
+      }
+      const active = tabs.querySelector('.cat-tab.on span');
+      const shown = grid.querySelectorAll('.wc').length;
+      if(active && shown){
+        count.textContent = active.textContent.trim() + ' • ' + shown + ' videos';
+      }else if(active){
+        count.textContent = active.textContent.trim();
+      }
+    }
+
+    // Expose a tiny updater so the existing render/filter code can stay untouched.
+    window.__cutHireUpdateMobileWorkCount = updateMobileWorkCount;
+
+    if(grid){
+      new MutationObserver(function(){
+        setTimeout(updateMobileWorkCount, 60);
+      }).observe(grid,{childList:true});
+    }
+
+    setTimeout(function(){ updateArrows(); updateMobileWorkCount(); }, 120);
+    setTimeout(function(){ updateArrows(); updateMobileWorkCount(); }, 700);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', setupMobileCategoryArrows);
+  }else{
+    setupMobileCategoryArrows();
+  }
+})();
+</script>
 
 </body>
 </html>

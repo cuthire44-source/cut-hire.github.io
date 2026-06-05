@@ -60,6 +60,22 @@
 <link rel="preload" as="image" href="review-pfp.png" fetchpriority="high">
 <link rel="preload" as="image" href="review_4.webp" fetchpriority="high">
 <link rel="preload" as="image" href="review_4_pfp.webp" fetchpriority="high">
+<!-- Mobile thumbnails tab preload: keeps the tab next to Vlogs/IRL from feeling slow on phones. -->
+<link rel="preload" as="image" href="portfolio-thumbnails/8.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/5.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/image.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/bvcvcbvcbvcb43541.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/Illustrator_vid.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/thumbnail_by_lokesh_4.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/thumnbail_by_lokesh_2.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/thumbnail_by_lokesh_1_.webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/3(3).webp" fetchpriority="high">
+<link rel="preload" as="image" href="portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp" fetchpriority="high">
 <meta property="og:title" content="Cut & Hire">
 <meta property="og:description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more.">
 <meta property="og:image" content="https://www.cutandhire.com/logo.png">
@@ -71,7 +87,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- V2: keeps all start/video thumbnails loading normally; optimizes only modal MP4 playback and hover previews. -->
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<link rel="preconnect" href="https://vz-093429d3-cc4.b-cdn.net" crossorigin>
+<link rel="dns-prefetch" href="//vz-093429d3-cc4.b-cdn.net">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 :root{
   --hero-reveal-delay:1.5s;
@@ -420,6 +439,29 @@ section{padding:6rem 2rem}
 .wc.has-moving-thumb .wc-video-thumb{opacity:0}
 .wc.is-video:hover .wc-preview-video{transform:scale(1.04);filter:brightness(.86)}
 .wc.has-moving-thumb .video-fake-thumb{opacity:0!important;pointer-events:none}
+
+
+/* ===== PATCH: hide source-burned top overlay icon on selected videos =====
+   The small dark "next" icon in the screenshot is inside the uploaded video/thumbnail frame itself,
+   not the Cut & Hire player UI. This class gently zooms/crops only videos marked cleanTopIcon. */
+.wc.clean-top-source-icon .wc-video-thumb,
+.wc.clean-top-source-icon .wc-preview-video{
+  object-fit:cover!important;
+  transform:scale(1.22) translateY(-18px)!important;
+  transform-origin:center top!important;
+}
+.wc.clean-top-source-icon:hover .wc-video-thumb,
+.wc.clean-top-source-icon:hover .wc-preview-video{
+  transform:scale(1.24) translateY(-18px)!important;
+}
+.vp-screen.clean-top-source-icon video{
+  object-fit:cover!important;
+  transform:scale(1.12) translateY(-36px)!important;
+  transform-origin:center top!important;
+}
+.vp-screen.clean-top-source-icon.portrait video{
+  transform:scale(1.10) translateY(-28px)!important;
+}
 .wc.motion-featured-card{
   grid-column:2 / span 2;
   grid-row:span 2;
@@ -3137,6 +3179,276 @@ body.hero-start-boost
 }
 </style>
 
+
+
+<style>
+/* =========================================================
+   MOBILE WORK CATEGORY ARROWS — Cut & Hire style
+   Client requested YouTube-like arrows on phone so the other
+   categories are clearly selectable instead of looking hidden.
+   Desktop stays unchanged.
+========================================================= */
+.mobile-work-helper,
+.mobile-work-count{
+  display:none;
+}
+.mobile-cat-shell{
+  position:relative;
+  width:100%;
+  margin:0 0 2.4rem;
+}
+.cat-arrow{
+  display:none;
+}
+
+@media(max-width:820px){
+  #work{
+    padding-top:4.6rem!important;
+  }
+  #work .work-hdr{
+    margin-bottom:.8rem!important;
+  }
+  #work .sec-h2{
+    margin-bottom:.2rem!important;
+  }
+
+  .mobile-work-helper{
+    display:block;
+    margin:.1rem auto 1rem;
+    text-align:center;
+    font-family:'DM Mono',monospace;
+    font-size:.62rem;
+    line-height:1.45;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:rgba(245,240,235,.46);
+  }
+
+  .mobile-cat-shell{
+    display:flex!important;
+    align-items:center!important;
+    gap:.55rem!important;
+    margin:0 0 .95rem!important;
+    padding:0!important;
+    isolation:isolate;
+  }
+
+  .mobile-cat-shell::before,
+  .mobile-cat-shell::after{
+    content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:44px;
+    z-index:2;
+    pointer-events:none;
+  }
+  .mobile-cat-shell::before{
+    left:42px;
+    background:linear-gradient(to right,#000,rgba(0,0,0,0));
+  }
+  .mobile-cat-shell::after{
+    right:42px;
+    background:linear-gradient(to left,#000,rgba(0,0,0,0));
+  }
+  .mobile-cat-shell.at-start::before,
+  .mobile-cat-shell.at-end::after{
+    opacity:0;
+  }
+
+  .cat-arrow{
+    display:flex!important;
+    flex:0 0 40px!important;
+    width:40px!important;
+    height:40px!important;
+    border-radius:999px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:1px solid rgba(224,32,32,.45)!important;
+    background:
+      radial-gradient(circle at 50% 0%,rgba(255,255,255,.09),transparent 48%),
+      linear-gradient(135deg,rgba(224,32,32,.20),rgba(224,32,32,.055))!important;
+    color:#fff!important;
+    box-shadow:0 0 18px rgba(224,32,32,.16), inset 0 1px 0 rgba(255,255,255,.10)!important;
+    cursor:pointer!important;
+    transition:transform .18s cubic-bezier(.22,1,.36,1),opacity .22s,border-color .22s,background .22s!important;
+    z-index:4!important;
+  }
+  .cat-arrow svg{
+    width:21px!important;
+    height:21px!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+  .cat-arrow svg path{
+    fill:none!important;
+    stroke:currentColor!important;
+    stroke-width:2.5!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+  }
+  .cat-arrow:active{
+    transform:scale(.92)!important;
+  }
+  .cat-arrow.is-disabled{
+    opacity:.28!important;
+    pointer-events:none!important;
+    border-color:rgba(255,255,255,.12)!important;
+    background:rgba(255,255,255,.035)!important;
+    box-shadow:none!important;
+  }
+
+  #cat-tabs.cat-tabs{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    gap:.55rem!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-behavior:smooth!important;
+    scrollbar-width:none!important;
+    -webkit-overflow-scrolling:touch!important;
+    margin:0!important;
+    padding:.18rem .05rem .48rem!important;
+    mask-image:none!important;
+  }
+  #cat-tabs.cat-tabs::-webkit-scrollbar{display:none!important;}
+
+  #cat-tabs .cat-tab{
+    flex:0 0 auto!important;
+    border-radius:999px!important;
+    min-height:40px!important;
+    padding:.64rem 1rem!important;
+    border:1px solid rgba(255,255,255,.105)!important;
+    background:rgba(255,255,255,.045)!important;
+    color:rgba(245,240,235,.60)!important;
+    font-size:.62rem!important;
+    letter-spacing:.065em!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.055)!important;
+  }
+  #cat-tabs .cat-tab.on{
+    border-color:rgba(224,32,32,.90)!important;
+    background:linear-gradient(135deg,rgba(224,32,32,.28),rgba(224,32,32,.08))!important;
+    color:#fff!important;
+    box-shadow:0 0 18px rgba(224,32,32,.20),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  }
+
+  .mobile-work-count{
+    display:block;
+    min-height:1.35rem;
+    margin:0 0 1rem;
+    text-align:center;
+    font-family:'DM Mono',monospace;
+    font-size:.58rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:rgba(245,240,235,.42);
+  }
+
+  /* Phone perspective: no endless mixed portfolio feeling.
+     Each category shows its own clean cards only after selection. */
+  #work .work-grid{
+    margin-top:.2rem!important;
+    gap:14px!important;
+  }
+  #work .wc{
+    border-radius:18px!important;
+    border:1px solid rgba(255,255,255,.085)!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.42)!important;
+  }
+}
+
+@media(max-width:420px){
+  .mobile-cat-shell{
+    gap:.45rem!important;
+  }
+  .cat-arrow{
+    flex-basis:38px!important;
+    width:38px!important;
+    height:38px!important;
+  }
+  .mobile-cat-shell::before{left:39px;width:34px;}
+  .mobile-cat-shell::after{right:39px;width:34px;}
+  #cat-tabs .cat-tab{
+    min-height:38px!important;
+    padding:.58rem .82rem!important;
+    font-size:.58rem!important;
+  }
+}
+</style>
+
+
+
+<style>
+/* ===== MOBILE WORK ORGANIZATION + FAST THUMBNAIL TAB PATCH ===== */
+.mobile-work-helper{display:none!important}
+@media(max-width:820px){
+  #work .work-hdr{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;margin-bottom:1rem!important}
+  #work .sec-h2{font-size:clamp(2.45rem,11vw,3.55rem)!important;line-height:.95!important;margin:0!important}
+  .mobile-cat-shell{
+    margin:0 auto .75rem!important;
+    padding:.42rem!important;
+    border:1px solid rgba(255,255,255,.085)!important;
+    border-radius:999px!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important;
+    box-shadow:0 18px 44px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.06)!important;
+  }
+  .cat-arrow{
+    flex:0 0 36px!important;
+    width:36px!important;
+    height:36px!important;
+    border-color:rgba(224,32,32,.58)!important;
+    background:rgba(224,32,32,.12)!important;
+    box-shadow:0 0 16px rgba(224,32,32,.18)!important;
+  }
+  .cat-arrow svg{width:19px!important;height:19px!important}
+  .mobile-cat-shell::before{left:38px!important;width:30px!important;background:linear-gradient(to right,#080808,rgba(0,0,0,0))!important}
+  .mobile-cat-shell::after{right:38px!important;width:30px!important;background:linear-gradient(to left,#080808,rgba(0,0,0,0))!important}
+  #cat-tabs.cat-tabs{padding:.05rem .02rem!important;gap:.45rem!important}
+  #cat-tabs .cat-tab{
+    min-height:36px!important;
+    padding:.56rem .86rem!important;
+    font-size:.57rem!important;
+    letter-spacing:.055em!important;
+    background:rgba(255,255,255,.035)!important;
+  }
+  #cat-tabs .cat-tab.on{
+    background:linear-gradient(135deg,rgba(224,32,32,.34),rgba(224,32,32,.10))!important;
+    box-shadow:0 0 18px rgba(224,32,32,.22), inset 0 1px 0 rgba(255,255,255,.12)!important;
+  }
+  .mobile-work-count{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:fit-content!important;
+    max-width:100%!important;
+    min-height:0!important;
+    margin:.15rem auto 1rem!important;
+    padding:.34rem .72rem!important;
+    border:1px solid rgba(224,32,32,.18)!important;
+    border-radius:999px!important;
+    background:rgba(224,32,32,.055)!important;
+    color:rgba(245,240,235,.60)!important;
+    font-size:.56rem!important;
+    letter-spacing:.075em!important;
+    line-height:1.15!important;
+  }
+  #work .work-grid{margin-top:.35rem!important}
+  #work .work-grid[data-cat="thumbnail"] .wc-thumb{
+    content-visibility:visible!important;
+    background:#090909!important;
+  }
+}
+@media(max-width:420px){
+  .mobile-cat-shell{padding:.36rem!important}
+  .cat-arrow{flex-basis:34px!important;width:34px!important;height:34px!important}
+  #cat-tabs .cat-tab{min-height:34px!important;padding:.52rem .72rem!important;font-size:.54rem!important}
+  .mobile-work-count{font-size:.53rem!important}
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 
@@ -3233,16 +3545,27 @@ body.hero-start-boost
 <section id="work">
   <div class="con">
     <div class="work-hdr rv"><div><h2 class="sec-h2">Our <em>Work</em></h2></div></div>
-    <div class="cat-tabs rv stagger" id="cat-tabs">
-      <button class="cat-tab on" onclick="filterWork('youtube',this)"><span>Youtube Long Form</span></button>
-      <button class="cat-tab" onclick="filterWork('shorts',this)"><span>Shorts/Reels</span></button>
-      <button class="cat-tab" onclick="filterWork('motion',this)"><span>Motion Graphics</span></button>
-      <button class="cat-tab" onclick="filterWork('gaming',this)"><span>Gaming</span></button>
-      <button class="cat-tab" onclick="filterWork('documentary',this)"><span>Documentary</span></button>
-      <button class="cat-tab" onclick="filterWork('explainer',this)"><span>Explainer/Informative</span></button>
-      <button class="cat-tab" onclick="filterWork('vlogs',this)"><span>Vlogs/IRL Content</span></button>
-      <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
+    <div class="mobile-cat-shell rv" id="mobile-cat-shell">
+      <button class="cat-arrow cat-arrow-left" type="button" aria-label="Previous work categories" data-cat-scroll="left">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+
+      <div class="cat-tabs stagger" id="cat-tabs" aria-label="Work categories">
+        <button class="cat-tab on" onclick="filterWork('youtube',this)"><span>Youtube Long Form</span></button>
+        <button class="cat-tab" onclick="filterWork('shorts',this)"><span>Shorts/Reels</span></button>
+        <button class="cat-tab" onclick="filterWork('motion',this)"><span>Motion Graphics</span></button>
+        <button class="cat-tab" onclick="filterWork('gaming',this)"><span>Gaming</span></button>
+        <button class="cat-tab" onclick="filterWork('documentary',this)"><span>Documentary</span></button>
+        <button class="cat-tab" onclick="filterWork('explainer',this)"><span>Explainer/Informative</span></button>
+        <button class="cat-tab" onclick="filterWork('vlogs',this)"><span>Vlogs/IRL Content</span></button>
+        <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
+      </div>
+
+      <button class="cat-arrow cat-arrow-right" type="button" aria-label="Next work categories" data-cat-scroll="right">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
     </div>
+    <div class="mobile-work-count" id="mobile-work-count" aria-live="polite"></div>
     <div class="work-grid" id="work-grid"></div>
   </div>
 </section>
@@ -3934,60 +4257,60 @@ function primeImageFallback(img,src){
 }
 const works=[
   // Shorts/Reels: removed old 1st + 3rd shorts, added short44.
-  {cat:['motion'],title:'Short 44',src:'short44.mp4',thumb:'short44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/09af9161-4c34-4926-a9d8-724af58efe5d/playlist.m3u8'},
-  {cat:['motion'],title:'Short 2',src:'short2.mp4',thumb:'short2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/83435789-fcbb-4cf8-a872-03bddaeda0de/playlist.m3u8'},
-  {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/964d77ba-1e91-4ebe-b3b6-12797152857f/playlist.m3u8'},
-  {cat:['motion'],title:'Short 7',src:'short7.mp4',thumb:'short7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5d4fbfeb-5b23-497a-aa83-c5b39c7a0095/playlist.m3u8'},
-  {cat:['documentary'],title:'Short 8',src:'short8.mp4',thumb:'short8.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2e425999-cc85-45ce-8225-edc16c4e89ff/playlist.m3u8'},
-  {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/bc29fbe9-5677-4ae9-992a-4a5b2dbe99ee/playlist.m3u8'},
-  {cat:['explainer'],title:'Short 10',src:'short10.mp4',thumb:'short10.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1bbeccf1-537b-4faa-8a16-fb9151b1605c/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 45',src:'short45.mp4',thumb:'short45.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1aa5745b-0e17-4445-8161-6507974d82bb/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 488',src:'short488.mp4',thumb:'short488.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/f8e61286-0fa3-4fb5-83e2-e8bc28557b72/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 82',src:'short82.mp4',thumb:'short82.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/733a442d-41fc-44f1-9950-751a1540de10/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 849',src:'short849.mp4',thumb:'short849.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/31db26fa-887b-44be-b02d-b8e59a6348f4/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 11',src:'short11.mp4',thumb:'short11.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b2d9bf5c-3fcc-4172-b20c-9e00d4cbf266/playlist.m3u8'},
+  {cat:['motion'],title:'Short 44',src:'short44.mp4',thumb:'short44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6be10a63-cc56-4747-8d16-78fc04de25ec/playlist.m3u8'},
+  {cat:['motion'],title:'Short 2',src:'short2.mp4',thumb:'short2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0ef9d746-0faa-4e65-b659-a48af9a99b89/playlist.m3u8'},
+  {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cef9e28-b50b-4997-b93b-dfebef6c842b/playlist.m3u8'},
+  {cat:['motion'],title:'Short 7',src:'short7.mp4',thumb:'short7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/57b7a287-a4e0-4ccc-a5f1-23201066d46a/playlist.m3u8'},
+  {cat:['documentary'],title:'Short 8',src:'short8.mp4',thumb:'short8.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0e68e315-c9d4-4ff1-8418-18298f0563cf/playlist.m3u8'},
+  {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a266fa0b-51e0-4948-945c-97fe2f69cc8d/playlist.m3u8'},
+  {cat:['explainer'],title:'Short 10',src:'short10.mp4',thumb:'short10.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0f759218-6f05-480c-8abf-fc9d8a72740a/playlist.m3u8'},
+  {cat:['shorts'],title:'Short 45',src:'short45.mp4',thumb:'short45.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/99392d2a-e51e-4316-a049-74e94772df8b/playlist.m3u8'},
+  {cat:['shorts'],title:'Short 488',src:'short488.mp4',thumb:'short488.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2db2b00b-5186-4605-9367-494919af3ab1/playlist.m3u8'},
+  {cat:['shorts'],title:'Short 82',src:'short82.mp4',thumb:'short82.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b1ed06af-627d-4701-a170-272320b58d09/playlist.m3u8'},
+  {cat:['shorts'],title:'Short 849',src:'short849.mp4',thumb:'short849.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/06227b93-81e8-4532-bd0a-2efaf6f56b8b/playlist.m3u8'},
+  {cat:['shorts'],title:'Short 11',src:'short11.mp4',thumb:'short11.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/729472bd-fa5e-49f1-a239-4eb415a7b26f/playlist.m3u8'},
 
   // Youtube Long Form / Explainer additions.
-  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/9c379d07-db5e-4f69-a685-f95075421de8/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d0e737a6-d6b3-420d-be55-923d54e6516f/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/cd1f4784-a048-4bc4-b0d2-85be6948e1b1/playlist.m3u8'},
-  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4f79f0f6-a410-44c7-9f66-c6308dd0a9f0/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/fb921a19-367b-4eac-a03d-151c73afdb59/playlist.m3u8'},
-  {cat:['vlogs'],title:'Football Edit 443',src:'Football Edit443.mp4',thumb:'Football Edit443.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/df742a61-cf2b-4e31-b397-473a2733ff90/playlist.m3u8'},
-  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e3c377e4-74af-4847-8b63-5936b8b97863/playlist.m3u8'},
-  {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e75ed87f-f3ef-4d5a-a384-7b7e78a688c1/playlist.m3u8'},
-  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/bbd02389-21d9-4b6c-bf22-6c5e55f0c226/playlist.m3u8'},
-  {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/70c8f10e-28c0-4cb6-8088-82858ce19b8b/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/10b49c17-9d0b-491b-b459-fea876948140/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e9655fa3-b412-424b-b4f9-32152191a64a/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/f59a4011-5ad1-4899-aa46-31c7cdbce2d0/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3e9462e0-ef22-4da1-b506-90c035852ad1/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/aa05c7b8-2158-4e9d-b332-1abeade9aedd/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/89ac2433-a4ed-4591-9cc1-bcd746e92597/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',thumb:'Longform39.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6b49c09e-c6da-4392-95e7-0ea0d5eb1a87/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',thumb:'Longform58(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4ae6c4fc-5372-420c-b089-aee5f9556f0f/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',thumb:'Longform23(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6a2ec753-a90d-4687-a6e0-162bdbe486a1/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/28846d38-4e4e-4712-b461-e9db44ef1d69/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',thumb:'Sequence 01 5.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5f8526fb-68e7-4d9e-a5c0-fd6e20b5f18b/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',thumb:'Sequence 01 6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/66fa17c0-497a-451d-9d32-60a672cc6853/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6f4fdec8-9641-4637-9f45-f55923f419dd/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a3353ac2-bf59-46ea-a558-661811094ca1/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/000df819-896c-4124-9cc0-e434e574c930/playlist.m3u8'},
+  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,cleanTopIcon:true,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d9cc907a-96b7-4963-b9f4-c81ced78853f/playlist.m3u8'},
+  {cat:['vlogs'],title:'Football Edit 443',src:'Football Edit443.mp4',thumb:'Football Edit443.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/093a92f6-9ffa-4b5f-b9c1-d1caf5b6ebca/playlist.m3u8'},
+  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2699f3c4-5651-4500-bf1d-903b64a6b0f9/playlist.m3u8'},
+  {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6e4fcf8e-5a79-48dd-94a7-4b91a39e0585/playlist.m3u8'},
+  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5020cff4-0d5d-4065-8ced-70a56c26bec8/playlist.m3u8'},
+  {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/c2e1f59c-7418-40f9-a599-fe1a18f7befd/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2e5da4de-7438-4c0c-8fad-e9358d8c3e67/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e47e253e-878c-4cd5-9407-103fb227b6cb/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ea6e91ce-da0d-4e58-8dc4-89a0b066e30b/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/cdad4938-2920-4381-9656-46dc7089c791/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0b6ffca-b84e-4cbc-ade9-b94118829bd5/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1b2c4139-a02f-4cec-b13a-a552441842a4/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',thumb:'Longform39.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/aac3c7ff-5966-43b9-aac7-873b09f48542/playlist.m3u8'},
+  {cat:['gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',thumb:'Longform58(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2bc846ea-97fd-4cbc-9a14-a50f56b1201d/playlist.m3u8'},
+  {cat:['gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',thumb:'Longform23(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/92b392a7-08ae-4da2-a3f8-2125d0502e21/playlist.m3u8'},
+  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e1a49eac-b392-4c77-a137-e6b0d5dd5dec/playlist.m3u8'},
+  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',thumb:'Sequence 01 5.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a196e46a-2555-4078-888a-acf2a098708e/playlist.m3u8'},
+  {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',thumb:'Sequence 01 6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a7298b48-5980-4b3e-a1e1-115b6c38e618/playlist.m3u8'},
 
   // Cleaned categories: gaming videos removed from Gaming, blue-X items removed from the requested tabs.
-  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'longform1.mp4',thumb:'longform1.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/f5101b37-8176-40d4-b7bc-b6e65b2bcd68/playlist.m3u8'},
-  {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/9b48abfd-8ac6-4431-a609-32349d5708b9/playlist.m3u8'},
-  {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'longform3.mp4',thumb:'longform3.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/f3cbecd0-1eb8-43f3-8a41-f2a48cde1310/playlist.m3u8'},
-  {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/46a2c243-eaf8-4a30-bd12-879f4509f68d/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'longform6.mp4',thumb:'longform6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e4f08882-3a5f-40fe-9f1c-ae63a91f5cd4/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'longform7.mp4',thumb:'longform7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a567c18d-bb0e-4ecb-984f-4aa3d75a73e4/playlist.m3u8'},
-  {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ddab5cd6-5266-4710-9e33-9b0ab5f27af6/playlist.m3u8'},
-  {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b2512b55-d6f9-43f6-b4dd-e49ab73228d4/playlist.m3u8'},
-  {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/dd8e3b48-f1f8-485c-b51f-6c1bfba67dd7/playlist.m3u8'},
-  {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/16c1fcce-ecf4-4647-931b-8109074242f3/playlist.m3u8'},
-  {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/774e4156-3bc9-4595-8a6d-6ca725921baa/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b995ae3a-fff3-4f26-b6bd-403465dcc495/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3ba970c3-0dee-40f9-9d7c-647d1b32d0de/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3e102c32-2d97-4961-b9b1-00e61faca3b9/playlist.m3u8'},
-  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/507a5d14-88c7-49ef-8aa2-f6d6f7ad92ad/playlist.m3u8'},
-  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/11b0db00-964e-4aea-acc7-acbbb1ce3898/playlist.m3u8'},
+  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'longform1.mp4',thumb:'longform1.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2d43bba7-2a1c-4777-b9f0-d12f90559062/playlist.m3u8'},
+  {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ab6491c9-c293-490e-b4b9-2768c1086c85/playlist.m3u8'},
+  {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'longform3.mp4',thumb:'longform3.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0a07fb9-4932-43a0-a465-5c953ec1e9a9/playlist.m3u8'},
+  {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6b66916e-be17-4c05-a70f-6d290cfe0117/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'longform6.mp4',thumb:'longform6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/9f868843-2a13-468d-a5ae-b14cd4eb4ff0/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'longform7.mp4',thumb:'longform7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/597784c7-db9e-41a8-98c9-0da44ffa3989/playlist.m3u8'},
+  {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/fa11c6f1-2a0b-4e44-a1e0-fdfb4dd32944/playlist.m3u8'},
+  {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3855c353-a0e4-406b-8d17-4ac121daa8a2/playlist.m3u8'},
+  {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/923e8efd-d776-47f0-af3a-6c937e6e2dd2/playlist.m3u8'},
+  {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5b9eb7a4-4a25-49d8-96ff-b965b61393d6/playlist.m3u8'},
+  {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/00dcdf86-790f-4488-af28-a5f4e3984df7/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/24e22be3-c8aa-412b-9bf1-b77ddb5b7051/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cfa2b2b-1b44-4fb0-918f-cc1e4c870979/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b53f7f4d-92b0-4647-aa7c-1c1151f0714c/playlist.m3u8'},
+  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/49fbba49-e017-4202-8c6d-5e9ff95b325e/playlist.m3u8'},
+  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4bf67918-b544-495e-b44d-6c5a0ec79e72/playlist.m3u8'},
 
   // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
   {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
@@ -4038,11 +4361,17 @@ const works=[
   });
 })();
 
-// Preload portfolio thumbnail tab images too, so opening the Thumbnails tab feels instant.
-(function(){
-  const portfolioThumbs=works.filter(w=>w.isPhoto&&w.img).map(w=>w.img);
-  const run=()=>portfolioThumbs.forEach(src=>{const img=new Image();img.decoding='async';img.loading='eager';img.fetchPriority='high';img.src=cacheBustAsset(src);});
-  if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:900}); else setTimeout(run,300);
+// Preload portfolio thumbnail tab images immediately, not on idle.
+// This fixes the mobile tab beside Vlogs/IRL sometimes loading late.
+(function preloadPortfolioThumbnailsNow(){
+  const portfolioThumbs=[...new Set(works.filter(w=>w.isPhoto&&w.img).map(w=>w.img))];
+  portfolioThumbs.forEach((src,i)=>{
+    const img=new Image();
+    img.decoding='async';
+    img.loading='eager';
+    img.fetchPriority=i<15?'high':'auto';
+    img.src=cacheBustAsset(src);
+  });
 })();
 
 const playSVG=`<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
@@ -4118,6 +4447,7 @@ function renderWork(list, activeCat){
     const sizeClass=w.isPhoto?(w.size||''):(isShort?'shortform-card':'longform-card');
     const featuredClass=(w.featured&&w.isPhoto)?' motion-featured-card':'';
     const autoplayClass=w.autoplayPreview?' autoplay-preview':'';
+    const cleanTopIconClass=w.cleanTopIcon?' clean-top-source-icon':'';
     const badge=isShort?'<div class="wc-badge">9:16</div>':'';
     const phClass=isShort?'shortform-ph':isThumb?'thumbnail-ph':'';
     const dataCats=cats.join(' ');
@@ -4125,7 +4455,7 @@ function renderWork(list, activeCat){
     if(w.isPhoto&&w.img){
       const photoCandidates=imageCandidates(w.img);
       const firstPhoto=cacheBustAsset(photoCandidates[0]||w.img);
-      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
+      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
         <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
         ${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
@@ -4139,7 +4469,7 @@ function renderWork(list, activeCat){
     const explicitThumbAttr=explicitThumb ? ` src="${explicitThumb}" data-explicit-thumb="1"` : ` src=""`;
     const explicitThumbClass=explicitThumb ? ' has-thumb placeholder-hidden' : '';
 
-    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${explicitThumbClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
+    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass}${explicitThumbClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
       <div class="wc-placeholder ${phClass}"><div class="wc-placeholder-spinner"></div></div>
       <img class="wc-video-thumb"${explicitThumbAttr} data-video-src="${w.src}" data-thumb-time-min="2" data-thumb-time-max="5" alt="${w.title} thumbnail" loading="${eager}" decoding="async"${priority} onload="if(this.dataset.explicitThumb==='1'){const c=this.closest('.wc');if(c){c.classList.add('has-thumb');const p=c.querySelector('.wc-placeholder');if(p)p.classList.add('loaded');}}" onerror="if(this.dataset.explicitThumb==='1'&&!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">
       <video class="wc-preview-video" data-src="${w.src}" data-start="${ps}" data-end="${pe}" muted loop playsinline preload="none" disablepictureinpicture controlsList="nodownload noplaybackrate"></video>
@@ -4151,8 +4481,8 @@ function renderWork(list, activeCat){
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
       if(w.isPhoto)photoOpen(w.img||'',w.title);
-      else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'');
-      else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'');
+      else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
+      else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
     });
   });
 
@@ -4162,13 +4492,29 @@ function renderWork(list, activeCat){
 }
 
 const DEFAULT_WORK_CATEGORY='youtube';
+function preloadCategoryAssets(cat){
+  const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0,24);
+  items.forEach((w,i)=>{
+    const src=w.isPhoto?(w.img||''):(w.thumb||'');
+    if(!src)return;
+    const candidates=w.isPhoto?imageCandidates(src):[src];
+    const img=new Image();
+    img.decoding='async';
+    img.loading='eager';
+    img.fetchPriority=i<12?'high':'auto';
+    img.src=cacheBustAsset(candidates[0]||src);
+  });
+}
 function filterWork(cat,el){
   document.querySelectorAll('.cat-tab').forEach(c=>c.classList.remove('on'));
   if(el)el.classList.add('on');
   document.querySelectorAll('.wc').forEach(c=>{c.style.opacity='0';c.style.transform='scale(.95)'});
+  preloadCategoryAssets(cat);
   const filtered=cat==='all'?works:works.filter(w=>getCats(w).includes(cat));
-  setTimeout(()=>renderWork(filtered,cat),200);
+  setTimeout(()=>renderWork(filtered,cat),120);
 }
+preloadCategoryAssets('thumbnail');
+preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
 
 /* ===== AUTO VIDEO THUMBNAILS FROM 2–5 SECONDS ===== */
@@ -4421,6 +4767,7 @@ function hardStopVideoPlayer(){
       video.removeAttribute('data-is-hls');
       video.load();
       video.currentTime = 0;
+      if(vpScreen) vpScreen.classList.remove('clean-top-source-icon');
     }
   }catch(e){}
   try{
@@ -4452,11 +4799,12 @@ function unlockPageForVideo(){
   requestAnimationFrame(function(){ window.scrollTo(0, window.__videoSavedScrollY || 0); });
 }
 
-function vpOpen(src,title,isPortrait,poster){
+function vpOpen(src,title,isPortrait,poster,cleanTopIcon){
   lockPageForVideo(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
+  vpScreen.classList.toggle('clean-top-source-icon', !!cleanTopIcon);
   const cleanSrc=String(src||'').trim();
   const isHls=/\.m3u8(\?|$)/i.test(cleanSrc);
   video.poster=poster||'';
@@ -4476,8 +4824,12 @@ function vpOpen(src,title,isPortrait,poster){
         window.__cnhHls = new Hls({
           enableWorker:true,
           lowLatencyMode:false,
-          maxBufferLength:30,
-          maxMaxBufferLength:60
+          startLevel:-1,
+          capLevelToPlayerSize:true,
+          maxBufferLength:20,
+          maxMaxBufferLength:40,
+          backBufferLength:20,
+          abrEwmaDefaultEstimate:2500000
         });
         window.__cnhHls.loadSource(cleanSrc);
         window.__cnhHls.attachMedia(video);
@@ -5385,6 +5737,104 @@ ring.style.visibility = 'visible';
 
 
 
+
+
+
+<script>
+/* ===== MOBILE WORK CATEGORY ARROWS ===== */
+(function(){
+  function setupMobileCategoryArrows(){
+    const shell = document.getElementById('mobile-cat-shell');
+    const tabs = document.getElementById('cat-tabs');
+    const grid = document.getElementById('work-grid');
+    const count = document.getElementById('mobile-work-count');
+    if(!shell || !tabs) return;
+
+    const left = shell.querySelector('[data-cat-scroll="left"]');
+    const right = shell.querySelector('[data-cat-scroll="right"]');
+
+    function updateArrows(){
+      const max = Math.max(0, tabs.scrollWidth - tabs.clientWidth - 2);
+      const x = tabs.scrollLeft;
+      shell.classList.toggle('at-start', x <= 2);
+      shell.classList.toggle('at-end', x >= max);
+      if(left) left.classList.toggle('is-disabled', x <= 2);
+      if(right) right.classList.toggle('is-disabled', x >= max || max <= 2);
+    }
+
+    function scrollTabs(dir){
+      const amount = Math.max(150, Math.floor(tabs.clientWidth * .72));
+      tabs.scrollBy({ left: dir === 'left' ? -amount : amount, behavior:'smooth' });
+      setTimeout(updateArrows, 260);
+    }
+
+    if(left) left.addEventListener('click', function(){ scrollTabs('left'); });
+    if(right) right.addEventListener('click', function(){ scrollTabs('right'); });
+    tabs.addEventListener('scroll', updateArrows, {passive:true});
+    window.addEventListener('resize', updateArrows);
+
+    // Keep selected category visible after tapping it.
+    function catFromButton(btn){
+      const onclick = btn ? String(btn.getAttribute('onclick')||'') : '';
+      const match = onclick.match(/filterWork\('([^']+)'/);
+      return match ? match[1] : '';
+    }
+    tabs.addEventListener('touchstart', function(e){
+      const btn = e.target.closest('.cat-tab');
+      const cat = catFromButton(btn);
+      if(cat && typeof preloadCategoryAssets === 'function') preloadCategoryAssets(cat);
+    }, {passive:true});
+    tabs.addEventListener('click', function(e){
+      const btn = e.target.closest('.cat-tab');
+      if(!btn) return;
+      const cat = catFromButton(btn);
+      if(cat && typeof preloadCategoryAssets === 'function') preloadCategoryAssets(cat);
+      setTimeout(function(){
+        btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        updateMobileWorkCount();
+        updateArrows();
+      }, 40);
+    });
+
+    function updateMobileWorkCount(){
+      if(!count || !grid) return;
+      if(!window.matchMedia('(max-width:820px)').matches){
+        count.textContent = '';
+        return;
+      }
+      const active = tabs.querySelector('.cat-tab.on span');
+      const activeBtn = tabs.querySelector('.cat-tab.on');
+      const shown = grid.querySelectorAll('.wc').length;
+      const label = active ? active.textContent.trim() : '';
+      const isThumb = label.toLowerCase().includes('thumbnail');
+      const itemWord = isThumb ? 'thumbnails' : 'videos';
+      if(active && shown){
+        count.textContent = label + ' • ' + shown + ' ' + itemWord;
+      }else if(active){
+        count.textContent = label;
+      }
+    }
+
+    // Expose a tiny updater so the existing render/filter code can stay untouched.
+    window.__cutHireUpdateMobileWorkCount = updateMobileWorkCount;
+
+    if(grid){
+      new MutationObserver(function(){
+        setTimeout(updateMobileWorkCount, 60);
+      }).observe(grid,{childList:true});
+    }
+
+    setTimeout(function(){ updateArrows(); updateMobileWorkCount(); }, 120);
+    setTimeout(function(){ updateArrows(); updateMobileWorkCount(); }, 700);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', setupMobileCategoryArrows);
+  }else{
+    setupMobileCategoryArrows();
+  }
+})();
+</script>
 
 </body>
 </html>

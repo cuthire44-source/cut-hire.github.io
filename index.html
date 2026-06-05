@@ -5,6 +5,7 @@
 <meta name="google-site-verification" content="Bz43ZUbrjdEl9Tn69VxMuZ8uCnfwchOGkdHbGxgJrCk" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Cut & Hire</title>
+<!-- BUNNY_STREAM_TEST_DOCUMENTARY3983: https://iframe.mediadelivery.net/embed/676973/3ba970c3-0dee-40f9-9d7c-647d1b32d0de?autoplay=true&preload=true&responsive=true -->
 <meta name="description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more. Join our Discord and start your project today.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preload" as="image" href="7xLgtMa0Xb5M3IAu.png" fetchpriority="high">
@@ -486,6 +487,14 @@ section{padding:6rem 2rem}
 .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
 .vp-wrap:fullscreen .vp-screen.landscape,.vp-wrap.is-fullscreen .vp-screen.landscape{width:100vw;height:calc(100vh - 74px);max-height:none;aspect-ratio:auto}
 .vp-screen video{width:100%;height:100%;object-fit:contain;display:block}
+.vp-screen.bunny-mode{background:#000}
+.vp-bunny-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#000}
+.vp-wrap.bunny-active .vp-controls{display:none!important}
+.vp-wrap.bunny-active .vp-bigplay,
+.vp-wrap.bunny-active .vp-placeholder,
+.vp-wrap.bunny-active #vp-video{display:none!important}
+.vp-wrap.bunny-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
+.vp-wrap:fullscreen .vp-bunny-iframe,.vp-wrap.is-fullscreen .vp-bunny-iframe{display:block!important}
 .vp-bigplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s}
 .vp-bigplay.show{opacity:1}
 .vp-bigplay::before{content:'';position:absolute;width:96px;height:96px;border-radius:50%;background:rgba(224,32,32,.38);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);box-shadow:0 0 34px rgba(224,32,32,.55);animation:bpc .35s cubic-bezier(.34,1.56,.64,1)}
@@ -3503,6 +3512,7 @@ body.hero-start-boost
   <button class="vp-close" id="vp-close" type="button" onclick="vpClose(event)" aria-label="Close video">✕</button>
   <div class="vp-screen landscape" id="vp-screen">
     <video id="vp-video" preload="metadata" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
+    <iframe id="vp-bunny-iframe" class="vp-bunny-iframe" title="Bunny Stream video" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
     <div class="vp-placeholder" id="vp-placeholder">
       <img src="disc.png" alt=""><p>No preview available</p>
     </div>
@@ -3540,6 +3550,7 @@ body.hero-start-boost
 </div>
 
 <script>
+const BUNNY_DOCUMENTARY3983_URL = 'https://iframe.mediadelivery.net/embed/676973/3ba970c3-0dee-40f9-9d7c-647d1b32d0de?autoplay=true&preload=true&responsive=true';
 var THUMB_CACHE_VERSION = 'v=20260525d';
 
 /* ===== REVIEWS PROOF WINDOW ===== */
@@ -3964,7 +3975,7 @@ const works=[
   {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
   {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
   {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false},
-  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false},
+  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,bunny:'https://iframe.mediadelivery.net/embed/676973/3ba970c3-0dee-40f9-9d7c-647d1b32d0de?autoplay=true&preload=true&responsive=true'},
   {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false},
   {cat:['motion'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false},
   {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
@@ -4131,6 +4142,7 @@ function renderWork(list, activeCat){
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
       if(w.isPhoto)photoOpen(w.img||'',w.title);
+      else if(w.bunny && typeof vpOpenBunny === 'function') vpOpenBunny(w.bunny,w.title,isShortVideo(w));
       else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'');
     });
   });
@@ -5312,6 +5324,93 @@ ring.style.visibility = 'visible';
       warmVideo(src, 'auto');
     }
     if(typeof vpUpdatePlay === 'function') vpUpdatePlay(src ? !video.paused : false);
+  };
+})();
+</script>
+
+
+<script>
+/* ===== BUNNY STREAM TEST PLAYER PATCH =====
+   Documentary3983.mp4 uses Bunny Stream, all other videos keep the normal Cut & Hire player.
+   Bunny library: 676973
+   Bunny video: 3ba970c3-0dee-40f9-9d7c-647d1b32d0de
+*/
+(function(){
+  const bunnyFrame = document.getElementById('vp-bunny-iframe');
+  const vp = document.getElementById('vp-wrap');
+  const screen = document.getElementById('vp-screen');
+  const controls = document.getElementById('vp-controls');
+  const normalVideo = document.getElementById('vp-video');
+  const placeholder = document.getElementById('vp-placeholder');
+  const bigPlay = document.getElementById('vp-bigplay');
+
+  function stopBunny(){
+    if(bunnyFrame){
+      bunnyFrame.removeAttribute('src');
+      bunnyFrame.style.display = 'none';
+    }
+    if(vp) vp.classList.remove('bunny-active');
+    if(screen) screen.classList.remove('bunny-mode');
+    if(controls) controls.style.display = '';
+    if(normalVideo) normalVideo.style.display = '';
+    if(placeholder) placeholder.style.display = '';
+    if(bigPlay) bigPlay.style.display = '';
+  }
+
+  const originalHardStop = window.hardStopVideoPlayer;
+  window.hardStopVideoPlayer = function(){
+    stopBunny();
+    if(typeof originalHardStop === 'function') originalHardStop();
+  };
+
+  window.vpOpenBunny = function(url,title,isPortrait){
+    if(!url) return;
+    try{ if(typeof lockPageForVideo === 'function') lockPageForVideo(); }catch(e){}
+    try{ document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause()); }catch(e){}
+    try{
+      if(normalVideo){
+        normalVideo.pause();
+        normalVideo.removeAttribute('src');
+        normalVideo.removeAttribute('poster');
+        normalVideo.load();
+        normalVideo.style.display = 'none';
+      }
+    }catch(e){}
+
+    if(isPortrait){
+      if(screen) screen.className = 'vp-screen portrait bunny-mode';
+      if(controls) controls.className = 'vp-controls portrait';
+    }else{
+      if(screen) screen.className = 'vp-screen landscape bunny-mode';
+      if(controls) controls.className = 'vp-controls landscape';
+    }
+
+    if(placeholder) placeholder.style.display = 'none';
+    if(bigPlay) bigPlay.style.display = 'none';
+    if(controls) controls.style.display = 'none';
+
+    const sep = url.includes('?') ? '&' : '?';
+    const finalUrl = url + sep + 'muted=false';
+    bunnyFrame.src = finalUrl;
+    bunnyFrame.style.display = 'block';
+
+    if(vp) vp.classList.add('open','bunny-active');
+  };
+
+  window.vpClose = function(){
+    try{ stopBunny(); }catch(e){}
+    try{
+      if(normalVideo){
+        normalVideo.pause();
+        normalVideo.removeAttribute('src');
+        normalVideo.removeAttribute('poster');
+        normalVideo.load();
+        normalVideo.currentTime = 0;
+      }
+    }catch(e){}
+    if(vp) vp.classList.remove('open','is-fullscreen','bunny-active');
+    document.body.style.overflow = '';
+    try{ if(typeof unlockPageForVideo === 'function') unlockPageForVideo(); }catch(e){}
   };
 })();
 </script>

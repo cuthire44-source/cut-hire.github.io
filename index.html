@@ -71,7 +71,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- V2: keeps all start/video thumbnails loading normally; optimizes only modal MP4 playback and hover previews. -->
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<link rel="preconnect" href="https://vz-093429d3-cc4.b-cdn.net" crossorigin>
+<link rel="dns-prefetch" href="//vz-093429d3-cc4.b-cdn.net">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 :root{
   --hero-reveal-delay:1.5s;
@@ -420,6 +423,29 @@ section{padding:6rem 2rem}
 .wc.has-moving-thumb .wc-video-thumb{opacity:0}
 .wc.is-video:hover .wc-preview-video{transform:scale(1.04);filter:brightness(.86)}
 .wc.has-moving-thumb .video-fake-thumb{opacity:0!important;pointer-events:none}
+
+
+/* ===== PATCH: hide source-burned top overlay icon on selected videos =====
+   The small dark "next" icon in the screenshot is inside the uploaded video/thumbnail frame itself,
+   not the Cut & Hire player UI. This class gently zooms/crops only videos marked cleanTopIcon. */
+.wc.clean-top-source-icon .wc-video-thumb,
+.wc.clean-top-source-icon .wc-preview-video{
+  object-fit:cover!important;
+  transform:scale(1.22) translateY(-18px)!important;
+  transform-origin:center top!important;
+}
+.wc.clean-top-source-icon:hover .wc-video-thumb,
+.wc.clean-top-source-icon:hover .wc-preview-video{
+  transform:scale(1.24) translateY(-18px)!important;
+}
+.vp-screen.clean-top-source-icon video{
+  object-fit:cover!important;
+  transform:scale(1.12) translateY(-36px)!important;
+  transform-origin:center top!important;
+}
+.vp-screen.clean-top-source-icon.portrait video{
+  transform:scale(1.10) translateY(-28px)!important;
+}
 .wc.motion-featured-card{
   grid-column:2 / span 2;
   grid-row:span 2;
@@ -3951,7 +3977,7 @@ const works=[
   {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6f4fdec8-9641-4637-9f45-f55923f419dd/playlist.m3u8'},
   {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a3353ac2-bf59-46ea-a558-661811094ca1/playlist.m3u8'},
   {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/000df819-896c-4124-9cc0-e434e574c930/playlist.m3u8'},
-  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
+  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,cleanTopIcon:true,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
   {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d9cc907a-96b7-4963-b9f4-c81ced78853f/playlist.m3u8'},
   {cat:['vlogs'],title:'Football Edit 443',src:'Football Edit443.mp4',thumb:'Football Edit443.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/093a92f6-9ffa-4b5f-b9c1-d1caf5b6ebca/playlist.m3u8'},
   {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2699f3c4-5651-4500-bf1d-903b64a6b0f9/playlist.m3u8'},
@@ -4118,6 +4144,7 @@ function renderWork(list, activeCat){
     const sizeClass=w.isPhoto?(w.size||''):(isShort?'shortform-card':'longform-card');
     const featuredClass=(w.featured&&w.isPhoto)?' motion-featured-card':'';
     const autoplayClass=w.autoplayPreview?' autoplay-preview':'';
+    const cleanTopIconClass=w.cleanTopIcon?' clean-top-source-icon':'';
     const badge=isShort?'<div class="wc-badge">9:16</div>':'';
     const phClass=isShort?'shortform-ph':isThumb?'thumbnail-ph':'';
     const dataCats=cats.join(' ');
@@ -4125,7 +4152,7 @@ function renderWork(list, activeCat){
     if(w.isPhoto&&w.img){
       const photoCandidates=imageCandidates(w.img);
       const firstPhoto=cacheBustAsset(photoCandidates[0]||w.img);
-      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
+      return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
         <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
         ${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
@@ -4139,7 +4166,7 @@ function renderWork(list, activeCat){
     const explicitThumbAttr=explicitThumb ? ` src="${explicitThumb}" data-explicit-thumb="1"` : ` src=""`;
     const explicitThumbClass=explicitThumb ? ' has-thumb placeholder-hidden' : '';
 
-    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${explicitThumbClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
+    return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass}${explicitThumbClass} is-video rv" data-idx="${i}" data-src="${w.src}" data-cat="${dataCats}" style="transition-delay:${Math.min(i*.025,.25)}s">
       <div class="wc-placeholder ${phClass}"><div class="wc-placeholder-spinner"></div></div>
       <img class="wc-video-thumb"${explicitThumbAttr} data-video-src="${w.src}" data-thumb-time-min="2" data-thumb-time-max="5" alt="${w.title} thumbnail" loading="${eager}" decoding="async"${priority} onload="if(this.dataset.explicitThumb==='1'){const c=this.closest('.wc');if(c){c.classList.add('has-thumb');const p=c.querySelector('.wc-placeholder');if(p)p.classList.add('loaded');}}" onerror="if(this.dataset.explicitThumb==='1'&&!this.dataset.fallbackTried&&this.getAttribute('src').includes('/')){this.dataset.fallbackTried='1';this.src=this.getAttribute('src').split('/').pop();}">
       <video class="wc-preview-video" data-src="${w.src}" data-start="${ps}" data-end="${pe}" muted loop playsinline preload="none" disablepictureinpicture controlsList="nodownload noplaybackrate"></video>
@@ -4151,8 +4178,8 @@ function renderWork(list, activeCat){
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
       if(w.isPhoto)photoOpen(w.img||'',w.title);
-      else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'');
-      else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'');
+      else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
+      else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
     });
   });
 
@@ -4421,6 +4448,7 @@ function hardStopVideoPlayer(){
       video.removeAttribute('data-is-hls');
       video.load();
       video.currentTime = 0;
+      if(vpScreen) vpScreen.classList.remove('clean-top-source-icon');
     }
   }catch(e){}
   try{
@@ -4452,11 +4480,12 @@ function unlockPageForVideo(){
   requestAnimationFrame(function(){ window.scrollTo(0, window.__videoSavedScrollY || 0); });
 }
 
-function vpOpen(src,title,isPortrait,poster){
+function vpOpen(src,title,isPortrait,poster,cleanTopIcon){
   lockPageForVideo(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
   if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
+  vpScreen.classList.toggle('clean-top-source-icon', !!cleanTopIcon);
   const cleanSrc=String(src||'').trim();
   const isHls=/\.m3u8(\?|$)/i.test(cleanSrc);
   video.poster=poster||'';
@@ -4476,8 +4505,12 @@ function vpOpen(src,title,isPortrait,poster){
         window.__cnhHls = new Hls({
           enableWorker:true,
           lowLatencyMode:false,
-          maxBufferLength:30,
-          maxMaxBufferLength:60
+          startLevel:-1,
+          capLevelToPlayerSize:true,
+          maxBufferLength:20,
+          maxMaxBufferLength:40,
+          backBufferLength:20,
+          abrEwmaDefaultEstimate:2500000
         });
         window.__cnhHls.loadSource(cleanSrc);
         window.__cnhHls.attachMedia(video);

@@ -171,6 +171,15 @@ img[src="film-reel.png"]{
 }
 
 
+
+/* Outsourcer badge icon: people/talking icon fits outsourcing better than film reel */
+.path-badge.cl img[src="friend.png"]{
+  width:.92rem;
+  height:.92rem;
+  object-fit:contain;
+  transform:none !important;
+}
+
 .path-card:hover .path-icon{transform:scale(1.12) rotate(-4deg)}
 
 .path-card h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
@@ -2457,7 +2466,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   <div class="paths" id="paths">
     <!-- CLIENT CARD -->
     <div class="path-card client">
-      <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Outsourcers</div>
+      <div class="path-badge cl"><img class="icon-img badge-icon" src="friend.png" alt="Outsourcing people icon"> For Outsourcers</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Want to make <em>money?</em></h2>
       <div class="join-video-card client-video-card" data-video-src="Full Video With Music.mp4" data-video-poster="videojoinus21.png" role="button" tabindex="0" aria-label="Play client/outsourcer video">
@@ -2470,7 +2479,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Apply as Outsourcer</span>
+      <span>Apply as an Outsourcer</span>
     </a>
     </div>
 
@@ -2478,7 +2487,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
     <div class="path-card editor">
       <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors/Designers</div>
       <span class="path-icon"><img src="film-reel.png" alt=""></span>
-      <h2>Ready to Land <em>Real Clients?</em></h2>
+      <h2>Ready to <em>land real clients?</em></h2>
       <div class="join-video-card editor-video-card is-placeholder" data-video-src="" data-video-poster="" data-placeholder="true" role="button" tabindex="0" aria-label="Open editor/designer video placeholder">
         <video class="join-video-preview" preload="none" muted playsinline></video>
         <div class="join-video-shade"></div>
@@ -2489,7 +2498,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Apply as Editor/Designer</span>
+      <span>Apply as an Editor/Designer</span>
     </a>
     </div>
   </div>
@@ -2808,9 +2817,9 @@ function toggleFaq(el){
     while((node=walker.nextNode())){
       node.nodeValue=node.nodeValue
         .replace(/For Clients/g,'For Outsourcers')
-        .replace(/Ready to Get Real Clients\?/g,'Ready to Land Real Clients?')
-        .replace(/Ready to get Real Clients\?/g,'Ready to Land Real Clients?')
-        .replace(/Need an Editor\?/g,'Ready to Land Real Clients?');
+        .replace(/Ready to Get Real Clients\?/g,'Ready to land real clients?')
+        .replace(/Ready to get Real Clients\?/g,'Ready to land real clients?')
+        .replace(/Need an Editor\?/g,'Ready to land real clients?');
     }
   }
   if(document.readyState==='loading'){

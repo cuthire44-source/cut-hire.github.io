@@ -2358,6 +2358,155 @@ body.hero-start-boost
   .hero-h1 .u-stroke-main,.hero-h1 .u-stroke-shadow,.hero-h1 .u-sweep,.hero-h1 .u-spark{animation:none!important}
 }
 
+
+/* ===================== MOBILE UI POLISH PATCH — PC-LIKE + LESS SCROLL ===================== */
+@media(max-width:760px){
+  body{background:#000!important;}
+
+  /* Home page spacing: keep mobile closer to desktop instead of huge stacked blocks */
+  section{padding:3.2rem 1rem!important;}
+  .con{max-width:100%!important;}
+  .sec-lbl{font-size:.52rem!important;letter-spacing:.2em!important;margin-bottom:.55rem!important;}
+  .sec-h2{font-size:clamp(2rem,10vw,3.1rem)!important;line-height:.94!important;margin-bottom:1rem!important;}
+
+  #hero{height:100svh!important;min-height:620px!important;}
+  .hero-center-stack{
+    max-width:100%!important;
+    padding:0 1rem!important;
+    transform:translate(-50%, calc(-50% - 38px))!important;
+  }
+  @keyframes hero-stack-rise{
+    from{opacity:0;transform:translate(-50%, calc(-50% - 6px));filter:blur(1.2px)}
+    to{opacity:1;transform:translate(-50%, calc(-50% - 38px));filter:blur(0)}
+  }
+  .hero-logo-gif{width:126px!important;}
+  .hero-h1{font-size:clamp(3rem,15vw,5rem)!important;line-height:.86!important;}
+  .hero-sub{font-size:clamp(1.2rem,5.7vw,2rem)!important;white-space:normal!important;max-width:340px!important;margin-top:.85rem!important;}
+  .hero-cta{margin-top:1.35rem!important;gap:.65rem!important;}
+  .btn-primary,.btn-outline{min-width:0!important;width:auto!important;padding:.82rem 1.25rem!important;font-size:.82rem!important;}
+
+  .about-section{padding:3.1rem 1rem!important;}
+  #main-nav{margin-bottom:2rem!important;overflow:auto!important;justify-content:flex-start!important;-webkit-overflow-scrolling:touch!important;}
+  .nav-links{gap:.75rem!important;white-space:nowrap!important;padding:0 .1rem!important;}
+  .nav-links a{font-size:.62rem!important;letter-spacing:.11em!important;}
+  .about-title{font-size:clamp(2.2rem,12vw,3.3rem)!important;}
+  .about-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:1.25rem .7rem!important;}
+  .stat-l{white-space:normal!important;font-size:.56rem!important;}
+  .views-stat{grid-column:1 / -1!important;}
+  .views-stat .stat-number-wrap{transform:none!important;height:auto!important;}
+  .views-stat .stat-l{top:0!important;margin-top:.55rem!important;}
+
+  .work-hdr{margin-bottom:1rem!important;}
+  .cat-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:.45rem!important;
+    margin-bottom:1.2rem!important;
+  }
+  .cat-tab{font-size:.58rem!important;padding:.55rem .45rem!important;border-radius:999px!important;text-align:center!important;}
+  .work-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:145px!important;gap:6px!important;}
+  .wc,.wc.shortform-card,.wc.tall,.wc.wide,.wc.motion-featured-card{
+    grid-column:span 1!important;
+    grid-row:span 1!important;
+    border-radius:14px!important;
+  }
+
+  .serv-grid,.proc-steps{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;}
+  .sv,.ps{border-radius:18px!important;padding:1.2rem 1rem!important;}
+  .sv-p,.ps p{font-size:.72rem!important;line-height:1.55!important;}
+
+  footer{padding:2.2rem 1rem 1.5rem!important;}
+  .fi{justify-content:center!important;text-align:center!important;}
+  .fb p{max-width:320px!important;margin-left:auto!important;margin-right:auto!important;}
+
+  /* Discord CTA: mobile now stays compact and horizontal like desktop screenshot */
+  #discord{
+    min-height:auto!important;
+    padding:2.7rem .75rem 3.2rem!important;
+  }
+  #discord .rv-scale{
+    transform:none!important;
+    max-width:560px!important;
+    margin:0 auto!important;
+  }
+  #discord img[src="disc.png"]{
+    width:58px!important;
+    height:58px!important;
+    margin-bottom:1rem!important;
+  }
+  #discord .sec-lbl{
+    justify-content:center!important;
+    font-size:.48rem!important;
+    letter-spacing:.18em!important;
+    margin-bottom:.75rem!important;
+  }
+  .disc-h{
+    font-size:clamp(2.35rem,11.2vw,4.2rem)!important;
+    line-height:.88!important;
+    margin-bottom:.85rem!important;
+    letter-spacing:-.055em!important;
+  }
+  .disc-sub{
+    max-width:315px!important;
+    font-size:.84rem!important;
+    line-height:1.55!important;
+    margin:0 auto 1.3rem!important;
+  }
+  #discord-invite-card{
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    gap:.72rem!important;
+    max-width:440px!important;
+    width:min(100%,440px)!important;
+    min-height:66px!important;
+    padding:.72rem .82rem!important;
+    border-radius:9px!important;
+    text-align:left!important;
+    transform:none!important;
+  }
+  #discord-invite-card > img{
+    width:38px!important;
+    height:38px!important;
+  }
+  #discord-invite-card > div{
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+  #discord-invite-card > div > div:first-child{
+    font-size:.48rem!important;
+    margin-bottom:.08rem!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  #discord-invite-card > div > div:nth-child(2){
+    font-size:.78rem!important;
+    margin-bottom:.16rem!important;
+  }
+  #discord-invite-card > div > div:nth-child(3){
+    font-size:.58rem!important;
+    gap:.42rem!important;
+    flex-wrap:nowrap!important;
+    white-space:nowrap!important;
+  }
+  #discord-invite-card a{
+    padding:.46rem .78rem!important;
+    font-size:.72rem!important;
+    border-radius:5px!important;
+  }
+}
+
+@media(max-width:420px){
+  .work-grid{grid-auto-rows:128px!important;}
+  .serv-grid,.proc-steps{grid-template-columns:1fr!important;}
+  .disc-h{font-size:clamp(2.05rem,12vw,3.2rem)!important;}
+  #discord-invite-card{gap:.55rem!important;padding:.62rem .62rem!important;}
+  #discord-invite-card > div > div:first-child{font-size:.43rem!important;}
+  #discord-invite-card > div > div:nth-child(3){font-size:.52rem!important;gap:.28rem!important;}
+  #discord-invite-card a{padding:.42rem .62rem!important;font-size:.68rem!important;}
+}
+
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -3447,6 +3596,66 @@ body.hero-start-boost
   #cat-tabs .cat-tab{min-height:34px!important;padding:.52rem .72rem!important;font-size:.54rem!important}
   .mobile-work-count{font-size:.53rem!important}
 }
+
+
+/* ===================== LOCKED MOBILE FIX: SHORTER PORTFOLIO + PC-LIKE DISCORD CARD ===================== */
+/* This is intentionally placed at the very end so older mobile rules cannot wrap/bloat the invite card again. */
+@media(max-width:700px){
+  #work{padding:3.15rem .75rem 3.2rem!important;}
+  #work .con{width:100%!important;max-width:560px!important;margin:0 auto!important;}
+  .work-hdr{margin-bottom:1.15rem!important;align-items:center!important;text-align:center!important;justify-content:center!important;}
+  .work-hdr .sec-h2{margin-bottom:.25rem!important;}
+  .cat-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:.42rem!important;margin-bottom:1.05rem!important;}
+  .cat-tab{min-height:38px!important;border-radius:999px!important;font-size:.56rem!important;padding:.5rem .38rem!important;}
+  .work-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:118px!important;gap:6px!important;max-width:560px!important;margin:0 auto!important;}
+  .wc,.wc.shortform-card,.wc.tall,.wc.wide,.wc.motion-featured-card{grid-column:span 1!important;grid-row:span 1!important;border-radius:14px!important;}
+  .wc-overlay{opacity:0!important;}
+
+  #discord{min-height:auto!important;padding:2.15rem .75rem 2.65rem!important;text-align:center!important;}
+  #discord::before{opacity:.72!important;}
+  #discord .con{width:100%!important;max-width:560px!important;margin:0 auto!important;}
+  #discord .rv-scale{max-width:560px!important;width:100%!important;margin:0 auto!important;transform:none!important;}
+  #discord img[src="disc.png"]{width:52px!important;height:52px!important;margin:0 auto .85rem!important;}
+  #discord .sec-lbl{font-size:.46rem!important;letter-spacing:.16em!important;margin-bottom:.7rem!important;}
+  .disc-h{font-size:clamp(2.2rem,10.4vw,3.75rem)!important;line-height:.9!important;margin-bottom:.75rem!important;letter-spacing:-.055em!important;}
+  .disc-sub{max-width:330px!important;margin:0 auto 1.15rem!important;font-size:.8rem!important;line-height:1.5!important;}
+
+  #discord-invite-card{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:.62rem!important;
+    width:100%!important;
+    max-width:430px!important;
+    min-height:60px!important;
+    margin:0 auto!important;
+    padding:.62rem .68rem!important;
+    border-radius:8px!important;
+    text-align:left!important;
+    box-shadow:0 16px 42px rgba(0,0,0,.34)!important;
+    transform:none!important;
+  }
+  #discord-invite-card > img{width:34px!important;height:34px!important;flex:0 0 34px!important;}
+  #discord-invite-card > div{flex:1 1 auto!important;min-width:0!important;text-align:left!important;}
+  #discord-invite-card > div > div:first-child{font-size:.42rem!important;line-height:1.15!important;margin-bottom:.08rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  #discord-invite-card > div > div:nth-child(2){font-size:.76rem!important;line-height:1.12!important;margin-bottom:.14rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  #discord-invite-card > div > div:nth-child(3){display:flex!important;flex-wrap:nowrap!important;gap:.38rem!important;font-size:.5rem!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+  #discord-invite-card > div > div:nth-child(3) span{white-space:nowrap!important;}
+  #discord-invite-card a{width:auto!important;min-width:62px!important;flex:0 0 auto!important;text-align:center!important;border-radius:5px!important;padding:.45rem .72rem!important;font-size:.7rem!important;line-height:1!important;}
+}
+@media(max-width:390px){
+  .work-grid{grid-auto-rows:108px!important;}
+  .disc-h{font-size:clamp(2rem,11vw,3.25rem)!important;}
+  .disc-sub{font-size:.76rem!important;max-width:295px!important;}
+  #discord-invite-card{gap:.48rem!important;padding:.56rem!important;}
+  #discord-invite-card > img{width:31px!important;height:31px!important;flex-basis:31px!important;}
+  #discord-invite-card a{min-width:56px!important;padding:.42rem .62rem!important;font-size:.66rem!important;}
+  #discord-invite-card > div > div:first-child{font-size:.38rem!important;}
+  #discord-invite-card > div > div:nth-child(2){font-size:.7rem!important;}
+  #discord-invite-card > div > div:nth-child(3){font-size:.46rem!important;gap:.3rem!important;}
+}
 </style>
 
 </head>
@@ -4434,8 +4643,20 @@ function getVideoCandidates(src){
   }
   return [...new Set(candidates.filter(Boolean))];
 }
+function isMobilePortfolioView(){
+  return window.matchMedia && window.matchMedia('(max-width:700px)').matches;
+}
+function mobilePortfolioLimit(activeCat){
+  /* Reduces the AMOUNT of cards on phone, not video duration/loading time. */
+  const cat = activeCat || DEFAULT_WORK_CATEGORY || 'youtube';
+  if(!isMobilePortfolioView()) return Infinity;
+  if(cat === 'youtube') return 6;      // long-form row is the one that made mobile scrolling huge
+  if(cat === 'all') return 8;
+  if(cat === 'thumbnail') return 8;
+  return 6;
+}
 function renderWork(list, activeCat){
-  list=orderWorkList(list||[]);
+  list=orderWorkList(list||[]).slice(0, mobilePortfolioLimit(activeCat));
   const g=document.getElementById('work-grid');
   if(g) g.dataset.cat = activeCat || g.dataset.cat || DEFAULT_WORK_CATEGORY;
   g.innerHTML=list.map((w,i)=>{
@@ -4493,7 +4714,7 @@ function renderWork(list, activeCat){
 
 const DEFAULT_WORK_CATEGORY='youtube';
 function preloadCategoryAssets(cat){
-  const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0,24);
+  const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
   items.forEach((w,i)=>{
     const src=w.isPhoto?(w.img||''):(w.thumb||'');
     if(!src)return;
@@ -4516,6 +4737,7 @@ function filterWork(cat,el){
 preloadCategoryAssets('thumbnail');
 preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
+window.addEventListener('resize',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(()=>{const g=document.getElementById('work-grid');const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);},180)}})());
 
 /* ===== AUTO VIDEO THUMBNAILS FROM 2–5 SECONDS ===== */
 let thumbObserver=null;

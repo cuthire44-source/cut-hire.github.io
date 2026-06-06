@@ -2303,6 +2303,117 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   box-shadow:none !important;
 }
 
+
+/* ===================== MOBILE UI POLISH PATCH — PC-LIKE + LESS SCROLL ===================== */
+@media(max-width:900px){
+  .back-btn{
+    top:max(.85rem,env(safe-area-inset-top))!important;
+    left:.85rem!important;
+    padding:.56rem .95rem!important;
+    font-size:.58rem!important;
+  }
+  .join-hero{
+    min-height:auto!important;
+    padding:4.55rem 1rem .9rem!important;
+  }
+  .join-h1{
+    font-size:clamp(2.7rem,13vw,4.4rem)!important;
+    line-height:.88!important;
+    letter-spacing:-.05em!important;
+  }
+  .join-sub{
+    max-width:330px!important;
+    font-size:.72rem!important;
+    line-height:1.5!important;
+    margin-top:.9rem!important;
+    transform:none!important;
+  }
+  .divider{max-width:calc(100% - 2rem)!important;margin-top:.55rem!important;}
+  .join-content{
+    max-width:620px!important;
+    padding:1.1rem .8rem 2.8rem!important;
+  }
+  .paths{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:.75rem!important;
+    margin-bottom:1.6rem!important;
+  }
+  .path-card{
+    min-height:0!important;
+    border-radius:22px!important;
+    padding:1.05rem 1rem!important;
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    grid-template-areas:
+      "badge badge"
+      "title icon"
+      "video video"
+      "button button"!important;
+    align-items:center!important;
+    gap:.55rem .7rem!important;
+  }
+  .path-badge{
+    grid-area:badge!important;
+    margin-bottom:.1rem!important;
+    font-size:.48rem!important;
+    letter-spacing:.16em!important;
+    padding:.35rem .68rem!important;
+    border-radius:999px!important;
+  }
+  .path-icon{
+    grid-area:icon!important;
+    width:2rem!important;
+    height:2rem!important;
+    min-height:0!important;
+    margin:0!important;
+  }
+  .path-icon img{width:2rem!important;height:2rem!important;}
+  .path-card h2{
+    grid-area:title!important;
+    font-size:clamp(1.65rem,7.8vw,2.45rem)!important;
+    line-height:.96!important;
+    margin:0!important;
+    letter-spacing:-.035em!important;
+  }
+  .join-video-card{
+    grid-area:video!important;
+    margin:.1rem 0 .2rem!important;
+    aspect-ratio:16/8.2!important;
+    border-radius:16px!important;
+  }
+  .join-video-play{width:42px!important;height:42px!important;}
+  .join-video-play span{
+    border-top-width:8px!important;
+    border-bottom-width:8px!important;
+    border-left-width:12px!important;
+  }
+  .path-btn{
+    grid-area:button!important;
+    min-height:48px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:.82rem 1rem!important;
+    font-size:.8rem!important;
+    border-radius:999px!important;
+  }
+  .faq-section{
+    margin-top:1.5rem!important;
+    padding:0 .2rem!important;
+  }
+  .strip-label{font-size:.5rem!important;letter-spacing:.17em!important;margin-bottom:1rem!important;}
+  .faq-item{padding:.85rem 0!important;}
+  .faq-q{font-size:.9rem!important;line-height:1.25!important;}
+  .faq-a{font-size:.76rem!important;line-height:1.55!important;}
+}
+@media(max-width:430px){
+  .join-hero{padding-top:4.35rem!important;}
+  .join-content{padding-left:.72rem!important;padding-right:.72rem!important;}
+  .path-card{padding:.92rem .85rem!important;border-radius:20px!important;}
+  .path-card h2{font-size:1.78rem!important;}
+  .join-video-card{aspect-ratio:16/8.8!important;}
+}
+
 </style>
 
 <script>

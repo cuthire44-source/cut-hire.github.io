@@ -543,6 +543,13 @@ section{padding:6rem 2rem}
 .vp-wrap.bunny-active .vp-placeholder,
 .vp-wrap.bunny-active #vp-video{display:none!important}
 .vp-wrap.bunny-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
+.vp-wrap.youtube-active .vp-controls{display:none!important}
+.vp-wrap.youtube-active .vp-bigplay,
+.vp-wrap.youtube-active .vp-placeholder,
+.vp-wrap.youtube-active #vp-video{display:none!important}
+.vp-wrap.youtube-active .vp-bunny-iframe{display:block!important}
+.vp-wrap.youtube-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
+.vp-wrap.youtube-active .vp-screen.portrait{width:min(400px,50vh);aspect-ratio:9/16}
 .vp-wrap:fullscreen .vp-bunny-iframe,.vp-wrap.is-fullscreen .vp-bunny-iframe{display:block!important}
 .vp-bigplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s}
 .vp-bigplay.show{opacity:1}
@@ -4480,46 +4487,46 @@ const works=[
   {cat:['shorts'],title:'Short 11',src:'short11.mp4',thumb:'short11.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/729472bd-fa5e-49f1-a239-4eb415a7b26f/playlist.m3u8'},
 
   // Youtube Long Form / Explainer additions.
-  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6f4fdec8-9641-4637-9f45-f55923f419dd/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a3353ac2-bf59-46ea-a558-661811094ca1/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/000df819-896c-4124-9cc0-e434e574c930/playlist.m3u8'},
-  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,cleanTopIcon:true,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d9cc907a-96b7-4963-b9f4-c81ced78853f/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6f4fdec8-9641-4637-9f45-f55923f419dd/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a3353ac2-bf59-46ea-a558-661811094ca1/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/000df819-896c-4124-9cc0-e434e574c930/playlist.m3u8'},
+  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,cleanTopIcon:true,youtubeEmbed:'https://www.youtube.com/embed/j5hNlIsf1Uk?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/H9K8FMVV9Jw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d9cc907a-96b7-4963-b9f4-c81ced78853f/playlist.m3u8'},
   {cat:['vlogs'],title:'Football Edit 443',src:'Football Edit443.mp4',thumb:'Football Edit443.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/093a92f6-9ffa-4b5f-b9c1-d1caf5b6ebca/playlist.m3u8'},
-  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2699f3c4-5651-4500-bf1d-903b64a6b0f9/playlist.m3u8'},
+  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/wKNpTszi-fc?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2699f3c4-5651-4500-bf1d-903b64a6b0f9/playlist.m3u8'},
   {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6e4fcf8e-5a79-48dd-94a7-4b91a39e0585/playlist.m3u8'},
-  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5020cff4-0d5d-4065-8ced-70a56c26bec8/playlist.m3u8'},
+  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/s669PGbeb4k?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5020cff4-0d5d-4065-8ced-70a56c26bec8/playlist.m3u8'},
   {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/c2e1f59c-7418-40f9-a599-fe1a18f7befd/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2e5da4de-7438-4c0c-8fad-e9358d8c3e67/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e47e253e-878c-4cd5-9407-103fb227b6cb/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ea6e91ce-da0d-4e58-8dc4-89a0b066e30b/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/cdad4938-2920-4381-9656-46dc7089c791/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/AFtN7s0ECxg?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2e5da4de-7438-4c0c-8fad-e9358d8c3e67/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WFWDhwUFjIU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e47e253e-878c-4cd5-9407-103fb227b6cb/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/VsWTvf-oyyA?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ea6e91ce-da0d-4e58-8dc4-89a0b066e30b/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/cdad4938-2920-4381-9656-46dc7089c791/playlist.m3u8'},
   {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0b6ffca-b84e-4cbc-ade9-b94118829bd5/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1b2c4139-a02f-4cec-b13a-a552441842a4/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',thumb:'Longform39.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/aac3c7ff-5966-43b9-aac7-873b09f48542/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',thumb:'Longform58(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2bc846ea-97fd-4cbc-9a14-a50f56b1201d/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',thumb:'Longform23(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/92b392a7-08ae-4da2-a3f8-2125d0502e21/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e1a49eac-b392-4c77-a137-e6b0d5dd5dec/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',thumb:'Sequence 01 5.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a196e46a-2555-4078-888a-acf2a098708e/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1b2c4139-a02f-4cec-b13a-a552441842a4/playlist.m3u8'},
+  {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',thumb:'Longform39.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/OlGP_Mx3hiM?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/aac3c7ff-5966-43b9-aac7-873b09f48542/playlist.m3u8'},
+  {cat:['gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',thumb:'Longform58(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Yphs7QzS_UY?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2bc846ea-97fd-4cbc-9a14-a50f56b1201d/playlist.m3u8'},
+  {cat:['gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',thumb:'Longform23(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/tlmpnG7x_yE?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/92b392a7-08ae-4da2-a3f8-2125d0502e21/playlist.m3u8'},
+  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e1a49eac-b392-4c77-a137-e6b0d5dd5dec/playlist.m3u8'},
+  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a196e46a-2555-4078-888a-acf2a098708e/playlist.m3u8'},
   {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',thumb:'Sequence 01 6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a7298b48-5980-4b3e-a1e1-115b6c38e618/playlist.m3u8'},
 
   // Cleaned categories: gaming videos removed from Gaming, blue-X items removed from the requested tabs.
-  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'longform1.mp4',thumb:'longform1.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2d43bba7-2a1c-4777-b9f0-d12f90559062/playlist.m3u8'},
+  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'longform1.mp4',thumb:'longform1.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/gSeTOVGMLiU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2d43bba7-2a1c-4777-b9f0-d12f90559062/playlist.m3u8'},
   {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ab6491c9-c293-490e-b4b9-2768c1086c85/playlist.m3u8'},
   {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'longform3.mp4',thumb:'longform3.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0a07fb9-4932-43a0-a465-5c953ec1e9a9/playlist.m3u8'},
   {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6b66916e-be17-4c05-a70f-6d290cfe0117/playlist.m3u8'},
   {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'longform6.mp4',thumb:'longform6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/9f868843-2a13-468d-a5ae-b14cd4eb4ff0/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'longform7.mp4',thumb:'longform7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/597784c7-db9e-41a8-98c9-0da44ffa3989/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'longform7.mp4',thumb:'longform7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/XsQh6mlIaQE?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/597784c7-db9e-41a8-98c9-0da44ffa3989/playlist.m3u8'},
   {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/fa11c6f1-2a0b-4e44-a1e0-fdfb4dd32944/playlist.m3u8'},
   {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3855c353-a0e4-406b-8d17-4ac121daa8a2/playlist.m3u8'},
   {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/923e8efd-d776-47f0-af3a-6c937e6e2dd2/playlist.m3u8'},
   {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5b9eb7a4-4a25-49d8-96ff-b965b61393d6/playlist.m3u8'},
   {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/00dcdf86-790f-4488-af28-a5f4e3984df7/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/24e22be3-c8aa-412b-9bf1-b77ddb5b7051/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cfa2b2b-1b44-4fb0-918f-cc1e4c870979/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b53f7f4d-92b0-4647-aa7c-1c1151f0714c/playlist.m3u8'},
-  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/49fbba49-e017-4202-8c6d-5e9ff95b325e/playlist.m3u8'},
-  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4bf67918-b544-495e-b44d-6c5a0ec79e72/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/24e22be3-c8aa-412b-9bf1-b77ddb5b7051/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cfa2b2b-1b44-4fb0-918f-cc1e4c870979/playlist.m3u8'},
+  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b53f7f4d-92b0-4647-aa7c-1c1151f0714c/playlist.m3u8'},
+  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/49fbba49-e017-4202-8c6d-5e9ff95b325e/playlist.m3u8'},
+  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4bf67918-b544-495e-b44d-6c5a0ec79e72/playlist.m3u8'},
 
   // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
   {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
@@ -4702,6 +4709,7 @@ function renderWork(list, activeCat){
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
       if(w.isPhoto)photoOpen(w.img||'',w.title);
+      else if(w.youtubeEmbed) vpOpenYouTube(w.youtubeEmbed,w.title,isShortVideo(w),!!w.cleanTopIcon);
       else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
       else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
     });
@@ -4982,6 +4990,14 @@ function hardStopVideoPlayer(){
     }
   }catch(e){}
   try{
+    const embedFrame=document.getElementById('vp-bunny-iframe');
+    if(embedFrame){
+      embedFrame.removeAttribute('src');
+      embedFrame.style.display='none';
+    }
+    if(vpEl)vpEl.classList.remove('youtube-active','bunny-active');
+  }catch(e){}
+  try{
     if(video){
       video.pause();
       video.removeAttribute('src');
@@ -5019,6 +5035,27 @@ function unlockPageForVideo(){
   document.body.classList.remove('video-modal-locked');
   document.body.style.overflow='';
   requestAnimationFrame(function(){ window.scrollTo(0, window.__videoSavedScrollY || 0); });
+}
+
+function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
+  lockPageForVideo(); hardStopVideoPlayer();
+  document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
+  if(isPortrait){vpScreen.className='vp-screen portrait';vpControls.className='vp-controls portrait'}
+  else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
+  vpScreen.classList.toggle('clean-top-source-icon', !!cleanTopIcon);
+
+  const frame=document.getElementById('vp-bunny-iframe');
+  const cleanSrc=String(embedSrc||'').trim();
+  document.getElementById('vp-placeholder').style.display=cleanSrc?'none':'flex';
+  video.style.display='none';
+  if(frame){
+    frame.title=title || 'YouTube video';
+    frame.src=cleanSrc;
+    frame.style.display=cleanSrc?'block':'none';
+  }
+
+  vpEl.classList.add('open','youtube-active');
+  vpUpdatePlay(false);
 }
 
 function vpOpen(src,title,isPortrait,poster,cleanTopIcon){
@@ -5450,6 +5487,14 @@ ring.style.visibility = 'visible';
   window.hardStopVideoPlayer = function(){
     const els = getVideoEls();
     try{
+      const frame=document.getElementById('vp-bunny-iframe');
+      if(frame){
+        frame.removeAttribute('src');
+        frame.style.display='none';
+      }
+      if(els.wrap) els.wrap.classList.remove('youtube-active','bunny-active');
+    }catch(e){}
+    try{
       if(els.video){
         els.video.pause();
         els.video.removeAttribute('src');
@@ -5582,6 +5627,15 @@ ring.style.visibility = 'visible';
   };
 
   window.hardStopVideoPlayer = function(){
+    try{
+      const frame=document.getElementById('vp-bunny-iframe');
+      if(frame){
+        frame.removeAttribute('src');
+        frame.style.display='none';
+      }
+      const w = wrap();
+      if(w) w.classList.remove('youtube-active','bunny-active');
+    }catch(e){}
     try{
       const v = vid();
       if(v){

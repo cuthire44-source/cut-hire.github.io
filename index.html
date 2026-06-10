@@ -4468,15 +4468,16 @@ function primeImageFallback(img,src){
   img.src=cacheBustAsset(list[0]||src||'');
 }
 const works=[
-  // Motion Graphics first-row additions.
-  {cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
-
-{cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
+{cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
+{cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
+{cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
+{cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
 {cat:['documentary'],title:'Short 8',src:'Video 30.mp4',thumb:'short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
 {cat:['explainer'],title:'Short 10',src:'Video 34.mp4',thumb:'short10.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/rok-pcThmjs?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -4507,7 +4508,6 @@ const works=[
 {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Video 7.mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Video 2.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Video 29.mp4',thumb:'Sequence 01 6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/xsSBnoaRS4Q?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
 {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false},
 {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'Video 28.mp4',thumb:'longform3.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/kCodkI7Pyzg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false},
@@ -4521,8 +4521,6 @@ const works=[
 {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'Video 4.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['documentary','youtube'],title:'Documentary 3983',src:'Video 15.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['documentary','youtube'],title:'Documetary 6383',src:'Video 12.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
 {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
 {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
 {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},

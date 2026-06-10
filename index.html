@@ -4421,11 +4421,11 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
 
 /* ===== WORKS DATA ===== */
 
-THUMB_CACHE_VERSION='v=20260525d';
+THUMB_CACHE_VERSION='v=20260611a';
 function cacheBustAsset(src){
   if(!src)return src;
   const clean=String(src).trim();
-  if(clean==='Sequence 075.png')return 'Sequence 075.png?v=20260525d';
+  if(clean==='Sequence 075.png')return 'Sequence 075.png?v=20260611a';
   if(clean.startsWith('data:')||clean.startsWith('blob:')||clean.includes('?'))return clean;
   if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${THUMB_CACHE_VERSION}`;
   return clean;
@@ -4468,11 +4468,15 @@ function primeImageFallback(img,src){
   img.src=cacheBustAsset(list[0]||src||'');
 }
 const works=[
-{cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
 {cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
 {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
+{cat:['motion'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Video 19.mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Video 22.mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Video 21.mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -4497,10 +4501,6 @@ const works=[
 {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'Video 4.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['documentary','youtube'],title:'Documentary 3983',src:'Video 15.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['documentary','youtube'],title:'Documetary 6383',src:'Video 12.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
 {cat:['documentary'],title:'Short 8',src:'Video 30.mp4',thumb:'short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},

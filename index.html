@@ -5,10 +5,6 @@
 <meta name="google-site-verification" content="Bz43ZUbrjdEl9Tn69VxMuZ8uCnfwchOGkdHbGxgJrCk" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Cut & Hire</title>
-<!-- BUNNY_LIBRARY_ID: 676973 -->
-<!-- BUNNY_HLS_HOST: vz-093429d3-cc4.b-cdn.net -->
-<!-- SEARCH_MARKER: Bunny HLS playlist URLs are added directly inside the works[] objects. -->
-<!-- BUNNY_HLS_CUSTOM_PLAYER_ENABLED: Site video cards use Bunny HLS playlist URLs inside the custom Cut & Hire player. -->
 <meta name="description" content="Cut & Hire connects creators and brands with vetted video editors. YouTube videos, Shorts, ads, thumbnails and more. Join our Discord and start your project today.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preload" as="image" href="7xLgtMa0Xb5M3IAu.png" fetchpriority="high">
@@ -86,11 +82,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- V2: keeps all start/video thumbnails loading normally; optimizes only modal MP4 playback and hover previews. -->
-<link rel="preconnect" href="https://vz-093429d3-cc4.b-cdn.net" crossorigin>
-<link rel="dns-prefetch" href="//vz-093429d3-cc4.b-cdn.net">
+<!-- V3: video cards use local/GitHub MP4 filenames in the custom Cut & Hire player. Thumbnails and hover previews stay unchanged. -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 :root{
   --hero-reveal-delay:1.5s;
@@ -526,7 +519,7 @@ section{padding:6rem 2rem}
 .disc-h em{font-style:italic;color:var(--red)}
 .disc-sub{color:rgba(245,240,235,.68);max-width:460px;margin:0 auto 2.2rem;font-size:1.02rem;line-height:1.65}
 
-/* ===== VIDEO PLAYER ===== */
+/* ===== VIDEO / YOUTUBE PLAYER ===== */
 .vp-wrap{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
 .vp-wrap.open{opacity:1;pointer-events:all}
 .vp-wrap:fullscreen,.vp-wrap.is-fullscreen{opacity:1!important;pointer-events:all!important;background:#000;backdrop-filter:none;width:100vw;height:100vh;padding:0}
@@ -4058,7 +4051,7 @@ body.hero-start-boost
   <button class="vp-close" id="vp-close" type="button" onclick="vpClose(event)" aria-label="Close video">✕</button>
   <div class="vp-screen landscape" id="vp-screen">
     <video id="vp-video" preload="metadata" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
-    <iframe id="vp-bunny-iframe" class="vp-bunny-iframe" title="Bunny Stream video" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    <iframe id="vp-bunny-iframe" class="vp-bunny-iframe" title="Video player" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
     <div class="vp-placeholder" id="vp-placeholder">
       <img src="disc.png" alt=""><p>No preview available</p>
     </div>
@@ -4096,7 +4089,6 @@ body.hero-start-boost
 </div>
 
 <script>
-const BUNNY_CDN_HOST = 'vz-093429d3-cc4.b-cdn.net';
 var THUMB_CACHE_VERSION = 'v=20260525d';
 
 /* ===== REVIEWS PROOF WINDOW ===== */
@@ -4473,60 +4465,60 @@ function primeImageFallback(img,src){
 }
 const works=[
   // Shorts/Reels: removed old 1st + 3rd shorts, added short44.
-  {cat:['motion'],title:'Short 44',src:'short44.mp4',thumb:'short44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6be10a63-cc56-4747-8d16-78fc04de25ec/playlist.m3u8'},
-  {cat:['motion'],title:'Short 2',src:'short2.mp4',thumb:'short2.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0ef9d746-0faa-4e65-b659-a48af9a99b89/playlist.m3u8'},
-  {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cef9e28-b50b-4997-b93b-dfebef6c842b/playlist.m3u8'},
-  {cat:['motion'],title:'Short 7',src:'short7.mp4',thumb:'short7.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/57b7a287-a4e0-4ccc-a5f1-23201066d46a/playlist.m3u8'},
-  {cat:['documentary'],title:'Short 8',src:'short8.mp4',thumb:'short8.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0e68e315-c9d4-4ff1-8418-18298f0563cf/playlist.m3u8'},
-  {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a266fa0b-51e0-4948-945c-97fe2f69cc8d/playlist.m3u8'},
-  {cat:['explainer'],title:'Short 10',src:'short10.mp4',thumb:'short10.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/0f759218-6f05-480c-8abf-fc9d8a72740a/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 45',src:'short45.mp4',thumb:'short45.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/99392d2a-e51e-4316-a049-74e94772df8b/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 488',src:'short488.mp4',thumb:'short488.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2db2b00b-5186-4605-9367-494919af3ab1/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 82',src:'short82.mp4',thumb:'short82.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b1ed06af-627d-4701-a170-272320b58d09/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 849',src:'short849.mp4',thumb:'short849.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/06227b93-81e8-4532-bd0a-2efaf6f56b8b/playlist.m3u8'},
-  {cat:['shorts'],title:'Short 11',src:'short11.mp4',thumb:'short11.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/729472bd-fa5e-49f1-a239-4eb415a7b26f/playlist.m3u8'},
+  {cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
+  {cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['documentary'],title:'Short 8',src:'Video 30.mp4',thumb:'short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
+  {cat:['explainer'],title:'Short 10',src:'Video 34.mp4',thumb:'short10.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/rok-pcThmjs?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['shorts'],title:'Short 45',src:'Video 33.mp4',thumb:'short45.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Q5HkVgNNj9M?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['shorts'],title:'Short 488',src:'Video 37.mp4',thumb:'short488.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/YAiMD58FPbo?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['shorts'],title:'Short 82',src:'Video 40.mp4',thumb:'short82.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/txZZYitchUY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['shorts'],title:'Short 849',src:'Video 38.mp4',thumb:'short849.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/HhB8bHgFRHA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['shorts'],title:'Short 11',src:'Video 36.mp4',thumb:'short11.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MCzX0FOU9NM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 
   // Youtube Long Form / Explainer additions.
-  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Sequence 01(2).mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6f4fdec8-9641-4637-9f45-f55923f419dd/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Sequence 01 1(1).mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a3353ac2-bf59-46ea-a558-661811094ca1/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Longform37(1).mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/000df819-896c-4124-9cc0-e434e574c930/playlist.m3u8'},
-  {cat:['vlogs'],title:'Vlog 583',src:'vlog583.mp4',thumb:'vlog583.png',isPhoto:false,cleanTopIcon:true,youtubeEmbed:'https://www.youtube.com/embed/j5hNlIsf1Uk?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/615d4a81-8737-485e-9bc1-7e134a0a65ef/playlist.m3u8'},
-  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Cinematic Edit433.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/H9K8FMVV9Jw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/d9cc907a-96b7-4963-b9f4-c81ced78853f/playlist.m3u8'},
-  {cat:['vlogs'],title:'Football Edit 443',src:'Football Edit443.mp4',thumb:'Football Edit443.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/093a92f6-9ffa-4b5f-b9c1-d1caf5b6ebca/playlist.m3u8'},
-  {cat:['youtube','explainer'],title:'Sequence 075',src:'Sequence 075.mp4',thumb:'Sequence 075.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/wKNpTszi-fc?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2699f3c4-5651-4500-bf1d-903b64a6b0f9/playlist.m3u8'},
-  {cat:['explainer'],title:'Infromative 44',src:'infromative44.mp4',thumb:'infromative44.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6e4fcf8e-5a79-48dd-94a7-4b91a39e0585/playlist.m3u8'},
-  {cat:['explainer'],title:'Explanitory 484',src:'explanitory484.mp4',thumb:'explanitory484.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/s669PGbeb4k?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5020cff4-0d5d-4065-8ced-70a56c26bec8/playlist.m3u8'},
-  {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Sequence 01 2.mp4',thumb:'Sequence 01 2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/vq8-QPIXH90?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/c2e1f59c-7418-40f9-a599-fe1a18f7befd/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Lily Sample',src:'Lily Sample.Mp4.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/AFtN7s0ECxg?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2e5da4de-7438-4c0c-8fad-e9358d8c3e67/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'7xLgtMa0Xb5M3IAu.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WFWDhwUFjIU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e47e253e-878c-4cd5-9407-103fb227b6cb/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'ZR-sJOwRe2iWBSUF.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/VsWTvf-oyyA?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ea6e91ce-da0d-4e58-8dc4-89a0b066e30b/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Sequence 01 7(1).mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/cdad4938-2920-4381-9656-46dc7089c791/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'MInecraft LongForm.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0b6ffca-b84e-4cbc-ade9-b94118829bd5/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'MInecraft LongForm2.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1b2c4139-a02f-4cec-b13a-a552441842a4/playlist.m3u8'},
-  {cat:['youtube','gaming'],title:'Longform 39',src:'Longform39.mp4',thumb:'Longform39.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/OlGP_Mx3hiM?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/aac3c7ff-5966-43b9-aac7-873b09f48542/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 58 (1)',src:'Longform58(1).mp4',thumb:'Longform58(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Yphs7QzS_UY?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2bc846ea-97fd-4cbc-9a14-a50f56b1201d/playlist.m3u8'},
-  {cat:['gaming'],title:'Longform 23 (1)',src:'Longform23(1).mp4',thumb:'Longform23(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/tlmpnG7x_yE?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/92b392a7-08ae-4da2-a3f8-2125d0502e21/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Sequence 01 4(1).mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e1a49eac-b392-4c77-a137-e6b0d5dd5dec/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Sequence 01 5.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a196e46a-2555-4078-888a-acf2a098708e/playlist.m3u8'},
-  {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Sequence 01 6.mp4',thumb:'Sequence 01 6.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/a7298b48-5980-4b3e-a1e1-115b6c38e618/playlist.m3u8'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Video 19.mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Video 22.mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Video 21.mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['vlogs'],title:'Vlog 583',src:'Video 14.mp4',thumb:'vlog583.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/j5hNlIsf1Uk?autoplay=1&rel=0&playsinline=1&modestbranding=1',cleanTopIcon:true},
+  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Video 5.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/H9K8FMVV9Jw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['vlogs'],title:'Football Edit 443',src:'Video 41.mp4',thumb:'Football Edit443.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_skf6972O2I?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','explainer'],title:'Sequence 075',src:'Video 6.mp4',thumb:'Sequence 075.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/wKNpTszi-fc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['explainer'],title:'Infromative 44',src:'Video 32.mp4',thumb:'infromative44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/5sv3G6elUP4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['explainer'],title:'Explanitory 484',src:'Video 8.mp4',thumb:'explanitory484.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/s669PGbeb4k?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Video 27.mp4',thumb:'Sequence 01 2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/vq8-QPIXH90?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'Lily Sample',src:'Video 10.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/AFtN7s0ECxg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'Video 11.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WFWDhwUFjIU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'Video 9.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/VsWTvf-oyyA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Video 25.mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'Video 17.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/SeYpdqFks40?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'Video 13.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','gaming'],title:'Longform 39',src:'Video 20.mp4',thumb:'Longform39.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/OlGP_Mx3hiM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['gaming'],title:'Longform 58 (1)',src:'Video 24.mp4',thumb:'Longform58(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Yphs7QzS_UY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['gaming'],title:'Longform 23 (1)',src:'Video 23.mp4',thumb:'Longform23(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/tlmpnG7x_yE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Video 7.mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Video 2.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Video 29.mp4',thumb:'Sequence 01 6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/xsSBnoaRS4Q?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 
   // Cleaned categories: gaming videos removed from Gaming, blue-X items removed from the requested tabs.
-  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'longform1.mp4',thumb:'longform1.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/gSeTOVGMLiU?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/2d43bba7-2a1c-4777-b9f0-d12f90559062/playlist.m3u8'},
-  {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/ab6491c9-c293-490e-b4b9-2768c1086c85/playlist.m3u8'},
-  {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'longform3.mp4',thumb:'longform3.png',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/e0a07fb9-4932-43a0-a465-5c953ec1e9a9/playlist.m3u8'},
-  {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/6b66916e-be17-4c05-a70f-6d290cfe0117/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'longform6.mp4',thumb:'longform6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WCCoity0cDM?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/9f868843-2a13-468d-a5ae-b14cd4eb4ff0/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'longform7.mp4',thumb:'longform7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/XsQh6mlIaQE?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/597784c7-db9e-41a8-98c9-0da44ffa3989/playlist.m3u8'},
-  {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/fa11c6f1-2a0b-4e44-a1e0-fdfb4dd32944/playlist.m3u8'},
-  {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/3855c353-a0e4-406b-8d17-4ac121daa8a2/playlist.m3u8'},
-  {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/923e8efd-d776-47f0-af3a-6c937e6e2dd2/playlist.m3u8'},
-  {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/5b9eb7a4-4a25-49d8-96ff-b965b61393d6/playlist.m3u8'},
-  {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false,bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/00dcdf86-790f-4488-af28-a5f4e3984df7/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'longform13.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/24e22be3-c8aa-412b-9bf1-b77ddb5b7051/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documentary 3983',src:'documentary3983.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/1cfa2b2b-1b44-4fb0-918f-cc1e4c870979/playlist.m3u8'},
-  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Documetary6383.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/b53f7f4d-92b0-4647-aa7c-1c1151f0714c/playlist.m3u8'},
-  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'motion graphics92.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/49fbba49-e017-4202-8c6d-5e9ff95b325e/playlist.m3u8'},
-  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'motion-graphics/YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,featured:true,autoplayPreview:true,previewStart:2,previewEnd:5,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',bunnyHls:'https://vz-093429d3-cc4.b-cdn.net/4bf67918-b544-495e-b44d-6c5a0ec79e72/playlist.m3u8'},
+  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'longform1.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/gSeTOVGMLiU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false},
+  {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'Video 28.mp4',thumb:'longform3.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/kCodkI7Pyzg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false},
+  {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'Video 26.mp4',thumb:'longform6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WCCoity0cDM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'Video 1.mp4',thumb:'longform7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/XsQh6mlIaQE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false},
+  {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false},
+  {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false},
+  {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
+  {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
+  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'Video 4.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['documentary','youtube'],title:'Documentary 3983',src:'Video 15.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Video 12.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
 
   // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
   {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
@@ -4708,9 +4700,8 @@ function renderWork(list, activeCat){
   g.querySelectorAll('.wc').forEach(card=>{
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
-      if(w.isPhoto)photoOpen(w.img||'',w.title);
+      if(w.isPhoto) photoOpen(w.img||'',w.title);
       else if(w.youtubeEmbed) vpOpenYouTube(w.youtubeEmbed,w.title,isShortVideo(w),!!w.cleanTopIcon);
-      else if(w.bunnyHls) vpOpen(w.bunnyHls,w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
       else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
     });
   });

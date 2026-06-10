@@ -82,7 +82,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- V3: video cards use local/GitHub MP4 filenames in the custom Cut & Hire player. Thumbnails and hover previews stay unchanged. -->
+<!-- V4: video cards use YouTube embeds on click and local/GitHub MP4 files for hover previews. -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
 :root{
@@ -529,21 +529,21 @@ section{padding:6rem 2rem}
 .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
 .vp-wrap:fullscreen .vp-screen.landscape,.vp-wrap.is-fullscreen .vp-screen.landscape{width:100vw;height:calc(100vh - 74px);max-height:none;aspect-ratio:auto}
 .vp-screen video{width:100%;height:100%;object-fit:contain;display:block}
-.vp-screen.bunny-mode{background:#000}
-.vp-bunny-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#000}
-.vp-wrap.bunny-active .vp-controls{display:none!important}
-.vp-wrap.bunny-active .vp-bigplay,
-.vp-wrap.bunny-active .vp-placeholder,
-.vp-wrap.bunny-active #vp-video{display:none!important}
-.vp-wrap.bunny-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
+.vp-screen.embed-mode{background:#000}
+.vp-embed-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#000}
+.vp-wrap.embed-active .vp-controls{display:none!important}
+.vp-wrap.embed-active .vp-bigplay,
+.vp-wrap.embed-active .vp-placeholder,
+.vp-wrap.embed-active #vp-video{display:none!important}
+.vp-wrap.embed-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
 .vp-wrap.youtube-active .vp-controls{display:none!important}
 .vp-wrap.youtube-active .vp-bigplay,
 .vp-wrap.youtube-active .vp-placeholder,
 .vp-wrap.youtube-active #vp-video{display:none!important}
-.vp-wrap.youtube-active .vp-bunny-iframe{display:block!important}
+.vp-wrap.youtube-active .vp-embed-iframe{display:block!important}
 .vp-wrap.youtube-active .vp-screen.landscape{width:min(900px,92vw);aspect-ratio:16/9}
 .vp-wrap.youtube-active .vp-screen.portrait{width:min(400px,50vh);aspect-ratio:9/16}
-.vp-wrap:fullscreen .vp-bunny-iframe,.vp-wrap.is-fullscreen .vp-bunny-iframe{display:block!important}
+.vp-wrap:fullscreen .vp-embed-iframe,.vp-wrap.is-fullscreen .vp-embed-iframe{display:block!important}
 .vp-bigplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s}
 .vp-bigplay.show{opacity:1}
 .vp-bigplay::before{content:'';position:absolute;width:96px;height:96px;border-radius:50%;background:rgba(224,32,32,.38);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);box-shadow:0 0 34px rgba(224,32,32,.55);animation:bpc .35s cubic-bezier(.34,1.56,.64,1)}
@@ -4051,7 +4051,7 @@ body.hero-start-boost
   <button class="vp-close" id="vp-close" type="button" onclick="vpClose(event)" aria-label="Close video">✕</button>
   <div class="vp-screen landscape" id="vp-screen">
     <video id="vp-video" preload="metadata" controlsList="nodownload noplaybackrate" disablepictureinpicture></video>
-    <iframe id="vp-bunny-iframe" class="vp-bunny-iframe" title="Video player" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    <iframe id="vp-embed-iframe" class="vp-embed-iframe" title="Video player" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
     <div class="vp-placeholder" id="vp-placeholder">
       <img src="disc.png" alt=""><p>No preview available</p>
     </div>
@@ -4981,12 +4981,12 @@ function hardStopVideoPlayer(){
     }
   }catch(e){}
   try{
-    const embedFrame=document.getElementById('vp-bunny-iframe');
+    const embedFrame=document.getElementById('vp-embed-iframe');
     if(embedFrame){
       embedFrame.removeAttribute('src');
       embedFrame.style.display='none';
     }
-    if(vpEl)vpEl.classList.remove('youtube-active','bunny-active');
+    if(vpEl)vpEl.classList.remove('youtube-active','embed-active');
   }catch(e){}
   try{
     if(video){
@@ -5035,7 +5035,7 @@ function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
   else{vpScreen.className='vp-screen landscape';vpControls.className='vp-controls landscape'}
   vpScreen.classList.toggle('clean-top-source-icon', !!cleanTopIcon);
 
-  const frame=document.getElementById('vp-bunny-iframe');
+  const frame=document.getElementById('vp-embed-iframe');
   const cleanSrc=String(embedSrc||'').trim();
   document.getElementById('vp-placeholder').style.display=cleanSrc?'none':'flex';
   video.style.display='none';
@@ -5478,12 +5478,12 @@ ring.style.visibility = 'visible';
   window.hardStopVideoPlayer = function(){
     const els = getVideoEls();
     try{
-      const frame=document.getElementById('vp-bunny-iframe');
+      const frame=document.getElementById('vp-embed-iframe');
       if(frame){
         frame.removeAttribute('src');
         frame.style.display='none';
       }
-      if(els.wrap) els.wrap.classList.remove('youtube-active','bunny-active');
+      if(els.wrap) els.wrap.classList.remove('youtube-active','embed-active');
     }catch(e){}
     try{
       if(els.video){
@@ -5619,13 +5619,13 @@ ring.style.visibility = 'visible';
 
   window.hardStopVideoPlayer = function(){
     try{
-      const frame=document.getElementById('vp-bunny-iframe');
+      const frame=document.getElementById('vp-embed-iframe');
       if(frame){
         frame.removeAttribute('src');
         frame.style.display='none';
       }
       const w = wrap();
-      if(w) w.classList.remove('youtube-active','bunny-active');
+      if(w) w.classList.remove('youtube-active','embed-active');
     }catch(e){}
     try{
       const v = vid();

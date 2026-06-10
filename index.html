@@ -47,6 +47,10 @@
 <link rel="preload" as="image" href="short82.png" fetchpriority="high">
 <link rel="preload" as="image" href="short849.png" fetchpriority="high">
 <link rel="preload" as="image" href="motion graphics92.png" fetchpriority="high">
+<link rel="preload" as="image" href="supreme.png" fetchpriority="high">
+<link rel="preload" as="image" href="Video42.png" fetchpriority="high">
+<link rel="preload" as="image" href="Video43.png" fetchpriority="high">
+<link rel="preload" as="image" href="formula21speed.png" fetchpriority="high">
 <link rel="preload" as="image" href="Cinematic Edit433.png" fetchpriority="high">
 <link rel="preload" as="image" href="Football Edit443.png" fetchpriority="high">
 <link rel="preload" as="image" href="motion graphics92.png" fetchpriority="high">
@@ -4464,78 +4468,76 @@ function primeImageFallback(img,src){
   img.src=cacheBustAsset(list[0]||src||'');
 }
 const works=[
-  // Shorts/Reels: removed old 1st + 3rd shorts, added short44.
-  {cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
-  {cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['documentary'],title:'Short 8',src:'Video 30.mp4',thumb:'short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
-  {cat:['explainer'],title:'Short 10',src:'Video 34.mp4',thumb:'short10.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/rok-pcThmjs?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['shorts'],title:'Short 45',src:'Video 33.mp4',thumb:'short45.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Q5HkVgNNj9M?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['shorts'],title:'Short 488',src:'Video 37.mp4',thumb:'short488.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/YAiMD58FPbo?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['shorts'],title:'Short 82',src:'Video 40.mp4',thumb:'short82.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/txZZYitchUY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['shorts'],title:'Short 849',src:'Video 38.mp4',thumb:'short849.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/HhB8bHgFRHA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['shorts'],title:'Short 11',src:'Video 36.mp4',thumb:'short11.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MCzX0FOU9NM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  // Motion Graphics first-row additions.
+  {cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+  {cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
 
-  // Youtube Long Form / Explainer additions.
-  {cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Video 19.mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Video 22.mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Video 21.mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['vlogs'],title:'Vlog 583',src:'Video 14.mp4',thumb:'vlog583.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/j5hNlIsf1Uk?autoplay=1&rel=0&playsinline=1&modestbranding=1',cleanTopIcon:true},
-  {cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Video 5.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/H9K8FMVV9Jw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['vlogs'],title:'Football Edit 443',src:'Video 41.mp4',thumb:'Football Edit443.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_skf6972O2I?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','explainer'],title:'Sequence 075',src:'Video 6.mp4',thumb:'Sequence 075.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/wKNpTszi-fc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['explainer'],title:'Infromative 44',src:'Video 32.mp4',thumb:'infromative44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/5sv3G6elUP4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['explainer'],title:'Explanitory 484',src:'Video 8.mp4',thumb:'explanitory484.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/s669PGbeb4k?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','explainer'],title:'Sequence 01 2',src:'Video 27.mp4',thumb:'Sequence 01 2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/vq8-QPIXH90?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'Lily Sample',src:'Video 10.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/AFtN7s0ECxg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'Video 11.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WFWDhwUFjIU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'Video 9.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/VsWTvf-oyyA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Video 25.mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'Video 17.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/SeYpdqFks40?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'Video 13.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','gaming'],title:'Longform 39',src:'Video 20.mp4',thumb:'Longform39.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/OlGP_Mx3hiM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['gaming'],title:'Longform 58 (1)',src:'Video 24.mp4',thumb:'Longform58(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Yphs7QzS_UY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['gaming'],title:'Longform 23 (1)',src:'Video 23.mp4',thumb:'Longform23(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/tlmpnG7x_yE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Video 7.mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Video 2.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Video 29.mp4',thumb:'Sequence 01 6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/xsSBnoaRS4Q?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-
-  // Cleaned categories: gaming videos removed from Gaming, blue-X items removed from the requested tabs.
-  {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'longform1.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/gSeTOVGMLiU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false},
-  {cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'Video 28.mp4',thumb:'longform3.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/kCodkI7Pyzg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false},
-  {cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'Video 26.mp4',thumb:'longform6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WCCoity0cDM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'Video 1.mp4',thumb:'longform7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/XsQh6mlIaQE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false},
-  {cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false},
-  {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false},
-  {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
-  {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
-  {cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'Video 4.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['documentary','youtube'],title:'Documentary 3983',src:'Video 15.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['documentary','youtube'],title:'Documetary 6383',src:'Video 12.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-  {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
-
-  // Thumbnails: Thumbnail 14 uses the uploaded 3(3).webp image.
-  {cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'portfolio-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'portfolio-thumbnails/5.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'portfolio-thumbnails/image.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 7',src:'',isPhoto:true,img:'portfolio-thumbnails/bvcvcbvcbvcb43541.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 8',src:'',isPhoto:true,img:'portfolio-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 9',src:'',isPhoto:true,img:'portfolio-thumbnails/Illustrator_vid.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 10',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_4.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 11',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 12',src:'',isPhoto:true,img:'portfolio-thumbnails/thumnbail_by_lokesh_2.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 13',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_1_.webp'},
-  {cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'portfolio-thumbnails/3(3).webp'},
-  {cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp'}
+{cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
+{cat:['motion'],title:'Short 7',src:'Video 31.mp4',thumb:'short7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/bEn6rmsAkIA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['documentary'],title:'Short 8',src:'Video 30.mp4',thumb:'short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
+{cat:['explainer'],title:'Short 10',src:'Video 34.mp4',thumb:'short10.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/rok-pcThmjs?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short 45',src:'Video 33.mp4',thumb:'short45.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Q5HkVgNNj9M?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short 488',src:'Video 37.mp4',thumb:'short488.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/YAiMD58FPbo?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short 82',src:'Video 40.mp4',thumb:'short82.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/txZZYitchUY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short 849',src:'Video 38.mp4',thumb:'short849.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/HhB8bHgFRHA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short 11',src:'Video 36.mp4',thumb:'short11.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MCzX0FOU9NM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','vlogs'],title:'Sequence 01 (2)',src:'Video 19.mp4',thumb:'Sequence 01(2).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/TlzMIK30Yok?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','vlogs'],title:'Sequence 01 1 (1)',src:'Video 22.mp4',thumb:'Sequence 01 1(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/J31L1G4av2E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','vlogs'],title:'Longform 37 (1)',src:'Video 21.mp4',thumb:'Longform37(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/3AuPJd4jNYU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['vlogs'],title:'Vlog 583',src:'Video 14.mp4',thumb:'vlog583.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/j5hNlIsf1Uk?autoplay=1&rel=0&playsinline=1&modestbranding=1',cleanTopIcon:true},
+{cat:['youtube','vlogs'],title:'Cinematic Edit 433',src:'Video 5.mp4',thumb:'Cinematic Edit433.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/H9K8FMVV9Jw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['vlogs'],title:'Football Edit 443',src:'Video 41.mp4',thumb:'Football Edit443.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_skf6972O2I?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','explainer'],title:'Sequence 075',src:'Video 6.mp4',thumb:'Sequence 075.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/wKNpTszi-fc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['explainer'],title:'Infromative 44',src:'Video 32.mp4',thumb:'infromative44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/5sv3G6elUP4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['explainer'],title:'Explanitory 484',src:'Video 8.mp4',thumb:'explanitory484.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/s669PGbeb4k?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','explainer'],title:'Sequence 01 2',src:'Video 27.mp4',thumb:'Sequence 01 2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/vq8-QPIXH90?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'Lily Sample',src:'Video 10.mp4',thumb:'Lily Sample.Mp4.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/AFtN7s0ECxg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'7xLgtMa0Xb5M3IAu',src:'Video 11.mp4',thumb:'7xLgtMa0Xb5M3IAu.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WFWDhwUFjIU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'ZR-sJOwRe2iWBSUF',src:'Video 9.mp4',thumb:'ZR-sJOwRe2iWBSUF.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/VsWTvf-oyyA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Video 25.mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'Minecraft LongForm',src:'Video 17.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/SeYpdqFks40?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'Video 13.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','gaming'],title:'Longform 39',src:'Video 20.mp4',thumb:'Longform39.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/OlGP_Mx3hiM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['gaming'],title:'Longform 58 (1)',src:'Video 24.mp4',thumb:'Longform58(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Yphs7QzS_UY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['gaming'],title:'Longform 23 (1)',src:'Video 23.mp4',thumb:'Longform23(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/tlmpnG7x_yE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Video 7.mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','documentary'],title:'Sequence 01 5',src:'Video 2.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['youtube','documentary'],title:'Sequence 01 6',src:'Video 29.mp4',thumb:'Sequence 01 6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/xsSBnoaRS4Q?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
+{cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false},
+{cat:['explainer','youtube'],title:'Long Form 3',size:'',src:'Video 28.mp4',thumb:'longform3.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/kCodkI7Pyzg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false},
+{cat:['documentary','youtube'],title:'Long Form 6',size:'',src:'Video 26.mp4',thumb:'longform6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WCCoity0cDM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['documentary','youtube'],title:'Long Form 7',size:'',src:'Video 1.mp4',thumb:'longform7.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/XsQh6mlIaQE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:[],title:'Long Form 8',size:'tall',src:'longform8.mp4',isPhoto:false},
+{cat:[],title:'Long Form 9',size:'',src:'longform9.mp4',isPhoto:false},
+{cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false},
+{cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
+{cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
+{cat:['documentary','youtube'],title:'Long Form 13',size:'',src:'Video 4.mp4',thumb:'longform13.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/i_b1kG59y4A?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['documentary','youtube'],title:'Documentary 3983',src:'Video 15.mp4',thumb:'documentary3983.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/8xrxi2kDvGI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['documentary','youtube'],title:'Documetary 6383',src:'Video 12.mp4',thumb:'documetary6383.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/-TsYumZBUfg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
+{cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'portfolio-thumbnails/8.webp'},
+{cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
+{cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
+{cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'portfolio-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp'},
+{cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'portfolio-thumbnails/5.webp'},
+{cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'portfolio-thumbnails/image.webp'},
+{cat:['thumbnail'],title:'Thumbnail 7',src:'',isPhoto:true,img:'portfolio-thumbnails/bvcvcbvcbvcb43541.webp'},
+{cat:['thumbnail'],title:'Thumbnail 8',src:'',isPhoto:true,img:'portfolio-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp'},
+{cat:['thumbnail'],title:'Thumbnail 9',src:'',isPhoto:true,img:'portfolio-thumbnails/Illustrator_vid.webp'},
+{cat:['thumbnail'],title:'Thumbnail 10',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_4.webp'},
+{cat:['thumbnail'],title:'Thumbnail 11',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp'},
+{cat:['thumbnail'],title:'Thumbnail 12',src:'',isPhoto:true,img:'portfolio-thumbnails/thumnbail_by_lokesh_2.webp'},
+{cat:['thumbnail'],title:'Thumbnail 13',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_1_.webp'},
+{cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'portfolio-thumbnails/3(3).webp'},
+{cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp'}
 ];
 
 
@@ -4592,10 +4594,10 @@ function isShortVideo(w){
   const cats=getCats(w||{});
   const portraitThumbs=new Set([
     'short8.png','short7.png','infromative44.png','short45.png','short10.png','short44.png',
-    'short11.png','short488.png','short849.png','short2.png','short82.png','Football Edit443.png'
+    'short11.png','short488.png','short849.png','short2.png','short82.png'
   ]);
   return /^short\d+\.mp4$/i.test(src)
-    || /^Video\s*(3[0-9]|4[0-1])\.mp4$/i.test(src)
+    || /^Video\s*(3[0-9]|40)\.mp4$/i.test(src)
     || cats.includes('shorts')
     || /short/i.test(title)
     || portraitThumbs.has(thumb);

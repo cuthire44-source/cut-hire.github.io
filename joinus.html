@@ -171,6 +171,15 @@ img[src="film-reel.png"]{
 }
 
 
+
+/* Outsourcer badge icon: people/talking icon fits outsourcing better than film reel */
+.path-badge.cl img[src="friend.png"]{
+  width:.92rem;
+  height:.92rem;
+  object-fit:contain;
+  transform:none !important;
+}
+
 .path-card:hover .path-icon{transform:scale(1.12) rotate(-4deg)}
 
 .path-card h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
@@ -2303,6 +2312,117 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   box-shadow:none !important;
 }
 
+
+/* ===================== MOBILE UI POLISH PATCH — PC-LIKE + LESS SCROLL ===================== */
+@media(max-width:900px){
+  .back-btn{
+    top:max(.85rem,env(safe-area-inset-top))!important;
+    left:.85rem!important;
+    padding:.56rem .95rem!important;
+    font-size:.58rem!important;
+  }
+  .join-hero{
+    min-height:auto!important;
+    padding:4.55rem 1rem .9rem!important;
+  }
+  .join-h1{
+    font-size:clamp(2.7rem,13vw,4.4rem)!important;
+    line-height:.88!important;
+    letter-spacing:-.05em!important;
+  }
+  .join-sub{
+    max-width:330px!important;
+    font-size:.72rem!important;
+    line-height:1.5!important;
+    margin-top:.9rem!important;
+    transform:none!important;
+  }
+  .divider{max-width:calc(100% - 2rem)!important;margin-top:.55rem!important;}
+  .join-content{
+    max-width:620px!important;
+    padding:1.1rem .8rem 2.8rem!important;
+  }
+  .paths{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:.75rem!important;
+    margin-bottom:1.6rem!important;
+  }
+  .path-card{
+    min-height:0!important;
+    border-radius:22px!important;
+    padding:1.05rem 1rem!important;
+    display:grid!important;
+    grid-template-columns:1fr auto!important;
+    grid-template-areas:
+      "badge badge"
+      "title icon"
+      "video video"
+      "button button"!important;
+    align-items:center!important;
+    gap:.55rem .7rem!important;
+  }
+  .path-badge{
+    grid-area:badge!important;
+    margin-bottom:.1rem!important;
+    font-size:.48rem!important;
+    letter-spacing:.16em!important;
+    padding:.35rem .68rem!important;
+    border-radius:999px!important;
+  }
+  .path-icon{
+    grid-area:icon!important;
+    width:2rem!important;
+    height:2rem!important;
+    min-height:0!important;
+    margin:0!important;
+  }
+  .path-icon img{width:2rem!important;height:2rem!important;}
+  .path-card h2{
+    grid-area:title!important;
+    font-size:clamp(1.65rem,7.8vw,2.45rem)!important;
+    line-height:.96!important;
+    margin:0!important;
+    letter-spacing:-.035em!important;
+  }
+  .join-video-card{
+    grid-area:video!important;
+    margin:.1rem 0 .2rem!important;
+    aspect-ratio:16/8.2!important;
+    border-radius:16px!important;
+  }
+  .join-video-play{width:42px!important;height:42px!important;}
+  .join-video-play span{
+    border-top-width:8px!important;
+    border-bottom-width:8px!important;
+    border-left-width:12px!important;
+  }
+  .path-btn{
+    grid-area:button!important;
+    min-height:48px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:.82rem 1rem!important;
+    font-size:.8rem!important;
+    border-radius:999px!important;
+  }
+  .faq-section{
+    margin-top:1.5rem!important;
+    padding:0 .2rem!important;
+  }
+  .strip-label{font-size:.5rem!important;letter-spacing:.17em!important;margin-bottom:1rem!important;}
+  .faq-item{padding:.85rem 0!important;}
+  .faq-q{font-size:.9rem!important;line-height:1.25!important;}
+  .faq-a{font-size:.76rem!important;line-height:1.55!important;}
+}
+@media(max-width:430px){
+  .join-hero{padding-top:4.35rem!important;}
+  .join-content{padding-left:.72rem!important;padding-right:.72rem!important;}
+  .path-card{padding:.92rem .85rem!important;border-radius:20px!important;}
+  .path-card h2{font-size:1.78rem!important;}
+  .join-video-card{aspect-ratio:16/8.8!important;}
+}
+
 </style>
 
 <script>
@@ -2346,9 +2466,9 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
   <div class="paths" id="paths">
     <!-- CLIENT CARD -->
     <div class="path-card client">
-      <div class="path-badge cl"><img class="icon-img badge-icon" src="film-reel.png" alt=""> For Clients</div>
+      <div class="path-badge cl"><img class="icon-img badge-icon" src="friend.png" alt="Outsourcing people icon"> For Outsourcers</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
-      <h2>Outsource to Our <em>Editors</em></h2>
+      <h2>Want to make <em>money?</em></h2>
       <div class="join-video-card client-video-card" data-video-src="Full Video With Music.mp4" data-video-poster="videojoinus21.png" role="button" tabindex="0" aria-label="Play client/outsourcer video">
         <video class="join-video-preview" src="Full Video With Music.mp4" preload="none" muted playsinline poster="videojoinus21.png"></video>
         <div class="join-video-shade"></div>
@@ -2359,7 +2479,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Apply as Outsourcer</span>
+      <span>Apply as an Outsourcer</span>
     </a>
     </div>
 
@@ -2367,7 +2487,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
     <div class="path-card editor">
       <div class="path-badge ed"><img class="icon-img badge-icon" src="scissors.png" alt=""> For Editors/Designers</div>
       <span class="path-icon"><img src="film-reel.png" alt=""></span>
-      <h2>Apply as an <em>Editor/Designer</em></h2>
+      <h2>Ready to <em>land real clients?</em></h2>
       <div class="join-video-card editor-video-card is-placeholder" data-video-src="" data-video-poster="" data-placeholder="true" role="button" tabindex="0" aria-label="Open editor/designer video placeholder">
         <video class="join-video-preview" preload="none" muted playsinline></video>
         <div class="join-video-shade"></div>
@@ -2378,7 +2498,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
-      <span>Apply as Editor/Designer</span>
+      <span>Apply as an Editor/Designer</span>
     </a>
     </div>
   </div>
@@ -2686,6 +2806,27 @@ function toggleFaq(el){
     wrap.classList.toggle('is-fullscreen',isFS());
     update();
   }));
+})();
+
+
+/* Text safety patch: keeps requested wording if older cached/dynamic text appears. */
+(function(){
+  function fixRequestedText(){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    var node;
+    while((node=walker.nextNode())){
+      node.nodeValue=node.nodeValue
+        .replace(/For Clients/g,'For Outsourcers')
+        .replace(/Ready to Get Real Clients\?/g,'Ready to land real clients?')
+        .replace(/Ready to get Real Clients\?/g,'Ready to land real clients?')
+        .replace(/Need an Editor\?/g,'Ready to land real clients?');
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',fixRequestedText);
+  }else{
+    fixRequestedText();
+  }
 })();
 </script>
 

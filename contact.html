@@ -688,6 +688,93 @@ body::before{
   opacity:.34 !important;
 }
 
+
+/* ===================== MOBILE UI POLISH PATCH — PC-LIKE + LESS SCROLL ===================== */
+@media(max-width:760px){
+  .back-btn{
+    top:max(.85rem,env(safe-area-inset-top))!important;
+    left:.85rem!important;
+    padding:.56rem .95rem!important;
+    font-size:.58rem!important;
+  }
+  .contact-stage{
+    min-height:100svh!important;
+    justify-content:center!important;
+    padding:4.8rem .85rem 2rem!important;
+  }
+  .contact-hero{
+    padding:0 .2rem 1.35rem!important;
+  }
+  .contact-h1{
+    font-size:clamp(2.8rem,13.5vw,4.4rem)!important;
+    line-height:.88!important;
+    letter-spacing:-.055em!important;
+  }
+  .contact-sub{
+    max-width:330px!important;
+    margin-top:.9rem!important;
+    font-size:.78rem!important;
+    line-height:1.55!important;
+  }
+  .contact-content{
+    max-width:560px!important;
+    padding:0!important;
+  }
+  .contact-methods{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:.65rem!important;
+  }
+  .contact-card{
+    border-radius:20px!important;
+    padding:1rem 1rem!important;
+    display:grid!important;
+    grid-template-columns:42px 1fr!important;
+    grid-template-areas:
+      "icon label"
+      "icon title"
+      "icon value"!important;
+    column-gap:.85rem!important;
+    align-items:center!important;
+  }
+  .cc-icon{
+    grid-area:icon!important;
+    width:2.15rem!important;
+    height:2.15rem!important;
+    margin:0!important;
+  }
+  .cc-label{
+    grid-area:label!important;
+    font-size:.48rem!important;
+    letter-spacing:.16em!important;
+    margin-bottom:.1rem!important;
+  }
+  .cc-title{
+    grid-area:title!important;
+    font-size:1rem!important;
+    margin-bottom:.05rem!important;
+  }
+  .cc-value{
+    grid-area:value!important;
+    font-size:.76rem!important;
+    line-height:1.45!important;
+  }
+  .contact-main-btn{
+    margin-top:1rem!important;
+  }
+  .btn-discord{
+    width:100%!important;
+    min-width:0!important;
+    min-height:50px!important;
+    padding:.88rem 1rem!important;
+    font-size:.86rem!important;
+  }
+}
+@media(max-width:380px){
+  .contact-h1{font-size:2.55rem!important;}
+  .contact-card{padding:.9rem .85rem!important;}
+}
+
 </style>
 </head>
 <body>
@@ -704,7 +791,7 @@ body::before{
 <main class="contact-stage" id="contact-stage">
 <div class="contact-hero">
   <h1 class="contact-h1">Contact <em>Us</em></h1>
-  <p class="contact-sub">The fastest way to reach us is through Discord. Every project and inquiry is handled through private tickets — no wait, no middlemen.</p>
+  <p class="contact-sub">The fastest way to reach us is through Discord. Every project and inquiry is handled through private tickets — no wait, no middleman.</p>
 </div>
 
 <div class="divider"></div>

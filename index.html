@@ -4471,7 +4471,7 @@ const works=[
 {cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
 {cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1',featured:true,autoplayPreview:true,previewStart:2,previewEnd:5},
+{cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion','youtube'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
 {cat:['motion','youtube'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -4605,7 +4605,7 @@ function getVideoThumb(w){return w.thumb||videoThumbFromSrc(w.src||'')}
 
 
 function orderWorkList(list){
-  return [...list].sort((a,b)=>(b.featured===true)-(a.featured===true));
+  return [...(list||[])];
 }
 function getVideoCandidates(src){
   if(!src)return [];
@@ -4654,6 +4654,23 @@ function getVideoCandidates(src){
       'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.mp4'
     );
   }
+
+  // Extra exact fallbacks for hover previews that may have slightly different GitHub filenames.
+  if(/^Video\s*16\.mp4$/i.test(file)){
+    candidates.push(
+      'Video 16.mp4','Video16.mp4','VIdeo 16.mp4','VIdeo16.mp4','video 16.mp4','video16.mp4',
+      './Video 16.mp4','./Video16.mp4','./VIdeo 16.mp4','./VIdeo16.mp4',
+      'Video%2016.mp4','VIdeo%2016.mp4'
+    );
+  }
+  if(/^Video\s*18\.mp4$/i.test(file)){
+    candidates.push(
+      'Video 18.mp4','Video18.mp4','VIdeo 18.mp4','VIdeo18.mp4','video 18.mp4','video18.mp4',
+      './Video 18.mp4','./Video18.mp4','./VIdeo 18.mp4','./VIdeo18.mp4',
+      'Video%2018.mp4','VIdeo%2018.mp4'
+    );
+  }
+
   return [...new Set(candidates.filter(Boolean))];
 }
 function isMobilePortfolioView(){

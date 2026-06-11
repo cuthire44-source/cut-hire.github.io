@@ -2469,14 +2469,14 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
       <div class="path-badge cl"><img class="icon-img badge-icon" src="friend.png" alt="Outreach people icon"> For Outreachers</div>
       <span class="path-icon"><img src="target.png" alt=""></span>
       <h2>Want to make <em>money?</em></h2>
-      <div class="join-video-card client-video-card" data-video-src="Full Video With Music.mp4" data-video-poster="videojoinus21.png" role="button" tabindex="0" aria-label="Play outreacher video">
+      <div class="join-video-card client-video-card" data-video-src="Full Video With Music.mp4" data-video-poster="videojoinus21.png" role="button" tabindex="0" aria-label="Play outreacher/outreacher video">
         <video class="join-video-preview" src="Full Video With Music.mp4" preload="none" muted playsinline poster="videojoinus21.png"></video>
         <div class="join-video-shade"></div>
         <div class="join-video-play">
           <span></span>
         </div>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT9QWFSuTx_MyLHwbwtVtcUVIu4zDuxAEsCN-7gFffh7oOgA/viewform" target="_blank" class="btn-red path-btn stroke-glow-btn">
+      <a href="https://docs.google.com/forms/d/1AcI4ke95eso2Sf_vlqK0b9HCh4fisTyIWY95eHglqE/viewform" target="_blank" rel="noopener" class="btn-red path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
       <span>Apply as an Outreacher</span>
@@ -2495,7 +2495,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
           <span></span>
         </div>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" target="_blank" class="btn-blu path-btn stroke-glow-btn">
+      <a href="https://docs.google.com/forms/d/1AcI4ke95eso2Sf_vlqK0b9HCh4fisTyIWY95eHglqE/viewform" target="_blank" rel="noopener" class="btn-blu path-btn stroke-glow-btn">
       <span class="stroke-spin-mask" aria-hidden="true"></span>
       <span class="stroke-inner-gloss" aria-hidden="true"></span>
       <span>Submit an Application</span>
@@ -2507,7 +2507,7 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
     <p class="strip-label" style="margin-bottom:1.8rem">Common Questions</p>
     <div class="faq-item" onclick="toggleFaq(this)">
       <div class="faq-q">Why Discord? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Our Discord is where accepted editors, designers, and outreachers receive updates, communicate with the team, and access job opportunities. We also use a bot system that sends available jobs directly, so projects are not only shared manually by outreachers.</div>
+      <div class="faq-a">Our Discord is where accepted editors, designers, and outreachers receive team updates, communicate with staff, and access job opportunities. We also have a bot system that can send available jobs directly, so projects are not only shared manually by outreachers.</div>
     </div>
   </div>
 
@@ -2797,10 +2797,6 @@ function toggleFaq(el){
     while((node=walker.nextNode())){
       node.nodeValue=node.nodeValue
         .replace(/For Clients/g,'For Outreachers')
-        .replace(/For Outsourcers/g,'For Outreachers')
-        .replace(/Apply as an Outsourcer/g,'Apply as an Outreacher')
-        .replace(/outsourcer/g,'outreacher')
-        .replace(/Outsourcer/g,'Outreacher')
         .replace(/Ready to Get Real Clients\?/g,'Ready to land real clients?')
         .replace(/Ready to get Real Clients\?/g,'Ready to land real clients?')
         .replace(/Need an Editor\?/g,'Ready to land real clients?');

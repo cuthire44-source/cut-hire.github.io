@@ -22,7 +22,7 @@
 <link rel="preload" as="image" href="Sequence 01 6.png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01 7(1).png" fetchpriority="high">
 <link rel="preload" as="image" href="Sequence 01(2).png" fetchpriority="high">
-<link rel="preload" as="image" href="Sequence 075.png?v=20260525d" fetchpriority="high">
+<link rel="preload" as="image" href="Sequence 075.png?v=20260611b" fetchpriority="high">
 <link rel="preload" as="image" href="infromative44.png" fetchpriority="high">
 <link rel="preload" as="image" href="explanitory484.png" fetchpriority="high">
 <link rel="preload" as="image" href="documentary3983.png" fetchpriority="high">
@@ -4421,11 +4421,11 @@ fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
 
 /* ===== WORKS DATA ===== */
 
-THUMB_CACHE_VERSION='v=20260611a';
+THUMB_CACHE_VERSION='v=20260611b';
 function cacheBustAsset(src){
   if(!src)return src;
   const clean=String(src).trim();
-  if(clean==='Sequence 075.png')return 'Sequence 075.png?v=20260611a';
+  if(clean==='Sequence 075.png')return 'Sequence 075.png?v=20260611b';
   if(clean.startsWith('data:')||clean.startsWith('blob:')||clean.includes('?'))return clean;
   if(/\.(png|jpg|jpeg|webp|gif)$/i.test(clean))return `${clean}?${THUMB_CACHE_VERSION}`;
   return clean;
@@ -4469,10 +4469,10 @@ function primeImageFallback(img,src){
 }
 const works=[
 {cat:['motion'],title:'Video 42',src:'Video 42.mp4',thumb:'Video42.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Tx42kp-Dqu8?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/dP-6th8gfds?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false},
+{cat:['motion'],title:'Video 43',src:'Video 43.mp4',thumb:'Video43.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/4R2KBE1s58g?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['motion'],title:'Video 44',src:'Video 44.mp4',thumb:'formula21speed.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/uP8zul2FVsE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Motion Graphics 1',size:'wide',src:'Video 18.mp4',thumb:'YTDown_YouTube_Saas-Animation-NeuralPath-AI_Media_4_CPY_MAcYA_002_720p.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/MeaRUSkXNCw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['motion'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false},
+{cat:['motion'],title:'Long Form 1',size:'tall',src:'Video 16.mp4',thumb:'supreme.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/zqXGLIl0XFE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Motion Graphics 92',src:'Video 3.mp4',thumb:'motion graphics92.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_oEtS2dwbXw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Short 2',src:'Video 39.mp4',thumb:'short2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/BMhTnsWHNKg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['motion'],title:'Short 44',src:'Video 35.mp4',thumb:'short44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/QMFui_OUjVQ?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -4591,11 +4591,12 @@ function isShortVideo(w){
   const thumb=String(w&&w.thumb||'');
   const cats=getCats(w||{});
   const portraitThumbs=new Set([
+    'supreme.png','formula21speed.png',
     'short8.png','short7.png','infromative44.png','short45.png','short10.png','short44.png',
     'short11.png','short488.png','short849.png','short2.png','short82.png'
   ]);
   return /^short\d+\.mp4$/i.test(src)
-    || /^Video\s*(3[0-9]|40)\.mp4$/i.test(src)
+    || /^Video\s*(16|3[0-9]|40|44)\.mp4$/i.test(src)
     || cats.includes('shorts')
     || /short/i.test(title)
     || portraitThumbs.has(thumb);

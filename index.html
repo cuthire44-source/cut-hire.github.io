@@ -517,6 +517,7 @@
 </script>
 <!-- /SEO -->
 <link href="logo.png" rel="icon" type="image/png"/>
+<link as="image" fetchpriority="high" href="whatsapp.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="7xLgtMa0Xb5M3IAu.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Lily Sample.Mp4.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Longform23(1).png" rel="preload"/>
@@ -2961,6 +2962,540 @@ body.hero-start-boost
   #discord-invite-card a{padding:.42rem .62rem!important;font-size:.68rem!important;}
 }
 
+
+
+/* ==================== CUT & HIRE LIMITED OFFER BAR ==================== */
+.cut-hire-offer-bar{
+  position:sticky;
+  top:0;
+  z-index:9999;
+  width:100%;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 18px;
+  text-align:center;
+  color:#fff;
+  background:
+    radial-gradient(circle at 16% 50%, rgba(255,255,255,.22), transparent 22%),
+    linear-gradient(90deg, #150000 0%, #ff1e1e 46%, #b30000 68%, #150000 100%);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  box-shadow:0 12px 44px rgba(255,0,0,.20), inset 0 -1px 0 rgba(0,0,0,.35);
+  font-family:'DM Sans',system-ui,sans-serif;
+}
+.cut-hire-offer-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.24), transparent);
+  transform:translateX(-100%);
+  animation:offer-bar-sheen 4.8s ease-in-out infinite;
+  opacity:.8;
+}
+@keyframes offer-bar-sheen{
+  0%,42%{transform:translateX(-100%)}
+  68%,100%{transform:translateX(100%)}
+}
+.cut-hire-offer-inner{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  font-size:clamp(13px,1.05vw,15px);
+  font-weight:900;
+  letter-spacing:-.015em;
+}
+.cut-hire-offer-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:24px;
+  padding:4px 10px;
+  border-radius:999px;
+  color:#ff2727;
+  background:#fff;
+  box-shadow:0 0 28px rgba(255,255,255,.28);
+  text-transform:uppercase;
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.cut-hire-offer-link{
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.72);
+  line-height:1.05;
+  transition:opacity .2s ease, border-color .2s ease;
+}
+.cut-hire-offer-link:hover{opacity:.82;border-color:#fff}
+@media(max-width:680px){
+  .cut-hire-offer-bar{min-height:42px;padding:9px 12px}
+  .cut-hire-offer-inner{gap:7px;font-size:12px;line-height:1.25}
+  .cut-hire-offer-pill{font-size:10px;padding:3px 8px;min-height:21px}
+}
+
+/* ==================== PRICING SHOWCASE CAROUSEL ==================== */
+.pricing-showcase-section{
+  position:relative;
+  overflow:hidden;
+  padding:140px 0 150px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,42,42,.18), transparent 34%),
+    radial-gradient(circle at 12% 70%, rgba(255,0,0,.12), transparent 30%),
+    linear-gradient(180deg, #030303 0%, #080000 46%, #020202 100%);
+}
+.pricing-showcase-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size:70px 70px;
+  opacity:.08;
+  mask-image:radial-gradient(circle at center, #000 0%, transparent 72%);
+}
+.pricing-bg-noise{
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  opacity:.28;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,0,0,.2), transparent 22%),
+    radial-gradient(circle at 82% 25%, rgba(255,255,255,.06), transparent 18%),
+    radial-gradient(circle at 50% 100%, rgba(130,0,0,.45), transparent 40%);
+  filter:blur(10px);
+}
+.pricing-showcase-con{position:relative;z-index:1}
+.pricing-showcase-head{text-align:center;max-width:900px;margin:0 auto 54px}
+.pricing-eyebrow{color:#ff3030;text-shadow:0 0 18px rgba(255,0,0,.65)}
+.pricing-main-title{letter-spacing:-.055em}
+.pricing-showcase-sub{
+  max-width:760px;
+  margin:18px auto 0;
+  color:rgba(255,255,255,.68);
+  font-size:clamp(15px,1.25vw,18px);
+  line-height:1.65;
+}
+.pricing-carousel-wrap{
+  position:relative;
+  max-width:1260px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.pricing-viewport{
+  width:100%;
+  overflow:hidden;
+  border-radius:34px;
+  padding:10px;
+}
+.pricing-track{
+  display:flex;
+  gap:24px;
+  will-change:transform;
+  transition:transform .65s cubic-bezier(.16,1,.3,1);
+}
+.pricing-card{
+  flex:0 0 calc((100% - 48px) / 3);
+  min-width:0;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:30px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)),
+    rgba(8,8,8,.88);
+  box-shadow:0 24px 70px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.12);
+  transform:translateZ(0);
+}
+.pricing-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,35,35,.75), transparent 32%, transparent 68%, rgba(255,255,255,.18));
+  opacity:.34;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  padding:1px;
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  border-radius:inherit;
+}
+.pricing-card::after{
+  content:"";
+  position:absolute;
+  left:18%;
+  right:18%;
+  top:-40px;
+  height:90px;
+  background:rgba(255,0,0,.34);
+  filter:blur(42px);
+  opacity:.55;
+  pointer-events:none;
+}
+.pricing-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(255,42,42,.36);
+  box-shadow:0 30px 90px rgba(255,0,0,.16), 0 24px 70px rgba(0,0,0,.58);
+  transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.pricing-img-shell{
+  position:relative;
+  height:205px;
+  margin:14px;
+  border-radius:22px;
+  overflow:hidden;
+  background:#080808;
+  border:1px solid rgba(255,255,255,.1);
+}
+.pricing-img-shell img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.02);
+  transition:transform .55s cubic-bezier(.16,1,.3,1), filter .55s ease;
+}
+.pricing-card:hover .pricing-img-shell img{transform:scale(1.08);filter:saturate(1.12) contrast(1.08)}
+.yt-pricing-img img{object-position:center}
+.reels-pricing-img img{object-position:center}
+.team-pricing-img img{object-position:center}
+.pricing-img-shell::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 35%, rgba(0,0,0,.58) 100%);
+}
+.pricing-img-tag{
+  position:absolute;
+  left:14px;
+  bottom:14px;
+  z-index:2;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  padding:8px 12px;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  background:rgba(0,0,0,.55);
+  box-shadow:0 0 24px rgba(255,0,0,.22);
+  backdrop-filter:blur(12px);
+}
+.pricing-card-body{padding:8px 26px 28px}
+.pricing-kicker{
+  margin:0 0 8px;
+  color:#ff3434;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.pricing-card h3{
+  margin:0;
+  color:#fff;
+  font-size:clamp(26px,2.25vw,38px);
+  line-height:.96;
+  letter-spacing:-.055em;
+}
+.pricing-price{
+  margin:18px 0 12px;
+  color:#fff;
+  font-size:17px;
+  font-weight:800;
+}
+.pricing-price strong{
+  font-size:1.45em;
+  color:#fff;
+  text-shadow:0 0 24px rgba(255,0,0,.52);
+}
+.pricing-price span{color:rgba(255,255,255,.64);font-weight:700}
+
+.pricing-discount-pill{display:none!important}
+.pricing-discount-pill{
+  position:absolute;
+  top:24px;
+  right:24px;
+  z-index:5;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  padding:8px 12px;
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.045em;
+  text-transform:uppercase;
+  background:linear-gradient(135deg, rgba(255,36,36,.95), rgba(115,0,0,.94));
+  box-shadow:0 0 28px rgba(255,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25);
+  backdrop-filter:blur(10px);
+}
+.pricing-discount-pill::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:#fff;
+  box-shadow:0 0 14px rgba(255,255,255,.8);
+}
+.pricing-price-wrap{
+  margin:18px 0 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.pricing-price-wrap .pricing-price{margin:0}
+.pricing-save-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:28px;
+  padding:6px 10px;
+  border-radius:999px;
+  color:#ffeded;
+  font-size:12px;
+  font-weight:950;
+  line-height:1;
+  white-space:nowrap;
+  background:rgba(255,0,0,.14);
+  border:1px solid rgba(255,55,55,.32);
+  box-shadow:0 0 24px rgba(255,0,0,.18);
+}
+
+/* ===== OFFER PRICE STYLE PATCH: crossed regular price + discount price ===== */
+.pricing-showcase-section{scroll-margin-top:74px;}
+.pricing-discount-pill{
+  top:22px;
+  right:22px;
+  max-width:calc(100% - 44px);
+  color:#ff3b3b;
+  text-transform:none;
+  letter-spacing:-.01em;
+  font-size:12px;
+  background:rgba(8,8,10,.78);
+  border-color:rgba(255,55,55,.46);
+  box-shadow:0 0 24px rgba(255,0,0,.28), inset 0 1px 0 rgba(255,255,255,.1);
+}
+.pricing-discount-pill::before{
+  width:6px;
+  height:6px;
+  background:#ff3030;
+  box-shadow:0 0 14px rgba(255,0,0,.9);
+}
+.pricing-price-wrap{
+  margin:18px 0 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.pricing-price-line{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  min-width:0;
+  flex-wrap:wrap;
+  line-height:1;
+}
+.pricing-from{
+  color:rgba(255,255,255,.72);
+  font-size:15px;
+  font-weight:900;
+}
+.pricing-old-price{
+  position:relative;
+  display:inline-block;
+  color:rgba(255,255,255,.38);
+  font-size:clamp(21px,1.9vw,30px);
+  font-weight:1000;
+  letter-spacing:-.055em;
+}
+.pricing-old-price::after{
+  content:"";
+  position:absolute;
+  left:-3px;
+  right:-3px;
+  top:52%;
+  height:3px;
+  border-radius:999px;
+  transform:rotate(-7deg);
+  background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(255,38,38,.98), rgba(255,255,255,.22));
+  box-shadow:0 0 12px rgba(255,0,0,.55);
+}
+.pricing-new-price{
+  color:#fff;
+  font-size:clamp(28px,2.45vw,41px);
+  font-weight:1000;
+  letter-spacing:-.06em;
+  text-shadow:0 0 24px rgba(255,0,0,.56);
+}
+.pricing-period{
+  color:rgba(255,255,255,.56);
+  font-size:14px;
+  font-weight:800;
+}
+.pricing-save-chip{
+  color:#ff4a4a;
+  background:rgba(255,0,0,.08);
+  border-color:rgba(255,55,55,.36);
+  box-shadow:0 0 22px rgba(255,0,0,.18);
+}
+@media(max-width:680px){
+  .pricing-showcase-section{scroll-margin-top:86px;}
+  .pricing-price-wrap{align-items:flex-start;gap:8px;}
+  .pricing-price-line{gap:7px;}
+  .pricing-from{font-size:13px;}
+  .pricing-old-price{font-size:24px;}
+  .pricing-new-price{font-size:32px;}
+  .pricing-period{font-size:13px;}
+}
+
+@media(max-width:680px){
+  .pricing-discount-pill{top:18px;right:18px;font-size:10px;padding:7px 10px}
+  .pricing-save-chip{font-size:11px;min-height:25px;padding:5px 9px}
+}
+
+.pricing-copy{
+  min-height:76px;
+  margin:0 0 18px;
+  color:rgba(255,255,255,.64);
+  line-height:1.55;
+  font-size:14px;
+}
+.pricing-list{
+  list-style:none;
+  margin:0 0 24px;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+.pricing-list li{
+  position:relative;
+  padding-left:25px;
+  color:rgba(255,255,255,.82);
+  font-size:14px;
+  line-height:1.25;
+}
+.pricing-list li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:.15em;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:rgba(255,0,0,.12);
+  box-shadow:0 0 18px rgba(255,0,0,.35);
+}
+.pricing-list li::after{
+  content:"✓";
+  position:absolute;
+  left:3px;
+  top:-1px;
+  color:#ff3030;
+  font-size:12px;
+  font-weight:1000;
+}
+.pricing-btn{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:50px;
+  width:100%;
+  border-radius:14px;
+  overflow:hidden;
+  color:#fff;
+  font-weight:950;
+  text-decoration:none;
+  background:linear-gradient(135deg, #ff1e1e, #a60000 52%, #ff3535);
+  box-shadow:0 16px 40px rgba(255,0,0,.25), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.pricing-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-110%) skewX(-18deg);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.38), transparent);
+  transition:transform .65s ease;
+}
+.pricing-btn:hover::before{transform:translateX(110%) skewX(-18deg)}
+.pricing-arrow{
+  flex:0 0 48px;
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:50%;
+  background:rgba(0,0,0,.68);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 0 34px rgba(255,0,0,.2);
+  transition:transform .25s ease, border-color .25s ease, background .25s ease;
+}
+.pricing-arrow:hover{
+  transform:scale(1.08);
+  border-color:rgba(255,45,45,.55);
+  background:rgba(255,0,0,.16);
+}
+.pricing-arrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.pricing-dots{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:28px;
+}
+.pricing-dot{
+  width:9px;
+  height:9px;
+  border:0;
+  border-radius:999px;
+  background:rgba(255,255,255,.3);
+  cursor:pointer;
+  padding:0;
+  transition:width .3s ease, background .3s ease, box-shadow .3s ease;
+}
+.pricing-dot.on{
+  width:28px;
+  background:#ff2727;
+  box-shadow:0 0 22px rgba(255,0,0,.75);
+}
+@media (max-width:980px){
+  .pricing-showcase-section{padding:95px 0 105px}
+  .pricing-carousel-wrap{gap:10px}
+  .pricing-card{flex-basis:calc((100% - 24px) / 2)}
+  .pricing-arrow{position:absolute;z-index:4;top:43%;background:rgba(0,0,0,.78)}
+  .pricing-arrow-left{left:-6px}
+  .pricing-arrow-right{right:-6px}
+}
+@media (max-width:680px){
+  .pricing-showcase-head{margin-bottom:30px}
+  .pricing-showcase-sub{font-size:14px}
+  .pricing-viewport{padding:4px;border-radius:26px}
+  .pricing-track{gap:16px}
+  .pricing-card{flex-basis:100%;border-radius:24px}
+  .pricing-img-shell{height:190px;margin:10px;border-radius:18px}
+  .pricing-card-body{padding:8px 18px 22px}
+  .pricing-copy{min-height:auto}
+  .pricing-arrow{width:42px;height:42px;top:38%}
+  .pricing-arrow-left{left:2px}
+  .pricing-arrow-right{right:2px}
+}
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -4090,9 +4625,338 @@ body.hero-start-boost
   #discord-invite-card > div > div:nth-child(3){font-size:.46rem!important;gap:.3rem!important;}
 }
 </style>
-</meta><meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/></head>
+</meta><meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
+<style>
+/* ===== CONTACT CTA UPGRADE: Discord + Book A Call + WhatsApp — cleaned C&H style ===== */
+#discord .contact-cta-row{
+  width:100%;
+  max-width:920px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  position:relative;
+  z-index:2;
+}
+#discord .discord-card-wrap{
+  flex:0 1 460px;
+  min-width:300px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#discord .contact-action{
+  position:relative;
+  isolation:isolate;
+  flex:0 0 172px;
+  min-height:78px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:16px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(224,32,32,.13),transparent 58%),
+    linear-gradient(180deg,rgba(30,31,36,.92),rgba(9,9,10,.96));
+  color:#fff;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:.82rem .95rem;
+  overflow:hidden;
+  box-shadow:0 18px 44px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.055);
+  transform:none!important;
+  transition:transform .24s cubic-bezier(.22,1,.36,1),box-shadow .24s,border-color .24s,background .24s,filter .24s;
+}
+#discord .contact-action::before{
+  content:'';
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:10px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(224,32,32,.95),transparent);
+  opacity:.62;
+  box-shadow:0 0 14px rgba(224,32,32,.28);
+  transition:opacity .24s,box-shadow .24s,transform .24s;
+  pointer-events:none;
+}
+#discord .contact-action::after{
+  content:'';
+  position:absolute;
+  inset:-24% auto -24% -65%;
+  width:45%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+  transform:skewX(-18deg) translateX(0);
+  opacity:0;
+  transition:transform .65s cubic-bezier(.22,1,.36,1),opacity .18s;
+  pointer-events:none;
+}
+#discord .contact-action:hover,
+#discord .contact-action:focus-visible{
+  transform:translateY(-4px) scale(1.018)!important;
+  border-color:rgba(224,32,32,.46);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(224,32,32,.19),transparent 58%),
+    linear-gradient(180deg,rgba(37,38,44,.95),rgba(11,11,12,.98));
+  box-shadow:0 0 32px rgba(224,32,32,.17),0 24px 58px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.075);
+  filter:brightness(1.04);
+  outline:none;
+}
+#discord .contact-action:hover::before,
+#discord .contact-action:focus-visible::before{opacity:1;box-shadow:0 0 18px rgba(224,32,32,.48);transform:scaleX(1.05)}
+#discord .contact-action:hover::after,
+#discord .contact-action:focus-visible::after{opacity:1;transform:skewX(-18deg) translateX(420%)}
+#discord .contact-action:active{transform:translateY(-1px) scale(.982)!important}
+#discord .contact-whatsapp{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(224,32,32,.12),transparent 58%),
+    linear-gradient(180deg,rgba(30,31,36,.92),rgba(9,9,10,.96));
+}
+#discord .contact-whatsapp::before{background:linear-gradient(90deg,transparent,rgba(224,32,32,.95),transparent)}
+#discord .contact-action-glow{
+  position:absolute;
+  inset:auto 16% -42px;
+  height:64px;
+  border-radius:50%;
+  background:rgba(224,32,32,.26);
+  filter:blur(24px);
+  z-index:-1;
+  opacity:0;
+  transform:scale(.88);
+  transition:opacity .28s,transform .28s;
+}
+#discord .contact-action:hover .contact-action-glow,
+#discord .contact-action:focus-visible .contact-action-glow{transform:scale(1.1);opacity:.75}
+#discord .contact-action-icon{
+  width:27px;
+  height:27px;
+  object-fit:contain;
+  display:block;
+  margin:0 0 .25rem;
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.08));
+  transition:transform .24s,filter .24s;
+}
+#discord .contact-action:hover .contact-action-icon{transform:translateY(-1px) scale(1.06);filter:drop-shadow(0 0 12px rgba(224,32,32,.45))}
+#discord .contact-action-top{
+  font-family:'DM Mono',monospace;
+  font-size:.50rem;
+  line-height:1;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:rgba(245,240,235,.54);
+  margin-bottom:.18rem;
+}
+#discord .contact-action-main{
+  font-family:'Playfair Display',serif;
+  font-size:1.45rem;
+  font-weight:900;
+  line-height:.95;
+  letter-spacing:-.035em;
+  text-transform:none;
+  text-shadow:0 0 18px rgba(224,32,32,.22);
+}
+#discord .contact-whatsapp .contact-action-main{
+  font-family:'DM Sans',sans-serif;
+  font-size:1.18rem;
+  font-weight:900;
+  letter-spacing:-.015em;
+  text-shadow:0 0 18px rgba(224,32,32,.18);
+}
+#discord .contact-action-foot{
+  font-family:'DM Sans',sans-serif;
+  font-size:.61rem;
+  color:rgba(245,240,235,.52);
+  margin-top:.34rem;
+  line-height:1.18;
+}
+#discord .contact-cta-row #discord-invite-card{margin:0!important;}
+#discord .pricing-discount-pill{display:none!important;}
+@media(max-width:980px){
+  #discord .contact-cta-row{max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:.85rem;align-items:stretch;}
+  #discord .discord-card-wrap{grid-column:1 / -1;grid-row:1;min-width:0;width:100%;}
+  #discord .contact-action{grid-row:2;flex:auto;min-height:76px;border-radius:15px;}
+  #discord .contact-action-main{font-size:1.28rem;}
+  #discord .contact-whatsapp .contact-action-main{font-size:1.08rem;}
+}
+@media(max-width:560px){
+  #discord .disc-sub{max-width:330px!important;margin-bottom:1.45rem!important;}
+  #discord .contact-cta-row{grid-template-columns:1fr;max-width:360px;gap:.7rem;}
+  #discord .discord-card-wrap{grid-row:1;}
+  #discord .contact-action{grid-row:auto;min-height:72px;padding:.72rem .85rem;}
+  #discord .contact-book{grid-row:2;}
+  #discord .contact-whatsapp{grid-row:3;}
+  #discord .contact-action-icon{width:25px;height:25px;margin-bottom:.18rem;}
+  #discord .contact-action-top{font-size:.46rem;letter-spacing:.14em;margin-bottom:.16rem;}
+  #discord .contact-action-main{font-size:1.15rem;}
+  #discord .contact-whatsapp .contact-action-main{font-size:1rem;}
+  #discord .contact-action-foot{font-size:.56rem;margin-top:.24rem;}
+}
+@media(max-width:380px){
+  #discord .contact-cta-row{max-width:320px;}
+  #discord .contact-action{min-height:68px;}
+}
+</style>
+
+<style>
+/* ===== V3 CONTACT CTA RESTYLE — wider, straight, Cut & Hire styled ===== */
+#discord .contact-cta-row{
+  max-width:1050px!important;
+  width:100%!important;
+  margin:0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.85rem!important;
+  flex-wrap:nowrap!important;
+}
+#discord .discord-card-wrap{
+  flex:0 1 450px!important;
+  min-width:310px!important;
+  max-width:450px!important;
+}
+#discord .contact-cta-row #discord-invite-card{
+  height:78px!important;
+  min-height:78px!important;
+  border-radius:10px!important;
+  margin:0!important;
+}
+#discord .contact-action{
+  height:78px!important;
+  min-height:78px!important;
+  border-radius:10px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  background:
+    radial-gradient(circle at 50% -20%,rgba(224,32,32,.12),transparent 56%),
+    linear-gradient(180deg,rgba(20,21,25,.96),rgba(7,7,8,.98))!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  padding:.78rem 1.15rem!important;
+  transform:none!important;
+  rotate:0deg!important;
+  filter:none!important;
+}
+#discord .contact-book{
+  flex:0 0 188px!important;
+}
+#discord .contact-whatsapp{
+  flex:0 0 260px!important;
+}
+#discord .contact-action::before{
+  left:18px!important;
+  right:18px!important;
+  bottom:9px!important;
+  height:2px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,transparent,rgba(224,32,32,.82),transparent)!important;
+  opacity:0!important;
+  box-shadow:none!important;
+  transform:scaleX(.72)!important;
+  transition:opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1), box-shadow .25s ease!important;
+}
+#discord .contact-action::after{
+  display:block!important;
+  content:''!important;
+  position:absolute!important;
+  inset:-35% auto -35% -70%!important;
+  width:38%!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)!important;
+  transform:skewX(-18deg) translateX(0)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  transition:transform .72s cubic-bezier(.22,1,.36,1),opacity .18s ease!important;
+}
+#discord .contact-action:hover,
+#discord .contact-action:focus-visible{
+  transform:translateY(-3px) scale(.985)!important;
+  border-color:rgba(224,32,32,.38)!important;
+  background:
+    radial-gradient(circle at 50% -20%,rgba(224,32,32,.19),transparent 58%),
+    linear-gradient(180deg,rgba(26,27,32,.98),rgba(8,8,9,.99))!important;
+  box-shadow:0 0 30px rgba(224,32,32,.12),0 20px 50px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  filter:brightness(1.04)!important;
+}
+#discord .contact-action:hover::before,
+#discord .contact-action:focus-visible::before{
+  opacity:1!important;
+  transform:scaleX(1)!important;
+  box-shadow:0 0 12px rgba(224,32,32,.42)!important;
+}
+#discord .contact-action:hover::after,
+#discord .contact-action:focus-visible::after{
+  opacity:1!important;
+  transform:skewX(-18deg) translateX(470%)!important;
+}
+#discord .contact-action-glow{display:none!important;}
+#discord .contact-action-top{
+  font-family:'DM Mono',monospace!important;
+  font-size:.47rem!important;
+  letter-spacing:.18em!important;
+  color:rgba(245,240,235,.52)!important;
+  margin-bottom:.2rem!important;
+}
+#discord .contact-action-main{
+  font-family:'Playfair Display',serif!important;
+  font-size:1.34rem!important;
+  font-weight:900!important;
+  line-height:.95!important;
+  letter-spacing:-.035em!important;
+  color:#fff!important;
+  text-shadow:0 0 16px rgba(224,32,32,.18)!important;
+}
+#discord .contact-whatsapp .contact-action-main{
+  font-family:'DM Sans',sans-serif!important;
+  font-size:1.18rem!important;
+  font-weight:900!important;
+  letter-spacing:-.02em!important;
+}
+#discord .contact-action-foot{
+  font-size:.56rem!important;
+  color:rgba(245,240,235,.48)!important;
+  margin-top:.28rem!important;
+}
+#discord .contact-action-icon{
+  width:23px!important;
+  height:23px!important;
+  margin:0 0 .22rem!important;
+  filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(224,32,32,.18))!important;
+  opacity:.9!important;
+}
+#discord .contact-action:hover .contact-action-icon{transform:translateY(-1px) scale(1.04)!important;filter:brightness(0) invert(1) drop-shadow(0 0 11px rgba(224,32,32,.45))!important;}
+#discord .pricing-discount-pill,
+#discord .pricing-sale-badge,
+#pricing .pricing-discount-pill,
+#pricing .pricing-sale-badge,
+.pricing-card .pricing-discount-pill,
+.pricing-card .pricing-sale-badge{
+  display:none!important;
+}
+@media(max-width:1050px){
+  #discord .contact-cta-row{max-width:620px!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:.85rem!important;align-items:stretch!important;}
+  #discord .discord-card-wrap{grid-column:1 / -1!important;grid-row:1!important;max-width:100%!important;min-width:0!important;width:100%!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;flex:auto!important;}
+  #discord .contact-whatsapp{grid-column:2!important;grid-row:2!important;flex:auto!important;}
+}
+@media(max-width:560px){
+  #discord .contact-cta-row{display:grid!important;grid-template-columns:1fr!important;max-width:360px!important;gap:.7rem!important;}
+  #discord .discord-card-wrap{grid-column:1!important;grid-row:1!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;}
+  #discord .contact-whatsapp{grid-column:1!important;grid-row:3!important;}
+  #discord .contact-action{height:72px!important;min-height:72px!important;padding:.72rem .9rem!important;}
+}
+</style>
+
+</head>
 <body class="hero-start-boost">
 <div aria-hidden="true" class="site-fade-cover"></div>
+<div class="cut-hire-offer-bar" role="banner" aria-label="Cut and Hire limited offer">
+  <div class="cut-hire-offer-inner">
+    <span class="cut-hire-offer-pill">-20% Off</span>
+    <span>20% off your first Cut &amp; Hire project.</span>
+    <a class="cut-hire-offer-link" href="#process">Start Today →</a>
+  </div>
+</div>
 <!-- Scroll hints -->
 <div class="scroll-hint left" id="scroll-left">
 <div class="scroll-hint-circle">
@@ -4127,10 +4991,10 @@ body.hero-start-boost
 <h1 class="hero-h1">We do the<br/><span class="italic"><span class="impossible-text">impossible.</span><span aria-hidden="true" class="impossible-underline"><span class="u-stroke u-stroke-main"></span><span class="u-stroke u-stroke-shadow"></span><span class="u-sweep"></span><span class="u-spark s1"></span><span class="u-spark s2"></span><span class="u-spark s3"></span></span></span></h1>
 <p class="hero-sub">Make viral content with elite editors</p>
 <div class="hero-cta">
-<a class="btn-primary main-mrbeast-glint-btn" href="#discord">
+<a class="btn-primary main-mrbeast-glint-btn" href="#process">
 <span aria-hidden="true" class="main-glint-stroke"></span>
 <span aria-hidden="true" class="main-glint-gloss"></span>
-<span>Start a Project</span>
+<span>Start Today</span>
 </a>
 </div>
 </div>
@@ -4212,21 +5076,125 @@ body.hero-start-boost
 </div>
 </div>
 </section>
-<!-- ==================== PROCESS ==================== -->
-<section id="process">
-<div class="con">
-<div class="rv" style="text-align:center">
-<p class="sec-lbl" style="justify-content:center">How It Works</p>
-<h2 class="sec-h2">Simple <em>Process</em>, Great <em>Results</em></h2>
-</div>
-<div class="proc-steps stagger">
-<div class="ps rv"><div class="ps-n">01</div><img alt="" class="ps-i process-img-icon" src="bubble-chat.png"/><h3>Join the Server</h3><p>Hit the Discord link, join our community, and open a ticket with your project details.</p></div>
-<div class="ps rv"><div class="ps-n">02</div><img alt="" class="ps-i process-img-icon" src="clipboard.png"/><h3>Share Your Brief</h3><p>Tell us your vision, style, deadline, and budget. We'll match you with the right editor.</p></div>
-<div class="ps rv"><div class="ps-n">03</div><img alt="" class="ps-i process-img-icon" src="film-reel.png"/><h3>We Get to Work</h3><p>Your editor dives in. Regular updates and direct feedback anytime through Discord.</p></div>
-<div class="ps rv"><div class="ps-n">04</div><img alt="" class="ps-i process-img-icon" src="check-circle.png"/><h3>Approve &amp; Deliver</h3><p>Once the project is delivered, payment is completed according to the agreed terms.</p></div>
-</div>
-</div>
+<!-- ==================== PRICING / TEAMS ==================== -->
+<section id="process" class="pricing-showcase-section">
+  <div class="pricing-bg-noise" aria-hidden="true"></div>
+  <div class="con pricing-showcase-con">
+    <div class="pricing-showcase-head rv">
+      <p class="sec-lbl pricing-eyebrow" style="justify-content:center">Popular Services</p>
+      <h2 class="sec-h2 pricing-main-title">Choose Your <em>Editing</em> Setup</h2>
+      <p class="pricing-showcase-sub">Start with the content type you need most. Every setup can be customized after we see your channel, style, schedule, and workload.</p>
+    </div>
+
+    <div class="pricing-carousel-wrap rv" data-pricing-carousel>
+      <button class="pricing-arrow pricing-arrow-left" type="button" aria-label="Previous pricing option" data-pricing-prev>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 5 8.5 12l7 7"></path></svg>
+      </button>
+
+      <div class="pricing-viewport">
+        <div class="pricing-track">
+          <article class="pricing-card pricing-card-featured" data-pricing-card>
+            <div class="pricing-img-shell yt-pricing-img">
+              <img src="yt videos.jpg" alt="YouTube pricing thumbnail collage" loading="lazy">
+              <span class="pricing-img-tag">Long Form</span>
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For creators building bigger videos</p>
+              <h3>YouTube Pricing</h3>
+              <div class="pricing-price-wrap">
+                <div class="pricing-price-line" aria-label="YouTube pricing regular $5K per month, discount price $4K per month">
+                  <span class="pricing-from">From</span>
+                  <span class="pricing-old-price">$5K</span>
+                  <strong class="pricing-new-price">$4K</strong>
+                  <span class="pricing-period">/month</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">Retention-focused long-form editing for creators who need consistent videos with strong pacing, story, sound design, and thumbnails.</p>
+              <ul class="pricing-list">
+                <li>1-2 days turnaround</li>
+                <li>Dedicated editors</li>
+                <li>Dedicated project manager</li>
+                <li>Strategy support</li>
+                <li>Thumbnails</li>
+                <li>Ideation and scripting</li>
+                <li>Video SEO support</li>
+              </ul>
+              <a class="pricing-btn" href="#discord">YouTube Pricing</a>
+            </div>
+          </article>
+
+          <article class="pricing-card" data-pricing-card>
+            <div class="pricing-img-shell reels-pricing-img">
+              <img src="reels.jpg" alt="Reels and short-form pricing examples" loading="lazy">
+              <span class="pricing-img-tag">Short Form</span>
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For TikTok, Reels and Shorts</p>
+              <h3>Reels Pricing</h3>
+              <div class="pricing-price-wrap">
+                <div class="pricing-price-line" aria-label="Reels pricing regular $2.5K per month, discount price $2K per month">
+                  <span class="pricing-from">From</span>
+                  <span class="pricing-old-price">$2.5K</span>
+                  <strong class="pricing-new-price">$2K</strong>
+                  <span class="pricing-period">/month</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">Fast vertical edits built for hooks, pacing, captions, replay value, and platform-ready delivery across every short-form channel.</p>
+              <ul class="pricing-list">
+                <li>Optimized for every platform</li>
+                <li>1-2 days turnaround</li>
+                <li>Dedicated editors</li>
+                <li>Dedicated project manager</li>
+                <li>Upload assistance</li>
+              </ul>
+              <a class="pricing-btn" href="#discord">Social Media Pricing</a>
+            </div>
+          </article>
+
+          <article class="pricing-card pricing-card-team" data-pricing-card>
+            <div class="pricing-img-shell team-pricing-img">
+              <img src="fulltime editors team.png" alt="Full-time editors and team pricing graphic" loading="lazy">
+              <span class="pricing-img-tag">Team Setup</span>
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For brands needing daily output</p>
+              <h3>Full-Time Editors/Team</h3>
+              <div class="pricing-price-wrap">
+                <div class="pricing-price-line" aria-label="Full-Time Editors Team pricing regular $4K per month, discount price $3.2K per month">
+                  <span class="pricing-from">From</span>
+                  <span class="pricing-old-price">$4K</span>
+                  <strong class="pricing-new-price">$3.2K</strong>
+                  <span class="pricing-period">/month</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">A managed editing team for businesses that want reliable output, senior editors, project leadership, and a smoother content pipeline.</p>
+              <ul class="pricing-list">
+                <li>Save 60-70% on salaries</li>
+                <li>Senior editors</li>
+                <li>4+ years of experience</li>
+                <li>Project leaders</li>
+                <li>Creative input</li>
+                <li>Expertly vetted talent</li>
+                <li>Managed by Cut &amp; Hire</li>
+              </ul>
+              <a class="pricing-btn" href="#discord">Full-Time Pricing</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <button class="pricing-arrow pricing-arrow-right" type="button" aria-label="Next pricing option" data-pricing-next>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8.5 5 7 7-7 7"></path></svg>
+      </button>
+    </div>
+
+    <div class="pricing-dots" role="tablist" aria-label="Pricing carousel navigation" data-pricing-dots></div>
+  </div>
 </section>
+
 <!-- ==================== REVIEWS ==================== -->
 <section id="reviews">
 <div class="con reviews-shell">
@@ -4364,7 +5332,15 @@ body.hero-start-boost
 <img alt="" src="disc.png" style="width:80px;height:80px;object-fit:contain;animation:spin 6s linear infinite;filter:drop-shadow(0 0 22px rgba(58,123,213,.7));margin:0 auto 1.8rem;display:block"/>
 <p class="sec-lbl" style="justify-content:center">Let's Work Together</p>
 <h2 class="disc-h">Ready to <em>Create</em><br/>Something Great?</h2>
-<p class="disc-sub">Open a ticket and tell us what you need. We'll guide you from there.</p>
+<p class="disc-sub">Open a ticket, book a call, or message us on WhatsApp. We'll guide you from there.</p>
+<div class="contact-cta-row" aria-label="Contact options">
+<a class="contact-action contact-book" href="https://wa.me/51924991093?text=Hi%20Cut%20%26%20Hire%2C%20I%20want%20to%20book%20a%20call." target="_blank" rel="noopener" aria-label="Book a call with Cut and Hire on WhatsApp">
+<span class="contact-action-glow" aria-hidden="true"></span>
+<span class="contact-action-top">Book</span>
+<span class="contact-action-main">A Call</span>
+<span class="contact-action-foot">Schedule today</span>
+</a>
+<div class="discord-card-wrap">
 <div id="discord-invite-card" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(255,255,255,.1)'" onmouseover="this.style.transform='scale(1.04) translateY(-4px)';this.style.boxShadow='0 0 40px rgba(35,165,90,.2),0 20px 60px rgba(0,0,0,.4)';this.style.borderColor='rgba(35,165,90,.35)'" style="display:inline-flex;align-items:center;gap:1.2rem;background:#2b2d31;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem 1.4rem;margin:0 auto;max-width:460px;width:100%;text-align:left;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s;cursor:pointer">
 <img alt="Cut &amp; Hire" src="dadawfa223133414.gif" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex-shrink:0"/>
 <div style="flex:1;min-width:0">
@@ -4375,7 +5351,16 @@ body.hero-start-boost
 <span><span style="color:rgba(255,255,255,.3);font-size:.55rem">●</span> <span id="disc-members">—</span> Members</span>
 </div>
 </div>
-<a href="https://discord.gg/dXemseJsDV" onmouseout="this.style.background='#23a55a'" onmouseover="this.style.background='#1a8a47'" style="background:#23a55a;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:4px;font-weight:700;font-size:.85rem;text-decoration:none;flex-shrink:0;transition:background .2s" target="_blank">Join</a>
+<a href="https://discord.gg/dXemseJsDV" onmouseout="this.style.background='#23a55a'" onmouseover="this.style.background='#1a8a47'" style="background:#23a55a;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:4px;font-weight:700;font-size:.85rem;text-decoration:none;flex-shrink:0;transition:background .2s" target="_blank" rel="noopener">Join</a>
+</div>
+</div>
+<a class="contact-action contact-whatsapp" href="https://wa.me/51924991093?text=Hi%20Cut%20%26%20Hire%2C%20I%20want%20to%20start%20a%20project." target="_blank" rel="noopener" aria-label="Message Cut and Hire on WhatsApp">
+<span class="contact-action-glow" aria-hidden="true"></span>
+<img src="whatsapp.png" alt="" class="contact-action-icon"/>
+<span class="contact-action-top">Message us</span>
+<span class="contact-action-main">WhatsApp</span>
+<span class="contact-action-foot">Message us directly</span>
+</a>
 </div>
 </div>
 </div>
@@ -6474,5 +7459,104 @@ ring.style.visibility = 'visible';
   }
 })();
 </script>
+
+<script>
+
+/* ==================== PRICING SHOWCASE CAROUSEL ==================== */
+(function(){
+  const root = document.querySelector('[data-pricing-carousel]');
+  if(!root) return;
+
+  const viewport = root.querySelector('.pricing-viewport');
+  const track = root.querySelector('.pricing-track');
+  const cards = Array.from(root.querySelectorAll('[data-pricing-card]'));
+  const prev = root.querySelector('[data-pricing-prev]');
+  const next = root.querySelector('[data-pricing-next]');
+  const dotsWrap = document.querySelector('[data-pricing-dots]');
+  let index = 0;
+  let startX = 0;
+  let dragging = false;
+
+  function perView(){
+    if (window.innerWidth <= 680) return 1;
+    if (window.innerWidth <= 980) return 2;
+    return 3;
+  }
+
+  function maxIndex(){
+    return Math.max(0, cards.length - perView());
+  }
+
+  function cardStep(){
+    if(!cards[0]) return 0;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || 0);
+    return cards[0].getBoundingClientRect().width + gap;
+  }
+
+  function buildDots(){
+    if(!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    const total = maxIndex() + 1;
+    for(let i = 0; i < total; i++){
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'pricing-dot';
+      dot.setAttribute('aria-label', 'Go to pricing slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function update(){
+    index = Math.max(0, Math.min(index, maxIndex()));
+    track.style.transform = 'translate3d(' + (-index * cardStep()) + 'px,0,0)';
+    if(dotsWrap){
+      Array.from(dotsWrap.children).forEach((dot, i) => dot.classList.toggle('on', i === index));
+    }
+    if(prev) prev.disabled = maxIndex() === 0;
+    if(next) next.disabled = maxIndex() === 0;
+  }
+
+  function goTo(nextIndex){
+    index = nextIndex;
+    update();
+  }
+
+  function go(dir){
+    const total = maxIndex();
+    if(total === 0) return update();
+    index = index + dir;
+    if(index < 0) index = total;
+    if(index > total) index = 0;
+    update();
+  }
+
+  prev && prev.addEventListener('click', () => go(-1));
+  next && next.addEventListener('click', () => go(1));
+
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    viewport.setPointerCapture && viewport.setPointerCapture(e.pointerId);
+  });
+  viewport.addEventListener('pointerup', (e) => {
+    if(!dragging) return;
+    dragging = false;
+    const diff = e.clientX - startX;
+    if(Math.abs(diff) > 42) go(diff < 0 ? 1 : -1);
+  });
+  viewport.addEventListener('pointercancel', () => dragging = false);
+
+  window.addEventListener('resize', () => {
+    buildDots();
+    update();
+  }, {passive:true});
+
+  buildDots();
+  update();
+})();
+</script>
+
 </body>
 </html>

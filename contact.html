@@ -986,6 +986,142 @@ body::before{
 }
 </style>
 
+
+
+<style>
+/* ===== V14 CONTACT PAGE BUTTONS: match the index side buttons =====
+   Book A Call + WhatsApp are equal size, clear buttons, bigger call icon, no logo glow. */
+.contact-action-lane{
+  gap:.55rem!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.contact-side-action{
+  width:188px!important;
+  max-width:188px!important;
+  min-width:188px!important;
+  height:78px!important;
+  min-height:78px!important;
+  border-radius:8px!important;
+  background:#2b2d31!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:none!important;
+  color:#fff!important;
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.66rem!important;
+  padding:.86rem .9rem!important;
+  text-align:left!important;
+  cursor:pointer!important;
+  transform:none!important;
+  overflow:hidden!important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s,background .3s!important;
+}
+.contact-side-action::before,
+.contact-side-action::after{
+  display:none!important;
+  content:none!important;
+}
+.contact-side-action:hover,
+.contact-side-action:focus-visible{
+  transform:scale(1.04) translateY(-4px)!important;
+  background:#303238!important;
+  border-color:rgba(224,32,32,.38)!important;
+  box-shadow:0 0 40px rgba(224,32,32,.18),0 20px 60px rgba(0,0,0,.4)!important;
+  outline:none!important;
+  filter:none!important;
+}
+.contact-side-whatsapp:hover,
+.contact-side-whatsapp:focus-visible{
+  border-color:rgba(35,165,90,.45)!important;
+  box-shadow:0 0 40px rgba(35,165,90,.22),0 20px 60px rgba(0,0,0,.4)!important;
+}
+.contact-side-action:active{transform:scale(.99) translateY(-1px)!important;}
+.contact-side-copy{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  line-height:1!important;
+}
+.contact-side-kicker{
+  display:block!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:.48rem!important;
+  letter-spacing:.13em!important;
+  text-transform:uppercase!important;
+  color:rgba(255,255,255,.58)!important;
+  margin:0 0 .18rem!important;
+  white-space:nowrap!important;
+}
+.contact-side-main,
+.contact-side-main-sans{
+  display:block!important;
+  color:#fff!important;
+  text-shadow:none!important;
+  white-space:nowrap!important;
+}
+.contact-side-main{
+  font-family:'Playfair Display',serif!important;
+  font-size:1.1rem!important;
+  line-height:1.02!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+}
+.contact-side-main-sans{
+  font-family:'DM Sans',sans-serif!important;
+  font-size:.96rem!important;
+  font-weight:800!important;
+  letter-spacing:-.015em!important;
+}
+.contact-side-icon{
+  width:36px!important;
+  height:36px!important;
+  flex:0 0 36px!important;
+  margin:0!important;
+  object-fit:contain!important;
+  opacity:1!important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1)!important;
+}
+.contact-side-book-icon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:rgba(255,255,255,.95)!important;
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+.contact-side-book-icon svg{
+  width:34px!important;
+  height:34px!important;
+  display:block!important;
+  filter:none!important;
+}
+.contact-side-whatsapp .contact-side-icon{
+  filter:brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(596%) hue-rotate(93deg) brightness(96%) contrast(91%)!important;
+}
+.contact-side-action:hover .contact-side-icon{transform:scale(1.05)!important;}
+@media(max-width:980px){
+  .contact-action-lane{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:620px!important;margin:1.7rem auto 0!important;gap:.85rem!important;}
+  .contact-action-lane .contact-main-btn{grid-column:1 / -1!important;grid-row:1!important;display:flex!important;justify-content:center!important;}
+  .contact-side-book{grid-column:1!important;grid-row:2!important;}
+  .contact-side-whatsapp{grid-column:2!important;grid-row:2!important;}
+  .contact-side-book,.contact-side-whatsapp{width:100%!important;max-width:none!important;min-width:0!important;}
+}
+@media(max-width:640px){
+  .contact-action-lane{grid-template-columns:1fr!important;max-width:420px!important;margin-top:1.15rem!important;gap:.65rem!important;}
+  .contact-action-lane .contact-main-btn{grid-column:1!important;grid-row:1!important;}
+  .contact-side-book{grid-column:1!important;grid-row:2!important;}
+  .contact-side-whatsapp{grid-column:1!important;grid-row:3!important;}
+  .contact-side-action{height:74px!important;min-height:74px!important;width:100%!important;max-width:none!important;min-width:0!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="orb o1"></div>
@@ -1026,8 +1162,16 @@ body::before{
 
   <div class="contact-action-lane" id="contact-actions" aria-label="Contact options">
     <a class="contact-side-action contact-side-book" href="https://calendar.app.google/4oRbUVPcrCtm2KRGA" target="_blank" rel="noopener" aria-label="Book a Cut and Hire discovery call">
-      <span class="contact-side-kicker">Book</span>
-      <span class="contact-side-main">A Call</span>
+      <span class="contact-side-icon contact-side-book-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 3v3M17 3v3M4.5 9.2h15M6.6 5h10.8c1.16 0 2.1.94 2.1 2.1v10.3c0 1.16-.94 2.1-2.1 2.1H6.6c-1.16 0-2.1-.94-2.1-2.1V7.1C4.5 5.94 5.44 5 6.6 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.2 13h7.6M8.2 16h4.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="contact-side-copy">
+        <span class="contact-side-kicker">Book</span>
+        <span class="contact-side-main">A Call</span>
+      </span>
     </a>
 
     <div class="contact-main-btn" id="discord-btn">
@@ -1040,8 +1184,10 @@ body::before{
 
     <a class="contact-side-action contact-side-whatsapp" href="https://wa.me/51924991093?text=Hi%20Cut%20%26%20Hire%2C%20I%20want%20to%20start%20a%20project." target="_blank" rel="noopener" aria-label="Message Cut and Hire on WhatsApp">
       <img src="whatsapp.png" alt="" aria-hidden="true" class="contact-side-icon">
-      <span class="contact-side-kicker">Message us</span>
-      <span class="contact-side-main contact-side-main-sans">WhatsApp</span>
+      <span class="contact-side-copy">
+        <span class="contact-side-kicker">Message us</span>
+        <span class="contact-side-main contact-side-main-sans">WhatsApp</span>
+      </span>
     </a>
   </div>
 

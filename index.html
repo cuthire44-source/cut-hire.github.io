@@ -5034,6 +5034,388 @@ body.hero-start-boost
 }
 </style>
 
+
+<style>
+/* ===== V12 INDEX CTA FIX — symmetrical side buttons, Discord invite restored/untouched ===== */
+#discord .contact-cta-row{
+  max-width:940px!important;
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.85rem!important;
+  flex-wrap:nowrap!important;
+}
+#discord .discord-card-wrap{
+  flex:0 1 450px!important;
+  min-width:310px!important;
+  max-width:450px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+/* keep the real Discord invite card looking like itself */
+#discord .contact-cta-row #discord-invite-card{
+  height:auto!important;
+  min-height:78px!important;
+  border-radius:8px!important;
+  padding:1rem 1.4rem!important;
+  margin:0 auto!important;
+  max-width:460px!important;
+  width:100%!important;
+}
+#discord .contact-book,
+#discord .contact-whatsapp{
+  flex:0 0 205px!important;
+  width:205px!important;
+  max-width:205px!important;
+  height:78px!important;
+  min-height:78px!important;
+  border-radius:8px!important;
+  padding:1rem 1.05rem!important;
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:.72rem!important;
+  text-align:left!important;
+  background:#2b2d31!important;
+  border:1px solid rgba(255,255,255,.1)!important;
+  box-shadow:none!important;
+  color:#fff!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  cursor:pointer!important;
+  transform:none!important;
+  filter:none!important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s,background .3s!important;
+}
+#discord .contact-book::before,
+#discord .contact-book::after,
+#discord .contact-whatsapp::before,
+#discord .contact-whatsapp::after{
+  display:none!important;
+  content:none!important;
+}
+#discord .contact-book:hover,
+#discord .contact-book:focus-visible{
+  transform:scale(1.04) translateY(-4px)!important;
+  box-shadow:0 0 40px rgba(224,32,32,.18),0 20px 60px rgba(0,0,0,.4)!important;
+  border-color:rgba(224,32,32,.38)!important;
+  background:#303238!important;
+  outline:none!important;
+}
+#discord .contact-whatsapp:hover,
+#discord .contact-whatsapp:focus-visible{
+  transform:scale(1.04) translateY(-4px)!important;
+  box-shadow:0 0 40px rgba(35,165,90,.22),0 20px 60px rgba(0,0,0,.4)!important;
+  border-color:rgba(35,165,90,.45)!important;
+  background:#303238!important;
+  outline:none!important;
+}
+#discord .contact-book:active,
+#discord .contact-whatsapp:active{
+  transform:scale(.99) translateY(-1px)!important;
+}
+#discord .contact-action-copy{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  line-height:1!important;
+}
+#discord .contact-action-top{
+  display:block!important;
+  font-family:'DM Mono',monospace!important;
+  font-size:.58rem!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+  color:rgba(255,255,255,.52)!important;
+  margin:0 0 .22rem!important;
+  white-space:nowrap!important;
+}
+#discord .contact-action-main{
+  display:block!important;
+  font-family:'DM Sans',sans-serif!important;
+  font-size:1.02rem!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+  letter-spacing:-.015em!important;
+  color:#fff!important;
+  text-shadow:none!important;
+  white-space:nowrap!important;
+}
+#discord .contact-book .contact-action-main{
+  font-family:'Playfair Display',serif!important;
+  font-size:1.18rem!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+}
+#discord .contact-action-icon{
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  object-fit:contain!important;
+  opacity:1!important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),filter .3s ease!important;
+}
+#discord .contact-book-icon{
+  color:#fff!important;
+  border-radius:50%!important;
+  background:rgba(224,32,32,.14)!important;
+  box-shadow:0 0 18px rgba(224,32,32,.18)!important;
+  filter:none!important;
+}
+#discord .contact-whatsapp .contact-action-icon{
+  filter:brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(596%) hue-rotate(93deg) brightness(96%) contrast(91%) drop-shadow(0 0 10px rgba(35,165,90,.35))!important;
+}
+#discord .contact-book:hover .contact-action-icon,
+#discord .contact-whatsapp:hover .contact-action-icon{
+  transform:scale(1.08)!important;
+}
+#discord .contact-action-foot,
+#discord .contact-action-glow{
+  display:none!important;
+}
+@media(max-width:1050px){
+  #discord .contact-cta-row{
+    max-width:620px!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:.85rem!important;
+    align-items:stretch!important;
+  }
+  #discord .discord-card-wrap{grid-column:1 / -1!important;grid-row:1!important;max-width:100%!important;min-width:0!important;width:100%!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;}
+  #discord .contact-whatsapp{grid-column:2!important;grid-row:2!important;}
+  #discord .contact-book,
+  #discord .contact-whatsapp{width:100%!important;max-width:none!important;flex:auto!important;}
+}
+@media(max-width:560px){
+  #discord .contact-cta-row{grid-template-columns:1fr!important;max-width:360px!important;gap:.7rem!important;}
+  #discord .discord-card-wrap{grid-column:1!important;grid-row:1!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;}
+  #discord .contact-whatsapp{grid-column:1!important;grid-row:3!important;}
+  #discord .contact-book,
+  #discord .contact-whatsapp{height:74px!important;min-height:74px!important;padding:.86rem 1rem!important;}
+}
+</style>
+
+
+
+<style>
+/* ===== V13 INDEX CTA TIGHT SYMMETRY — only the two new side buttons =====
+   Keeps the Discord invite card visually intact, but pulls the two new buttons
+   closer so the row feels balanced and not stretched out. */
+#discord .contact-cta-row{
+  width:100%!important;
+  max-width:840px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:176px minmax(420px,460px) 176px!important;
+  justify-content:center!important;
+  align-items:center!important;
+  column-gap:.52rem!important;
+  row-gap:.7rem!important;
+}
+#discord .discord-card-wrap{
+  grid-column:2!important;
+  grid-row:1!important;
+  width:100%!important;
+  max-width:460px!important;
+  min-width:0!important;
+  justify-self:center!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#discord .contact-cta-row #discord-invite-card{
+  width:100%!important;
+  max-width:460px!important;
+  min-height:78px!important;
+  margin:0!important;
+}
+#discord .contact-book,
+#discord .contact-whatsapp{
+  width:176px!important;
+  max-width:176px!important;
+  min-width:176px!important;
+  height:78px!important;
+  min-height:78px!important;
+  flex:none!important;
+  justify-self:center!important;
+  border-radius:8px!important;
+  background:#2b2d31!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.62rem!important;
+  padding:.86rem .88rem!important;
+  text-align:left!important;
+}
+#discord .contact-book{grid-column:1!important;grid-row:1!important;}
+#discord .contact-whatsapp{grid-column:3!important;grid-row:1!important;}
+#discord .contact-action-icon{
+  width:30px!important;
+  height:30px!important;
+  flex:0 0 30px!important;
+  margin:0!important;
+}
+#discord .contact-action-top{
+  font-size:.46rem!important;
+  letter-spacing:.13em!important;
+  margin-bottom:.18rem!important;
+}
+#discord .contact-action-main{
+  font-size:.95rem!important;
+  line-height:1.02!important;
+}
+#discord .contact-book .contact-action-main{
+  font-size:1.08rem!important;
+}
+#discord .contact-whatsapp .contact-action-main{
+  font-size:.95rem!important;
+}
+#discord .contact-book:hover,
+#discord .contact-book:focus-visible,
+#discord .contact-whatsapp:hover,
+#discord .contact-whatsapp:focus-visible{
+  transform:scale(1.04) translateY(-4px)!important;
+  background:#303238!important;
+  outline:none!important;
+}
+#discord .contact-book:hover,
+#discord .contact-book:focus-visible{
+  border-color:rgba(224,32,32,.38)!important;
+  box-shadow:0 0 40px rgba(224,32,32,.18),0 20px 60px rgba(0,0,0,.4)!important;
+}
+#discord .contact-whatsapp:hover,
+#discord .contact-whatsapp:focus-visible{
+  border-color:rgba(35,165,90,.45)!important;
+  box-shadow:0 0 40px rgba(35,165,90,.22),0 20px 60px rgba(0,0,0,.4)!important;
+}
+@media(max-width:1050px){
+  #discord .contact-cta-row{
+    max-width:620px!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:.85rem!important;
+  }
+  #discord .discord-card-wrap{grid-column:1 / -1!important;grid-row:1!important;max-width:100%!important;width:100%!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;}
+  #discord .contact-whatsapp{grid-column:2!important;grid-row:2!important;}
+  #discord .contact-book,
+  #discord .contact-whatsapp{width:100%!important;max-width:none!important;min-width:0!important;}
+}
+@media(max-width:560px){
+  #discord .contact-cta-row{max-width:360px!important;grid-template-columns:1fr!important;gap:.7rem!important;}
+  #discord .discord-card-wrap{grid-column:1!important;grid-row:1!important;}
+  #discord .contact-book{grid-column:1!important;grid-row:2!important;}
+  #discord .contact-whatsapp{grid-column:1!important;grid-row:3!important;}
+  #discord .contact-book,
+  #discord .contact-whatsapp{height:74px!important;min-height:74px!important;width:100%!important;max-width:none!important;min-width:0!important;}
+}
+</style>
+
+
+
+<style>
+/* ===== V14: SIDE BUTTON LOGO + SYMMETRY CLEANUP =====
+   - only Book A Call + WhatsApp are changed
+   - Discord invite card is left alone
+   - the two new buttons stay same size
+   - call logo is bigger and has no glow bubble */
+#discord .contact-cta-row{
+  max-width:870px!important;
+  grid-template-columns:188px minmax(420px,460px) 188px!important;
+  column-gap:.48rem!important;
+}
+#discord .contact-book,
+#discord .contact-whatsapp{
+  width:188px!important;
+  max-width:188px!important;
+  min-width:188px!important;
+  height:78px!important;
+  min-height:78px!important;
+  border-radius:8px!important;
+  background:#2b2d31!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  box-shadow:none!important;
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.66rem!important;
+  padding:.86rem .9rem!important;
+  color:#fff!important;
+}
+#discord .contact-action-icon{
+  width:36px!important;
+  height:36px!important;
+  flex:0 0 36px!important;
+  margin:0!important;
+}
+#discord .contact-book-icon{
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  color:rgba(255,255,255,.95)!important;
+  filter:none!important;
+}
+#discord .contact-book-icon svg{
+  width:34px!important;
+  height:34px!important;
+  display:block!important;
+  filter:none!important;
+}
+#discord .contact-whatsapp .contact-action-icon{
+  filter:brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(596%) hue-rotate(93deg) brightness(96%) contrast(91%)!important;
+}
+#discord .contact-book:hover .contact-action-icon,
+#discord .contact-whatsapp:hover .contact-action-icon{
+  transform:scale(1.05)!important;
+  filter:none!important;
+}
+#discord .contact-whatsapp:hover .contact-action-icon{
+  filter:brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(596%) hue-rotate(93deg) brightness(96%) contrast(91%)!important;
+}
+#discord .contact-action-top{
+  font-size:.48rem!important;
+  letter-spacing:.13em!important;
+}
+#discord .contact-action-main{
+  font-size:.96rem!important;
+}
+#discord .contact-book .contact-action-main{
+  font-size:1.1rem!important;
+}
+@media(max-width:1050px){
+  #discord .contact-cta-row{
+    grid-template-columns:1fr 1fr!important;
+    max-width:620px!important;
+    gap:.85rem!important;
+  }
+  #discord .contact-book,
+  #discord .contact-whatsapp{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+}
+@media(max-width:560px){
+  #discord .contact-cta-row{grid-template-columns:1fr!important;max-width:360px!important;gap:.7rem!important;}
+  #discord .contact-book,
+  #discord .contact-whatsapp{height:74px!important;min-height:74px!important;width:100%!important;max-width:none!important;min-width:0!important;}
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 <script>
@@ -5435,9 +5817,16 @@ body.hero-start-boost
 <p class="disc-sub">Open a ticket, book a call, or message us on WhatsApp. We'll guide you from there.</p>
 <div class="contact-cta-row" aria-label="Contact options">
 <a class="contact-action contact-book" href="https://calendar.app.google/4oRbUVPcrCtm2KRGA" target="_blank" rel="noopener" aria-label="Book a Cut and Hire discovery call">
-<span class="contact-action-glow" aria-hidden="true"></span>
+<span class="contact-action-icon contact-book-icon" aria-hidden="true">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7 3v3M17 3v3M4.5 9.2h15M6.6 5h10.8c1.16 0 2.1.94 2.1 2.1v10.3c0 1.16-.94 2.1-2.1 2.1H6.6c-1.16 0-2.1-.94-2.1-2.1V7.1C4.5 5.94 5.44 5 6.6 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.2 13h7.6M8.2 16h4.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+</svg>
+</span>
+<span class="contact-action-copy">
 <span class="contact-action-top">Book</span>
 <span class="contact-action-main">A Call</span>
+</span>
 </a>
 <div class="discord-card-wrap">
 <div id="discord-invite-card" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(255,255,255,.1)'" onmouseover="this.style.transform='scale(1.04) translateY(-4px)';this.style.boxShadow='0 0 40px rgba(35,165,90,.2),0 20px 60px rgba(0,0,0,.4)';this.style.borderColor='rgba(35,165,90,.35)'" style="display:inline-flex;align-items:center;gap:1.2rem;background:#2b2d31;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem 1.4rem;margin:0 auto;max-width:460px;width:100%;text-align:left;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s;cursor:pointer">
@@ -5454,10 +5843,11 @@ body.hero-start-boost
 </div>
 </div>
 <a class="contact-action contact-whatsapp" href="https://wa.me/51924991093?text=Hi%20Cut%20%26%20Hire%2C%20I%20want%20to%20start%20a%20project." target="_blank" rel="noopener" aria-label="Message Cut and Hire on WhatsApp">
-<span class="contact-action-glow" aria-hidden="true"></span>
 <img src="whatsapp.png" alt="" class="contact-action-icon"/>
+<span class="contact-action-copy">
 <span class="contact-action-top">Message us</span>
 <span class="contact-action-main">WhatsApp</span>
+</span>
 </a>
 </div>
 </div>

@@ -919,6 +919,73 @@ body::before{
 }
 </style>
 
+
+<style>
+/* ===== V11 CLEAR CONTACT PAGE SIDE BUTTONS — readable, obvious, Discord-card hover ===== */
+.contact-side-action{
+  height:62px!important;
+  min-height:62px!important;
+  border-radius:10px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:#2b2d31!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.055)!important;
+  color:#fff!important;
+  cursor:pointer!important;
+  opacity:1!important;
+  padding:.68rem 1.25rem!important;
+  overflow:hidden!important;
+  transform:none!important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease, background .3s ease!important;
+}
+.contact-side-action::before,
+.contact-side-action::after{
+  display:none!important;
+  content:none!important;
+}
+.contact-side-action:hover,
+.contact-side-action:focus-visible{
+  transform:scale(1.04) translateY(-4px)!important;
+  background:#303238!important;
+  box-shadow:0 0 40px rgba(224,32,32,.18), 0 20px 60px rgba(0,0,0,.4)!important;
+  border-color:rgba(224,32,32,.38)!important;
+  filter:none!important;
+  outline:none!important;
+}
+.contact-side-whatsapp:hover,
+.contact-side-whatsapp:focus-visible{
+  box-shadow:0 0 40px rgba(35,165,90,.22), 0 20px 60px rgba(0,0,0,.4)!important;
+  border-color:rgba(35,165,90,.45)!important;
+}
+.contact-side-action:active{
+  transform:scale(.99) translateY(-1px)!important;
+}
+.contact-side-book{width:190px!important;}
+.contact-side-whatsapp{width:285px!important;}
+.contact-side-kicker{
+  color:rgba(255,255,255,.58)!important;
+  margin-bottom:.24rem!important;
+}
+.contact-side-main,
+.contact-side-main-sans{
+  color:#fff!important;
+  text-shadow:none!important;
+}
+.contact-side-small{display:none!important;}
+.contact-side-icon{
+  width:24px!important;
+  height:24px!important;
+  margin:0 0 .16rem!important;
+  opacity:1!important;
+  filter:brightness(0) saturate(100%) invert(47%) sepia(83%) saturate(587%) hue-rotate(93deg) brightness(95%) contrast(91%) drop-shadow(0 0 10px rgba(35,165,90,.35))!important;
+}
+.contact-side-action:hover .contact-side-icon{
+  transform:scale(1.07)!important;
+}
+@media(max-width:980px){
+  .contact-side-book,.contact-side-whatsapp{width:100%!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="orb o1"></div>
@@ -961,7 +1028,6 @@ body::before{
     <a class="contact-side-action contact-side-book" href="https://calendar.app.google/4oRbUVPcrCtm2KRGA" target="_blank" rel="noopener" aria-label="Book a Cut and Hire discovery call">
       <span class="contact-side-kicker">Book</span>
       <span class="contact-side-main">A Call</span>
-      <span class="contact-side-small">Schedule today</span>
     </a>
 
     <div class="contact-main-btn" id="discord-btn">
@@ -976,7 +1042,6 @@ body::before{
       <img src="whatsapp.png" alt="" aria-hidden="true" class="contact-side-icon">
       <span class="contact-side-kicker">Message us</span>
       <span class="contact-side-main contact-side-main-sans">WhatsApp</span>
-      <span class="contact-side-small">Message us directly</span>
     </a>
   </div>
 

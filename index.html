@@ -518,6 +518,13 @@
 <!-- /SEO -->
 <link href="logo.png" rel="icon" type="image/png"/>
 <link as="image" fetchpriority="high" href="whatsapp.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="minimalreelphoto.jpg" rel="preload"/>
+<link as="image" fetchpriority="high" href="2danimtionwindow.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="thumbnailwindow.jpg" rel="preload"/>
+<link as="image" fetchpriority="high" href="fulltimeeditors2.png" rel="preload"/>
+<link as="video" href="Video 44.mp4" rel="preload"/>
+<link as="video" href="Video 43.mp4" rel="preload"/>
+
 <link as="image" fetchpriority="high" href="7xLgtMa0Xb5M3IAu.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Lily Sample.Mp4.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Longform23(1).png" rel="preload"/>
@@ -3113,7 +3120,7 @@ body.hero-start-boost
   display:flex;
   gap:24px;
   will-change:transform;
-  transition:transform .65s cubic-bezier(.16,1,.3,1);
+  transition:transform .34s cubic-bezier(.22,1,.36,1);
 }
 .pricing-card{
   flex:0 0 calc((100% - 48px) / 3);
@@ -3509,6 +3516,126 @@ body.hero-start-boost
   .pricing-arrow-left{left:2px}
   .pricing-arrow-right{right:2px}
 }
+
+
+/* ===== PRICING V15: 6 cards + Increditors-style extra categories + playable previews ===== */
+.pricing-card{display:flex;flex-direction:column;}
+.pricing-card-body{display:flex;flex-direction:column;flex:1;}
+.pricing-list{flex:1;}
+.pricing-video-shell{cursor:pointer;}
+.pricing-video-shell .pricing-preview-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:0;
+  transform:scale(1.02);
+  transition:opacity .32s ease, transform .55s cubic-bezier(.16,1,.3,1), filter .55s ease;
+  background:#050505;
+  z-index:1;
+  pointer-events:none;
+}
+.pricing-video-shell:hover .pricing-preview-video,
+.pricing-video-shell.preview-on .pricing-preview-video{
+  opacity:1;
+  transform:scale(1.08);
+  filter:saturate(1.12) contrast(1.08) brightness(.88);
+}
+.pricing-video-shell:hover img,
+.pricing-video-shell.preview-on img{opacity:0;}
+.pricing-video-shell .pricing-img-tag{z-index:4;}
+.pricing-video-play{
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:5;
+  width:54px;
+  height:54px;
+  border-radius:999px;
+  transform:translate(-50%,-50%) scale(.9);
+  display:grid;
+  place-items:center;
+  color:#fff;
+  background:rgba(224,32,32,.62);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 0 34px rgba(224,32,32,.48), inset 0 1px 0 rgba(255,255,255,.22);
+  backdrop-filter:blur(9px);
+  opacity:.92;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), background .3s ease, box-shadow .3s ease;
+}
+.pricing-video-play::before{
+  content:"";
+  margin-left:4px;
+  border-left:15px solid currentColor;
+  border-top:10px solid transparent;
+  border-bottom:10px solid transparent;
+}
+.pricing-video-shell:hover .pricing-video-play,
+.pricing-video-shell:focus-visible .pricing-video-play{
+  transform:translate(-50%,-50%) scale(1.05);
+  background:rgba(224,32,32,.82);
+  box-shadow:0 0 48px rgba(224,32,32,.65), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.pricing-video-shell:focus-visible{outline:2px solid rgba(255,48,48,.72);outline-offset:3px;}
+.pricing-simple-price{
+  justify-content:flex-start!important;
+  margin:18px 0 14px;
+}
+.pricing-simple-price .pricing-new-price{font-size:clamp(26px,2.1vw,36px);}
+.pricing-simple-price .pricing-period{font-size:13px;}
+.pricing-btn.pricing-btn-call{
+  background:linear-gradient(135deg,#141416,#080808 52%,#1e1e22);
+  border:1px solid rgba(255,50,50,.42);
+  box-shadow:0 14px 34px rgba(0,0,0,.42),0 0 30px rgba(255,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.pricing-btn.pricing-btn-call:hover{box-shadow:0 18px 44px rgba(0,0,0,.52),0 0 42px rgba(255,0,0,.24),inset 0 1px 0 rgba(255,255,255,.16);}
+.pricing-btn.pricing-btn-book{
+  background:linear-gradient(135deg,#151515,#070707 52%,#202020);
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 14px 34px rgba(0,0,0,.42),0 0 28px rgba(255,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.pricing-btn.pricing-btn-book:hover{box-shadow:0 18px 46px rgba(0,0,0,.52),0 0 38px rgba(255,0,0,.22),inset 0 1px 0 rgba(255,255,255,.15);}
+.thumb-pricing-img img{object-position:center;}
+.anim-pricing-img img{object-position:center;}
+.minimal-pricing-img img{object-position:center;}
+@media(max-width:680px){
+  .pricing-video-play{width:48px;height:48px;}
+  .pricing-video-play::before{border-left-width:13px;border-top-width:9px;border-bottom-width:9px;}
+}
+
+/* ===== PRICING V16: simple-price sale chip, no crossed text for custom/simple prices ===== */
+.pricing-simple-price{
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+.pricing-simple-price .pricing-save-chip{
+  flex:0 0 auto;
+}
+.pricing-simple-price .pricing-price-line{
+  flex:1 1 auto;
+}
+@media(max-width:680px){
+  .pricing-simple-price{justify-content:flex-start!important;}
+}
+
+
+
+/* ===== PRICING VIDEO DIRECT LINK PATCH: keep video shells visually identical even as real links ===== */
+a.pricing-img-shell.pricing-video-shell{
+  display:block;
+  color:inherit;
+  text-decoration:none;
+}
+a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
+
+/* ===== PRICING CLEANUP: remove category/name pills on image shells ===== */
+.pricing-img-tag{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+
+/* ===== PRICING IMAGE LABEL CLEANUP: removes Short Form / Minimal Reels / Long Form / Team Setup / 2D Animation / Thumbnails pills only ===== */
+.pricing-img-tag{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====
@@ -5575,10 +5702,37 @@ body.hero-start-boost
 
       <div class="pricing-viewport">
         <div class="pricing-track">
+                    <article class="pricing-card" data-pricing-card>
+            <div class="pricing-img-shell reels-pricing-img">
+              <img src="reels.jpg" alt="Reels and short-form pricing examples" loading="lazy">
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For TikTok, Reels and Shorts</p>
+              <h3>Reels Pricing</h3>
+              <div class="pricing-price-wrap">
+                <div class="pricing-price-line" aria-label="Reels pricing regular $2.5K per month, discount price $2K per month">
+                  <span class="pricing-from">From</span>
+                  <span class="pricing-old-price">$2.5K</span>
+                  <strong class="pricing-new-price">$2K</strong>
+                  <span class="pricing-period">/month</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">Fast vertical edits built for hooks, pacing, captions, replay value, and platform-ready delivery across every short-form channel.</p>
+              <ul class="pricing-list">
+                <li>Optimized for every platform</li>
+                <li>1-2 days turnaround</li>
+                <li>Dedicated editors</li>
+                <li>Dedicated project manager</li>
+                <li>Upload assistance</li>
+              </ul>
+              <a class="pricing-btn js-contact-jump" href="#discord">Social Media Pricing</a>
+            </div>
+          </article>
+
           <article class="pricing-card pricing-card-featured" data-pricing-card>
             <div class="pricing-img-shell yt-pricing-img">
               <img src="yt videos.jpg" alt="YouTube pricing thumbnail collage" loading="lazy">
-              <span class="pricing-img-tag">Long Form</span>
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For creators building bigger videos</p>
@@ -5602,43 +5756,13 @@ body.hero-start-boost
                 <li>Ideation and scripting</li>
                 <li>Video SEO support</li>
               </ul>
-              <a class="pricing-btn" href="#discord">YouTube Pricing</a>
-            </div>
-          </article>
-
-          <article class="pricing-card" data-pricing-card>
-            <div class="pricing-img-shell reels-pricing-img">
-              <img src="reels.jpg" alt="Reels and short-form pricing examples" loading="lazy">
-              <span class="pricing-img-tag">Short Form</span>
-            </div>
-            <div class="pricing-card-body">
-              <p class="pricing-kicker">For TikTok, Reels and Shorts</p>
-              <h3>Reels Pricing</h3>
-              <div class="pricing-price-wrap">
-                <div class="pricing-price-line" aria-label="Reels pricing regular $2.5K per month, discount price $2K per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$2.5K</span>
-                  <strong class="pricing-new-price">$2K</strong>
-                  <span class="pricing-period">/month</span>
-                </div>
-                <span class="pricing-save-chip">-20% off</span>
-              </div>
-              <p class="pricing-copy">Fast vertical edits built for hooks, pacing, captions, replay value, and platform-ready delivery across every short-form channel.</p>
-              <ul class="pricing-list">
-                <li>Optimized for every platform</li>
-                <li>1-2 days turnaround</li>
-                <li>Dedicated editors</li>
-                <li>Dedicated project manager</li>
-                <li>Upload assistance</li>
-              </ul>
-              <a class="pricing-btn" href="#discord">Social Media Pricing</a>
+              <a class="pricing-btn js-contact-jump" href="#discord">YouTube Pricing</a>
             </div>
           </article>
 
           <article class="pricing-card pricing-card-team" data-pricing-card>
             <div class="pricing-img-shell team-pricing-img">
-              <img src="fulltime editors team.png" alt="Full-time editors and team pricing graphic" loading="lazy">
-              <span class="pricing-img-tag">Team Setup</span>
+              <img src="fulltimeeditors2.png" alt="Full-time editors and team pricing graphic" loading="lazy">
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For brands needing daily output</p>
@@ -5662,9 +5786,95 @@ body.hero-start-boost
                 <li>Expertly vetted talent</li>
                 <li>Managed by Cut &amp; Hire</li>
               </ul>
-              <a class="pricing-btn" href="#discord">Full-Time Pricing</a>
+              <a class="pricing-btn js-contact-jump" href="#discord">Full-Time Pricing</a>
             </div>
           </article>
+
+          <article class="pricing-card pricing-card-featured" data-pricing-card>
+            <a class="pricing-img-shell pricing-video-shell minimal-pricing-img" href="javascript:void(0)" role="button" tabindex="0" aria-label="Open Minimal Reels Pricing YouTube video" data-pricing-src="Video 44.mp4" data-pricing-poster="minimalreelphoto.jpg" data-pricing-title="Minimal Reels Pricing" data-pricing-portrait="true" data-pricing-youtube="https://youtube.com/shorts/k2s_fIZtLV8?feature=share">
+              <img src="minimalreelphoto.jpg" alt="Minimal reels pricing preview" loading="lazy">
+              <video class="pricing-preview-video" muted loop playsinline preload="none" poster="minimalreelphoto.jpg"></video>
+              <span class="pricing-video-play" aria-hidden="true"></span>
+            </a>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For creators who want clean viral authority</p>
+              <h3>Minimal Reels Pricing</h3>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Minimal Reels pricing from $500 per 30 seconds with 20 percent off">
+                  <span class="pricing-from">From</span>
+                  <strong class="pricing-new-price">$500</strong>
+                  <span class="pricing-period">/30 seconds</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">Clean minimal short-form edits built for hooks, authority, pacing, subtitles, and a polished brand feel.</p>
+              <ul class="pricing-list">
+                <li>The Most Viral Probability</li>
+                <li>3 days turnaround time</li>
+                <li>Storyboarding</li>
+                <li>AI Voiceover</li>
+                <li>Dan Koe Style</li>
+              </ul>
+              <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/4oRbUVPcrCtm2KRGA" target="_blank" rel="noopener">Book a Call</a>
+            </div>
+          </article>
+
+          <article class="pricing-card" data-pricing-card>
+            <a class="pricing-img-shell pricing-video-shell anim-pricing-img" href="javascript:void(0)" role="button" tabindex="0" aria-label="Open 2D Animation Pricing YouTube video" data-pricing-src="Video 43.mp4" data-pricing-poster="2danimtionwindow.png" data-pricing-title="2D Animation Pricing" data-pricing-portrait="false" data-pricing-youtube="https://youtu.be/oB6tEFoRAww">
+              <img src="2danimtionwindow.png" alt="2D animation pricing preview" loading="lazy">
+              <video class="pricing-preview-video" muted loop playsinline preload="none" poster="2danimtionwindow.png"></video>
+              <span class="pricing-video-play" aria-hidden="true"></span>
+            </a>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For B2B and SaaS companies</p>
+              <h3>2D Animation Pricing</h3>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="2D Animation pricing from $4.5K per minute with 20 percent off">
+                  <span class="pricing-from">From</span>
+                  <strong class="pricing-new-price">$4.5K</strong>
+                  <span class="pricing-period">/min</span>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">For B2B and SaaS companies to explain their products and increase conversion with polished animated videos.</p>
+              <ul class="pricing-list">
+                <li>14 days turnaround time</li>
+                <li>Storyboarding</li>
+                <li>Scriptwriting</li>
+                <li>Voiceover</li>
+                <li>Over 20 different styles</li>
+                <li>Repurposed content for ads</li>
+              </ul>
+              <a class="pricing-btn js-contact-jump" href="#discord">2D Animation Pricing</a>
+            </div>
+          </article>
+
+          <article class="pricing-card" data-pricing-card>
+            <div class="pricing-img-shell thumb-pricing-img">
+              <img src="thumbnailwindow.jpg" alt="Thumbnail pricing design window" loading="lazy">
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For stronger clicks and cleaner packaging</p>
+              <h3>Thumbnail Pricing</h3>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Thumbnail pricing custom pricing with 20 percent off">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
+                </div>
+                <span class="pricing-save-chip">-20% off</span>
+              </div>
+              <p class="pricing-copy">Custom thumbnail design built around your niche, idea, emotion, title, and click-focused visual hierarchy.</p>
+              <ul class="pricing-list">
+                <li>Click-focused concepts</li>
+                <li>Clean text hierarchy</li>
+                <li>Face/photo polish</li>
+                <li>Brand style matching</li>
+                <li>Multiple thumbnail directions</li>
+                <li>Fast revisions</li>
+              </ul>
+              <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/4oRbUVPcrCtm2KRGA" target="_blank" rel="noopener">Book a Call</a>
+            </div>
+          </article>
+        
         </div>
       </div>
 
@@ -6909,6 +7119,51 @@ function unlockPageForVideo(){
   requestAnimationFrame(function(){ window.scrollTo(0, window.__videoSavedScrollY || 0); });
 }
 
+
+function cnhNormalizeYouTubeEmbedSrc(input){
+  const raw = String(input || '').trim().replace(/&amp;/g, '&');
+  if(!raw) return '';
+
+  function withEmbedParams(base){
+    try{
+      const u = new URL(base, window.location.href);
+      if(!u.searchParams.has('autoplay')) u.searchParams.set('autoplay','1');
+      if(!u.searchParams.has('rel')) u.searchParams.set('rel','0');
+      if(!u.searchParams.has('playsinline')) u.searchParams.set('playsinline','1');
+      if(!u.searchParams.has('modestbranding')) u.searchParams.set('modestbranding','1');
+      return u.toString();
+    }catch(e){
+      return base;
+    }
+  }
+
+  try{
+    const u = new URL(raw, window.location.href);
+    const host = u.hostname.replace(/^www\./,'').toLowerCase();
+    const parts = u.pathname.split('/').filter(Boolean);
+    let id = '';
+
+    if(host === 'youtu.be'){
+      id = parts[0] || '';
+    }else if(host.endsWith('youtube.com') || host.endsWith('youtube-nocookie.com')){
+      if(parts[0] === 'embed') return withEmbedParams(raw);
+      if(parts[0] === 'shorts') id = parts[1] || '';
+      if(!id) id = u.searchParams.get('v') || '';
+    }
+
+    if(id){
+      return 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    }
+  }catch(err){
+    const match = raw.match(/(?:youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/embed\/|[?&]v=)([A-Za-z0-9_-]{6,})/i);
+    if(match && match[1]){
+      return 'https://www.youtube.com/embed/' + encodeURIComponent(match[1]) + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    }
+  }
+
+  return raw;
+}
+
 function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
   lockPageForVideo(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());
@@ -6917,7 +7172,7 @@ function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
   vpScreen.classList.toggle('clean-top-source-icon', !!cleanTopIcon);
 
   const frame=document.getElementById('vp-embed-iframe');
-  const cleanSrc=String(embedSrc||'').trim();
+  const cleanSrc=cnhNormalizeYouTubeEmbedSrc(embedSrc);
   document.getElementById('vp-placeholder').style.display=cleanSrc?'none':'flex';
   video.style.display='none';
   if(frame){
@@ -6929,6 +7184,9 @@ function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
   vpEl.classList.add('open','youtube-active');
   vpUpdatePlay(false);
 }
+
+window.cnhNormalizeYouTubeEmbedSrc = cnhNormalizeYouTubeEmbedSrc;
+window.vpOpenYouTube = vpOpenYouTube;
 
 function vpOpen(src,title,isPortrait,poster,cleanTopIcon){
   lockPageForVideo(); hardStopVideoPlayer();
@@ -7949,104 +8207,528 @@ ring.style.visibility = 'visible';
 </script>
 
 <script>
-
-/* ==================== PRICING SHOWCASE CAROUSEL ==================== */
+/* ==================== PRICING SHOWCASE CAROUSEL ====================
+   Stable loop + preload patch:
+   - prevents empty black space when the next/prev arrows are clicked fast while scrolling
+   - preloads pricing cards once the pricing section is near the viewport
+   - keeps the scroll entrance animation untouched */
 (function(){
   const root = document.querySelector('[data-pricing-carousel]');
   if(!root) return;
 
+  const section = root.closest('.pricing-showcase-section') || root;
   const viewport = root.querySelector('.pricing-viewport');
   const track = root.querySelector('.pricing-track');
-  const cards = Array.from(root.querySelectorAll('[data-pricing-card]'));
   const prev = root.querySelector('[data-pricing-prev]');
   const next = root.querySelector('[data-pricing-next]');
   const dotsWrap = document.querySelector('[data-pricing-dots]');
-  let index = 0;
-  let startX = 0;
-  let dragging = false;
+  const realCards = Array.from(track.querySelectorAll(':scope > [data-pricing-card]'));
 
-  function perView(){
-    if (window.innerWidth <= 680) return 1;
-    if (window.innerWidth <= 980) return 2;
+  let realIndex = 0; // first visible row stays: Reels Pricing → YouTube Pricing → Full-Time Editors/Team
+  let physicalIndex = 0;
+  let cloneCount = 0;
+  let startX = 0;
+  let startY = 0;
+  let dragging = false;
+  let resizeTimer = 0;
+  let animTimer = 0;
+  let isAnimating = false;
+  let pendingDir = 0;
+  let lastTranslate = 0;
+  let didPreloadPricing = false;
+
+  if(!realCards.length) return;
+
+  function mod(n, m){ return ((n % m) + m) % m; }
+
+  function visibleCount(){
+    if(window.matchMedia('(max-width: 680px)').matches) return 1;
+    if(window.matchMedia('(max-width: 980px)').matches) return 2;
     return 3;
   }
 
-  function maxIndex(){
-    return Math.max(0, cards.length - perView());
+  function gapSize(){
+    const styles = getComputedStyle(track);
+    return parseFloat(styles.columnGap || styles.gap || 0) || 0;
+  }
+
+  function allCards(){
+    return Array.from(track.children).filter(el => el.matches('[data-pricing-card]'));
   }
 
   function cardStep(){
+    const cards = allCards();
     if(!cards[0]) return 0;
-    const styles = getComputedStyle(track);
-    const gap = parseFloat(styles.columnGap || styles.gap || 0);
-    return cards[0].getBoundingClientRect().width + gap;
+    return cards[0].getBoundingClientRect().width + gapSize();
+  }
+
+  function translateForPhysical(pos){
+    return Math.max(0, pos * cardStep());
+  }
+
+  function cloneCard(card){
+    const clone = card.cloneNode(true);
+    clone.setAttribute('data-pricing-clone','true');
+    clone.setAttribute('aria-hidden','true');
+    clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    clone.querySelectorAll('[tabindex]').forEach(el => el.setAttribute('tabindex','-1'));
+    clone.querySelectorAll('[data-pricing-wired]').forEach(el => el.removeAttribute('data-pricing-wired'));
+    clone.querySelectorAll('video').forEach(video => {
+      try{
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      }catch(e){}
+    });
+    clone.querySelectorAll('img').forEach(img => {
+      img.loading = 'eager';
+      img.decoding = 'async';
+    });
+    return clone;
+  }
+
+  function removeClones(){
+    track.querySelectorAll('[data-pricing-clone="true"]').forEach(clone => clone.remove());
+  }
+
+  function setPosition(animate){
+    const x = translateForPhysical(physicalIndex);
+    lastTranslate = x;
+    track.style.transition = animate ? 'transform .34s cubic-bezier(.22,1,.36,1)' : 'none';
+    track.style.transform = 'translate3d(' + (-x) + 'px,0,0)';
+    updateDots();
+
+    if(!animate){
+      // Force the snap before restoring the transition. This prevents a visual slide when we normalize the loop.
+      track.getBoundingClientRect();
+      track.style.transition = 'transform .34s cubic-bezier(.22,1,.36,1)';
+    }
+  }
+
+  function normalizeLoopPosition(){
+    const total = realCards.length;
+    let changed = false;
+
+    if(physicalIndex < cloneCount){
+      physicalIndex += total;
+      changed = true;
+    }else if(physicalIndex >= cloneCount + total){
+      physicalIndex -= total;
+      changed = true;
+    }
+
+    if(changed) setPosition(false);
+  }
+
+  function resetAnimationState(){
+    clearTimeout(animTimer);
+    isAnimating = false;
+    normalizeLoopPosition();
+
+    // Do not replay queued arrow clicks after the slide ends.
+    // Replaying them was the reason cards moved a little late after fast clicks.
+    pendingDir = 0;
+  }
+
+  function startAnimationGuard(){
+    clearTimeout(animTimer);
+    isAnimating = true;
+    animTimer = setTimeout(resetAnimationState, 430);
+  }
+
+  function setupClones(){
+    clearTimeout(animTimer);
+    isAnimating = false;
+    pendingDir = 0;
+    removeClones();
+
+    cloneCount = Math.min(visibleCount(), realCards.length);
+    const before = realCards.slice(realCards.length - cloneCount).map(cloneCard);
+    const after = realCards.slice(0, cloneCount).map(cloneCard);
+
+    before.forEach(clone => track.insertBefore(clone, realCards[0]));
+    after.forEach(clone => track.appendChild(clone));
+
+    physicalIndex = realIndex + cloneCount;
+    setPosition(false);
+    wirePricingVideos();
+    if(didPreloadPricing) preloadPricingMedia();
   }
 
   function buildDots(){
     if(!dotsWrap) return;
     dotsWrap.innerHTML = '';
-    const total = maxIndex() + 1;
-    for(let i = 0; i < total; i++){
+    realCards.forEach((card, i) => {
       const dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'pricing-dot';
-      dot.setAttribute('aria-label', 'Go to pricing slide ' + (i + 1));
+      const title = (card.querySelector('h3') || {}).textContent || ('pricing category ' + (i + 1));
+      dot.setAttribute('aria-label', 'Go to ' + title.trim());
       dot.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(dot);
-    }
+    });
   }
 
-  function update(){
-    index = Math.max(0, Math.min(index, maxIndex()));
-    track.style.transform = 'translate3d(' + (-index * cardStep()) + 'px,0,0)';
-    if(dotsWrap){
-      Array.from(dotsWrap.children).forEach((dot, i) => dot.classList.toggle('on', i === index));
-    }
-    if(prev) prev.disabled = maxIndex() === 0;
-    if(next) next.disabled = maxIndex() === 0;
-  }
-
-  function goTo(nextIndex){
-    index = nextIndex;
-    update();
+  function updateDots(){
+    if(!dotsWrap) return;
+    Array.from(dotsWrap.children).forEach((dot, i) => {
+      dot.classList.toggle('on', i === realIndex);
+      dot.setAttribute('aria-selected', i === realIndex ? 'true' : 'false');
+    });
   }
 
   function go(dir){
-    const total = maxIndex();
-    if(total === 0) return update();
-    index = index + dir;
-    if(index < 0) index = total;
-    if(index > total) index = 0;
-    update();
+    if(realCards.length <= 1){ setPosition(false); return; }
+    preloadPricingMedia();
+
+    // This is the main empty-space fix: never let fast repeated clicks push the track past the clone buffer.
+    if(isAnimating){
+      // Ignore extra arrow clicks while the current slide is moving.
+      // This keeps the carousel from doing delayed/queued movements.
+      return;
+    }
+
+    normalizeLoopPosition();
+    physicalIndex += dir;
+    realIndex = mod(realIndex + dir, realCards.length);
+    setPosition(true);
+    startAnimationGuard();
+  }
+
+  function goTo(target){
+    target = mod(target, realCards.length);
+    preloadPricingMedia();
+
+    if(isAnimating){
+      // No delayed dot movement while the track is mid-transition.
+      return;
+    }
+
+    if(target === realIndex){
+      track.animate([
+        { transform:'translate3d(' + (-lastTranslate) + 'px,0,0) scale(1)' },
+        { transform:'translate3d(' + (-lastTranslate) + 'px,0,0) scale(.992)' },
+        { transform:'translate3d(' + (-lastTranslate) + 'px,0,0) scale(1)' }
+      ], { duration:260, easing:'cubic-bezier(.22,1,.36,1)' });
+      updateDots();
+      return;
+    }
+
+    normalizeLoopPosition();
+    const total = realCards.length;
+    const forward = mod(target - realIndex, total);
+    const backward = mod(realIndex - target, total);
+
+    if(forward <= backward){
+      physicalIndex += forward;
+    }else{
+      physicalIndex -= backward;
+    }
+
+    realIndex = target;
+    setPosition(true);
+    startAnimationGuard();
+  }
+
+  function preloadPricingMedia(){
+    didPreloadPricing = true;
+
+    root.querySelectorAll('img').forEach(img => {
+      const src = img.currentSrc || img.getAttribute('src');
+      img.loading = 'eager';
+      img.decoding = 'async';
+      try{ img.fetchPriority = 'high'; }catch(e){}
+      if(src){
+        const pre = new Image();
+        pre.decoding = 'async';
+        pre.src = src;
+      }
+    });
+
+    root.querySelectorAll('video.pricing-preview-video').forEach(video => {
+      const shell = video.closest('[data-pricing-src]');
+      const src = shell ? shell.getAttribute('data-pricing-src') : '';
+      const poster = shell ? shell.getAttribute('data-pricing-poster') : '';
+      if(poster) video.setAttribute('poster', poster);
+      if(src && !video.getAttribute('src')){
+        video.preload = 'metadata';
+        video.setAttribute('src', src);
+        try{ video.load(); }catch(e){}
+      }
+    });
+  }
+
+  function setupPreloadObserver(){
+    if('IntersectionObserver' in window){
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            preloadPricingMedia();
+            observer.disconnect();
+          }
+        });
+      }, { root:null, rootMargin:'900px 0px 900px 0px', threshold:0.01 });
+      observer.observe(section);
+    }else{
+      setTimeout(preloadPricingMedia, 700);
+    }
+
+    // Fallback: one tiny delay after load, so local testing does not wait on the observer.
+    window.addEventListener('load', () => setTimeout(preloadPricingMedia, 450), { once:true });
+  }
+
+  function wirePricingVideos(){
+    root.querySelectorAll('[data-pricing-src],[data-pricing-youtube]').forEach(shell => {
+      if(shell.dataset.pricingWired === 'true') return;
+      shell.dataset.pricingWired = 'true';
+
+      const video = shell.querySelector('.pricing-preview-video');
+      const src = shell.getAttribute('data-pricing-src') || '';
+      const poster = shell.getAttribute('data-pricing-poster') || '';
+      const title = shell.getAttribute('data-pricing-title') || 'Pricing preview';
+      const youtube = shell.getAttribute('data-pricing-youtube') || '';
+      const portrait = shell.getAttribute('data-pricing-portrait') === 'true';
+
+      function ensurePreview(){
+        if(!video || !src) return;
+        if(!video.getAttribute('src')){
+          video.setAttribute('src', src);
+          if(poster) video.setAttribute('poster', poster);
+          video.preload = 'metadata';
+          try{ video.load(); }catch(e){}
+        }
+      }
+
+      function playPreview(){
+        ensurePreview();
+        shell.classList.add('preview-on');
+        if(video) video.play().catch(()=>{});
+      }
+
+      function stopPreview(){
+        shell.classList.remove('preview-on');
+        if(video){
+          try{ video.pause(); video.currentTime = 0; }catch(e){}
+        }
+      }
+
+      function openPreview(e){
+        if(e){
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        let pricingYoutube = youtube;
+        if(!pricingYoutube && shell.classList.contains('minimal-pricing-img')) pricingYoutube = 'https://youtube.com/shorts/k2s_fIZtLV8?feature=share';
+        if(!pricingYoutube && shell.classList.contains('anim-pricing-img')) pricingYoutube = 'https://youtu.be/oB6tEFoRAww';
+        const pricingEmbed = (typeof cnhNormalizeYouTubeEmbedSrc === 'function') ? cnhNormalizeYouTubeEmbedSrc(pricingYoutube) : pricingYoutube;
+        if(pricingEmbed && typeof window.vpOpenYouTube === 'function'){
+          window.vpOpenYouTube(pricingEmbed, title, portrait, false);
+        }else if(pricingYoutube){
+          window.open(pricingYoutube, '_blank', 'noopener');
+        }
+      }
+
+      shell.addEventListener('mouseenter', playPreview, {passive:true});
+      shell.addEventListener('mouseleave', stopPreview, {passive:true});
+      shell.addEventListener('focus', playPreview);
+      shell.addEventListener('blur', stopPreview);
+      shell.addEventListener('click', openPreview);
+      shell.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          openPreview(e);
+        }
+      });
+    });
   }
 
   prev && prev.addEventListener('click', () => go(-1));
   next && next.addEventListener('click', () => go(1));
 
+  track.addEventListener('transitionend', function(e){
+    if(e.target === track && e.propertyName === 'transform') resetAnimationState();
+  });
+
+  // Light swipe support without pointer-capture. This keeps clicks from being retargeted and avoids the old dead-click bug.
   viewport.addEventListener('pointerdown', (e) => {
     dragging = true;
     startX = e.clientX;
-    viewport.setPointerCapture && viewport.setPointerCapture(e.pointerId);
-  });
+    startY = e.clientY;
+  }, {passive:true});
+
   viewport.addEventListener('pointerup', (e) => {
     if(!dragging) return;
     dragging = false;
-    const diff = e.clientX - startX;
-    if(Math.abs(diff) > 42) go(diff < 0 ? 1 : -1);
-  });
-  viewport.addEventListener('pointercancel', () => dragging = false);
-
-  window.addEventListener('resize', () => {
-    buildDots();
-    update();
+    const diffX = e.clientX - startX;
+    const diffY = e.clientY - startY;
+    if(Math.abs(diffX) > 48 && Math.abs(diffX) > Math.abs(diffY) * 1.2){
+      go(diffX < 0 ? 1 : -1);
+    }
   }, {passive:true});
 
+  viewport.addEventListener('pointercancel', () => { dragging = false; }, {passive:true});
+
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setupClones, 140);
+  }, {passive:true});
+
+  // Recalculate once after fonts/images settle so the first click never uses a wrong card width.
+  window.addEventListener('load', () => {
+    setTimeout(() => { setupClones(); setPosition(false); }, 160);
+  }, {once:true});
+
   buildDots();
-  update();
+  setupClones();
+  setupPreloadObserver();
 })();
 </script>
 
 
+
+
+
+
+
+
+
+
+
+<script>
+/* ===== FINAL PRICING YOUTUBE MODAL FIX =====
+   Minimal Reels + 2D Animation now open in the same in-site YouTube modal as the portfolio videos.
+   This stores the original pointerdown target because the carousel uses pointer-capture, which can retarget click/pointerup to the viewport. */
+(function(){
+  const MAP = [
+    { selector: '.minimal-pricing-img', id: 'k2s_fIZtLV8', title: 'Minimal Reels Pricing', portrait: true },
+    { selector: '.anim-pricing-img',    id: 'oB6tEFoRAww', title: '2D Animation Pricing',  portrait: false }
+  ];
+
+  let pressedShell = null;
+  let startX = 0;
+  let startY = 0;
+  let dragged = false;
+  let lastOpen = 0;
+
+  function findShell(target){
+    if(!target || !target.closest) return null;
+    return target.closest('.minimal-pricing-img, .anim-pricing-img');
+  }
+
+  function getInfo(shell){
+    if(!shell) return null;
+    const item = MAP.find(m => shell.matches(m.selector));
+    return item ? Object.assign({ shell }, item) : null;
+  }
+
+  function embedUrl(id){
+    return 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+  }
+
+  function forceOpenModal(info){
+    if(!info) return;
+    const now = Date.now();
+    if(now - lastOpen < 350) return;
+    lastOpen = now;
+
+    const src = embedUrl(info.id);
+
+    if(typeof window.vpOpenYouTube === 'function'){
+      window.vpOpenYouTube(src, info.title, info.portrait, false);
+      return;
+    }
+
+    // Backup path in case the original player function is renamed/broken later.
+    const wrap = document.getElementById('vp-wrap');
+    const screen = document.getElementById('vp-screen');
+    const controls = document.getElementById('vp-controls');
+    const frame = document.getElementById('vp-embed-iframe');
+    const vid = document.getElementById('vp-video');
+    const placeholder = document.getElementById('vp-placeholder');
+    if(!wrap || !screen || !frame) { window.open('https://youtu.be/' + info.id, '_blank', 'noopener'); return; }
+
+    try{ if(typeof window.lockPageForVideo === 'function') window.lockPageForVideo(); }catch(e){}
+    try{ if(vid){ vid.pause(); vid.removeAttribute('src'); vid.style.display='none'; vid.load(); } }catch(e){}
+    if(placeholder) placeholder.style.display='none';
+
+    screen.className = 'vp-screen ' + (info.portrait ? 'portrait' : 'landscape');
+    if(controls) controls.className = 'vp-controls ' + (info.portrait ? 'portrait' : 'landscape');
+    frame.title = info.title;
+    frame.src = src;
+    frame.style.display = 'block';
+    wrap.classList.add('open','youtube-active');
+  }
+
+  document.addEventListener('pointerdown', function(e){
+    const shell = findShell(e.target);
+    if(!shell) return;
+    pressedShell = shell;
+    startX = e.clientX || 0;
+    startY = e.clientY || 0;
+    dragged = false;
+  }, true);
+
+  document.addEventListener('pointermove', function(e){
+    if(!pressedShell) return;
+    if(Math.abs((e.clientX || 0) - startX) > 12 || Math.abs((e.clientY || 0) - startY) > 12){
+      dragged = true;
+    }
+  }, true);
+
+  document.addEventListener('pointercancel', function(){
+    pressedShell = null;
+    dragged = false;
+  }, true);
+
+  document.addEventListener('click', function(e){
+    const targetShell = findShell(e.target);
+    const shell = targetShell || (!dragged ? pressedShell : null);
+    const info = getInfo(shell);
+    if(!info) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    if(typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+    pressedShell = null;
+    dragged = false;
+    forceOpenModal(info);
+  }, true);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter' && e.key !== ' ') return;
+    const info = getInfo(findShell(e.target));
+    if(!info) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+    forceOpenModal(info);
+  }, true);
+})();
+</script>
+
+<script>
+/* ===== PRICING BUTTONS GO TO CONTACT CTA ===== */
+(function(){
+  function jumpToContact(event){
+    if(event) event.preventDefault();
+    const contactSection = document.getElementById('discord');
+    if(!contactSection) return;
+
+    const isMobile = window.matchMedia('(max-width: 680px)').matches;
+    const topOffset = isMobile ? 12 : 18;
+    const targetY = Math.max(0, contactSection.getBoundingClientRect().top + window.pageYOffset - topOffset);
+
+    try{ history.replaceState(null, '', location.pathname + location.search); }catch(err){}
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  }
+
+  document.addEventListener('click', function(event){
+    const btn = event.target.closest('.js-contact-jump');
+    if(!btn) return;
+    jumpToContact(event);
+  });
+})();
+</script>
 
 <script>
 /* ===== START TODAY CLICK-ONLY PRICING POSITION =====
@@ -8087,5 +8769,122 @@ ring.style.visibility = 'visible';
   });
 })();
 </script>
+
+<style>
+/* ===== PRICING BUTTON CLICK FIX =====
+   Keep the carousel swipe/click scripts away from the actual pricing CTA buttons. */
+.pricing-card-body{position:relative;z-index:8;}
+.pricing-btn{position:relative!important;z-index:20!important;pointer-events:auto!important;touch-action:manipulation;}
+.pricing-btn::before{pointer-events:none!important;}
+.pricing-card[data-pricing-clone="true"] .pricing-btn{pointer-events:auto!important;}
+</style>
+
+<script>
+/* ===== PRICING BUTTONS FINAL FIX =====
+   Works on real cards and cloned carousel cards.
+   - Red pricing buttons scroll to the contact/booking CTA section.
+   - Book a Call buttons open Google Calendar.
+   - Small drag/swipe is ignored so carousel swiping still feels normal. */
+(function(){
+  const BOOK_URL = 'https://calendar.app.google/4oRbUVPcrCtm2KRGA';
+  let pressedBtn = null;
+  let startX = 0;
+  let startY = 0;
+  let moved = false;
+  let lastAction = 0;
+
+  function buttonFrom(target){
+    if(!target || !target.closest) return null;
+    const btn = target.closest('.pricing-carousel-wrap .pricing-btn');
+    return btn || null;
+  }
+
+  function jumpToContact(){
+    const contactSection = document.getElementById('discord') || document.querySelector('[data-contact-section]') || document.querySelector('footer');
+    if(!contactSection) return;
+    const isMobile = window.matchMedia('(max-width: 680px)').matches;
+    const topOffset = isMobile ? 12 : 18;
+    const y = Math.max(0, contactSection.getBoundingClientRect().top + window.pageYOffset - topOffset);
+    try{ history.replaceState(null, '', location.pathname + location.search); }catch(err){}
+    window.scrollTo({ top:y, behavior:'smooth' });
+  }
+
+  function openBookCall(){
+    const win = window.open(BOOK_URL, '_blank', 'noopener');
+    if(!win) window.location.href = BOOK_URL;
+  }
+
+  function run(btn, event){
+    if(!btn) return;
+    const now = Date.now();
+    if(now - lastAction < 300) return;
+    lastAction = now;
+
+    if(event){
+      event.preventDefault();
+      event.stopPropagation();
+      if(typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+    }
+
+    if(btn.classList.contains('pricing-btn-book')){
+      openBookCall();
+      return;
+    }
+
+    jumpToContact();
+  }
+
+  document.addEventListener('pointerdown', function(event){
+    const btn = buttonFrom(event.target);
+    if(!btn) return;
+    pressedBtn = btn;
+    startX = event.clientX || 0;
+    startY = event.clientY || 0;
+    moved = false;
+  }, true);
+
+  document.addEventListener('pointermove', function(event){
+    if(!pressedBtn) return;
+    const dx = Math.abs((event.clientX || 0) - startX);
+    const dy = Math.abs((event.clientY || 0) - startY);
+    if(dx > 12 || dy > 12) moved = true;
+  }, true);
+
+  document.addEventListener('pointercancel', function(){
+    pressedBtn = null;
+    moved = false;
+  }, true);
+
+  document.addEventListener('click', function(event){
+    const btn = buttonFrom(event.target) || (!moved ? pressedBtn : null);
+    if(!btn) return;
+    const dx = Math.abs((event.clientX || 0) - startX);
+    const dy = Math.abs((event.clientY || 0) - startY);
+    const wasDrag = moved || dx > 14 || dy > 14;
+    pressedBtn = null;
+    moved = false;
+    if(wasDrag) return;
+    run(btn, event);
+  }, true);
+
+  document.addEventListener('keydown', function(event){
+    if(event.key !== 'Enter' && event.key !== ' ') return;
+    const btn = buttonFrom(event.target);
+    if(!btn) return;
+    run(btn, event);
+  }, true);
+})();
+</script>
+
+
+<style>
+/* ===== PRICING ARROW INSTANT FEEL FIX =====
+   Faster movement + no delayed queued movement after fast next/prev clicks. */
+.pricing-track{transition:transform .34s cubic-bezier(.22,1,.36,1)!important;}
+.pricing-arrow{touch-action:manipulation;}
+.pricing-arrow:active{transform:translateY(-50%) scale(.94)!important;}
+@media (max-width:980px){.pricing-arrow:active{transform:scale(.94)!important;}}
+</style>
+
 </body>
 </html>

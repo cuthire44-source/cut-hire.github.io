@@ -5619,6 +5619,31 @@ html, body{
   #work .con{width:100%!important;}
 }
 </style>
+
+<style id="hero-watch-reel-button-css">
+/* Hero second CTA: same button style as Start Today, but blue. */
+.btn-primary.main-mrbeast-glint-btn.hero-reel-btn{
+  background:linear-gradient(135deg,#1687ff,#32b7ff) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -2px 0 rgba(0,0,0,.34),
+    0 0 0 1px rgba(255,255,255,.03),
+    0 12px 28px rgba(0,0,0,.38),
+    0 14px 32px rgba(22,135,255,.22) !important;
+}
+.btn-primary.main-mrbeast-glint-btn.hero-reel-btn:hover{
+  filter:brightness(1.06) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -2px 0 rgba(0,0,0,.34),
+    0 0 0 1px rgba(255,255,255,.04),
+    0 12px 28px rgba(0,0,0,.38),
+    0 16px 36px rgba(22,135,255,.30) !important;
+}
+@media(max-width:680px){
+  .hero-cta .btn-primary{min-width:min(230px,86vw)}
+}
+</style>
 </head>
 <body class="hero-start-boost">
 <script>
@@ -5680,6 +5705,11 @@ html, body{
 <span aria-hidden="true" class="main-glint-stroke"></span>
 <span aria-hidden="true" class="main-glint-gloss"></span>
 <span>Start Today</span>
+</a>
+<a class="btn-primary main-mrbeast-glint-btn hero-reel-btn js-hero-reel" href="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" data-hero-reel-youtube="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" aria-label="Watch Cut & Hire reel">
+<span aria-hidden="true" class="main-glint-stroke"></span>
+<span aria-hidden="true" class="main-glint-gloss"></span>
+<span>Watch Our Reel</span>
 </a>
 </div>
 </div>
@@ -9127,5 +9157,40 @@ ring.style.visibility = 'visible';
   setTimeout(restorePricingLinks, 900);
 })();
 </script>
+
+<script id="hero-watch-reel-modal-js">
+/* Watch Our Reel opens a YouTube Shorts link inside the existing Cut & Hire video modal. */
+(function(){
+  const HERO_REEL_URL = 'https://youtube.com/shorts/k2s_fIZtLV8?feature=share';
+  let lastOpen = 0;
+
+  function openHeroReel(event){
+    const btn = event.target && event.target.closest ? event.target.closest('.js-hero-reel') : null;
+    if(!btn) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+
+    const now = Date.now();
+    if(now - lastOpen < 300) return;
+    lastOpen = now;
+
+    const rawUrl = btn.getAttribute('data-hero-reel-youtube') || HERO_REEL_URL;
+    if(typeof window.vpOpenYouTube === 'function'){
+      window.vpOpenYouTube(rawUrl, 'Cut & Hire Reel', true, false);
+    }else{
+      window.open(rawUrl, '_blank', 'noopener');
+    }
+  }
+
+  document.addEventListener('click', openHeroReel, true);
+  document.addEventListener('keydown', function(event){
+    if(event.key !== 'Enter' && event.key !== ' ') return;
+    openHeroReel(event);
+  }, true);
+})();
+</script>
+
 </body>
 </html>

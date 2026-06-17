@@ -518,6 +518,9 @@
 <!-- /SEO -->
 <link href="logo.png" rel="icon" type="image/png"/>
 <link as="image" fetchpriority="high" href="whatsapp.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="tik-tok.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="instagram.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="twitter.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="minimalreelphoto.jpg" rel="preload"/>
 <link as="image" fetchpriority="high" href="2danimtionwindow.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="thumbnailwindow.jpg" rel="preload"/>
@@ -5644,6 +5647,90 @@ html, body{
   .hero-cta .btn-primary{min-width:min(230px,86vw)}
 }
 </style>
+
+<style id="cut-hire-footer-social-update">
+/* ===== SIMPLE FOOTER SOCIAL ICONS: TikTok / Instagram / Twitter-X ===== */
+footer .fi{
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:2rem!important;
+}
+.footer-socials{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:1.15rem;
+  flex-wrap:wrap;
+}
+.footer-social-btn{
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  text-decoration:none;
+  background:transparent!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:none!important;
+  opacity:.78;
+  transition:opacity .22s ease, transform .22s cubic-bezier(.22,1,.36,1), border-color .22s ease, background .22s ease, box-shadow .22s ease;
+}
+.footer-social-btn::before,
+.footer-social-btn::after{
+  display:none!important;
+  content:none!important;
+}
+.footer-social-btn img{
+  width:24px;
+  height:24px;
+  object-fit:contain;
+  display:block;
+  position:relative;
+  z-index:2;
+  opacity:.95;
+  filter:brightness(0) invert(1)!important;
+  transition:transform .22s cubic-bezier(.22,1,.36,1), filter .22s ease, opacity .22s ease;
+}
+.footer-social-btn:hover,
+.footer-social-btn:focus-visible{
+  opacity:1;
+  transform:translateY(-2px);
+  border-color:rgba(224,32,32,.42)!important;
+  background:rgba(224,32,32,.08)!important;
+  box-shadow:0 0 18px rgba(224,32,32,.16)!important;
+  outline:none;
+}
+.footer-social-btn:hover img,
+.footer-social-btn:focus-visible img{
+  transform:scale(1.08);
+  filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(224,32,32,.45))!important;
+  opacity:1;
+}
+@media(max-width:820px){
+  footer .fi{
+    justify-content:center!important;
+    text-align:center!important;
+  }
+  .footer-socials{
+    width:100%;
+    margin:1rem auto 0;
+    justify-content:center;
+    gap:1rem;
+  }
+  .footer-social-btn{
+    width:42px;
+    height:42px;
+  }
+  .footer-social-btn img{
+    width:23px;
+    height:23px;
+  }
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 <script>
@@ -5744,7 +5831,7 @@ html, body{
 <div class="about-stats rv" id="hero-stats">
 <div class="stat projects-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="6184">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
 <div class="stat views-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="B+" data-target="3.1">0<span class="stat-suffix">B+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
-<div class="stat editors-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="50">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors &amp; Designers</div><div class="stat-bar"></div></div>
+<div class="stat editors-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="60">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors &amp; Designers</div><div class="stat-bar"></div></div>
 </div>
 </div>
 </section>
@@ -5919,7 +6006,7 @@ html, body{
                 <li>AI Voiceover</li>
                 <li>Gadzhi Style</li>
               </ul>
-              <a class="pricing-btn pricing-btn-book" href="#discord">Book a Call</a>
+              <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA" target="_blank" rel="noopener">Book a Call</a>
             </div>
           </article>
 
@@ -5974,7 +6061,7 @@ html, body{
                 <li>Multiple thumbnail directions</li>
                 <li>Fast revisions</li>
               </ul>
-              <a class="pricing-btn pricing-btn-book" href="#discord">Book a Call</a>
+              <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA" target="_blank" rel="noopener">Book a Call</a>
             </div>
           </article>
         
@@ -6129,7 +6216,7 @@ html, body{
 <h2 class="disc-h">Ready to <em>Create</em><br/>Something Great?</h2>
 <p class="disc-sub">Open a ticket, book a call, or message us on WhatsApp. We'll guide you from there.</p>
 <div class="contact-cta-row" aria-label="Contact options">
-<a class="contact-action contact-book" href="#discord" aria-label="Book a Cut and Hire discovery call">
+<a class="contact-action contact-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA" target="_blank" rel="noopener" aria-label="Book a Cut and Hire discovery call">
 <span class="contact-action-icon contact-book-icon" aria-hidden="true">
 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7 3v3M17 3v3M4.5 9.2h15M6.6 5h10.8c1.16 0 2.1.94 2.1 2.1v10.3c0 1.16-.94 2.1-2.1 2.1H6.6c-1.16 0-2.1-.94-2.1-2.1V7.1C4.5 5.94 5.44 5 6.6 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -6176,6 +6263,17 @@ html, body{
 </div>
 </a>
 <p>Elite video editing &amp; graphic design for creators, brands, and anyone with a story worth telling.</p>
+</div>
+<div class="footer-socials" aria-label="Cut &amp; Hire social links">
+<a class="footer-social-btn footer-social-tiktok" href="https://www.tiktok.com/@cutandhire?is_from_webapp=1&amp;sender_device=pc" target="_blank" rel="noopener" aria-label="Cut and Hire on TikTok">
+<img src="tik-tok.png" alt="" aria-hidden="true"/>
+</a>
+<a class="footer-social-btn footer-social-instagram" href="https://www.instagram.com/cutandhire/" target="_blank" rel="noopener" aria-label="Cut and Hire on Instagram">
+<img src="instagram.png" alt="" aria-hidden="true"/>
+</a>
+<a class="footer-social-btn footer-social-twitter" href="https://x.com/cutandhire" target="_blank" rel="noopener" aria-label="Cut and Hire on Twitter / X">
+<img src="twitter.png" alt="" aria-hidden="true"/>
+</a>
 </div>
 </div>
 <div class="fb-bot">
@@ -8939,6 +9037,14 @@ ring.style.visibility = 'visible';
       event.preventDefault();
       event.stopPropagation();
       if(typeof event.stopImmediatePropagation === 'function') event.stopImmediatePropagation();
+    }
+
+    if(btn.classList && btn.classList.contains('pricing-btn-book')){
+      const bookingUrl = (btn.getAttribute('href') || '').replace(/&amp;/g, '&');
+      if(/^https:\/\/calendar\.app\.google\//.test(bookingUrl)){
+        window.open(bookingUrl, '_blank', 'noopener');
+        return;
+      }
     }
 
     jumpToContact();

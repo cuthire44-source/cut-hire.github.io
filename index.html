@@ -5793,7 +5793,7 @@ footer .fi{
 <span aria-hidden="true" class="main-glint-gloss"></span>
 <span>Start Today</span>
 </a>
-<a class="btn-primary main-mrbeast-glint-btn hero-reel-btn js-hero-reel" href="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" data-hero-reel-youtube="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" aria-label="Watch Cut & Hire reel">
+<a class="btn-primary main-mrbeast-glint-btn hero-reel-btn js-hero-reel" href="https://youtu.be/QBdW_OE0Nug" data-hero-reel-youtube="https://youtu.be/QBdW_OE0Nug" aria-label="Watch Cut & Hire reel">
 <span aria-hidden="true" class="main-glint-stroke"></span>
 <span aria-hidden="true" class="main-glint-gloss"></span>
 <span>Watch Our Reel</span>
@@ -9233,9 +9233,9 @@ ring.style.visibility = 'visible';
 </script>
 
 <script id="hero-watch-reel-modal-js">
-/* Watch Our Reel opens a YouTube Shorts link inside the existing Cut & Hire video modal. */
+/* Watch Our Reel opens the selected YouTube video inside the existing Cut & Hire video modal. */
 (function(){
-  const HERO_REEL_URL = 'https://youtube.com/shorts/k2s_fIZtLV8?feature=share';
+  const HERO_REEL_URL = 'https://youtu.be/QBdW_OE0Nug';
   let lastOpen = 0;
 
   function openHeroReel(event){
@@ -9252,7 +9252,7 @@ ring.style.visibility = 'visible';
 
     const rawUrl = btn.getAttribute('data-hero-reel-youtube') || HERO_REEL_URL;
     if(typeof window.vpOpenYouTube === 'function'){
-      window.vpOpenYouTube(rawUrl, 'Cut & Hire Reel', true, false);
+      window.vpOpenYouTube(rawUrl, 'Cut & Hire Reel', false, false);
     }else{
       window.open(rawUrl, '_blank', 'noopener');
     }

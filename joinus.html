@@ -301,6 +301,7 @@
 <link href="logo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link as="image" fetchpriority="high" href="videojoinus21.png" rel="preload"/>
+<link as="image" href="Cut &amp; Hire V2.png" rel="preload"/>
 <style>
 :root{
   --bg:#000000;
@@ -2724,8 +2725,8 @@ body.video-modal-locked > *:not(.vp-wrap){filter:brightness(.55);}
 <div class="path-badge ed"><img alt="" class="icon-img badge-icon" src="scissors.png"/> For Editors/Designers</div>
 <span class="path-icon"><img alt="" src="film-reel.png"/></span>
 <h2>Ready to <em>land real clients?</em></h2>
-<div aria-label="Open editor/designer video placeholder" class="join-video-card editor-video-card is-placeholder" data-placeholder="true" data-video-poster="" data-video-src="" role="button" tabindex="0">
-<video class="join-video-preview" muted="" playsinline="" preload="none"></video>
+<div aria-label="Play editor/designer video" class="join-video-card editor-video-card" data-video-poster="Cut &amp; Hire V2.png" data-video-src="Cut &amp; Hire V2.mp4" role="button" tabindex="0">
+<video class="join-video-preview" muted="" playsinline="" poster="Cut &amp; Hire V2.png" preload="metadata" src="Cut &amp; Hire V2.mp4"></video>
 <div class="join-video-shade"></div>
 <div class="join-video-play">
 <span></span>
@@ -2856,6 +2857,7 @@ window.addEventListener('load', () => {
   }
 
   function openVideo(src, poster, isPlaceholder, playerTheme){
+    if(!isPlaceholder && !src) return;
     wrap.classList.remove('closing-neutral','placeholder-mode','placeholder-blue','placeholder-red','player-blue','player-red');
     wrap.classList.toggle('placeholder-mode', !!isPlaceholder);
     wrap.classList.toggle('placeholder-blue', !!isPlaceholder && playerTheme==='blue');

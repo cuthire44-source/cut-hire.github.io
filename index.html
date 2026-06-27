@@ -3695,6 +3695,21 @@ a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
   object-position:center;
 }
 
+
+
+/* ===== FINAL PATCH: make every pricing/category CTA red, including the old black Book/Call buttons ===== */
+.pricing-btn.pricing-btn-book,
+.pricing-btn.pricing-btn-call{
+  background:linear-gradient(135deg,#ff1e1e,#a60000 52%,#ff3535)!important;
+  border:1px solid rgba(255,60,60,.58)!important;
+  box-shadow:0 16px 40px rgba(255,0,0,.25), inset 0 1px 0 rgba(255,255,255,.2)!important;
+  color:#fff!important;
+}
+.pricing-btn.pricing-btn-book:hover,
+.pricing-btn.pricing-btn-call:hover{
+  background:linear-gradient(135deg,#ff3030,#b00000 52%,#ff4444)!important;
+  box-shadow:0 18px 46px rgba(255,0,0,.32),0 0 42px rgba(255,0,0,.24),inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
 </style>
 <style>
 /* ===== HERO SMOOTH MOVEMENT PATCH - NO START CENTER SNAP =====

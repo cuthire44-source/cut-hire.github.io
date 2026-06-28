@@ -7096,7 +7096,27 @@ function filterWork(cat,el){
 preloadCategoryAssets('thumbnail');
 preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
-window.addEventListener('resize',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(()=>{const g=document.getElementById('work-grid');const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);},180)}})());
+/* ===== RESIZE GLITCH FIX =====
+   Old code re-rendered the whole portfolio on every resize. On mobile, the address bar
+   changes viewport height while scrolling, which caused cards/videos to reset and look like
+   the site was zooming/glitching. Re-render only when crossing the mobile/desktop layout breakpoint. */
+(function(){
+  let lastMobilePortfolioState = isMobilePortfolioView();
+  window.addEventListener('resize', (()=>{
+    let t;
+    return ()=>{
+      clearTimeout(t);
+      t=setTimeout(()=>{
+        const nowMobile = isMobilePortfolioView();
+        if(nowMobile === lastMobilePortfolioState) return;
+        lastMobilePortfolioState = nowMobile;
+        const g=document.getElementById('work-grid');
+        const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;
+        renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);
+      },220);
+    };
+  })(), {passive:true});
+})();
 
 /* ===== AUTO VIDEO THUMBNAILS FROM 2–5 SECONDS ===== */
 let thumbObserver=null;
@@ -9340,6 +9360,80 @@ ring.style.visibility = 'visible';
   }, true);
 })();
 </script>
+
+
+
+<!-- ===== AUTO-ZOOM / MOBILE-DESKTOP GLITCH FIX =====
+     Added after all old CSS so it safely overrides the broken zoom-out behavior without
+     removing any content, cards, buttons, videos, thumbnails, or links. -->
+<style id="cut-hire-no-auto-zoom-fix">
+html,body{
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+
+/* Stop the hero background from auto zooming out on page load. */
+.hero-grid-bg{
+  animation:none!important;
+  transform:scale(1) rotate(0deg)!important;
+  will-change:auto!important;
+  backface-visibility:hidden!important;
+  transform-origin:center center!important;
+}
+@media(max-width:640px){
+  .hero-grid-bg{
+    animation:none!important;
+    transform:scale(1) rotate(0deg)!important;
+  }
+}
+
+/* Keep portfolio cards stable by default. Hover can still feel alive on real mouse devices. */
+.wc,
+.wc-video-thumb,
+.wc-preview-video,
+.wc-thumb{
+  backface-visibility:hidden!important;
+  -webkit-backface-visibility:hidden!important;
+}
+
+/* This old class was permanently scaling some thumbnails to crop an icon; that looked like random zooming. */
+.wc.clean-top-source-icon .wc-video-thumb,
+.wc.clean-top-source-icon .wc-preview-video{
+  transform:none!important;
+  object-position:center center!important;
+}
+
+/* Desktop only: tiny hover lift, not aggressive zoom. */
+@media(hover:hover) and (pointer:fine){
+  .wc:hover{transform:translateY(-2px)!important;}
+  .wc.is-video:hover .wc-video-thumb,
+  .wc.is-video:hover .wc-preview-video{
+    transform:scale(1.015)!important;
+  }
+}
+
+/* Mobile/tablet: disable sticky hover zoom completely. */
+@media(hover:none), (pointer:coarse){
+  .wc:hover,
+  .wc.is-video:hover .wc-video-thumb,
+  .wc.is-video:hover .wc-preview-video,
+  .hero-grid-thumb:hover{
+    transform:none!important;
+  }
+  .wc-icon-circle,
+  .wc:hover .wc-icon-circle{
+    transform:scale(1)!important;
+  }
+}
+
+/* Prevent reveal animations from shrinking cards while category content is rebuilding. */
+#work .wc.rv{
+  transform:none!important;
+}
+#work .wc.rv.vis{
+  transform:none!important;
+}
+</style>
 
 </body>
 </html>

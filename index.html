@@ -530,10 +530,7 @@
 
 <link as="image" fetchpriority="high" href="7xLgtMa0Xb5M3IAu.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Lily Sample.Mp4.png" rel="preload"/>
-<link as="image" fetchpriority="high" href="Longform23(1).png?v=20260621-newthumbs" rel="preload"/>
 <link as="image" fetchpriority="high" href="Longform37(1).png" rel="preload"/>
-<link as="image" fetchpriority="high" href="Longform39.png?v=20260621-newthumbs" rel="preload"/>
-<link as="image" fetchpriority="high" href="Longform58(1).png?v=20260621-newthumbs" rel="preload"/>
 <link as="image" fetchpriority="high" href="MInecraft LongForm.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="MInecraft LongForm2.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="Sequence 01 1(1).png" rel="preload"/>
@@ -3695,6 +3692,8 @@ a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
   object-position:center;
 }
 
+
+
 /* ===== FINAL PATCH: make every pricing/category CTA red, including the old black Book/Call buttons ===== */
 .pricing-btn.pricing-btn-book,
 .pricing-btn.pricing-btn-call{
@@ -6796,9 +6795,6 @@ const works=[
 {cat:['youtube','gaming'],title:'Sequence 01 7 (1)',src:'Video 25.mp4',thumb:'Sequence 01 7(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/41zH3gOWeJw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','gaming'],title:'Minecraft LongForm',src:'Video 17.mp4',thumb:'MInecraft LongForm.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/SeYpdqFks40?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','gaming'],title:'Minecraft LongForm 2',src:'Video 13.mp4',thumb:'MInecraft LongForm2.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/2qlcSZeE7Y0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['youtube','gaming'],title:'Longform 39',src:'Video 20.mp4',thumb:'Longform39.png?v=20260621-newthumbs',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/hbMw2mX3uIo?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['gaming','youtube'],title:'Longform 23 (1)',src:'Video 23.mp4',thumb:'Longform23(1).png?v=20260621-newthumbs',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/vfqf1kHR1Ss?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['gaming','youtube'],title:'Longform 58 (1)',src:'Video 24.mp4',thumb:'Longform58(1).png?v=20260621-newthumbs',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/gLxewoQ_0Oc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','documentary'],title:'Sequence 01 4 (1)',src:'Video 7.mp4',thumb:'Sequence 01 4(1).png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/E2i0kueWQJM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','documentary'],title:'Sequence 01 5',src:'Video 2.mp4',thumb:'Sequence 01 5.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Gn9WePyu1rU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['youtube','documentary'],title:'Sequence 01 6',src:'Video 29.mp4',thumb:'Sequence 01 6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/xsSBnoaRS4Q?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -7096,27 +7092,7 @@ function filterWork(cat,el){
 preloadCategoryAssets('thumbnail');
 preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
-/* ===== RESIZE GLITCH FIX =====
-   Old code re-rendered the whole portfolio on every resize. On mobile, the address bar
-   changes viewport height while scrolling, which caused cards/videos to reset and look like
-   the site was zooming/glitching. Re-render only when crossing the mobile/desktop layout breakpoint. */
-(function(){
-  let lastMobilePortfolioState = isMobilePortfolioView();
-  window.addEventListener('resize', (()=>{
-    let t;
-    return ()=>{
-      clearTimeout(t);
-      t=setTimeout(()=>{
-        const nowMobile = isMobilePortfolioView();
-        if(nowMobile === lastMobilePortfolioState) return;
-        lastMobilePortfolioState = nowMobile;
-        const g=document.getElementById('work-grid');
-        const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;
-        renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);
-      },220);
-    };
-  })(), {passive:true});
-})();
+window.addEventListener('resize',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(()=>{const g=document.getElementById('work-grid');const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);},180)}})());
 
 /* ===== AUTO VIDEO THUMBNAILS FROM 2–5 SECONDS ===== */
 let thumbObserver=null;
@@ -9360,80 +9336,6 @@ ring.style.visibility = 'visible';
   }, true);
 })();
 </script>
-
-
-
-<!-- ===== AUTO-ZOOM / MOBILE-DESKTOP GLITCH FIX =====
-     Added after all old CSS so it safely overrides the broken zoom-out behavior without
-     removing any content, cards, buttons, videos, thumbnails, or links. -->
-<style id="cut-hire-no-auto-zoom-fix">
-html,body{
-  max-width:100%!important;
-  overflow-x:hidden!important;
-}
-
-/* Stop the hero background from auto zooming out on page load. */
-.hero-grid-bg{
-  animation:none!important;
-  transform:scale(1) rotate(0deg)!important;
-  will-change:auto!important;
-  backface-visibility:hidden!important;
-  transform-origin:center center!important;
-}
-@media(max-width:640px){
-  .hero-grid-bg{
-    animation:none!important;
-    transform:scale(1) rotate(0deg)!important;
-  }
-}
-
-/* Keep portfolio cards stable by default. Hover can still feel alive on real mouse devices. */
-.wc,
-.wc-video-thumb,
-.wc-preview-video,
-.wc-thumb{
-  backface-visibility:hidden!important;
-  -webkit-backface-visibility:hidden!important;
-}
-
-/* This old class was permanently scaling some thumbnails to crop an icon; that looked like random zooming. */
-.wc.clean-top-source-icon .wc-video-thumb,
-.wc.clean-top-source-icon .wc-preview-video{
-  transform:none!important;
-  object-position:center center!important;
-}
-
-/* Desktop only: tiny hover lift, not aggressive zoom. */
-@media(hover:hover) and (pointer:fine){
-  .wc:hover{transform:translateY(-2px)!important;}
-  .wc.is-video:hover .wc-video-thumb,
-  .wc.is-video:hover .wc-preview-video{
-    transform:scale(1.015)!important;
-  }
-}
-
-/* Mobile/tablet: disable sticky hover zoom completely. */
-@media(hover:none), (pointer:coarse){
-  .wc:hover,
-  .wc.is-video:hover .wc-video-thumb,
-  .wc.is-video:hover .wc-preview-video,
-  .hero-grid-thumb:hover{
-    transform:none!important;
-  }
-  .wc-icon-circle,
-  .wc:hover .wc-icon-circle{
-    transform:scale(1)!important;
-  }
-}
-
-/* Prevent reveal animations from shrinking cards while category content is rebuilding. */
-#work .wc.rv{
-  transform:none!important;
-}
-#work .wc.rv.vis{
-  transform:none!important;
-}
-</style>
 
 </body>
 </html>

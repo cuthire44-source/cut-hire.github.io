@@ -1,4 +1,4 @@
-<!-- CUTANDHIRE FAST + WHAT CREATORS SAY + RESULTS WINDOW -->
+<!-- CUTANDHIRE NO OPEN REVIEWS BUTTON -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -4217,6 +4217,67 @@ a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
   object-position:center!important;
   border-radius:8px!important;
 }
+
+/* Extra client reviews added from Discord proof screenshots */
+#reviews .review-card.bubble-review-card .review-quote,
+#reviews .review-card.zxkie-review-card .review-quote{
+  font-size:.80rem!important;
+  line-height:1.48!important;
+  min-height:132px!important;
+}
+#reviews .review-card.kaim-review-card .review-quote{
+  font-size:.70rem!important;
+  line-height:1.36!important;
+  min-height:148px!important;
+}
+#reviews .review-card.vinx-review-card .review-quote{
+  font-size:.90rem!important;
+  line-height:1.55!important;
+}
+.review-proof-img.proof-discord-wide{
+  width:min(1180px,100%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+.review-proof-img.proof-discord-compact{
+  width:min(860px,100%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+
+
+/* ===== CLIENT REVIEW PROOF SIZE TWEAK =====
+   Bubble + Zxkie smaller, Vinx bigger. */
+.review-proof-img.proof-discord-wide-small{
+  width:min(880px,86%)!important;
+  height:auto!important;
+  max-height:calc(82vh - 125px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+.review-proof-img.proof-discord-compact{
+  width:min(1040px,94%)!important;
+  height:auto!important;
+  max-height:calc(84vh - 120px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+@media(max-width:760px){
+  .review-proof-img.proof-discord-wide-small,
+  .review-proof-img.proof-discord-compact{
+    width:min(96vw,100%)!important;
+    max-height:calc(86svh - 95px)!important;
+  }
+}
+
 @keyframes reviewsInfiniteLoop{
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(-50%,0,0)}
@@ -5768,11 +5829,9 @@ footer .fi{
 .creator-review-board{position:relative;max-width:980px;margin:0 auto;border:1px solid rgba(224,32,32,.5);border-radius:26px;background:linear-gradient(145deg,rgba(25,25,25,.92),rgba(8,8,8,.96));box-shadow:0 0 0 1px rgba(255,255,255,.035),0 28px 90px rgba(0,0,0,.45),0 0 60px rgba(224,32,32,.08);padding:1.45rem;cursor:pointer;overflow:hidden;transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .28s,box-shadow .28s;}
 .creator-review-board::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 16% 0%,rgba(224,32,32,.16),transparent 34%),radial-gradient(circle at 100% 100%,rgba(224,32,32,.10),transparent 42%);pointer-events:none;}
 .creator-review-board:hover{transform:translateY(-4px);border-color:rgba(224,32,32,.78);box-shadow:0 0 0 1px rgba(255,255,255,.04),0 34px 110px rgba(0,0,0,.58),0 0 80px rgba(224,32,32,.14);}
-.creator-review-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid rgba(255,255,255,.09);padding:.55rem .45rem 1.25rem;margin-bottom:1rem;}
+.creator-review-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:flex-start;gap:1rem;border-bottom:1px solid rgba(255,255,255,.09);padding:.55rem .45rem 1.25rem;margin-bottom:1rem;}
 .creator-review-kicker{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,235,.48);margin-bottom:.32rem;}
 .creator-review-count{font-size:1.65rem;line-height:1;font-weight:900;color:#fff;letter-spacing:-.035em;}
-.creator-open-btn{flex-shrink:0;border:1px solid rgba(224,32,32,.42);border-radius:999px;background:rgba(224,32,32,.08);color:#fff;padding:.75rem 1.1rem;font-weight:900;font-size:.78rem;cursor:pointer;transition:transform .2s,border-color .2s,background .2s;}
-.creator-review-board:hover .creator-open-btn,.creator-open-btn:hover{transform:translateY(-1px);border-color:rgba(224,32,32,.8);background:rgba(224,32,32,.16);}
 .creator-reviews-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
 .creator-card{min-height:160px;border:1px solid rgba(255,255,255,.085);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.015));padding:1.05rem;transition:border-color .25s,background .25s,transform .25s;}
 .creator-card:first-child{border-color:rgba(224,32,32,.28);background:linear-gradient(135deg,rgba(224,32,32,.12),rgba(255,255,255,.018));}
@@ -5812,7 +5871,6 @@ footer .fi{
   #services.creator-reviews-section{padding:4.6rem 1rem;}
   .creator-review-board{padding:1rem;border-radius:22px;}
   .creator-review-top{align-items:flex-start;flex-direction:column;}
-  .creator-open-btn{width:100%;}
   .creator-reviews-grid{grid-template-columns:1fr;gap:.8rem;}
   .creator-card{min-height:auto;}
   .creator-modal{padding:.75rem;align-items:center;}
@@ -6262,7 +6320,6 @@ footer .fi{
           <div class="creator-review-kicker">Trusted by growing channels</div>
           <div class="creator-review-count">4 Client Reviews</div>
         </div>
-        <button class="creator-open-btn" data-open-creator-reviews type="button">Open Reviews</button>
       </div>
 
       <div class="creator-reviews-grid">
@@ -6604,6 +6661,54 @@ footer .fi{
 <div class="review-tag">✦ Fast quality delivery</div>
 <span class="review-proof-hint">Click to open message proof</span>
 </button>
+<button class="review-card rv bubble-review-card" data-full="@M_Bilal is great, he worked fast and produced a great video that reached one of the top vids on my page instantly 10/10" data-name="Bubble" data-proof="Original Discord review screenshot from Bubble" data-proof-img="23r32r32f32(1).png" data-proof-size="discord-wide-small" data-tag="Fast viral delivery" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Bubble profile picture" class="review-avatar-img-real" src="1783639237781~3.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Bubble</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“@M_Bilal is great, he worked fast and produced a great video that reached one of the top vids on my page instantly 10/10”</p>
+<div class="review-tag">✦ Fast viral delivery</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card rv kaim-review-card" data-full="Yessir i gotchu&#10;&#10;Bilal is consistent and a reliable team member I can count on for high quality projects. I love his willingness to learn and grow with the channel and his personal connection to me!" data-name="KaiM" data-proof="Original Discord review screenshot from KaiM" data-proof-img="23re2er23d(1).png" data-proof-size="discord-wide" data-tag="Reliable team member" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="KaiM profile picture" class="review-avatar-img-real" src="1783639203022~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">KaiM</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Yessir i gotchu Bilal is consistent and a reliable team member I can count on for high quality projects. I love his willingness to learn and grow with the channel and his personal connection to me!”</p>
+<div class="review-tag">✦ Reliable team member</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card rv zxkie-review-card" data-full="@M_Bilal is a wonderful editor. He understands all the fundamentals of creating a very viral video and delivery time was immaculate." data-name="Zxkie" data-proof="Original Discord review screenshot from Zxkie" data-proof-img="23re32f32f32(1).png" data-proof-size="discord-wide-small" data-tag="Immaculate delivery" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Zxkie profile picture" class="review-avatar-img-real" src="1783639112489~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Zxkie</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“@M_Bilal is a wonderful editor. He understands all the fundamentals of creating a very viral video and delivery time was immaculate.”</p>
+<div class="review-tag">✦ Immaculate delivery</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card rv vinx-review-card" data-full="Wow this is fire bro" data-name="Vinx" data-proof="Original Discord review screenshot from Vinx" data-proof-img="asdsadsad13d13d(1).png" data-proof-size="discord-compact" data-tag="Fire edit reaction" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Vinx profile picture" class="review-avatar-img-real" src="1783639070359~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Vinx</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Wow this is fire bro”</p>
+<div class="review-tag">✦ Fire edit reaction</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
 <button class="review-card review-card-duplicate" data-full="@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10" data-name="Tiffany" data-proof="Discord message from Tiffany" data-proof-img="tiffany.png" data-tag="10/10 rating" type="button">
 <div class="review-avatar tiffany-avatar" style="overflow:hidden">
 <img alt="Tiffany logo" class="review-avatar-photo" src="tiffany-logo.webp"/>
@@ -6645,6 +6750,54 @@ footer .fi{
 <div class="review-verified"><span>⌁</span> Verified on Discord</div>
 <p class="review-quote">“@outwrld got my video back to me very fast, and it was quality. Will 100% be coming back”</p>
 <div class="review-tag">✦ Fast quality delivery</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card review-card-duplicate bubble-review-card" data-full="@M_Bilal is great, he worked fast and produced a great video that reached one of the top vids on my page instantly 10/10" data-name="Bubble" data-proof="Original Discord review screenshot from Bubble" data-proof-img="23r32r32f32(1).png" data-proof-size="discord-wide-small" data-tag="Fast viral delivery" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Bubble profile picture" class="review-avatar-img-real" src="1783639237781~3.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Bubble</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“@M_Bilal is great, he worked fast and produced a great video that reached one of the top vids on my page instantly 10/10”</p>
+<div class="review-tag">✦ Fast viral delivery</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card review-card-duplicate kaim-review-card" data-full="Yessir i gotchu&#10;&#10;Bilal is consistent and a reliable team member I can count on for high quality projects. I love his willingness to learn and grow with the channel and his personal connection to me!" data-name="KaiM" data-proof="Original Discord review screenshot from KaiM" data-proof-img="23re2er23d(1).png" data-proof-size="discord-wide" data-tag="Reliable team member" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="KaiM profile picture" class="review-avatar-img-real" src="1783639203022~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">KaiM</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Yessir i gotchu Bilal is consistent and a reliable team member I can count on for high quality projects. I love his willingness to learn and grow with the channel and his personal connection to me!”</p>
+<div class="review-tag">✦ Reliable team member</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card review-card-duplicate zxkie-review-card" data-full="@M_Bilal is a wonderful editor. He understands all the fundamentals of creating a very viral video and delivery time was immaculate." data-name="Zxkie" data-proof="Original Discord review screenshot from Zxkie" data-proof-img="23re32f32f32(1).png" data-proof-size="discord-wide-small" data-tag="Immaculate delivery" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Zxkie profile picture" class="review-avatar-img-real" src="1783639112489~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Zxkie</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“@M_Bilal is a wonderful editor. He understands all the fundamentals of creating a very viral video and delivery time was immaculate.”</p>
+<div class="review-tag">✦ Immaculate delivery</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card review-card-duplicate vinx-review-card" data-full="Wow this is fire bro" data-name="Vinx" data-proof="Original Discord review screenshot from Vinx" data-proof-img="asdsadsad13d13d(1).png" data-proof-size="discord-compact" data-tag="Fire edit reaction" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Vinx profile picture" class="review-avatar-img-real" src="1783639070359~2.png"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Vinx</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Wow this is fire bro”</p>
+<div class="review-tag">✦ Fire edit reaction</div>
 <span class="review-proof-hint">Click to open message proof</span>
 </button>
 </div>
@@ -6862,6 +7015,9 @@ function openReviewModal(card){
     if(proofSize==='700x80') img.classList.add('proof-700x80');
     if(proofSize==='mdm-full') img.classList.add('proof-mdm-full');
     if(proofSize==='review4-full') img.classList.add('proof-review4-full');
+    if(proofSize==='discord-wide') img.classList.add('proof-discord-wide');
+    if(proofSize==='discord-wide-small') img.classList.add('proof-discord-wide-small');
+    if(proofSize==='discord-compact') img.classList.add('proof-discord-compact');
     img.src=proofImg;
     img.alt=`Discord screenshot proof from ${name}`;
     img.onerror=()=>{

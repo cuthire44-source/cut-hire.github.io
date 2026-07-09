@@ -600,7 +600,8 @@
 <link as="image" fetchpriority="high" href="portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp" rel="preload"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/></noscript>
 <!-- V4: video cards use YouTube embeds on click and local/GitHub MP4 files for hover previews. -->
 <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <style>
@@ -7080,12 +7081,17 @@ function initDecorations(){
 document.addEventListener('visibilitychange',()=>{document.querySelectorAll('.particle,.sc-item,.cut-line').forEach(el=>{el.style.animationPlayState=document.hidden?'paused':''})});
 
 /* ===== DISCORD MEMBER COUNT ===== */
-fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.approximate_member_count)document.getElementById('disc-members').textContent=d.approximate_member_count.toLocaleString();
-    if(d.approximate_presence_count)document.getElementById('disc-online').textContent=d.approximate_presence_count.toLocaleString();
-  }).catch(()=>{});
+(function(){
+  function loadDiscordCount(){
+    fetch('https://discord.com/api/v9/invites/dXemseJsDV?with_counts=true')
+      .then(r=>r.json())
+      .then(d=>{
+        if(d.approximate_member_count)document.getElementById('disc-members').textContent=d.approximate_member_count.toLocaleString();
+        if(d.approximate_presence_count)document.getElementById('disc-online').textContent=d.approximate_presence_count.toLocaleString();
+      }).catch(()=>{});
+  }
+  (window.requestIdleCallback||function(cb){return setTimeout(cb,900)})(loadDiscordCount,{timeout:1600});
+})();
 
 /* ===== STATS COUNTER ===== */
 (function(){
@@ -7493,7 +7499,7 @@ function filterWork(cat,el){
 }
 preloadCategoryAssets('thumbnail');
 preloadCategoryAssets('vlogs');
-setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
+(window.requestIdleCallback||function(cb){return setTimeout(cb,220)})(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),{timeout:650});
 window.addEventListener('resize',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(()=>{const g=document.getElementById('work-grid');const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);},180)}})());
 
 /* ===== AUTO VIDEO THUMBNAILS FROM 2–5 SECONDS ===== */
@@ -8114,12 +8120,12 @@ ring.style.visibility = 'visible';
     });
   }
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(releaseIntro, 450); });
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(releaseIntro, 120); });
   } else {
-    setTimeout(releaseIntro, 450);
+    setTimeout(releaseIntro, 120);
   }
-  window.addEventListener('load', function(){ setTimeout(releaseIntro, 350); });
-  setTimeout(releaseIntro, 1800);
+  window.addEventListener('load', function(){ setTimeout(releaseIntro, 80); });
+  setTimeout(releaseIntro, 900);
 })();
 </script>
 <script>
@@ -9952,6 +9958,36 @@ ring.style.visibility = 'visible';
   syncLock();
 })();
 </script>
+
+
+<script id="cnh-keep-preloads-speed-polish-js">
+/* ===== SPEED POLISH WITHOUT REMOVING PRELOADS =====
+   Keeps the original preloads, instant portfolio thumbnail warmers, video metadata warming,
+   and hero thumbnail behavior. This only improves first paint/perceived speed and scroll smoothness. */
+(function(){
+  try{
+    document.documentElement.classList.add('cnh-speed-polish');
+  }catch(e){}
+})();
+</script>
+<style id="cnh-keep-preloads-speed-polish-css">
+/* Do less expensive painting work for heavy lower sections until they are near the viewport. */
+#work,#services,#process,#reviews,#discord,footer{
+  content-visibility:auto;
+  contain-intrinsic-size:900px;
+}
+/* Keep animated background layers from causing accidental layout work. */
+.hero-grid-bg,.particles,.sc-bg,.orb{
+  contain:layout paint style;
+}
+/* Keep huge modal/background blur from repainting the whole page too hard. */
+.creator-reviews-modal,.review-modal,.photo-lb,.vp-wrap{
+  contain:layout paint style;
+}
+@media(max-width:640px){
+  #work,#services,#process,#reviews,#discord,footer{contain-intrinsic-size:700px;}
+}
+</style>
 
 </body>
 </html>

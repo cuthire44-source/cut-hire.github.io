@@ -1,4 +1,4 @@
-<!-- CUTANDHIRE GITHUB 404 THUMBNAIL LOAD FIX -->
+<!-- CUTANDHIRE FAST + WHAT CREATORS SAY WINDOW -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5754,6 +5754,74 @@ footer .fi{
 }
 </style>
 
+
+<style id="cnh-what-creators-say-css">
+/* ===== WHAT CREATORS SAY — lightweight creator review window ===== */
+#services.creator-reviews-section{position:relative;background:var(--bg);overflow:hidden;padding:6rem 2rem;}
+#services.creator-reviews-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 18%,rgba(224,32,32,.09),transparent 46%);pointer-events:none;}
+.creator-reviews-section .con{position:relative;z-index:1;}
+.creator-reviews-head{text-align:center;max-width:850px;margin:0 auto 2.4rem;}
+.creator-reviews-head .sec-lbl{justify-content:center;}
+.creator-reviews-head .sec-lbl::before{display:inline-block;}
+.creator-reviews-head .sec-h2{margin-bottom:.9rem;}
+.creator-reviews-sub{max-width:680px;margin:0 auto;color:rgba(245,240,235,.68);font-size:1rem;line-height:1.75;}
+.creator-review-board{position:relative;max-width:980px;margin:0 auto;border:1px solid rgba(224,32,32,.5);border-radius:26px;background:linear-gradient(145deg,rgba(25,25,25,.92),rgba(8,8,8,.96));box-shadow:0 0 0 1px rgba(255,255,255,.035),0 28px 90px rgba(0,0,0,.45),0 0 60px rgba(224,32,32,.08);padding:1.45rem;cursor:pointer;overflow:hidden;transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .28s,box-shadow .28s;}
+.creator-review-board::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 16% 0%,rgba(224,32,32,.16),transparent 34%),radial-gradient(circle at 100% 100%,rgba(224,32,32,.10),transparent 42%);pointer-events:none;}
+.creator-review-board:hover{transform:translateY(-4px);border-color:rgba(224,32,32,.78);box-shadow:0 0 0 1px rgba(255,255,255,.04),0 34px 110px rgba(0,0,0,.58),0 0 80px rgba(224,32,32,.14);}
+.creator-review-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid rgba(255,255,255,.09);padding:.55rem .45rem 1.25rem;margin-bottom:1rem;}
+.creator-review-kicker{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,235,.48);margin-bottom:.32rem;}
+.creator-review-count{font-size:1.65rem;line-height:1;font-weight:900;color:#fff;letter-spacing:-.035em;}
+.creator-open-btn{flex-shrink:0;border:1px solid rgba(224,32,32,.42);border-radius:999px;background:rgba(224,32,32,.08);color:#fff;padding:.75rem 1.1rem;font-weight:900;font-size:.78rem;cursor:pointer;transition:transform .2s,border-color .2s,background .2s;}
+.creator-review-board:hover .creator-open-btn,.creator-open-btn:hover{transform:translateY(-1px);border-color:rgba(224,32,32,.8);background:rgba(224,32,32,.16);}
+.creator-reviews-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
+.creator-card{min-height:160px;border:1px solid rgba(255,255,255,.085);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.015));padding:1.05rem;transition:border-color .25s,background .25s,transform .25s;}
+.creator-card:first-child{border-color:rgba(224,32,32,.28);background:linear-gradient(135deg,rgba(224,32,32,.12),rgba(255,255,255,.018));}
+.creator-review-board:hover .creator-card{border-color:rgba(255,255,255,.13);}
+.creator-card-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem;}
+.creator-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 18px rgba(224,32,32,.14);background:#111;}
+.creator-name-row,.creator-modal-name{display:flex;align-items:center;gap:.42rem;min-width:0;}
+.creator-name-row strong,.creator-modal-name strong{display:block;color:#fff;font-size:1.02rem;line-height:1.15;font-weight:900;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.creator-identity>span,.creator-modal-sub{display:block;margin-top:.15rem;color:rgba(245,240,235,.58);font-size:.78rem;}
+.creator-verified{position:relative;display:inline-flex;width:15px;height:15px;border-radius:50%;background:#1da1f2;flex:0 0 auto;box-shadow:0 0 12px rgba(29,161,242,.35);}
+.creator-verified::after{content:'';position:absolute;left:4px;top:3px;width:6px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg);}
+.creator-card-review{color:rgba(245,240,235,.86);font-size:.94rem;line-height:1.7;}
+.creator-modal{position:fixed;inset:0;z-index:8600;display:flex;align-items:center;justify-content:center;padding:1.25rem;background:rgba(0,0,0,.82);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .28s ease;}
+.creator-modal.open{opacity:1;pointer-events:all;}
+.creator-modal.closing{opacity:0;pointer-events:none;}
+.creator-modal-card{position:relative;width:min(760px,94vw);max-height:86vh;overflow:auto;border:1px solid rgba(255,255,255,.13);border-radius:26px;background:linear-gradient(180deg,#171717,#101010);box-shadow:0 34px 130px rgba(0,0,0,.72),0 0 80px rgba(224,32,32,.08);padding:1.35rem;transform:translateY(8px) scale(.985);transition:transform .28s cubic-bezier(.22,1,.36,1);}
+.creator-modal.open .creator-modal-card{transform:translateY(0) scale(1);}
+.creator-modal-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(224,32,32,.18),transparent 42%);pointer-events:none;}
+.creator-modal-card::-webkit-scrollbar{width:8px;}
+.creator-modal-card::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px;}
+.creator-modal-card::-webkit-scrollbar-thumb{background:rgba(224,32,32,.55);border-radius:99px;}
+.creator-modal-close{position:absolute;top:1rem;right:1rem;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.045);color:var(--w);cursor:pointer;z-index:3;font-size:1.25rem;line-height:1;transition:transform .2s,border-color .2s,background .2s;}
+.creator-modal-close:hover{transform:scale(1.06);border-color:rgba(224,32,32,.5);background:rgba(224,32,32,.12);}
+.creator-modal-head{position:relative;z-index:1;border-bottom:1px solid rgba(255,255,255,.1);padding:.2rem 3.2rem 1.05rem .25rem;margin-bottom:1rem;}
+.creator-modal-head p{font-weight:900;color:#fff;font-size:1.05rem;margin-bottom:.35rem;}
+.creator-modal-head h3{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.85rem,5vw,3.2rem);line-height:.94;letter-spacing:-.045em;margin-bottom:.55rem;}
+.creator-modal-head span{color:rgba(245,240,235,.46);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.04em;}
+.creator-modal-list{position:relative;z-index:1;display:flex;flex-direction:column;gap:.82rem;}
+.creator-modal-review{display:grid;grid-template-columns:58px 1fr;gap:.92rem;padding:1rem;border:1px solid rgba(255,255,255,.075);border-radius:18px;background:rgba(255,255,255,.025);}
+.creator-modal-review:first-child{border-color:rgba(224,32,32,.27);background:rgba(224,32,32,.055);}
+.creator-modal-review img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 22px rgba(224,32,32,.18);background:#111;}
+.creator-modal-review p{margin-top:.62rem;color:rgba(245,240,235,.82);line-height:1.72;font-size:.93rem;}
+.creator-modal-foot{position:relative;z-index:1;margin-top:1rem;display:flex;justify-content:flex-end;}
+.creator-modal-review-btn{border:0;border-radius:10px;background:rgba(245,240,235,.72);color:#111;padding:.62rem .92rem;font-weight:900;cursor:pointer;transition:transform .2s,background .2s;}
+.creator-modal-review-btn:hover{transform:translateY(-2px);background:#fff;}
+@media(max-width:760px){
+  #services.creator-reviews-section{padding:4.6rem 1rem;}
+  .creator-review-board{padding:1rem;border-radius:22px;}
+  .creator-review-top{align-items:flex-start;flex-direction:column;}
+  .creator-open-btn{width:100%;}
+  .creator-reviews-grid{grid-template-columns:1fr;gap:.8rem;}
+  .creator-card{min-height:auto;}
+  .creator-modal{padding:.75rem;align-items:center;}
+  .creator-modal-card{width:100%;max-height:88svh;border-radius:22px;padding:1rem;}
+  .creator-modal-review{grid-template-columns:50px 1fr;padding:.85rem;}
+  .creator-modal-review img{width:50px;height:50px;}
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 <script>
@@ -5854,7 +5922,7 @@ footer .fi{
 <div class="about-stats rv" id="hero-stats">
 <div class="stat projects-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="6184">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Projects Done</div><div class="stat-bar"></div></div>
 <div class="stat views-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="B+" data-target="3.1">0<span class="stat-suffix">B+</span></span></div></div><div class="stat-l">Views Generated</div><div class="stat-bar"></div></div>
-<div class="stat editors-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="60">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors &amp; Designers</div><div class="stat-bar"></div></div>
+<div class="stat editors-stat"><div class="stat-number-wrap"><div class="stat-n"><span class="stat-number stat-value" data-suffix="+" data-target="70">0<span class="stat-suffix">+</span></span></div></div><div class="stat-l">Editors &amp; Designers</div><div class="stat-bar"></div></div>
 </div>
 </div>
 </section>
@@ -5885,21 +5953,70 @@ footer .fi{
 </div>
 </section>
 <!-- ==================== SERVICES ==================== -->
-<section id="services">
-<div class="con">
-<div class="rv" style="text-align:center">
-<p class="sec-lbl">What We Do</p>
-<h2 class="sec-h2">Every <em>Style</em>, Every <em>Platform</em></h2>
-</div>
-<div class="serv-grid stagger">
-<div class="sv rv"><div class="sv-i"><img alt="" class="sv-icon" src="cinema-projector.png"/></div><div class="sv-n">Cinematic Editing</div><p class="sv-p">Film-level color grading, pacing, and storytelling for your most important projects.</p></div>
-<div class="sv rv"><div class="sv-i"><img alt="" class="sv-icon" src="console.png"/></div><div class="sv-n">Gaming Content</div><p class="sv-p">Highlight reels, montages, and stream VOD edits built for engagement and retention.</p></div>
-<div class="sv rv"><div class="sv-i"><img alt="" class="sv-icon" src="smartphone-call.png"/></div><div class="sv-n">Short Form / Reels</div><p class="sv-p">Hook-first vertical content engineered for TikTok, Reels, and YouTube Shorts virality.</p></div>
-<div class="sv rv"><div class="sv-i"><img alt="YouTube" class="sv-icon" src="youtube.png"/></div><div class="sv-n">YouTube Long Form</div><p class="sv-p">Clean pacing, retention-focused cuts, sound design, and storytelling for full YouTube videos.</p></div>
-<div class="sv rv"><div class="sv-i"><img alt="" class="sv-icon" src="photograph.png"/></div><div class="sv-n">Documentary</div><p class="sv-p">Long-form narrative editing that finds the story hidden inside your raw footage.</p></div>
-<div class="sv rv"><div class="sv-i"><img alt="" class="sv-icon" src="brand.png"/></div><div class="sv-n">Brand &amp; Corporate</div><p class="sv-p">Polished brand films, ads, and internal videos that represent you professionally.</p></div>
-</div>
-</div>
+<section id="services" class="creator-reviews-section">
+  <div class="con">
+    <div class="creator-reviews-head rv">
+      <p class="sec-lbl">Client Reviews</p>
+      <h2 class="sec-h2">What <em>Creators</em> Say</h2>
+      <p class="creator-reviews-sub">Real testimonials from large creators who trust Cut &amp; Hire for reliable editing, stronger retention, and consistent content output.</p>
+    </div>
+
+    <div class="creator-review-board rv" data-open-creator-reviews role="button" tabindex="0" aria-label="Open 4 client reviews">
+      <div class="creator-review-top">
+        <div>
+          <div class="creator-review-kicker">Trusted by growing channels</div>
+          <div class="creator-review-count">4 Client Reviews</div>
+        </div>
+        <button class="creator-open-btn" data-open-creator-reviews type="button">Open Reviews</button>
+      </div>
+
+      <div class="creator-reviews-grid">
+        <article class="creator-card">
+          <div class="creator-card-head">
+            <img alt="mas channel logo" class="creator-avatar" loading="lazy" src="creator-mas.jpg"/>
+            <div class="creator-identity">
+              <div class="creator-name-row"><strong>mas</strong><span class="creator-verified" aria-label="Verified"></span></div>
+              <span>300K subscribers</span>
+            </div>
+          </div>
+          <p class="creator-card-review">“Best way to build a reliable editing team for a channel that needs to pump content!”</p>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-card-head">
+            <img alt="ThatGorillaGuy channel logo" class="creator-avatar" loading="lazy" src="creator-thatgorillaguy.jpg"/>
+            <div class="creator-identity">
+              <div class="creator-name-row"><strong>ThatGorillaGuy</strong><span class="creator-verified" aria-label="Verified"></span></div>
+              <span>199K subscribers</span>
+            </div>
+          </div>
+          <p class="creator-card-review">“Cut &amp; Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut &amp; Hire’s editors and it drastically improved his average view duration.”</p>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-card-head">
+            <img alt="Joe Monkey channel logo" class="creator-avatar" loading="lazy" src="creator-joe-monkey.jpg"/>
+            <div class="creator-identity">
+              <div class="creator-name-row"><strong>Joe Monkey</strong><span class="creator-verified" aria-label="Verified"></span></div>
+              <span>128K subscribers</span>
+            </div>
+          </div>
+          <p class="creator-card-review">“Good team overall. The owner is a nice guy and serious about business, and the editors are also great.”</p>
+        </article>
+
+        <article class="creator-card">
+          <div class="creator-card-head">
+            <img alt="MMVR channel logo" class="creator-avatar" loading="lazy" src="creator-mmvr.jpg"/>
+            <div class="creator-identity">
+              <div class="creator-name-row"><strong>MMVR</strong><span class="creator-verified" aria-label="Verified"></span></div>
+              <span>115K subscribers</span>
+            </div>
+          </div>
+          <p class="creator-card-review">“On time editing, very good!”</p>
+        </article>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- ==================== PRICING / TEAMS ==================== -->
 <section id="process" class="pricing-showcase-section">
@@ -9340,6 +9457,73 @@ ring.style.visibility = 'visible';
   document.addEventListener('keydown', function(event){
     if(event.key !== 'Enter' && event.key !== ' ') return;
     openHeroReel(event);
+  }, true);
+})();
+</script>
+
+
+<div aria-hidden="true" class="creator-modal" id="creator-reviews-modal">
+  <div aria-label="Client Reviews" aria-modal="true" class="creator-modal-card" role="dialog">
+    <button aria-label="Close client reviews" class="creator-modal-close" data-close-creator-reviews type="button">×</button>
+    <div class="creator-modal-head">
+      <p>Client Reviews</p>
+      <h3>What Creators Say</h3>
+      <span>4 client reviews</span>
+    </div>
+    <div class="creator-modal-list">
+      <article class="creator-modal-review">
+        <img alt="mas channel logo" loading="lazy" src="creator-mas.jpg"/>
+        <div><div class="creator-modal-name"><strong>mas</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">300K subscribers</span><p>“Best way to build a reliable editing team for a channel that needs to pump content!”</p></div>
+      </article>
+      <article class="creator-modal-review">
+        <img alt="ThatGorillaGuy channel logo" loading="lazy" src="creator-thatgorillaguy.jpg"/>
+        <div><div class="creator-modal-name"><strong>ThatGorillaGuy</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">199K subscribers</span><p>“Cut &amp; Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut &amp; Hire’s editors and it drastically improved his average view duration.”</p></div>
+      </article>
+      <article class="creator-modal-review">
+        <img alt="Joe Monkey channel logo" loading="lazy" src="creator-joe-monkey.jpg"/>
+        <div><div class="creator-modal-name"><strong>Joe Monkey</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">128K subscribers</span><p>“Good team overall. The owner is a nice guy and serious about business, and the editors are also great.”</p></div>
+      </article>
+      <article class="creator-modal-review">
+        <img alt="MMVR channel logo" loading="lazy" src="creator-mmvr.jpg"/>
+        <div><div class="creator-modal-name"><strong>MMVR</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">115K subscribers</span><p>“On time editing, very good!”</p></div>
+      </article>
+    </div>
+    <div class="creator-modal-foot"><button class="creator-modal-review-btn" data-close-creator-reviews type="button">Close</button></div>
+  </div>
+</div>
+
+
+<script id="cnh-what-creators-say-js">
+(function(){
+  function modal(){return document.getElementById('creator-reviews-modal');}
+  function openCreatorReviews(event){
+    var target = event && event.target;
+    if(!target || !target.closest('[data-open-creator-reviews]')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    var m = modal();
+    if(!m) return;
+    m.classList.remove('closing');
+    m.classList.add('open');
+    m.setAttribute('aria-hidden','false');
+  }
+  function closeCreatorReviews(){
+    var m = modal();
+    if(!m || !m.classList.contains('open')) return;
+    m.classList.add('closing');
+    m.classList.remove('open');
+    m.setAttribute('aria-hidden','true');
+    window.setTimeout(function(){ if(m) m.classList.remove('closing'); }, 280);
+  }
+  document.addEventListener('click', function(event){
+    if(event.target.closest('[data-open-creator-reviews]')) return openCreatorReviews(event);
+    if(event.target.closest('[data-close-creator-reviews]')){ event.preventDefault(); return closeCreatorReviews(); }
+    var m = modal();
+    if(m && m.classList.contains('open') && event.target === m) closeCreatorReviews();
+  }, true);
+  document.addEventListener('keydown', function(event){
+    if((event.key === 'Enter' || event.key === ' ') && event.target.closest('[data-open-creator-reviews]')) return openCreatorReviews(event);
+    if(event.key === 'Escape') closeCreatorReviews();
   }, true);
 })();
 </script>

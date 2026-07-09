@@ -1,3 +1,4 @@
+<!-- CUTANDHIRE GITHUB 404 THUMBNAIL LOAD FIX -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -579,21 +580,6 @@
 <link as="image" fetchpriority="high" href="review_4.webp" rel="preload"/>
 <link as="image" fetchpriority="high" href="review_4_pfp.webp" rel="preload"/>
 <!-- Mobile thumbnails tab preload: keeps the tab next to Vlogs/IRL from feeling slow on phones. -->
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/8.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/e837326a-3c9d-4142-a663-1d32cff2edef.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/5.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/image.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/bvcvcbvcbvcb43541.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/I_tested_10_Spy_Gadgets_Thumbnail.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/Illustrator_vid.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/thumbnail_by_lokesh_4.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/thumbnail_by_lokesh_7.png.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/thumnbail_by_lokesh_2.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/thumbnail_by_lokesh_1_.webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/3(3).webp" rel="preload"/>
-<link as="image" fetchpriority="high" href="portfolio-thumbnails/thumbnail_by_lokesh_3.png.webp" rel="preload"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
@@ -6742,6 +6728,15 @@ function imageCandidates(src){
   if(clean.startsWith('data:')||clean.startsWith('blob:'))return [clean];
   const noQuery=clean.split('?')[0];
   const file=noQuery.split('/').pop();
+
+  // GitHub Pages fix:
+  // For portfolio thumbnail assets, do not try root/hero fallback paths.
+  // When those files are missing, the old fallback list caused many extra 404s
+  // and made the site look like it was still loading forever.
+  if(noQuery.includes('portfolio-thumbnails/')){
+    return [...new Set([clean,noQuery,encodeURI(noQuery), './'+noQuery, encodeURI('./'+noQuery)].filter(Boolean))];
+  }
+
   const folders=['','portfolio-thumbnails/','hero-thumbnails/','./','./portfolio-thumbnails/','./hero-thumbnails/'];
   const list=[clean,noQuery,encodeURI(noQuery)];
   folders.forEach(folder=>{
@@ -6868,18 +6863,25 @@ const works=[
   });
 })();
 
-// Preload portfolio thumbnail tab images immediately, not on idle.
-// This fixes the mobile tab beside Vlogs/IRL sometimes loading late.
-(function preloadPortfolioThumbnailsNow(){
+// GitHub Pages fix:
+ // Do NOT warm the thumbnail-tab images on first load.
+ // In the live Network tab these files were returning 404 and keeping the page busy.
+ // They now load only if the visitor opens the Thumbnails tab.
+let portfolioThumbsPrimed=false;
+function preloadPortfolioThumbnailsNow(){
+  if(portfolioThumbsPrimed)return;
+  portfolioThumbsPrimed=true;
   const portfolioThumbs=[...new Set(works.filter(w=>w.isPhoto&&w.img).map(w=>w.img))];
   portfolioThumbs.forEach((src,i)=>{
-    const img=new Image();
-    img.decoding='async';
-    img.loading='eager';
-    img.fetchPriority=i<15?'high':'auto';
-    img.src=cacheBustAsset(src);
+    window.setTimeout(()=>{
+      const img=new Image();
+      img.decoding='async';
+      img.loading='lazy';
+      img.fetchPriority='low';
+      img.src=cacheBustAsset(src);
+    }, i*90);
   });
-})();
+}
 
 const playSVG=`<svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)"><polygon points="6,3 20,12 6,21"/></svg>`;
 const camSVG=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M9 6l1.5-2h3L15 6"/></svg>`;
@@ -7031,7 +7033,7 @@ function renderWork(list, activeCat){
       const photoCandidates=imageCandidates(w.img);
       const firstPhoto=cacheBustAsset(photoCandidates[0]||w.img);
       return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
-        <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="eager" decoding="async" fetchpriority="high" width="480" height="260" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
+        <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="lazy" decoding="async" fetchpriority="low" width="480" height="260" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
         ${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     }
@@ -7068,6 +7070,13 @@ function renderWork(list, activeCat){
 
 const DEFAULT_WORK_CATEGORY='youtube';
 function preloadCategoryAssets(cat){
+  // GitHub Pages fix:
+  // Don't preload the thumbnail tab on first page load. These are below-fold and were
+  // producing many 404s on the live site when portfolio-thumbnails files were absent.
+  if(cat==='thumbnail'){
+    preloadPortfolioThumbnailsNow();
+    return;
+  }
   const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
   items.forEach((w,i)=>{
     const src=w.isPhoto?(w.img||''):(w.thumb||'');
@@ -7075,8 +7084,8 @@ function preloadCategoryAssets(cat){
     const candidates=w.isPhoto?imageCandidates(src):[src];
     const img=new Image();
     img.decoding='async';
-    img.loading='eager';
-    img.fetchPriority=i<12?'high':'auto';
+    img.loading=i<6?'eager':'lazy';
+    img.fetchPriority=i<6?'high':'auto';
     img.src=cacheBustAsset(candidates[0]||src);
   });
 }
@@ -7088,7 +7097,6 @@ function filterWork(cat,el){
   const filtered=cat==='all'?works:works.filter(w=>getCats(w).includes(cat));
   setTimeout(()=>renderWork(filtered,cat),120);
 }
-preloadCategoryAssets('thumbnail');
 preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);
 window.addEventListener('resize',(()=>{let t;return()=>{clearTimeout(t);t=setTimeout(()=>{const g=document.getElementById('work-grid');const cat=(g&&g.dataset.cat)||DEFAULT_WORK_CATEGORY;renderWork(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)),cat);},180)}})());

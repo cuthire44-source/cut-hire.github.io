@@ -586,6 +586,15 @@
 <link as="image" fetchpriority="high" href="review-pfp.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="review_4.webp" rel="preload"/>
 <link as="image" fetchpriority="high" href="review_4_pfp.webp" rel="preload"/>
+<link as="image" fetchpriority="high" href="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" rel="preload"/>
+<link as="image" href="image (4).webp" rel="preload"/>
+<link as="image" href="image (3).webp" rel="preload"/>
+<link as="image" href="image (2).webp" rel="preload"/>
+<link as="image" href="image (1)(2).webp" rel="preload"/>
+<link as="image" fetchpriority="high" href="image (1).jpg" rel="preload"/>
+<link as="image" fetchpriority="high" href="image(2).webp" rel="preload"/>
+<link as="image" fetchpriority="high" href="Screenshot 2026-07-21 131745.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="bd96631016046cf863a0f0d320332281.webp" rel="preload"/>
 <!-- Mobile thumbnails tab preload: keeps the tab next to Vlogs/IRL from feeling slow on phones. -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -4225,6 +4234,26 @@ a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
   border-radius:8px!important;
 }
 
+/* New verified reviews: ozmok + Noko */
+#reviews .review-card.ozmok-review-card .review-quote{
+  font-size:.76rem!important;
+  line-height:1.46!important;
+  min-height:142px!important;
+}
+#reviews .review-card.noko-review-card .review-quote{
+  font-size:.79rem!important;
+  line-height:1.50!important;
+  min-height:132px!important;
+}
+.review-proof-img.proof-new-review-wide{
+  width:min(1180px,100%)!important;
+  height:auto!important;
+  max-height:calc(90vh - 115px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  border-radius:8px!important;
+}
+
 /* Extra client reviews added from Discord proof screenshots */
 #reviews .review-card.bubble-review-card .review-quote,
 #reviews .review-card.zxkie-review-card .review-quote{
@@ -5842,6 +5871,14 @@ footer .fi{
 .creator-reviews-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
 .creator-card{min-height:160px;border:1px solid rgba(255,255,255,.085);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.015));padding:1.05rem;transition:border-color .25s,background .25s,transform .25s;}
 .creator-card:first-child{border-color:rgba(224,32,32,.28);background:linear-gradient(135deg,rgba(224,32,32,.12),rgba(255,255,255,.018));}
+.creator-card.creator-card-ricky{
+  grid-column:1 / -1;
+  min-height:auto;
+  border-color:rgba(224,32,32,.42);
+  background:linear-gradient(135deg,rgba(224,32,32,.15),rgba(255,255,255,.022));
+  padding:1.2rem 1.25rem;
+}
+.creator-card.creator-card-ricky .creator-card-review{max-width:900px;}
 .creator-review-board:hover .creator-card{border-color:rgba(255,255,255,.13);}
 .creator-card-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem;}
 .creator-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 18px rgba(224,32,32,.14);background:#111;}
@@ -6321,15 +6358,26 @@ footer .fi{
       <p class="creator-reviews-sub">Real testimonials from large creators who trust Cut &amp; Hire for reliable editing, stronger retention, and consistent content output.</p>
     </div>
 
-    <div class="creator-review-board rv" data-open-creator-reviews role="button" tabindex="0" aria-label="Open 4 creator reviews">
+    <div class="creator-review-board rv" data-open-creator-reviews role="button" tabindex="0" aria-label="Open 5 creator reviews">
       <div class="creator-review-top">
         <div>
           <div class="creator-review-kicker">Trusted by growing channels</div>
-          <div class="creator-review-count">4 Creator Reviews</div>
+          <div class="creator-review-count">5 Creator Reviews</div>
         </div>
       </div>
 
       <div class="creator-reviews-grid">
+        <article class="creator-card creator-card-ricky">
+          <div class="creator-card-head">
+            <img alt="Ricky Flicks profile picture" class="creator-avatar" loading="eager" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp"/>
+            <div class="creator-identity">
+              <div class="creator-name-row"><strong>Ricky Flicks</strong><span class="creator-verified" aria-label="Verified"></span></div>
+              <span>1.5M followers</span>
+            </div>
+          </div>
+          <p class="creator-card-review">“Working with Cut &amp; Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut &amp; Hire to any creator looking for reliable editors who communicate well and take feedback seriously.”</p>
+        </article>
+
         <article class="creator-card">
           <div class="creator-card-head">
             <img alt="mas channel logo" class="creator-avatar" loading="lazy" src="creator-mas.jpg"/>
@@ -6716,6 +6764,30 @@ footer .fi{
 <div class="review-tag">✦ Fire edit reaction</div>
 <span class="review-proof-hint">Click to open message proof</span>
 </button>
+<button class="review-card rv ozmok-review-card" data-full="Really enjoyed working with you. You guys consistently delivered high quality edits/samples, communication was smooth, and you were always willing to make changes until everything was exactly how I wanted it. Appreciate all the help, and I'll definitely reach out if I need more editors in the future. 🤝" data-name="ozmok" data-proof="Original Discord review screenshot from ozmok" data-proof-img="image(2).webp" data-proof-size="new-review-wide" data-tag="High-quality team" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="ozmok profile picture" class="review-avatar-img-real" src="image (1).jpg"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">ozmok</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Really enjoyed working with you. You guys consistently delivered high quality edits/samples, communication was smooth, and you were always willing to make changes until everything was exactly how I wanted it. Appreciate all the help, and I'll definitely reach out if I need more editors in the future. 🤝”</p>
+<div class="review-tag">✦ High-quality team</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card rv noko-review-card" data-full="Fabri has a great editing team and the editors actually listen and know how to edit what you want. Cut &amp; Hire is the agency I would recommend." data-name="Noko" data-proof="Original Discord review screenshot from Noko" data-proof-img="Screenshot 2026-07-21 131745.png" data-proof-size="new-review-wide" data-tag="Agency recommended" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Noko profile picture" class="review-avatar-img-real" src="bd96631016046cf863a0f0d320332281.webp"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Noko</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Fabri has a great editing team and the editors actually listen and know how to edit what you want. Cut &amp; Hire is the agency I would recommend.”</p>
+<div class="review-tag">✦ Agency recommended</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
 <button class="review-card review-card-duplicate" data-full="@CFEDIT is one of the best editors out there! Very detailed and produces great work! 10/10" data-name="Tiffany" data-proof="Discord message from Tiffany" data-proof-img="tiffany.png" data-tag="10/10 rating" type="button">
 <div class="review-avatar tiffany-avatar" style="overflow:hidden">
 <img alt="Tiffany logo" class="review-avatar-photo" src="tiffany-logo.webp"/>
@@ -6807,6 +6879,30 @@ footer .fi{
 <div class="review-tag">✦ Fire edit reaction</div>
 <span class="review-proof-hint">Click to open message proof</span>
 </button>
+<button class="review-card review-card-duplicate ozmok-review-card" data-full="Really enjoyed working with you. You guys consistently delivered high quality edits/samples, communication was smooth, and you were always willing to make changes until everything was exactly how I wanted it. Appreciate all the help, and I'll definitely reach out if I need more editors in the future. 🤝" data-name="ozmok" data-proof="Original Discord review screenshot from ozmok" data-proof-img="image(2).webp" data-proof-size="new-review-wide" data-tag="High-quality team" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="ozmok profile picture" class="review-avatar-img-real" src="image (1).jpg"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">ozmok</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Really enjoyed working with you. You guys consistently delivered high quality edits/samples, communication was smooth, and you were always willing to make changes until everything was exactly how I wanted it. Appreciate all the help, and I'll definitely reach out if I need more editors in the future. 🤝”</p>
+<div class="review-tag">✦ High-quality team</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
+<button class="review-card review-card-duplicate noko-review-card" data-full="Fabri has a great editing team and the editors actually listen and know how to edit what you want. Cut &amp; Hire is the agency I would recommend." data-name="Noko" data-proof="Original Discord review screenshot from Noko" data-proof-img="Screenshot 2026-07-21 131745.png" data-proof-size="new-review-wide" data-tag="Agency recommended" type="button">
+<div class="review-avatar" style="overflow:hidden">
+<img alt="Noko profile picture" class="review-avatar-img-real" src="bd96631016046cf863a0f0d320332281.webp"/>
+<div class="review-avatar-img" style="display:none"></div>
+<div class="review-discord-dot">⌁</div>
+</div>
+<div class="review-name">Noko</div>
+<div class="review-verified"><span>⌁</span> Verified on Discord</div>
+<p class="review-quote">“Fabri has a great editing team and the editors actually listen and know how to edit what you want. Cut &amp; Hire is the agency I would recommend.”</p>
+<div class="review-tag">✦ Agency recommended</div>
+<span class="review-proof-hint">Click to open message proof</span>
+</button>
 </div>
 </div>
 <div class="reviews-bottom rv">
@@ -6839,6 +6935,18 @@ footer .fi{
       </button>
       <button class="result-card" type="button" data-result-title="YouTube Analytics · 133.2K Views" data-result-img="HL-2In5W8AA8QRq.webp">
         <img src="HL-2In5W8AA8QRq.webp" alt="YouTube Analytics screenshot showing 133.2K views, a 9.8% impressions click-through rate, and a 4:38 average view duration" loading="lazy" decoding="async">
+      </button>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 10.0K Watch Hours" data-result-img="image (4).webp">
+        <img src="image (4).webp" alt="YouTube Analytics screenshot showing 10.0K watch hours and a 4:28 average view duration" loading="lazy" decoding="async">
+      </button>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 133.4K Views" data-result-img="image (3).webp">
+        <img src="image (3).webp" alt="YouTube Analytics screenshot showing 133.4K views, 10.0K watch hours, 735 subscribers, and 381 dollars and 25 cents in estimated revenue" loading="lazy" decoding="async">
+      </button>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 13.7K Watch Hours" data-result-img="image (2).webp">
+        <img src="image (2).webp" alt="YouTube Analytics screenshot showing 13.7K watch hours and a 4:43 average view duration" loading="lazy" decoding="async">
+      </button>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 174.2K Views" data-result-img="image (1)(2).webp">
+        <img src="image (1)(2).webp" alt="YouTube Analytics screenshot showing 174.2K views, 13.7K watch hours, 564 subscribers, and 490 dollars and 97 cents in estimated revenue" loading="lazy" decoding="async">
       </button>
     </div>
     <button class="results-arrow results-arrow-right" type="button" aria-label="Next result" data-results-next>
@@ -7028,6 +7136,7 @@ function openReviewModal(card){
     if(proofSize==='discord-wide') img.classList.add('proof-discord-wide');
     if(proofSize==='discord-wide-small') img.classList.add('proof-discord-wide-small');
     if(proofSize==='discord-compact') img.classList.add('proof-discord-compact');
+    if(proofSize==='new-review-wide') img.classList.add('proof-new-review-wide');
     img.src=proofImg;
     img.alt=`Discord screenshot proof from ${name}`;
     img.onerror=()=>{
@@ -10012,9 +10121,13 @@ ring.style.visibility = 'visible';
     <div class="creator-modal-head">
       <p>Creator Reviews</p>
       <h3>What Creators Say</h3>
-      <span>4 creator reviews</span>
+      <span>5 creator reviews</span>
     </div>
     <div class="creator-modal-list">
+      <article class="creator-modal-review creator-modal-review-ricky">
+        <img alt="Ricky Flicks profile picture" loading="eager" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp"/>
+        <div><div class="creator-modal-name"><strong>Ricky Flicks</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">1.5M followers</span><p>“Working with Cut &amp; Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut &amp; Hire to any creator looking for reliable editors who communicate well and take feedback seriously.”</p></div>
+      </article>
       <article class="creator-modal-review">
         <img alt="mas channel logo" loading="lazy" src="creator-mas.jpg"/>
         <div><div class="creator-modal-name"><strong>mas</strong><span class="creator-verified"></span></div><span class="creator-modal-sub">300K subscribers</span><p>“Best way to build a reliable editing team for a channel that needs to pump content!”</p></div>

@@ -6468,7 +6468,19 @@ footer .fi{
         <div class="pricing-track">
                     <article class="pricing-card" data-pricing-card>
             <div class="pricing-img-shell reels-pricing-img">
-              <img src="reels.jpg" alt="Reels and short-form pricing examples" loading="lazy">
+              <img id="reels-pricing-fresh-image"
+                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                   alt="Reels and short-form pricing examples"
+                   loading="eager"
+                   decoding="async">
+              <script>
+                /* Always request the newest reels.png instead of a cached older copy. */
+                (function(){
+                  var image = document.getElementById('reels-pricing-fresh-image');
+                  if (!image) return;
+                  image.src = 'reels.png?fresh=' + Date.now();
+                })();
+              </script>
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For TikTok, Reels and Shorts</p>

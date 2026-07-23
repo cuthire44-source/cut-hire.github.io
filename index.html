@@ -8472,22 +8472,94 @@ window.addEventListener('keydown',e=>{
 });
 function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)+'').padStart(2,'0')}
 
-/* ===== PHOTO LIGHTBOX ===== */
+/* ===== PHOTO LIGHTBOX — UNIFORM SIZE + NO CLICK FLICKER ===== */
+let photoLoadRequestId=0;
+let photoCloseTimer=0;
+
+function photoSetLoading(isLoading){
+  const wrap=document.getElementById('photo-lb-wrap');
+  const img=document.getElementById('photo-lb-img');
+  if(wrap)wrap.classList.toggle('is-loading',!!isLoading);
+  if(img)img.classList.toggle('is-loading',!!isLoading);
+}
+
 function photoOpen(src,title){
   const img=document.getElementById('photo-lb-img');
   const lb=document.getElementById('photo-lb');
-  if(img){
-    img.alt=title||'Thumbnail preview';
-    primeImageFallback(img,src);
-  }
-  if(lb)lb.classList.add('open');
+  const wrap=document.getElementById('photo-lb-wrap');
+  if(!img||!lb||!wrap)return;
+
+  clearTimeout(photoCloseTimer);
+  const requestId=++photoLoadRequestId;
+  const candidates=imageCandidates(src).map(cacheBustAsset).filter(Boolean);
+
+  // Open a fixed 16:9 frame immediately, but hide the old/new image until it is decoded.
+  // This removes the one-frame size jump/flicker that happened on click.
+  lb.classList.remove('photo-visual-fullscreen');
+  img.alt=title||'Thumbnail preview';
+  img.onload=null;
+  img.onerror=null;
+  img.removeAttribute('src');
+  img.dataset.candidates=JSON.stringify(candidates);
+  img.dataset.candidateIndex='0';
+  photoSetLoading(true);
+  lb.classList.add('open');
   document.body.style.overflow='hidden';
+
+  let candidateIndex=0;
+  const tryCandidate=()=>{
+    if(requestId!==photoLoadRequestId||!lb.classList.contains('open'))return;
+
+    const candidate=candidates[candidateIndex];
+    if(!candidate){
+      photoSetLoading(false);
+      wrap.classList.add('load-failed');
+      return;
+    }
+
+    wrap.classList.remove('load-failed');
+    img.dataset.candidateIndex=String(candidateIndex);
+    img.onload=async()=>{
+      if(requestId!==photoLoadRequestId)return;
+      try{if(img.decode)await img.decode()}catch(e){}
+      if(requestId!==photoLoadRequestId)return;
+      requestAnimationFrame(()=>{
+        if(requestId!==photoLoadRequestId)return;
+        photoSetLoading(false);
+      });
+    };
+    img.onerror=()=>{
+      if(requestId!==photoLoadRequestId)return;
+      candidateIndex+=1;
+      tryCandidate();
+    };
+    img.src=candidate;
+  };
+
+  tryCandidate();
 }
+
 function photoClose(){
   const lb=document.getElementById('photo-lb');
+  const img=document.getElementById('photo-lb-img');
+  const wrap=document.getElementById('photo-lb-wrap');
+  photoLoadRequestId+=1; // cancels any image load that finishes after closing
   if(lb)lb.classList.remove('open','photo-visual-fullscreen');
   document.body.style.overflow='';
+
+  clearTimeout(photoCloseTimer);
+  photoCloseTimer=setTimeout(()=>{
+    if(lb&&lb.classList.contains('open'))return;
+    if(img){
+      img.onload=null;
+      img.onerror=null;
+      img.removeAttribute('src');
+      img.classList.remove('is-loading');
+    }
+    if(wrap)wrap.classList.remove('is-loading','load-failed');
+  },380);
 }
+
 function photoFullscreen(){
   const lb=document.getElementById('photo-lb');
   if(!lb||!lb.classList.contains('open'))return;
@@ -8497,9 +8569,13 @@ function photoFullscreen(){
     lb.classList.add('photo-visual-fullscreen');
   });
 }
-document.getElementById('photo-lb').addEventListener('click',e=>{if(e.target===document.getElementById('photo-lb'))photoClose()});
+
+document.getElementById('photo-lb').addEventListener('click',e=>{
+  if(e.target===document.getElementById('photo-lb'))photoClose();
+});
 window.addEventListener('keydown',e=>{
-  if(document.getElementById('photo-lb').classList.contains('open')){
+  const lb=document.getElementById('photo-lb');
+  if(lb&&lb.classList.contains('open')){
     if(e.code==='Escape')photoClose();
     if(e.code==='KeyF')photoFullscreen();
   }
@@ -10366,6 +10442,184 @@ ring.style.visibility = 'visible';
 }
 @media(max-width:820px){
   #reviews .reviews-track{--reviews-loop-half-gap:7px;}
+}
+</style>
+
+
+<style id="uniform-thumbnail-lightbox-fix">
+/* =========================================================
+   THUMBNAILS: SAME CARD SIZE + SAME OPENED PREVIEW SIZE
+   Also eliminates the click-time resize/flicker.
+========================================================= */
+
+/* Every thumbnail card is locked to one clean 16:9 size. */
+#work .work-grid[data-cat="thumbnail"]{
+  align-items:stretch!important;
+}
+#work .work-grid[data-cat="thumbnail"] .wc.is-photo{
+  position:relative!important;
+  aspect-ratio:16 / 9!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  contain:layout paint;
+}
+#work .work-grid[data-cat="thumbnail"] .wc.is-photo .wc-thumb{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  transform:translateZ(0)!important;
+  backface-visibility:hidden!important;
+}
+
+/* One fixed 16:9 preview frame for every opened thumbnail. */
+#photo-lb{
+  --thumbnail-preview-width:min(1000px,92vw,135.111vh);
+  padding:24px!important;
+}
+#photo-lb .photo-lb-wrap{
+  position:relative!important;
+  width:var(--thumbnail-preview-width)!important;
+  height:auto!important;
+  aspect-ratio:16 / 9!important;
+  max-width:none!important;
+  max-height:none!important;
+  flex:0 0 auto!important;
+  overflow:hidden!important;
+  border-radius:14px 14px 0 0!important;
+  background:#030303!important;
+  contain:layout paint!important;
+  transform:translateZ(0)!important;
+  backface-visibility:hidden!important;
+}
+#photo-lb .photo-lb-wrap img{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  display:block!important;
+  opacity:1!important;
+  transform:none!important;
+  transition:opacity .16s ease!important;
+  backface-visibility:hidden!important;
+}
+#photo-lb .photo-lb-wrap img.is-loading{
+  opacity:0!important;
+}
+#photo-lb .photo-lb-bar{
+  width:var(--thumbnail-preview-width)!important;
+  max-width:none!important;
+  flex:0 0 auto!important;
+  border-radius:0 0 14px 14px!important;
+}
+
+/* Stable loading state so the old image never flashes before the new one. */
+#photo-lb .photo-lb-wrap::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:radial-gradient(circle at center,rgba(224,32,32,.06),transparent 48%);
+  opacity:0;
+  transition:opacity .16s ease;
+}
+#photo-lb .photo-lb-wrap::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:2;
+  width:34px;
+  height:34px;
+  margin:-17px 0 0 -17px;
+  border:2px solid rgba(255,255,255,.14);
+  border-top-color:#e02020;
+  border-radius:50%;
+  opacity:0;
+  pointer-events:none;
+  animation:thumbnailPreviewSpin .75s linear infinite;
+}
+#photo-lb .photo-lb-wrap.is-loading::before,
+#photo-lb .photo-lb-wrap.is-loading::after{
+  opacity:1;
+}
+#photo-lb .photo-lb-wrap.load-failed::after{
+  animation:none;
+  border:0;
+  width:auto;
+  height:auto;
+  margin:0;
+  transform:translate(-50%,-50%);
+  content:'Image could not be loaded';
+  color:rgba(245,240,235,.62);
+  font:500 .72rem/1.4 'DM Mono',monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:1;
+}
+@keyframes thumbnailPreviewSpin{to{transform:rotate(360deg)}}
+
+/* Real browser fullscreen and the existing visual fallback both stay stable. */
+#photo-lb-wrap:fullscreen,
+#photo-lb-wrap:-webkit-full-screen{
+  width:100vw!important;
+  height:100vh!important;
+  max-width:none!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#000!important;
+}
+#photo-lb-wrap:fullscreen img,
+#photo-lb-wrap:-webkit-full-screen img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+.photo-lb.photo-visual-fullscreen .photo-lb-wrap{
+  width:100vw!important;
+  height:calc(100vh - 54px)!important;
+  aspect-ratio:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  border-radius:0!important;
+}
+.photo-lb.photo-visual-fullscreen .photo-lb-bar{
+  width:100vw!important;
+  max-width:none!important;
+  border-radius:0!important;
+}
+
+@media(max-width:640px){
+  #photo-lb{
+    --thumbnail-preview-width:min(94vw,120.889svh);
+    padding:14px!important;
+  }
+  #photo-lb .photo-lb-wrap{
+    border-radius:12px 12px 0 0!important;
+  }
+  #photo-lb .photo-lb-bar{
+    border-radius:0 0 12px 12px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #photo-lb .photo-lb-wrap img{transition:none!important}
+  #photo-lb .photo-lb-wrap::after{animation-duration:1.2s}
 }
 </style>
 

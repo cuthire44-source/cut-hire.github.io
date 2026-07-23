@@ -1,4 +1,4 @@
-<!-- CUTANDHIRE NO OPEN REVIEWS BUTTON -->
+<!-- CUTANDHIRE NO OPEN REVIEWS BUTTON | THUMBNAIL PATH FIX 2026-07-23 -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7517,42 +7517,77 @@ function imageCandidates(src){
   if(!src)return [];
   const clean=String(src).trim();
   if(clean.startsWith('data:')||clean.startsWith('blob:'))return [clean];
-  const noQuery=clean.split('?')[0];
+
+  const noQuery=clean.split('?')[0].replace(/^\.\//,'');
   const file=noQuery.split('/').pop();
+  const list=[];
+  const add=value=>{
+    if(!value)return;
+    const v=String(value).trim();
+    if(!v||list.includes(v))return;
+    list.push(v);
+  };
+  const addPath=path=>{
+    if(!path)return;
+    add(path);
+    add('./'+String(path).replace(/^\.\//,''));
+    try{add(new URL(path,document.baseURI).href)}catch(e){}
+    try{add(new URL('/'+String(path).replace(/^\/?/,''),location.origin).href)}catch(e){}
+  };
 
-  // GitHub Pages fix:
-  // For portfolio thumbnail assets, do not try root/hero fallback paths.
-  // When those files are missing, the old fallback list caused many extra 404s
-  // and made the site look like it was still loading forever.
-  if(noQuery.includes('portfolio-thumbnails/')){
-    return [...new Set([clean,noQuery,encodeURI(noQuery), './'+noQuery, encodeURI('./'+noQuery)].filter(Boolean))];
-  }
+  // Keep the exact path from the HTML first.
+  add(clean);
+  addPath(noQuery);
 
-  const folders=['','portfolio-thumbnails/','hero-thumbnails/','./','./portfolio-thumbnails/','./hero-thumbnails/'];
-  const list=[clean,noQuery,encodeURI(noQuery)];
-  folders.forEach(folder=>{
-    list.push(folder+file);
-    list.push(encodeURI(folder+file));
+  // GitHub Pages is case-sensitive. Try the common folder placements as fallbacks,
+  // including repository root, because many of this site's assets live beside index.html.
+  const folders=[
+    '',
+    'portfolio-thumbnails/',
+    'Portfolio-Thumbnails/',
+    'portfolio_thumbnails/',
+    'portfolio thumbnails/',
+    'thumbnails/',
+    'hero-thumbnails/'
+  ];
+  folders.forEach(folder=>addPath(folder+file));
+
+  // Browsers encode spaces and parentheses automatically, but explicit encoded paths
+  // help on stricter GitHub Pages/CDN configurations.
+  [...list].forEach(value=>{
+    try{add(encodeURI(value))}catch(e){}
   });
-  return [...new Set(list.filter(Boolean))];
+
+  return list;
 }
 function nextImageFallback(img){
   if(!img)return;
   let list=[];
   try{list=JSON.parse(img.dataset.candidates||'[]')}catch(e){}
-  let idx=Number(img.dataset.candidateIndex||0)+1;
-  if(idx<list.length){
-    img.dataset.candidateIndex=String(idx);
-    img.src=cacheBustAsset(list[idx]);
-  }else{
-    img.classList.add('img-missing');
+  const nextIndex=Number(img.dataset.candidateIndex||0)+1;
+  if(nextIndex<list.length){
+    img.dataset.candidateIndex=String(nextIndex);
+    img.src=cacheBustAsset(list[nextIndex]);
+    return;
   }
+  img.classList.add('img-missing');
+  const card=img.closest('.wc');
+  if(card)card.classList.add('image-load-failed');
 }
 function primeImageFallback(img,src){
+  if(!img)return;
   const list=imageCandidates(src);
   img.dataset.candidates=JSON.stringify(list);
   img.dataset.candidateIndex='0';
   img.onerror=function(){nextImageFallback(this)};
+  img.onload=function(){
+    this.classList.remove('img-missing');
+    const card=this.closest('.wc');
+    if(card){
+      card.classList.remove('image-load-failed');
+      card.classList.add('has-thumb');
+    }
+  };
   img.src=cacheBustAsset(list[0]||src||'');
 }
 const works=[
@@ -7674,10 +7709,10 @@ function preloadPortfolioThumbnailsNow(){
     window.setTimeout(()=>{
       const img=new Image();
       img.decoding='async';
-      img.loading='lazy';
-      img.fetchPriority='low';
-      img.src=cacheBustAsset(src);
-    }, i*90);
+      img.loading='eager';
+      img.fetchPriority=i<6?'high':'auto';
+      primeImageFallback(img,src);
+    }, i*35);
   });
 }
 
@@ -7831,7 +7866,7 @@ function renderWork(list, activeCat){
       const photoCandidates=imageCandidates(w.img);
       const firstPhoto=cacheBustAsset(photoCandidates[0]||w.img);
       return `<div class="wc ${sizeClass}${featuredClass}${autoplayClass}${cleanTopIconClass} is-photo rv" data-idx="${i}" data-cat="${dataCats}" style="transition-delay:${i*.04}s">
-        <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="lazy" decoding="async" fetchpriority="low" width="480" height="260" onload="this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
+        <img class="wc-thumb" src="${firstPhoto}" data-candidates='${JSON.stringify(photoCandidates).replace(/'/g,"&#39;")}' data-candidate-index="0" alt="${w.title}" loading="eager" decoding="async" fetchpriority="${i<6?'high':'auto'}" width="480" height="260" onload="this.classList.remove('img-missing');this.closest('.wc')?.classList.add('has-thumb')" onerror="nextImageFallback(this)">
         ${badge}<div class="wc-overlay"><div class="wc-icon-circle">${camSVG}</div></div>
       </div>`;
     }
@@ -7893,7 +7928,7 @@ function filterWork(cat,el){
   document.querySelectorAll('.wc').forEach(c=>{c.style.opacity='0';c.style.transform='scale(.95)'});
   preloadCategoryAssets(cat);
   const filtered=cat==='all'?works:works.filter(w=>getCats(w).includes(cat));
-  setTimeout(()=>renderWork(filtered,cat),120);
+  setTimeout(()=>renderWork(filtered,cat),cat==='thumbnail'?20:120);
 }
 preloadCategoryAssets('vlogs');
 setTimeout(()=>renderWork(works.filter(w=>getCats(w).includes(DEFAULT_WORK_CATEGORY)),DEFAULT_WORK_CATEGORY),60);

@@ -2985,92 +2985,6 @@ body.hero-start-boost
 
 
 
-/* ==================== CUT & HIRE LIMITED OFFER BAR ==================== */
-.cut-hire-offer-bar{
-  /* Main page only: sits at the top of the page and scrolls away with the hero, not sticky/fixed. */
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:9999;
-  width:100%;
-  min-height:46px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px 18px;
-  text-align:center;
-  color:#fff;
-  background:
-    radial-gradient(circle at 16% 50%, rgba(255,255,255,.22), transparent 22%),
-    linear-gradient(90deg, #150000 0%, #ff1e1e 46%, #b30000 68%, #150000 100%);
-  border-bottom:1px solid rgba(255,255,255,.12);
-  box-shadow:0 12px 44px rgba(255,0,0,.20), inset 0 -1px 0 rgba(0,0,0,.35);
-  font-family:'DM Sans',system-ui,sans-serif;
-  transform:translate3d(0,-115%,0);
-  opacity:0;
-  will-change:transform,opacity,filter;
-  pointer-events:auto;
-  animation:offer-bar-entry var(--hero-reveal-duration,1.8s) cubic-bezier(.22,1,.36,1) var(--hero-reveal-delay,1.5s) both;
-}
-.cut-hire-offer-bar::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,.24), transparent);
-  transform:translateX(-100%);
-  animation:offer-bar-sheen 4.8s ease-in-out calc(var(--hero-reveal-delay,1.5s) + var(--hero-reveal-duration,1.8s) + .25s) infinite;
-  opacity:.8;
-}
-@keyframes offer-bar-entry{
-  from{opacity:0;transform:translate3d(0,-115%,0);filter:blur(1.2px)}
-  45%{opacity:1}
-  to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
-}
-@keyframes offer-bar-sheen{
-  0%,42%{transform:translateX(-100%)}
-  68%,100%{transform:translateX(100%)}
-}
-.cut-hire-offer-inner{
-  position:relative;
-  z-index:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  font-size:clamp(13px,1.05vw,15px);
-  font-weight:900;
-  letter-spacing:-.015em;
-}
-.cut-hire-offer-pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:24px;
-  padding:4px 10px;
-  border-radius:999px;
-  color:#ff2727;
-  background:#fff;
-  box-shadow:0 0 28px rgba(255,255,255,.28);
-  text-transform:uppercase;
-  font-size:11px;
-  letter-spacing:.08em;
-}
-.cut-hire-offer-link{
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.72);
-  line-height:1.05;
-  transition:opacity .2s ease, border-color .2s ease;
-}
-.cut-hire-offer-link:hover{opacity:.82;border-color:#fff}
-@media(max-width:680px){
-  .cut-hire-offer-bar{min-height:42px;padding:9px 12px}
-  .cut-hire-offer-inner{gap:7px;font-size:12px;line-height:1.25}
-  .cut-hire-offer-pill{font-size:10px;padding:3px 8px;min-height:21px}
-}
 
 /* ==================== PRICING SHOWCASE CAROUSEL ==================== */
 .pricing-showcase-section{
@@ -6248,13 +6162,6 @@ footer .fi{
 })();
 </script>
 <div aria-hidden="true" class="site-fade-cover"></div>
-<div class="cut-hire-offer-bar" role="banner" aria-label="Cut and Hire limited offer">
-  <div class="cut-hire-offer-inner">
-    <span class="cut-hire-offer-pill">-20% Off</span>
-    <span>20% off every Cut &amp; Hire project.</span>
-    <a class="cut-hire-offer-link js-pricing-jump" role="button" tabindex="0">Start Today →</a>
-  </div>
-</div>
 <!-- Scroll hints -->
 <div class="scroll-hint left" id="scroll-left">
 <div class="scroll-hint-circle">
@@ -6456,7 +6363,7 @@ footer .fi{
     <div class="pricing-showcase-head rv">
       <p class="sec-lbl pricing-eyebrow" style="justify-content:center">Popular Services</p>
       <h2 class="sec-h2 pricing-main-title">Choose Your <em>Editing</em> Setup</h2>
-      <p class="pricing-showcase-sub">Start with the content type you need most. Every setup can be customized after we see your channel, style, schedule, and workload.</p>
+      <p class="pricing-showcase-sub">Start with the content type you need most. Every setup is custom-built around your channel, style, schedule, goals, and workload.</p>
     </div>
 
     <div class="pricing-carousel-wrap rv" data-pricing-carousel>
@@ -6466,7 +6373,7 @@ footer .fi{
 
       <div class="pricing-viewport">
         <div class="pricing-track">
-                    <article class="pricing-card" data-pricing-card>
+          <article class="pricing-card" data-pricing-card>
             <div class="pricing-img-shell reels-pricing-img">
               <img id="reels-pricing-fresh-image"
                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
@@ -6485,24 +6392,19 @@ footer .fi{
             <div class="pricing-card-body">
               <p class="pricing-kicker">For TikTok, Reels and Shorts</p>
               <h3>Reels Pricing</h3>
-              <div class="pricing-price-wrap">
-                <div class="pricing-price-line" aria-label="Reels pricing regular $1.5K per month, discount price $1.2K per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$1.5K</span>
-                  <strong class="pricing-new-price">$1.2K</strong>
-                  <span class="pricing-period">/month</span>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Reels custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes 60 short-form videos per month</p>
-              <p class="pricing-copy">Fast vertical edits built for hooks, pacing, captions, replay value, and platform-ready delivery.</p>
+              <p class="pricing-includes">Includes a custom monthly editing plan built around your content goals</p>
+              <p class="pricing-copy">Whether you need 10 or 100+ videos per month, we’ll build a workflow that matches your upload schedule, editing style, and growth goals.</p>
               <ul class="pricing-list">
-                <li>2 videos per day</li>
-                <li>Optimized for every platform</li>
-                <li>1-2 days turnaround</li>
-                <li>Dedicated editors</li>
+                <li>Custom monthly video volume</li>
+                <li>Platform-optimized edits</li>
+                <li>1–2 day turnaround</li>
+                <li>Dedicated editor</li>
                 <li>Dedicated project manager</li>
-                
               </ul>
               <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
             </div>
@@ -6515,24 +6417,20 @@ footer .fi{
             <div class="pricing-card-body">
               <p class="pricing-kicker">For creators building bigger videos</p>
               <h3>YouTube Pricing</h3>
-              <div class="pricing-price-wrap">
-                <div class="pricing-price-line" aria-label="YouTube pricing regular $2.5K per month, discount price $2K per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$2.5K</span>
-                  <strong class="pricing-new-price">$2K</strong>
-                  <span class="pricing-period">/month</span>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="YouTube custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes 8 long-form videos per month</p>
-              <p class="pricing-copy">Retention-focused editing for creators who need consistent videos with strong pacing, story, sound design, and thumbnails.</p>
+              <p class="pricing-includes">Includes a fully customized YouTube editing workflow</p>
+              <p class="pricing-copy">Built for creators who want consistent long-form content with editing tailored to their niche, audience, and publishing schedule.</p>
               <ul class="pricing-list">
-                <li>1 video per day</li>
-                <li>1-2 days turnaround</li>
-                <li>Dedicated editors</li>
+                <li>Custom upload schedule</li>
+                <li>1–2 day turnaround</li>
+                <li>Dedicated editor</li>
                 <li>Dedicated project manager</li>
                 <li>Strategy support</li>
-                <li>Thumbnails included</li>
+                <li>Thumbnails available</li>
               </ul>
               <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
             </div>
@@ -6544,24 +6442,19 @@ footer .fi{
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For brands needing daily output</p>
-              <h3>Full-Time Editors/Team</h3>
-              <div class="pricing-price-wrap">
-                <div class="pricing-price-line" aria-label="Full-Time Editors Team pricing regular $3K per month, discount price $2.4K per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$3K</span>
-                  <strong class="pricing-new-price">$2.4K</strong>
-                  <span class="pricing-period">/month</span>
+              <h3>Full-Time Editors / Team</h3>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Full-Time Editors and Team custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes daily editing support + custom monthly output</p>
-              <p class="pricing-copy">A managed editing team for businesses that need reliable output, senior editors, project leadership, and a smoother content pipeline.</p>
+              <p class="pricing-includes">Includes a dedicated editing team customized for your business</p>
+              <p class="pricing-copy">We build a complete editing team around your company with the exact roles, workflow, and output you need.</p>
               <ul class="pricing-list">
                 <li>Custom video volume</li>
-                <li>Save 60-70% on salaries</li>
                 <li>Senior editors</li>
                 <li>Project leaders</li>
-                <li>Creative input</li>
+                <li>Creative direction</li>
                 <li>Expertly vetted talent</li>
                 <li>Managed by Cut &amp; Hire</li>
               </ul>
@@ -6576,30 +6469,24 @@ footer .fi{
             <div class="pricing-card-body">
               <p class="pricing-kicker">For streamers who want daily clips</p>
               <h3>Stream Clipping Pricing</h3>
-              <div class="pricing-price-wrap">
-                <div class="pricing-price-line" aria-label="Stream Clipping pricing regular $1.2K per month, discount price $1K per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$1.2K</span>
-                  <strong class="pricing-new-price">$1K</strong>
-                  <span class="pricing-period">/month</span>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Stream Clipping custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes 20 clips per week from your streams</p>
-              <p class="pricing-copy">We go through your Twitch, YouTube, or TikTok streams, find the best moments, and turn them into high-retention clips ready for TikTok, Reels, and Shorts.</p>
+              <p class="pricing-includes">Includes a personalized clipping workflow for your streams</p>
+              <p class="pricing-copy">We review your content, find the best moments, and create clips based on your goals and posting frequency.</p>
               <ul class="pricing-list">
-                <li>3 clips per day</li>
-                <li>20 clips per week</li>
-                <li>Clips from Twitch, YouTube, or TikTok streams</li>
-                <li>Best moments selected for you</li>
-                <li>Optimized for TikTok, Reels, and Shorts</li>
+                <li>Custom number of clips</li>
+                <li>Twitch, YouTube &amp; TikTok support</li>
+                <li>Best moments selected</li>
+                <li>Optimized for every platform</li>
                 <li>Captions included</li>
                 <li>Dedicated clipping team</li>
               </ul>
               <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
             </div>
           </article>
-
 
           <article class="pricing-card pricing-card-featured" data-pricing-card>
             <a class="pricing-img-shell pricing-video-shell minimal-pricing-img" href="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" role="button" tabindex="0" aria-label="Open Minimal Reels Pricing YouTube video" data-pricing-src="Video 44.mp4" data-pricing-poster="minimalreelphoto.jpg" data-pricing-title="Minimal Reels Pricing" data-pricing-portrait="true" data-pricing-youtube="https://youtube.com/shorts/k2s_fIZtLV8?feature=share">
@@ -6611,19 +6498,16 @@ footer .fi{
               <p class="pricing-kicker">For creators who want clean viral authority</p>
               <h3>Minimal Reels Pricing</h3>
               <div class="pricing-price-wrap pricing-simple-price">
-                <div class="pricing-price-line pricing-line-compact" aria-label="Minimal Reels pricing regular $900 per month, discount price $720 per month">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$900</span>
-                  <span class="pricing-current-group"><strong class="pricing-new-price">$720</strong><span class="pricing-period">/month</span></span>
+                <div class="pricing-price-line" aria-label="Minimal Reels custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes 15 minimal short-form videos per month</p>
-              <p class="pricing-copy">Clean short-form edits built for hooks, authority, pacing, subtitles, and a polished brand feel.</p>
+              <p class="pricing-includes">Includes a personalized short-form editing plan</p>
+              <p class="pricing-copy">Clean, professional edits designed around your brand, posting schedule, and content strategy.</p>
               <ul class="pricing-list">
-                <li>1 video per day</li>
-                <li>3 days turnaround time</li>
-                <li>Storyboarding</li>
+                <li>Custom monthly output</li>
+                <li>Fast turnaround</li>
+                <li>Storyboarding available</li>
                 <li>Clean viral style</li>
               </ul>
               <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA" target="_blank" rel="noopener">Start Your Project</a>
@@ -6640,21 +6524,18 @@ footer .fi{
               <p class="pricing-kicker">For B2B and SaaS companies</p>
               <h3>2D Animation Pricing</h3>
               <div class="pricing-price-wrap pricing-simple-price">
-                <div class="pricing-price-line pricing-line-compact" aria-label="2D Animation pricing regular $1.5K per minute, discount price $1.2K per minute">
-                  <span class="pricing-from">From</span>
-                  <span class="pricing-old-price">$1.5K</span>
-                  <span class="pricing-current-group"><strong class="pricing-new-price">$1.2K</strong><span class="pricing-period">/min</span></span>
+                <div class="pricing-price-line" aria-label="2D Animation custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
-              <p class="pricing-includes">Includes 1 minute of polished 2D animation</p>
-              <p class="pricing-copy">For B2B and SaaS companies that need animated videos to explain products, improve trust, and increase conversions.</p>
+              <p class="pricing-includes">Includes a custom animation project tailored to your business</p>
+              <p class="pricing-copy">Every animation is built from scratch based on your objectives, branding, and messaging.</p>
               <ul class="pricing-list">
-                <li>14 days turnaround time</li>
+                <li>Custom animation length</li>
                 <li>Storyboarding</li>
-                <li>Voiceover</li>
-                <li>20+ animation styles</li>
-                <li>Repurposed content for ads</li>
+                <li>Professional voiceover available</li>
+                <li>Multiple animation styles</li>
+                <li>Repurposed for ads &amp; social media</li>
               </ul>
               <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
             </div>
@@ -6668,10 +6549,9 @@ footer .fi{
               <p class="pricing-kicker">For stronger clicks and cleaner packaging</p>
               <h3>Thumbnail Pricing</h3>
               <div class="pricing-price-wrap pricing-simple-price">
-                <div class="pricing-price-line" aria-label="Thumbnail pricing custom pricing with 20 percent off">
+                <div class="pricing-price-line" aria-label="Thumbnail custom pricing">
                   <strong class="pricing-new-price">Custom Pricing</strong>
                 </div>
-                <span class="pricing-save-chip">-20% off</span>
               </div>
               <p class="pricing-includes">Includes custom thumbnail packages based on volume</p>
               <p class="pricing-copy">Thumbnail design built around your niche, idea, emotion, title, and click-focused visual hierarchy.</p>
@@ -6686,7 +6566,6 @@ footer .fi{
               <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA" target="_blank" rel="noopener">Start Your Project</a>
             </div>
           </article>
-        
         </div>
       </div>
 

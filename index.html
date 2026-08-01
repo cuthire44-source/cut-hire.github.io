@@ -5806,6 +5806,27 @@ footer .fi{
 }
 .creator-reviews-section .con{position:relative;z-index:1;}
 
+/* Restored section heading above the compact reviews grid. */
+.creator-reviews-head{
+  max-width:820px;
+  margin:0 auto 1.65rem;
+  text-align:center;
+}
+.creator-reviews-head .sec-lbl{
+  justify-content:center;
+}
+.creator-reviews-head .sec-h2{
+  margin-bottom:.7rem;
+}
+.creator-reviews-sub{
+  max-width:650px;
+  margin:0 auto;
+  color:rgba(245,240,235,.64);
+  font-family:'DM Sans',sans-serif;
+  font-size:.92rem;
+  line-height:1.65;
+}
+
 .creator-reviews-compact{
   width:min(1080px,100%);
   margin:0 auto;
@@ -5974,6 +5995,9 @@ footer .fi{
 }
 @media(max-width:620px){
   #services.creator-reviews-section{padding:2.7rem .85rem 2.9rem;}
+  .creator-reviews-head{margin-bottom:1.25rem;}
+  .creator-reviews-head .sec-h2{font-size:clamp(2.15rem,11vw,3rem);}
+  .creator-reviews-sub{font-size:.82rem;line-height:1.55;padding:0 .35rem;}
   .creator-reviews-compact{padding:.82rem;border-radius:19px;}
   .creator-reviews-compact-head{padding:.08rem .12rem .7rem;margin-bottom:.65rem;}
   .creator-reviews-compact-title{font-size:1.14rem;}
@@ -6528,6 +6552,12 @@ footer .fi{
 <!-- ==================== SERVICES ==================== -->
 <section id="services" class="creator-reviews-section">
   <div class="con">
+    <div class="creator-reviews-head rv">
+      <p class="sec-lbl">Creator Reviews</p>
+      <h2 class="sec-h2">What <em>Creators</em> Say</h2>
+      <p class="creator-reviews-sub">One featured testimonial at a time, with every creator still one click away.</p>
+    </div>
+
     <div class="creator-reviews-compact rv" aria-labelledby="creator-reviews-title" data-open-creator-reviews role="button" tabindex="0" aria-label="Open all 7 creator reviews">
       <header class="creator-reviews-compact-head">
         <div>

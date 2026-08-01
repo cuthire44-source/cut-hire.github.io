@@ -5847,8 +5847,9 @@ footer .fi{
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  padding:1.75rem 1.9rem 1.65rem;
+  padding:1.55rem 1.9rem 1.45rem;
 }
+.creator-featured-number{display:none!important;}
 .creator-featured-label{
   display:flex;
   align-items:center;
@@ -5861,8 +5862,7 @@ footer .fi{
   text-transform:uppercase;
   color:rgba(245,240,235,.46);
 }
-.creator-featured-number{color:rgba(224,32,32,.92);letter-spacing:.1em;}
-.creator-featured-person{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;}
+.creator-featured-person{display:flex;align-items:center;gap:.9rem;margin-bottom:.9rem;}
 .creator-featured-avatar{
   width:62px;
   height:62px;
@@ -5889,19 +5889,20 @@ footer .fi{
 .creator-featured-stat{display:block;margin-top:.24rem;color:rgba(245,240,235,.56);font-size:.77rem;}
 .creator-featured-quote{
   position:relative;
+  width:100%;
   max-width:680px;
-  min-height:8.8rem;
+  min-height:0;
   margin:0;
   padding-left:1.05rem;
   color:rgba(245,240,235,.88);
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1rem,1.45vw,1.18rem);
-  line-height:1.62;
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(.9rem,1.12vw,1rem);
+  line-height:1.68;
   font-weight:400;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:6;
-  overflow:hidden;
+  display:block;
+  overflow:visible;
+  white-space:normal;
+  text-wrap:pretty;
   transition:opacity .16s ease,transform .22s cubic-bezier(.22,1,.36,1);
 }
 .creator-featured-quote::before{
@@ -5916,7 +5917,7 @@ footer .fi{
 }
 .creator-featured-review.is-switching .creator-featured-avatar,
 .creator-featured-review.is-switching .creator-featured-quote{opacity:0;transform:translateY(5px);}
-.creator-featured-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.25rem;}
+.creator-featured-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:.95rem;}
 .creator-view-all{
   border:1px solid rgba(224,32,32,.5);
   border-radius:999px;
@@ -5945,7 +5946,7 @@ footer .fi{
 .creator-selector-head{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-start;
   gap:1rem;
   padding:.2rem .2rem .82rem;
 }
@@ -6017,7 +6018,7 @@ footer .fi{
 .creator-modal-review:first-child{border-color:rgba(224,32,32,.27);background:rgba(224,32,32,.055);}
 .creator-modal-review.creator-modal-review-cruunchuu{grid-column:1 / -1;width:100%;justify-self:stretch;}
 .creator-modal-review img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 22px rgba(224,32,32,.18);background:#111;}
-.creator-modal-review p{margin-top:.62rem;color:rgba(245,240,235,.82);line-height:1.72;font-size:.93rem;}
+.creator-modal-review p{margin-top:.62rem;color:rgba(245,240,235,.82);font-family:'DM Sans',sans-serif;line-height:1.72;font-size:.93rem;}
 .creator-modal-sub{display:block;margin-top:.15rem;color:rgba(245,240,235,.58);font-size:.78rem;}
 .creator-modal-foot{position:relative;z-index:1;margin-top:1rem;display:flex;justify-content:flex-end;}
 .creator-modal-review-btn{border:0;border-radius:10px;background:rgba(245,240,235,.72);color:#111;padding:.62rem .92rem;font-weight:900;cursor:pointer;transition:transform .2s,background .2s;}
@@ -6037,7 +6038,7 @@ footer .fi{
   .creator-featured-review{padding:1.25rem 1.1rem 1.2rem;}
   .creator-featured-label{margin-bottom:1rem;}
   .creator-featured-avatar{width:54px;height:54px;}
-  .creator-featured-quote{min-height:9.2rem;font-size:1rem;line-height:1.58;-webkit-line-clamp:7;}
+  .creator-featured-quote{min-height:0;font-size:.94rem;line-height:1.64;display:block;overflow:visible;-webkit-line-clamp:unset;}
   .creator-featured-actions{margin-top:1rem;}
   .creator-featured-hint{display:none;}
   .creator-review-selector{border-left:0;border-top:1px solid rgba(255,255,255,.075);padding:.85rem;}
@@ -6488,11 +6489,6 @@ footer .fi{
     <div class="creator-review-board rv">
       <article class="creator-featured-review" id="creator-featured-review" aria-live="polite">
         <div>
-          <div class="creator-featured-label">
-            <span>Featured testimonial</span>
-            <span class="creator-featured-number" id="creator-featured-number">01 / 07</span>
-          </div>
-
           <div class="creator-featured-person">
             <img class="creator-featured-avatar" id="creator-featured-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="Ricky Flicks profile picture" loading="eager"/>
             <div class="creator-featured-identity">
@@ -6506,12 +6502,11 @@ footer .fi{
 
         <div class="creator-featured-actions">
           <button class="creator-view-all" data-open-creator-reviews type="button">View all 7 reviews</button>
-          <span class="creator-featured-hint">Choose a creator on the right to switch the testimonial.</span>
         </div>
       </article>
 
       <aside class="creator-review-selector" aria-label="Choose a creator review">
-        <div class="creator-selector-head"><strong>7 Creator Reviews</strong><span>Select one</span></div>
+        <div class="creator-selector-head"><strong>7 Creator Reviews</strong></div>
         <div class="creator-selector-grid" role="tablist" aria-label="Creator testimonials">
           <button class="creator-selector-btn active" type="button" role="tab" aria-selected="true" data-creator-review-index="0">
             <img class="creator-selector-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="" loading="eager"/>
@@ -6551,27 +6546,52 @@ footer .fi{
 (function(){
   var dataNode = document.getElementById('creator-review-data');
   var featured = document.getElementById('creator-featured-review');
-  if(!dataNode || !featured) return;
+  var board = document.querySelector('.creator-review-board');
+  if(!dataNode || !featured || !board) return;
 
   var reviews;
   try{ reviews = JSON.parse(dataNode.textContent); }catch(error){ return; }
+  if(!reviews || reviews.length < 2) return;
 
+  var AUTO_SWITCH_MS = 6500;
   var avatar = document.getElementById('creator-featured-avatar');
   var name = document.getElementById('creator-featured-name');
   var stat = document.getElementById('creator-featured-stat');
   var quote = document.getElementById('creator-featured-quote');
-  var number = document.getElementById('creator-featured-number');
   var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-creator-review-index]'));
+  var selector = document.querySelector('.creator-selector-grid');
+  var currentIndex = 0;
   var switchTimer = 0;
+  var autoTimer = 0;
+  var isBoardVisible = true;
+  var isPaused = false;
 
-  function showReview(index){
+  function keepActiveButtonVisible(button){
+    if(!button || !selector || typeof button.scrollIntoView !== 'function') return;
+    if(window.matchMedia('(max-width: 760px)').matches){
+      button.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    }
+  }
+
+  function scheduleNext(){
+    window.clearTimeout(autoTimer);
+    if(isPaused || !isBoardVisible || document.hidden) return;
+    autoTimer = window.setTimeout(function(){
+      showReview((currentIndex + 1) % reviews.length, true);
+    }, AUTO_SWITCH_MS);
+  }
+
+  function showReview(index, fromAuto){
+    index = ((Number(index) || 0) + reviews.length) % reviews.length;
     var item = reviews[index];
     if(!item) return;
+    currentIndex = index;
 
     buttons.forEach(function(button, buttonIndex){
       var active = buttonIndex === index;
       button.classList.toggle('active', active);
       button.setAttribute('aria-selected', active ? 'true' : 'false');
+      if(active && fromAuto) keepActiveButtonVisible(button);
     });
 
     window.clearTimeout(switchTimer);
@@ -6582,16 +6602,51 @@ footer .fi{
       name.textContent = item.name;
       stat.textContent = item.stat;
       quote.textContent = item.quote;
-      number.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(reviews.length).padStart(2,'0');
       featured.classList.remove('is-switching');
+      scheduleNext();
     }, 145);
+  }
+
+  function pauseAuto(){
+    isPaused = true;
+    window.clearTimeout(autoTimer);
+  }
+
+  function resumeAuto(){
+    isPaused = false;
+    scheduleNext();
   }
 
   buttons.forEach(function(button){
     button.addEventListener('click', function(){
-      showReview(Number(button.getAttribute('data-creator-review-index')) || 0);
+      showReview(Number(button.getAttribute('data-creator-review-index')) || 0, false);
     });
   });
+
+  board.addEventListener('mouseenter', pauseAuto);
+  board.addEventListener('mouseleave', resumeAuto);
+  board.addEventListener('focusin', pauseAuto);
+  board.addEventListener('focusout', function(event){
+    if(!board.contains(event.relatedTarget)) resumeAuto();
+  });
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) window.clearTimeout(autoTimer);
+    else scheduleNext();
+  });
+
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.target !== board) return;
+        isBoardVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        scheduleNext();
+      });
+    }, {threshold:[0,0.25,0.5]});
+    observer.observe(board);
+  }
+
+  scheduleNext();
 })();
 </script>
 <!-- ==================== PRICING / TEAMS ==================== -->

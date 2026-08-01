@@ -5790,12 +5790,12 @@ footer .fi{
 
 
 <style id="cnh-what-creators-say-css">
-/* ===== CREATOR REVIEWS — all seven visible without the oversized section ===== */
+/* ===== CREATOR REVIEWS — clean two-column compact layout ===== */
 #services.creator-reviews-section{
   position:relative;
   overflow:hidden;
   background:var(--bg);
-  padding:3.35rem 2rem 3.65rem;
+  padding:3.15rem 2rem 3.35rem;
 }
 #services.creator-reviews-section::before{
   content:'';
@@ -5806,89 +5806,95 @@ footer .fi{
 }
 .creator-reviews-section .con{position:relative;z-index:1;}
 
-/* Restored section heading above the compact reviews grid. */
 .creator-reviews-head{
   max-width:820px;
-  margin:0 auto 1.65rem;
+  margin:0 auto 1.45rem;
   text-align:center;
 }
-.creator-reviews-head .sec-lbl{
-  justify-content:center;
-}
-.creator-reviews-head .sec-h2{
-  margin-bottom:.7rem;
-}
+.creator-reviews-head .sec-lbl{justify-content:center;}
+.creator-reviews-head .sec-h2{margin-bottom:.65rem;}
 .creator-reviews-sub{
   max-width:650px;
   margin:0 auto;
   color:rgba(245,240,235,.64);
   font-family:'DM Sans',sans-serif;
-  font-size:.92rem;
-  line-height:1.65;
+  font-size:.9rem;
+  line-height:1.6;
 }
 
 .creator-reviews-compact{
-  width:min(1080px,100%);
+  width:min(1020px,100%);
   margin:0 auto;
-  padding:1.15rem;
+  padding:.82rem;
   border:1px solid rgba(224,32,32,.42);
-  border-radius:24px;
+  border-radius:20px;
   background:
-    radial-gradient(circle at 10% 0%,rgba(224,32,32,.12),transparent 35%),
-    linear-gradient(145deg,rgba(24,24,24,.96),rgba(8,8,8,.985));
-  box-shadow:0 22px 75px rgba(0,0,0,.44),0 0 46px rgba(224,32,32,.055);
+    radial-gradient(circle at 8% 0%,rgba(224,32,32,.11),transparent 34%),
+    linear-gradient(145deg,rgba(22,22,22,.96),rgba(8,8,8,.985));
+  box-shadow:0 20px 65px rgba(0,0,0,.4),0 0 38px rgba(224,32,32,.05);
 }
 .creator-reviews-compact-head{
   display:flex;
-  align-items:flex-end;
+  align-items:center;
   justify-content:space-between;
   gap:1rem;
-  padding:.05rem .35rem .85rem;
-  margin-bottom:.8rem;
+  padding:.05rem .18rem .7rem;
+  margin-bottom:.58rem;
   border-bottom:1px solid rgba(255,255,255,.075);
 }
 .creator-reviews-compact-eyebrow{
-  margin:0 0 .24rem;
+  margin:0 0 .2rem;
   color:rgba(245,240,235,.43);
   font-family:'DM Mono',monospace;
-  font-size:.54rem;
+  font-size:.5rem;
   line-height:1;
-  letter-spacing:.19em;
+  letter-spacing:.18em;
   text-transform:uppercase;
 }
 .creator-reviews-compact-title{
   margin:0;
   color:#fff;
   font-family:'DM Sans',sans-serif;
-  font-size:1.35rem;
+  font-size:1.16rem;
   line-height:1.05;
   font-weight:900;
-  letter-spacing:-.035em;
+  letter-spacing:-.03em;
 }
 .creator-reviews-compact-note{
-  max-width:320px;
   margin:0;
-  color:rgba(245,240,235,.43);
+  padding:.34rem .62rem;
+  border:1px solid rgba(224,32,32,.28);
+  border-radius:999px;
+  color:rgba(245,240,235,.62);
+  background:rgba(224,32,32,.055);
   font-family:'DM Sans',sans-serif;
-  font-size:.68rem;
-  line-height:1.45;
-  text-align:right;
+  font-size:.6rem;
+  line-height:1;
+  font-weight:700;
+  white-space:nowrap;
 }
 
+/* Two independent columns remove the large empty gaps caused by uneven review lengths. */
 .creator-review-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:.72rem;
-  align-items:stretch;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.56rem;
+  align-items:start;
+}
+.creator-review-column{
+  display:flex;
+  flex-direction:column;
+  gap:.56rem;
+  min-width:0;
 }
 .creator-review-item{
   position:relative;
   min-width:0;
-  padding:.9rem .95rem .88rem;
-  border:1px solid rgba(255,255,255,.085);
-  border-radius:16px;
+  padding:.72rem .78rem .74rem;
+  border:1px solid rgba(255,255,255,.082);
+  border-radius:13px;
   overflow:hidden;
-  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+  background:linear-gradient(145deg,rgba(255,255,255,.034),rgba(255,255,255,.014));
   transition:transform .22s cubic-bezier(.22,1,.36,1),border-color .22s,background .22s;
 }
 .creator-review-item::before{
@@ -5897,41 +5903,40 @@ footer .fi{
   inset:0;
   pointer-events:none;
   opacity:0;
-  background:radial-gradient(circle at 12% 0%,rgba(224,32,32,.12),transparent 43%);
+  background:radial-gradient(circle at 10% 0%,rgba(224,32,32,.11),transparent 44%);
   transition:opacity .22s;
 }
 .creator-review-item:hover{
   transform:translateY(-2px);
-  border-color:rgba(224,32,32,.34);
-  background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.02));
+  border-color:rgba(224,32,32,.32);
+  background:linear-gradient(145deg,rgba(255,255,255,.048),rgba(255,255,255,.019));
 }
 .creator-review-item:hover::before{opacity:1;}
-.creator-review-item.creator-review-wide{grid-column:span 2;}
 
 .creator-review-person{
   position:relative;
   z-index:1;
   display:flex;
   align-items:center;
-  gap:.68rem;
+  gap:.58rem;
   min-width:0;
-  margin-bottom:.62rem;
+  margin-bottom:.42rem;
 }
 .creator-review-avatar{
-  width:42px;
-  height:42px;
+  width:36px;
+  height:36px;
   flex:0 0 auto;
   border-radius:50%;
   object-fit:cover;
   background:#111;
   border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 0 15px rgba(224,32,32,.12);
+  box-shadow:0 0 12px rgba(224,32,32,.11);
 }
 .creator-review-identity{min-width:0;}
 .creator-review-name-row{
   display:flex;
   align-items:center;
-  gap:.35rem;
+  gap:.3rem;
   min-width:0;
 }
 .creator-review-name-row strong{
@@ -5940,24 +5945,24 @@ footer .fi{
   overflow:hidden;
   color:#fff;
   font-family:'DM Sans',sans-serif;
-  font-size:.79rem;
+  font-size:.72rem;
   line-height:1.1;
   font-weight:900;
   white-space:nowrap;
   text-overflow:ellipsis;
 }
 .creator-review-verified{
-  width:13px;
-  height:13px;
+  width:12px;
+  height:12px;
   flex:0 0 auto;
   object-fit:contain;
 }
 .creator-review-stat{
   display:block;
-  margin-top:.15rem;
-  color:rgba(245,240,235,.46);
+  margin-top:.12rem;
+  color:rgba(245,240,235,.44);
   font-family:'DM Sans',sans-serif;
-  font-size:.59rem;
+  font-size:.54rem;
   line-height:1.2;
 }
 .creator-review-text{
@@ -5966,8 +5971,8 @@ footer .fi{
   margin:0;
   color:rgba(245,240,235,.82);
   font-family:'DM Sans',sans-serif;
-  font-size:.76rem;
-  line-height:1.54;
+  font-size:.68rem;
+  line-height:1.45;
   font-weight:400;
   white-space:normal;
   overflow:visible;
@@ -5980,32 +5985,30 @@ footer .fi{
   content:'“';
   color:rgba(224,32,32,.8);
   font-family:'Playfair Display',serif;
-  font-size:1.05rem;
+  font-size:.95rem;
   line-height:0;
-  margin-right:.12rem;
-  vertical-align:-.12rem;
+  margin-right:.1rem;
+  vertical-align:-.1rem;
 }
 .creator-review-text::after{content:'”';}
 
-@media(max-width:900px){
-  #services.creator-reviews-section{padding:3rem 1.25rem 3.25rem;}
-  .creator-review-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .creator-review-item.creator-review-wide{grid-column:span 2;}
+@media(max-width:800px){
+  #services.creator-reviews-section{padding:2.9rem 1.15rem 3.1rem;}
   .creator-reviews-compact-note{display:none;}
 }
 @media(max-width:620px){
-  #services.creator-reviews-section{padding:2.7rem .85rem 2.9rem;}
-  .creator-reviews-head{margin-bottom:1.25rem;}
+  #services.creator-reviews-section{padding:2.65rem .82rem 2.85rem;}
+  .creator-reviews-head{margin-bottom:1.15rem;}
   .creator-reviews-head .sec-h2{font-size:clamp(2.15rem,11vw,3rem);}
-  .creator-reviews-sub{font-size:.82rem;line-height:1.55;padding:0 .35rem;}
-  .creator-reviews-compact{padding:.82rem;border-radius:19px;}
-  .creator-reviews-compact-head{padding:.08rem .12rem .7rem;margin-bottom:.65rem;}
-  .creator-reviews-compact-title{font-size:1.14rem;}
-  .creator-review-grid{grid-template-columns:1fr;gap:.58rem;}
-  .creator-review-item,
-  .creator-review-item.creator-review-wide{grid-column:span 1;padding:.8rem .82rem;border-radius:14px;}
-  .creator-review-avatar{width:38px;height:38px;}
-  .creator-review-text{font-size:.73rem;line-height:1.5;}
+  .creator-reviews-sub{font-size:.8rem;line-height:1.52;padding:0 .3rem;}
+  .creator-reviews-compact{padding:.7rem;border-radius:17px;}
+  .creator-reviews-compact-head{padding:.02rem .08rem .62rem;margin-bottom:.5rem;}
+  .creator-reviews-compact-title{font-size:1.06rem;}
+  .creator-review-grid{grid-template-columns:1fr;gap:.5rem;}
+  .creator-review-column{gap:.5rem;}
+  .creator-review-item{padding:.7rem .72rem;border-radius:12px;}
+  .creator-review-avatar{width:34px;height:34px;}
+  .creator-review-text{font-size:.69rem;line-height:1.46;}
 }
 </style>
 
@@ -6564,86 +6567,90 @@ footer .fi{
           <p class="creator-reviews-compact-eyebrow">Trusted by growing channels</p>
           <h2 class="creator-reviews-compact-title" id="creator-reviews-title">7 Creator Reviews</h2>
         </div>
-        <p class="creator-reviews-compact-note">Click anywhere to open the full creator reviews window.</p>
+        <p class="creator-reviews-compact-note">Click to open full reviews</p>
       </header>
 
       <div class="creator-review-grid">
-        <article class="creator-review-item creator-review-wide">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="Ricky Flicks profile picture" loading="eager"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>Ricky Flicks</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">1.5M followers</span>
+        <div class="creator-review-column">
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="Ricky Flicks profile picture" loading="eager"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>Ricky Flicks</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">1.5M followers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Working with Cut &amp; Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut &amp; Hire to any creator looking for reliable editors who communicate well and take feedback seriously.</p>
-        </article>
+            <p class="creator-review-text">Working with Cut &amp; Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut &amp; Hire to any creator looking for reliable editors who communicate well and take feedback seriously.</p>
+          </article>
 
-        <article class="creator-review-item">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="creator-mas.jpg" alt="mas channel logo" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>mas</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">415K subscribers</span>
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="creator-thatgorillaguy.jpg" alt="ThatGorillaGuy channel logo" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>ThatGorillaGuy</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">199K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Best way to build a reliable editing team for a channel that needs to pump content!</p>
-        </article>
+            <p class="creator-review-text">Cut &amp; Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut &amp; Hire’s editors and it drastically improved his average view duration.</p>
+          </article>
 
-        <article class="creator-review-item">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="creator-thatgorillaguy.jpg" alt="ThatGorillaGuy channel logo" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>ThatGorillaGuy</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">199K subscribers</span>
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="creator-mmvr.jpg" alt="MMVR channel logo" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>MMVR</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">115K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Cut &amp; Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut &amp; Hire’s editors and it drastically improved his average view duration.</p>
-        </article>
+            <p class="creator-review-text">On time editing, very good!</p>
+          </article>
+        </div>
 
-        <article class="creator-review-item">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="creator-joe-monkey.jpg" alt="Joe Monkey channel logo" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>Joe Monkey</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">128K subscribers</span>
+        <div class="creator-review-column">
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="creator-mas.jpg" alt="mas channel logo" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>mas</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">415K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Good team overall. The owner is a nice guy and serious about business, and the editors are also great.</p>
-        </article>
+            <p class="creator-review-text">Best way to build a reliable editing team for a channel that needs to pump content!</p>
+          </article>
 
-        <article class="creator-review-item">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="creator-mmvr.jpg" alt="MMVR channel logo" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>MMVR</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">115K subscribers</span>
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="creator-joe-monkey.jpg" alt="Joe Monkey channel logo" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>Joe Monkey</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">128K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">On time editing, very good!</p>
-        </article>
+            <p class="creator-review-text">Good team overall. The owner is a nice guy and serious about business, and the editors are also great.</p>
+          </article>
 
-        <article class="creator-review-item">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="channels4_profile2331312.jpg" alt="IVAN channel logo" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>IVAN</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">38.7K subscribers</span>
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="channels4_profile2331312.jpg" alt="IVAN channel logo" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>IVAN</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">38.7K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Finds you good editors good all around 💯</p>
-        </article>
+            <p class="creator-review-text">Finds you good editors good all around 💯</p>
+          </article>
 
-        <article class="creator-review-item creator-review-wide">
-          <div class="creator-review-person">
-            <img class="creator-review-avatar" src="chann432124124213132els4_profile.jpg" alt="Cruunchuu channel profile picture" loading="lazy"/>
-            <div class="creator-review-identity">
-              <div class="creator-review-name-row"><strong>Cruunchuu</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
-              <span class="creator-review-stat">20.6K subscribers</span>
+          <article class="creator-review-item">
+            <div class="creator-review-person">
+              <img class="creator-review-avatar" src="chann432124124213132els4_profile.jpg" alt="Cruunchuu channel profile picture" loading="lazy"/>
+              <div class="creator-review-identity">
+                <div class="creator-review-name-row"><strong>Cruunchuu</strong><img class="creator-review-verified" src="blue_checkmark.png" alt="Verified"/></div>
+                <span class="creator-review-stat">20.6K subscribers</span>
+              </div>
             </div>
-          </div>
-          <p class="creator-review-text">Working with Cut &amp; Hire was a great experience from start to finish. The entire process was quick, simple, and affordable. They’re incredibly easy to work with, communicate well, and deliver high-quality edits fast. Their versatility really stands out. They’re able to adapt to different styles and consistently produce great results. I highly recommend Cut &amp; Hire.</p>
-        </article>
+            <p class="creator-review-text">Working with Cut &amp; Hire was a great experience from start to finish. The entire process was quick, simple, and affordable. They’re incredibly easy to work with, communicate well, and deliver high-quality edits fast. Their versatility really stands out. They’re able to adapt to different styles and consistently produce great results. I highly recommend Cut &amp; Hire.</p>
+          </article>
+        </div>
       </div>
     </div>
   </div>

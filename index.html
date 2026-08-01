@@ -1,4 +1,4 @@
-<!-- CUTANDHIRE | CRUUNCHUU FULL-WIDTH CREATOR REVIEW + MAS 415K + VERIFIED REVIEWS | 2026-08-01 -->
+<!-- CUTANDHIRE | COMPACT INTERACTIVE CREATOR REVIEWS + FULL REVIEW MODAL | 2026-08-01 -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5790,42 +5790,213 @@ footer .fi{
 
 
 <style id="cnh-what-creators-say-css">
-/* ===== WHAT CREATORS SAY — lightweight creator review window ===== */
-#services.creator-reviews-section{position:relative;background:var(--bg);overflow:hidden;padding:6rem 2rem;}
-#services.creator-reviews-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 18%,rgba(224,32,32,.09),transparent 46%);pointer-events:none;}
+/* ===== WHAT CREATORS SAY — compact featured-review switcher ===== */
+#services.creator-reviews-section{
+  position:relative;
+  background:var(--bg);
+  overflow:hidden;
+  padding:4.65rem 2rem 4.9rem;
+}
+#services.creator-reviews-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(224,32,32,.085),transparent 42%),
+    linear-gradient(to bottom,transparent,rgba(255,255,255,.012),transparent);
+  pointer-events:none;
+}
 .creator-reviews-section .con{position:relative;z-index:1;}
-.creator-reviews-head{text-align:center;max-width:850px;margin:0 auto 2.4rem;}
+.creator-reviews-head{text-align:center;max-width:820px;margin:0 auto 1.65rem;}
 .creator-reviews-head .sec-lbl{justify-content:center;}
 .creator-reviews-head .sec-lbl::before{display:inline-block;}
-.creator-reviews-head .sec-h2{margin-bottom:.9rem;}
-.creator-reviews-sub{max-width:680px;margin:0 auto;color:rgba(245,240,235,.68);font-size:1rem;line-height:1.75;}
-.creator-review-board{position:relative;max-width:1080px;margin:0 auto;border:1px solid rgba(224,32,32,.5);border-radius:26px;background:linear-gradient(145deg,rgba(25,25,25,.92),rgba(8,8,8,.96));box-shadow:0 0 0 1px rgba(255,255,255,.035),0 28px 90px rgba(0,0,0,.45),0 0 60px rgba(224,32,32,.08);padding:1.45rem;cursor:pointer;overflow:hidden;transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .28s,box-shadow .28s;}
-.creator-review-board::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 16% 0%,rgba(224,32,32,.16),transparent 34%),radial-gradient(circle at 100% 100%,rgba(224,32,32,.10),transparent 42%);pointer-events:none;}
-.creator-review-board:hover{transform:translateY(-4px);border-color:rgba(224,32,32,.78);box-shadow:0 0 0 1px rgba(255,255,255,.04),0 34px 110px rgba(0,0,0,.58),0 0 80px rgba(224,32,32,.14);}
-.creator-review-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:flex-start;gap:1rem;border-bottom:1px solid rgba(255,255,255,.09);padding:.55rem .45rem 1.25rem;margin-bottom:1rem;}
-.creator-review-kicker{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,235,.48);margin-bottom:.32rem;}
-.creator-review-count{font-size:1.65rem;line-height:1;font-weight:900;color:#fff;letter-spacing:-.035em;}
-.creator-reviews-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
-.creator-card{min-height:160px;border:1px solid rgba(255,255,255,.085);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.015));padding:1.05rem;transition:border-color .25s,background .25s,transform .25s;}
-.creator-card:first-child{border-color:rgba(224,32,32,.28);background:linear-gradient(135deg,rgba(224,32,32,.12),rgba(255,255,255,.018));}
-.creator-card.creator-card-ricky{
-  grid-column:auto;
-  min-height:160px;
-  border-color:rgba(224,32,32,.42);
-  background:linear-gradient(135deg,rgba(224,32,32,.15),rgba(255,255,255,.022));
-  padding:1.05rem;
+.creator-reviews-head .sec-h2{margin-bottom:.7rem;}
+.creator-reviews-sub{max-width:650px;margin:0 auto;color:rgba(245,240,235,.64);font-size:.92rem;line-height:1.65;}
+
+.creator-review-board{
+  position:relative;
+  z-index:1;
+  max-width:1080px;
+  min-height:356px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(355px,.82fr);
+  overflow:hidden;
+  border:1px solid rgba(224,32,32,.42);
+  border-radius:25px;
+  background:linear-gradient(145deg,rgba(24,24,24,.94),rgba(7,7,7,.98));
+  box-shadow:0 24px 85px rgba(0,0,0,.48),0 0 55px rgba(224,32,32,.075);
+  transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .28s,box-shadow .28s;
 }
-.creator-card.creator-card-ricky .creator-card-review{max-width:none;}
-.creator-card.creator-card-cruunchuu{grid-column:1 / -1;width:100%;justify-self:stretch;}
-.creator-review-board:hover .creator-card{border-color:rgba(255,255,255,.13);}
-.creator-card-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.9rem;}
-.creator-avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 18px rgba(224,32,32,.14);background:#111;}
+.creator-review-board::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(circle at 8% 0%,rgba(224,32,32,.15),transparent 36%);
+  pointer-events:none;
+}
+.creator-review-board:hover{
+  transform:translateY(-3px);
+  border-color:rgba(224,32,32,.68);
+  box-shadow:0 30px 100px rgba(0,0,0,.56),0 0 70px rgba(224,32,32,.11);
+}
+
+.creator-featured-review{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:1.75rem 1.9rem 1.65rem;
+}
+.creator-featured-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1.25rem;
+  font-family:'DM Mono',monospace;
+  font-size:.59rem;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  color:rgba(245,240,235,.46);
+}
+.creator-featured-number{color:rgba(224,32,32,.92);letter-spacing:.1em;}
+.creator-featured-person{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;}
+.creator-featured-avatar{
+  width:62px;
+  height:62px;
+  flex:0 0 auto;
+  border-radius:50%;
+  object-fit:cover;
+  border:1.5px solid rgba(255,255,255,.19);
+  background:#111;
+  box-shadow:0 0 24px rgba(224,32,32,.2);
+  transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1);
+}
+.creator-featured-identity{min-width:0;}
+.creator-featured-name-row{display:flex;align-items:center;gap:.44rem;min-width:0;}
+.creator-featured-name-row strong{
+  color:#fff;
+  font-size:1.08rem;
+  line-height:1.15;
+  font-weight:900;
+  letter-spacing:-.015em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.creator-featured-stat{display:block;margin-top:.24rem;color:rgba(245,240,235,.56);font-size:.77rem;}
+.creator-featured-quote{
+  position:relative;
+  max-width:680px;
+  min-height:8.8rem;
+  margin:0;
+  padding-left:1.05rem;
+  color:rgba(245,240,235,.88);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,1.45vw,1.18rem);
+  line-height:1.62;
+  font-weight:400;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:6;
+  overflow:hidden;
+  transition:opacity .16s ease,transform .22s cubic-bezier(.22,1,.36,1);
+}
+.creator-featured-quote::before{
+  content:'“';
+  position:absolute;
+  left:-.02rem;
+  top:-.35rem;
+  color:rgba(224,32,32,.78);
+  font-family:'Playfair Display',serif;
+  font-size:2.05rem;
+  line-height:1;
+}
+.creator-featured-review.is-switching .creator-featured-avatar,
+.creator-featured-review.is-switching .creator-featured-quote{opacity:0;transform:translateY(5px);}
+.creator-featured-actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.25rem;}
+.creator-view-all{
+  border:1px solid rgba(224,32,32,.5);
+  border-radius:999px;
+  background:rgba(224,32,32,.11);
+  color:#fff;
+  padding:.64rem 1rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform .2s,border-color .2s,background .2s;
+}
+.creator-view-all:hover{transform:translateY(-2px);border-color:rgba(224,32,32,.88);background:rgba(224,32,32,.2);}
+.creator-featured-hint{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.07em;color:rgba(245,240,235,.38);}
+
+.creator-review-selector{
+  min-width:0;
+  padding:1rem;
+  border-left:1px solid rgba(255,255,255,.075);
+  background:rgba(0,0,0,.24);
+  display:flex;
+  flex-direction:column;
+}
+.creator-selector-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.2rem .2rem .82rem;
+}
+.creator-selector-head strong{font-size:.78rem;color:rgba(245,240,235,.92);letter-spacing:.015em;}
+.creator-selector-head span{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,235,.36);}
+.creator-selector-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.55rem;
+  flex:1;
+  align-content:start;
+}
+.creator-selector-btn{
+  min-width:0;
+  min-height:66px;
+  display:flex;
+  align-items:center;
+  gap:.66rem;
+  padding:.6rem .65rem;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+  color:var(--w);
+  text-align:left;
+  cursor:pointer;
+  transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;
+}
+.creator-selector-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.047);}
+.creator-selector-btn.active{
+  border-color:rgba(224,32,32,.56);
+  background:linear-gradient(135deg,rgba(224,32,32,.14),rgba(255,255,255,.03));
+  box-shadow:inset 0 0 0 1px rgba(224,32,32,.07),0 0 22px rgba(224,32,32,.07);
+}
+.creator-selector-avatar{
+  width:40px;
+  height:40px;
+  flex:0 0 auto;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid rgba(255,255,255,.15);
+  background:#111;
+}
+.creator-selector-copy{min-width:0;display:block;}
+.creator-selector-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff;font-size:.75rem;line-height:1.15;}
+.creator-selector-copy span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:.18rem;color:rgba(245,240,235,.46);font-size:.6rem;}
+
 .creator-name-row,.creator-modal-name{display:flex;align-items:center;gap:.42rem;min-width:0;}
 .creator-name-row strong,.creator-modal-name strong{display:block;color:#fff;font-size:1.02rem;line-height:1.15;font-weight:900;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.creator-identity>span,.creator-modal-sub{display:block;margin-top:.15rem;color:rgba(245,240,235,.58);font-size:.78rem;}
 .creator-verified{position:relative;display:inline-flex;width:15px;height:15px;border-radius:50%;background:#1da1f2;flex:0 0 auto;box-shadow:0 0 12px rgba(29,161,242,.35);}
-.creator-verified::after{content:'';position:absolute;left:4px;top:3px;width:6px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg);}
-.creator-card-review{color:rgba(245,240,235,.86);font-size:.94rem;line-height:1.7;}
+
+/* Full review modal remains available, but the page itself stays compact. */
 .creator-modal{position:fixed;inset:0;z-index:8600;display:flex;align-items:center;justify-content:center;padding:1.25rem;background:rgba(0,0,0,.82);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .28s ease;}
 .creator-modal.open{opacity:1;pointer-events:all;}
 .creator-modal.closing{opacity:0;pointer-events:none;}
@@ -5847,22 +6018,43 @@ footer .fi{
 .creator-modal-review.creator-modal-review-cruunchuu{grid-column:1 / -1;width:100%;justify-self:stretch;}
 .creator-modal-review img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,.18);box-shadow:0 0 22px rgba(224,32,32,.18);background:#111;}
 .creator-modal-review p{margin-top:.62rem;color:rgba(245,240,235,.82);line-height:1.72;font-size:.93rem;}
+.creator-modal-sub{display:block;margin-top:.15rem;color:rgba(245,240,235,.58);font-size:.78rem;}
 .creator-modal-foot{position:relative;z-index:1;margin-top:1rem;display:flex;justify-content:flex-end;}
 .creator-modal-review-btn{border:0;border-radius:10px;background:rgba(245,240,235,.72);color:#111;padding:.62rem .92rem;font-weight:900;cursor:pointer;transition:transform .2s,background .2s;}
 .creator-modal-review-btn:hover{transform:translateY(-2px);background:#fff;}
+
+@media(max-width:900px){
+  .creator-review-board{grid-template-columns:minmax(0,1fr) 330px;}
+  .creator-featured-review{padding:1.5rem;}
+  .creator-selector-grid{grid-template-columns:1fr;}
+  .creator-selector-btn{min-height:48px;padding:.42rem .55rem;}
+  .creator-selector-avatar{width:34px;height:34px;}
+}
 @media(max-width:760px){
-  #services.creator-reviews-section{padding:4.6rem 1rem;}
-  .creator-review-board{padding:1rem;border-radius:22px;}
-  .creator-review-top{align-items:flex-start;flex-direction:column;}
-  .creator-reviews-grid{grid-template-columns:1fr;gap:.8rem;}
-  .creator-card{min-height:auto;}
-  .creator-card.creator-card-cruunchuu{grid-column:auto;width:100%;}
+  #services.creator-reviews-section{padding:4rem 1rem 4.2rem;}
+  .creator-reviews-head{margin-bottom:1.3rem;}
+  .creator-review-board{display:flex;flex-direction:column;min-height:0;border-radius:22px;}
+  .creator-featured-review{padding:1.25rem 1.1rem 1.2rem;}
+  .creator-featured-label{margin-bottom:1rem;}
+  .creator-featured-avatar{width:54px;height:54px;}
+  .creator-featured-quote{min-height:9.2rem;font-size:1rem;line-height:1.58;-webkit-line-clamp:7;}
+  .creator-featured-actions{margin-top:1rem;}
+  .creator-featured-hint{display:none;}
+  .creator-review-selector{border-left:0;border-top:1px solid rgba(255,255,255,.075);padding:.85rem;}
+  .creator-selector-head{padding:.05rem .1rem .65rem;}
+  .creator-selector-grid{display:flex;overflow-x:auto;gap:.5rem;padding-bottom:.15rem;scrollbar-width:none;}
+  .creator-selector-grid::-webkit-scrollbar{display:none;}
+  .creator-selector-btn{flex:0 0 158px;min-height:58px;padding:.5rem .55rem;}
+  .creator-selector-avatar{width:38px;height:38px;}
   .creator-modal{padding:.75rem;align-items:center;}
   .creator-modal-card{width:100%;max-height:88svh;border-radius:22px;padding:1rem;}
   .creator-modal-list{grid-template-columns:1fr;}
   .creator-modal-review{grid-template-columns:50px 1fr;padding:.85rem;}
   .creator-modal-review.creator-modal-review-cruunchuu{grid-column:auto;width:100%;}
   .creator-modal-review img{width:50px;height:50px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .creator-review-board,.creator-selector-btn,.creator-featured-avatar,.creator-featured-quote{transition:none!important;}
 }
 </style>
 
@@ -6290,98 +6482,118 @@ footer .fi{
     <div class="creator-reviews-head rv">
       <p class="sec-lbl">Creator Reviews</p>
       <h2 class="sec-h2">What <em>Creators</em> Say</h2>
-      <p class="creator-reviews-sub">Real testimonials from large creators who trust Cut &amp; Hire for reliable editing, stronger retention, and consistent content output.</p>
+      <p class="creator-reviews-sub">One featured testimonial at a time, with every creator still one click away.</p>
     </div>
 
-    <div class="creator-review-board rv" data-open-creator-reviews role="button" tabindex="0" aria-label="Open 7 creator reviews">
-      <div class="creator-review-top">
+    <div class="creator-review-board rv">
+      <article class="creator-featured-review" id="creator-featured-review" aria-live="polite">
         <div>
-          <div class="creator-review-kicker">Trusted by growing channels</div>
-          <div class="creator-review-count">7 Creator Reviews</div>
+          <div class="creator-featured-label">
+            <span>Featured testimonial</span>
+            <span class="creator-featured-number" id="creator-featured-number">01 / 07</span>
+          </div>
+
+          <div class="creator-featured-person">
+            <img class="creator-featured-avatar" id="creator-featured-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="Ricky Flicks profile picture" loading="eager"/>
+            <div class="creator-featured-identity">
+              <div class="creator-featured-name-row"><strong id="creator-featured-name">Ricky Flicks</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
+              <span class="creator-featured-stat" id="creator-featured-stat">1.5M followers</span>
+            </div>
+          </div>
+
+          <blockquote class="creator-featured-quote" id="creator-featured-quote">Working with Cut & Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut & Hire to any creator looking for reliable editors who communicate well and take feedback seriously.</blockquote>
         </div>
-      </div>
 
-      <div class="creator-reviews-grid">
-        <article class="creator-card creator-card-ricky">
-          <div class="creator-card-head">
-            <img alt="Ricky Flicks profile picture" class="creator-avatar" loading="eager" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>Ricky Flicks</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>1.5M followers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Working with Cut &amp; Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut &amp; Hire to any creator looking for reliable editors who communicate well and take feedback seriously.”</p>
-        </article>
+        <div class="creator-featured-actions">
+          <button class="creator-view-all" data-open-creator-reviews type="button">View all 7 reviews</button>
+          <span class="creator-featured-hint">Choose a creator on the right to switch the testimonial.</span>
+        </div>
+      </article>
 
-        <article class="creator-card">
-          <div class="creator-card-head">
-            <img alt="mas channel logo" class="creator-avatar" loading="lazy" src="creator-mas.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>mas</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>415K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Best way to build a reliable editing team for a channel that needs to pump content!”</p>
-        </article>
-
-        <article class="creator-card">
-          <div class="creator-card-head">
-            <img alt="ThatGorillaGuy channel logo" class="creator-avatar" loading="lazy" src="creator-thatgorillaguy.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>ThatGorillaGuy</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>199K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Cut &amp; Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut &amp; Hire’s editors and it drastically improved his average view duration.”</p>
-        </article>
-
-        <article class="creator-card">
-          <div class="creator-card-head">
-            <img alt="Joe Monkey channel logo" class="creator-avatar" loading="lazy" src="creator-joe-monkey.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>Joe Monkey</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>128K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Good team overall. The owner is a nice guy and serious about business, and the editors are also great.”</p>
-        </article>
-
-        <article class="creator-card">
-          <div class="creator-card-head">
-            <img alt="MMVR channel logo" class="creator-avatar" loading="lazy" src="creator-mmvr.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>MMVR</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>115K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“On time editing, very good!”</p>
-        </article>
-
-        <article class="creator-card">
-          <div class="creator-card-head">
-            <img alt="IVAN channel logo" class="creator-avatar" loading="lazy" src="channels4_profile2331312.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>IVAN</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>38.7K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Finds you good editors good all around 💯”</p>
-        </article>
-
-        <article class="creator-card creator-card-cruunchuu">
-          <div class="creator-card-head">
-            <img alt="Cruunchuu channel profile picture" class="creator-avatar" loading="lazy" src="chann432124124213132els4_profile.jpg"/>
-            <div class="creator-identity">
-              <div class="creator-name-row"><strong>Cruunchuu</strong><img alt="Verified" class="creator-verified" src="blue_checkmark.png"/></div>
-              <span>20.6K subscribers</span>
-            </div>
-          </div>
-          <p class="creator-card-review">“Working with Cut &amp; Hire was a great experience from start to finish. The entire process was quick, simple, and affordable. They’re incredibly easy to work with, communicate well, and deliver high-quality edits fast. Their versatility really stands out. They’re able to adapt to different styles and consistently produce great results. I highly recommend Cut &amp; Hire.”</p>
-        </article>
-      </div>
+      <aside class="creator-review-selector" aria-label="Choose a creator review">
+        <div class="creator-selector-head"><strong>7 Creator Reviews</strong><span>Select one</span></div>
+        <div class="creator-selector-grid" role="tablist" aria-label="Creator testimonials">
+          <button class="creator-selector-btn active" type="button" role="tab" aria-selected="true" data-creator-review-index="0">
+            <img class="creator-selector-avatar" src="54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp" alt="" loading="eager"/>
+            <span class="creator-selector-copy"><strong>Ricky Flicks</strong><span>1.5M followers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="1">
+            <img class="creator-selector-avatar" src="creator-mas.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>mas</strong><span>415K subscribers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="2">
+            <img class="creator-selector-avatar" src="creator-thatgorillaguy.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>ThatGorillaGuy</strong><span>199K subscribers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="3">
+            <img class="creator-selector-avatar" src="creator-joe-monkey.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>Joe Monkey</strong><span>128K subscribers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="4">
+            <img class="creator-selector-avatar" src="creator-mmvr.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>MMVR</strong><span>115K subscribers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="5">
+            <img class="creator-selector-avatar" src="channels4_profile2331312.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>IVAN</strong><span>38.7K subscribers</span></span>
+          </button>
+          <button class="creator-selector-btn" type="button" role="tab" aria-selected="false" data-creator-review-index="6">
+            <img class="creator-selector-avatar" src="chann432124124213132els4_profile.jpg" alt="" loading="lazy"/>
+            <span class="creator-selector-copy"><strong>Cruunchuu</strong><span>20.6K subscribers</span></span>
+          </button>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
+<script type="application/json" id="creator-review-data">[{"name": "Ricky Flicks", "stat": "1.5M followers", "avatar": "54e8dfba97dc532dc47d16d46f99ac66~tplv-tiktokx-cropcenter_720_720.webp", "alt": "Ricky Flicks profile picture", "quote": "Working with Cut & Hire was a great experience. Valie communicated clearly, stayed proactive, and handled every round of feedback quickly and thoughtfully. The edits improved with each revision, showing that the team truly understands and applies creative direction. I’d recommend Cut & Hire to any creator looking for reliable editors who communicate well and take feedback seriously."}, {"name": "mas", "stat": "415K subscribers", "avatar": "creator-mas.jpg", "alt": "mas channel logo", "quote": "Best way to build a reliable editing team for a channel that needs to pump content!"}, {"name": "ThatGorillaGuy", "stat": "199K subscribers", "avatar": "creator-thatgorillaguy.jpg", "alt": "ThatGorillaGuy channel logo", "quote": "Cut & Hire is high quality, with a great team of editors. My friend mas, who is also successful on YouTube, uses Cut & Hire’s editors and it drastically improved his average view duration."}, {"name": "Joe Monkey", "stat": "128K subscribers", "avatar": "creator-joe-monkey.jpg", "alt": "Joe Monkey channel logo", "quote": "Good team overall. The owner is a nice guy and serious about business, and the editors are also great."}, {"name": "MMVR", "stat": "115K subscribers", "avatar": "creator-mmvr.jpg", "alt": "MMVR channel logo", "quote": "On time editing, very good!"}, {"name": "IVAN", "stat": "38.7K subscribers", "avatar": "channels4_profile2331312.jpg", "alt": "IVAN channel logo", "quote": "Finds you good editors good all around 💯"}, {"name": "Cruunchuu", "stat": "20.6K subscribers", "avatar": "chann432124124213132els4_profile.jpg", "alt": "Cruunchuu channel profile picture", "quote": "Working with Cut & Hire was a great experience from start to finish. The entire process was quick, simple, and affordable. They’re incredibly easy to work with, communicate well, and deliver high-quality edits fast. Their versatility really stands out. They’re able to adapt to different styles and consistently produce great results. I highly recommend Cut & Hire."}]</script>
+<script id="creator-review-switcher-js">
+(function(){
+  var dataNode = document.getElementById('creator-review-data');
+  var featured = document.getElementById('creator-featured-review');
+  if(!dataNode || !featured) return;
+
+  var reviews;
+  try{ reviews = JSON.parse(dataNode.textContent); }catch(error){ return; }
+
+  var avatar = document.getElementById('creator-featured-avatar');
+  var name = document.getElementById('creator-featured-name');
+  var stat = document.getElementById('creator-featured-stat');
+  var quote = document.getElementById('creator-featured-quote');
+  var number = document.getElementById('creator-featured-number');
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-creator-review-index]'));
+  var switchTimer = 0;
+
+  function showReview(index){
+    var item = reviews[index];
+    if(!item) return;
+
+    buttons.forEach(function(button, buttonIndex){
+      var active = buttonIndex === index;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    window.clearTimeout(switchTimer);
+    featured.classList.add('is-switching');
+    switchTimer = window.setTimeout(function(){
+      avatar.src = item.avatar;
+      avatar.alt = item.alt;
+      name.textContent = item.name;
+      stat.textContent = item.stat;
+      quote.textContent = item.quote;
+      number.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(reviews.length).padStart(2,'0');
+      featured.classList.remove('is-switching');
+    }, 145);
+  }
+
+  buttons.forEach(function(button){
+    button.addEventListener('click', function(){
+      showReview(Number(button.getAttribute('data-creator-review-index')) || 0);
+    });
+  });
+})();
+</script>
 <!-- ==================== PRICING / TEAMS ==================== -->
 <section id="process" class="pricing-showcase-section">
   <div class="pricing-bg-noise" aria-hidden="true"></div>

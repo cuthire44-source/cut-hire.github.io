@@ -6330,6 +6330,16 @@ footer .fi{
   object-fit:cover!important;
   object-position:center center!important;
 }
+.results-proof-block .result-card.result-card-contain::before{
+  background:transparent!important;
+}
+.results-proof-block .result-card.result-card-contain img,
+.results-proof-block .result-card.result-card-contain:hover img{
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  filter:brightness(1) contrast(1.02)!important;
+}
 .results-modal-content{
   min-height:min(74vh,780px)!important;
 }
@@ -7174,7 +7184,7 @@ footer .fi{
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg>
     </button>
     <div class="results-track" data-results-track>
-      <button class="result-card" type="button" data-result-title="YouTube Analytics · 20.6M Views" data-result-img="imadawdawdawd4552ge.webp">
+      <button class="result-card result-card-contain" type="button" data-result-title="YouTube Analytics · 20.6M Views" data-result-img="imadawdawdawd4552ge.webp">
         <img src="imadawdawdawd4552ge.webp" alt="YouTube Analytics screenshot showing 20.6 million views, 378.6 thousand watch hours, 415.9 thousand subscribers, and 17,071 dollars and 40 cents in estimated revenue" loading="eager" decoding="async">
       </button>
       <button class="result-card" type="button" data-result-title="YouTube Analytics · 10.3M Views" data-result-img="dagvasggawdghadd.webp">

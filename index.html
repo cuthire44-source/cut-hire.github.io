@@ -5893,7 +5893,7 @@ footer .fi{
   max-width:680px;
   min-height:0;
   margin:0;
-  padding-left:1.05rem;
+  padding-left:0;
   color:rgba(245,240,235,.88);
   font-family:'DM Sans',sans-serif;
   font-size:clamp(.9rem,1.12vw,1rem);
@@ -5906,14 +5906,8 @@ footer .fi{
   transition:opacity .16s ease,transform .22s cubic-bezier(.22,1,.36,1);
 }
 .creator-featured-quote::before{
-  content:'“';
-  position:absolute;
-  left:-.02rem;
-  top:-.35rem;
-  color:rgba(224,32,32,.78);
-  font-family:'Playfair Display',serif;
-  font-size:2.05rem;
-  line-height:1;
+  content:none;
+  display:none;
 }
 .creator-featured-review.is-switching .creator-featured-avatar,
 .creator-featured-review.is-switching .creator-featured-quote{opacity:0;transform:translateY(5px);}
@@ -6553,7 +6547,7 @@ footer .fi{
   try{ reviews = JSON.parse(dataNode.textContent); }catch(error){ return; }
   if(!reviews || reviews.length < 2) return;
 
-  var AUTO_SWITCH_MS = 6500;
+  var AUTO_SWITCH_MS = 5000;
   var avatar = document.getElementById('creator-featured-avatar');
   var name = document.getElementById('creator-featured-name');
   var stat = document.getElementById('creator-featured-stat');
@@ -7180,6 +7174,12 @@ footer .fi{
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"></path></svg>
     </button>
     <div class="results-track" data-results-track>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 20.6M Views" data-result-img="imadawdawdawd4552ge.webp">
+        <img src="imadawdawdawd4552ge.webp" alt="YouTube Analytics screenshot showing 20.6 million views, 378.6 thousand watch hours, 415.9 thousand subscribers, and 17,071 dollars and 40 cents in estimated revenue" loading="eager" decoding="async">
+      </button>
+      <button class="result-card" type="button" data-result-title="YouTube Analytics · 10.3M Views" data-result-img="dagvasggawdghadd.webp">
+        <img src="dagvasggawdghadd.webp" alt="YouTube Analytics screenshot showing 10.3 million views, 202.1 thousand watch hours, 253.6 thousand subscribers, and 2,087 dollars and 63 cents in estimated revenue" loading="lazy" decoding="async">
+      </button>
       <button class="result-card" type="button" data-result-title="YouTube Analytics · 412.8K Views" data-result-img="asdasdd1d1.webp">
         <img src="asdasdd1d1.webp" alt="YouTube Analytics screenshot showing 412.8K views and 31.2K watch hours" loading="lazy" decoding="async">
       </button>

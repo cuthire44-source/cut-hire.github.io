@@ -6333,6 +6333,10 @@ footer .fi{
 .results-proof-block .result-card.result-card-contain::before{
   background:transparent!important;
 }
+.results-proof-block .result-card.result-card-contain{
+  flex-basis:clamp(380px,49vw,586px)!important;
+  aspect-ratio:1747 / 722!important;
+}
 .results-proof-block .result-card.result-card-contain img,
 .results-proof-block .result-card.result-card-contain:hover img{
   object-fit:contain!important;
@@ -6350,6 +6354,10 @@ footer .fi{
   object-fit:contain!important;
 }
 @media(max-width:780px){
+  .results-proof-block .result-card.result-card-contain{
+    flex-basis:82vw!important;
+    aspect-ratio:1747 / 722!important;
+  }
   .results-modal-content img{
     width:100%!important;
     max-height:calc(88svh - 74px)!important;

@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--w);font-family:'DM Sans',sans-serif;overfl
 body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");opacity:.5}
 
-/* BACK BUTTON */
+ 
 .back-btn{
   position:fixed;top:1.4rem;left:2rem;
   z-index:500;display:inline-flex;align-items:center;gap:.5rem;
@@ -41,12 +41,12 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .back-btn:hover svg{transform:translateX(-3px)}
 @keyframes fade-in{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
 
-/* BG ORBS */
+ 
 .orb{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0}
 .o1{width:600px;height:600px;background:rgba(224,32,32,.07);top:-10%;left:-15%}
 .o2{width:500px;height:500px;background:rgba(58,123,213,.06);bottom:-10%;right:-10%}
 
-/* HERO */
+ 
 .contact-hero{min-height:34vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:1}
 .contact-eyebrow{display:none}
 .contact-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-.03em;opacity:0;animation:fup .4s .08s forwards}
@@ -54,13 +54,13 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .contact-sub{max-width:500px;margin:1.4rem auto 0;color:var(--m);font-size:.9rem;line-height:1.9;opacity:0;animation:fup .4s .18s forwards}
 @keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
-/* DIVIDER */
+ 
 .divider{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(to right,transparent,rgba(224,32,32,.22),rgba(224,32,32,.5),rgba(224,32,32,.22),transparent)}
 
-/* MAIN CONTENT */
+ 
 .contact-content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;position:relative;z-index:1}
 
-/* CONTACT CARDS */
+ 
 .contact-methods{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -99,7 +99,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .cc-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
 .cc-value{font-size:.82rem;color:var(--m);line-height:1.75;flex:1}
 
-/* BIG DISCORD BUTTON */
+ 
 .contact-main-btn{
   display:flex;
   justify-content:center;
@@ -132,7 +132,7 @@ body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
 .btn-discord:hover{box-shadow:0 0 36px var(--rg);transform:translateY(-3px)}
 .btn-discord:hover::before{transform:translateX(100%)}
 
-/* ===================== PERFORMANCE TUNING (keeps visuals/features) ===================== */
+ 
 body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 .orb{will-change:transform;transform:translateZ(0);backface-visibility:hidden}
 .path-card,.how-step,.discord-strip,.network-section,.faq-item,.contact-card,.btn-discord,.btn-red,.btn-blu{contain:layout paint}
@@ -141,7 +141,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
 
 
-/* ===================== CENTERED CONTACT SECTION + TOGETHER REVEAL ===================== */
+ 
 .contact-stage{
   min-height:100vh;
   width:100%;
@@ -209,16 +209,16 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
 
 
-/* ===================== MRBEAST-STYLE BLACK BORDER GLINT — USING REAL FRAMER VALUES ===================== */
-/*
-  This version copies the important part from the MrBeast/Framer button:
-  - the glint is NOT an SVG dot
-  - it is a conic-gradient clipped to the pill border
-  - the conic-gradient center moves left/right: 16.0217% -> 83.9783%
-  - the angle changes while the center pauses near the rounded corners
-  - the straight sections keep a visible short streak instead of shrinking into a dot
-  - this creates the corner slow-down without making giant corner blooms
-*/
+ 
+
+
+
+
+
+
+
+
+
 @property --stroke-angle{
   syntax:"<angle>";
   inherits:false;
@@ -236,10 +236,10 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   isolation:isolate;
   overflow:hidden !important;
 
-  /* dark MrBeast-style rim, not grey */
+   
   border:2.8px solid rgba(0,0,0,.74) !important;
 
-  /* keep the button clean; no giant outer glow */
+   
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.16),
     inset 0 -2px 0 rgba(0,0,0,.38),
@@ -256,20 +256,20 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     box-shadow .46s ease !important;
 }
 
-/* remove the old linear sweep from .btn-discord */
+ 
 .stroke-glow-btn::before,
 .stroke-glow-btn::after{
   display:none !important;
   content:none !important;
 }
 
-/* keep text above all shine layers */
+ 
 .stroke-glow-btn > span:not(.stroke-spin-mask):not(.stroke-inner-gloss){
   position:relative;
   z-index:7;
 }
 
-/* subtle top gloss on the red body */
+ 
 .stroke-inner-gloss{
   position:absolute;
   inset:2px;
@@ -286,12 +286,12 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   opacity:.62;
 }
 
-/*
-  The real MrBeast-like glint:
-  the exact captured gradient shape was:
-  transparent 317deg, white 335deg, transparent 351deg.
-  Soft shoulders keep it visible on straight parts without returning the long corner glow.
-*/
+
+
+
+
+
+
 .stroke-spin-mask{
   position:absolute;
   inset:-1px;
@@ -301,7 +301,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   padding:2.8px;
 
   background:
-    /* very soft shoulders keep the glint from becoming a dot on straight parts */
+     
     conic-gradient(
       from var(--stroke-angle) at var(--stroke-x) 50%,
       rgba(0,0,0,0) 309deg,
@@ -330,7 +330,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   will-change:background;
 }
 
-/* very tiny reflection bloom only; no big corner blob */
+ 
 .stroke-spin-mask::after{
   content:"";
   position:absolute;
@@ -349,13 +349,13 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
   opacity:.34;
 }
 
-/*
-  These keyframes are based on the values you captured from the real MrBeast button.
-  Notice how --stroke-x pauses at 83.9783% and 16.0217%.
-  Those pauses are what make it slow down around the rounded corners.
-*/
+
+
+
+
+
 @keyframes strokeSpin{
-  /* right rounded corner: keep the nice corner behavior */
+   
   0%{
     --stroke-angle:103.678deg;
     --stroke-x:83.9783%;
@@ -365,7 +365,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     --stroke-x:83.9783%;
   }
 
-  /* long straight part: slower than before */
+   
   14%{
     --stroke-angle:134.133deg;
     --stroke-x:77.0819%;
@@ -387,13 +387,13 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     --stroke-x:16.0217%;
   }
 
-  /* left rounded corner: still holds like the MrBeast button */
+   
   57%{
     --stroke-angle:300.634deg;
     --stroke-x:16.0217%;
   }
 
-  /* second long straight part: slower and smoother */
+   
   61%{
     --stroke-angle:310.93deg;
     --stroke-x:20.4992%;
@@ -415,7 +415,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     --stroke-x:81.6%;
   }
 
-  /* right rounded corner again */
+   
   94%{
     --stroke-angle:412deg;
     --stroke-x:83.9783%;
@@ -425,7 +425,7 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
     --stroke-x:83.9783%;
   }
 }
-/* smooth zoom OUT on hover */
+ 
 .stroke-glow-btn:hover{
   transform:translateZ(0) scale(.982) !important;
   filter:brightness(1.045);
@@ -449,8 +449,8 @@ body::before{background-size:220px 220px;contain:strict;transform:translateZ(0)}
 
 
 
-/* ===================== FABRI-STYLE MOBILE RESPONSIVE PATCH ===================== */
-/* Desktop stays the same. This only fixes tablet/phone layout, spacing and touch sizing. */
+ 
+ 
 html,body{
   width:100%;
   max-width:100%;
@@ -654,7 +654,7 @@ a,button{
 
 
 
-/* ===================== TRUE BLACK BACKGROUND UPDATE ===================== */
+ 
 :root{
   --bg:#000000 !important;
   --card:#050505 !important;
@@ -690,7 +690,7 @@ body::before{
 }
 
 
-/* ===================== MOBILE UI POLISH PATCH — PC-LIKE + LESS SCROLL ===================== */
+ 
 @media(max-width:760px){
   .back-btn{
     top:max(.85rem,env(safe-area-inset-top))!important;
@@ -779,7 +779,7 @@ body::before{
 </style>
 
 <style>
-/* ===== CONTACT PAGE SIDE ACTIONS — same dark/red Cut & Hire language ===== */
+ 
 .contact-action-lane{
   display:flex;
   justify-content:center;
@@ -921,7 +921,7 @@ body::before{
 
 
 <style>
-/* ===== V11 CLEAR CONTACT PAGE SIDE BUTTONS — readable, obvious, Discord-card hover ===== */
+ 
 .contact-side-action{
   height:62px!important;
   min-height:62px!important;
@@ -989,8 +989,8 @@ body::before{
 
 
 <style>
-/* ===== V14 CONTACT PAGE BUTTONS: match the index side buttons =====
-   Book A Call + WhatsApp are equal size, clear buttons, bigger call icon, no logo glow. */
+
+
 .contact-action-lane{
   gap:.55rem!important;
   align-items:center!important;
@@ -1125,7 +1125,7 @@ body::before{
 
 
 <style>
-/* ===== FINAL COLOR FIX: side buttons match Cut & Hire black/red, WhatsApp stays green ===== */
+ 
 .contact-side-action{
   background:
     radial-gradient(circle at 50% -34%, rgba(224,32,32,.22), transparent 66%),
@@ -1196,7 +1196,7 @@ body::before{
 
 
 <style>
-/* ===== FINAL ANIMATION FIX: side buttons use the same glint/hover as Join Discord ===== */
+ 
 .contact-side-action.stroke-glow-btn{
   isolation:isolate!important;
   overflow:hidden!important;
@@ -1360,7 +1360,7 @@ window.addEventListener('load', () => {
 </script>
 
 <script>
-/* ===== BACK TO SITE WITHOUT RESTARTING HOME POSITION ===== */
+ 
 (function(){
   const HOME_SCROLL_KEY = 'cnh_home_scroll_y';
   const backBtn = document.querySelector('.back-btn');
@@ -1371,13 +1371,13 @@ window.addEventListener('load', () => {
     let hasSavedSpot = false;
     try{ hasSavedSpot = sessionStorage.getItem(HOME_SCROLL_KEY) !== null; }catch(err){}
 
-    // Best case: go back to the already-open home page, so it stays exactly where it was.
+
     if(hasSavedSpot && document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1){
       history.back();
       return;
     }
 
-    // Fallback: open home page; the home page script restores the saved scroll position.
+
     window.location.href = '/';
   });
 })();

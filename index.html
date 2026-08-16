@@ -6387,18 +6387,23 @@ footer .fi{
 
 <style id="cnh-policy-transition-style">
 @view-transition{navigation:auto}
-::view-transition-group(root){animation-duration:.46s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
-::view-transition-old(root){animation:cnh-page-out .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
-::view-transition-new(root){animation:cnh-page-in .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
-@keyframes cnh-page-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(3px)}}
-@keyframes cnh-page-in{0%{opacity:0;filter:blur(3px)}100%{opacity:1;filter:blur(0)}}
-.footer-meta-right{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;justify-content:flex-end}
-.footer-meta-right p{margin:0}
+::view-transition-group(root){animation-duration:.5s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(root){animation:cnh-page-out .5s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+::view-transition-new(root){animation:cnh-page-in .5s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+@keyframes cnh-page-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(5px)}}
+@keyframes cnh-page-in{0%{opacity:0;filter:blur(7px)}100%{opacity:1;filter:blur(0)}}
+.footer-meta-right{display:flex;align-items:center;justify-content:flex-end}
 .cnh-policies-link{position:relative;color:var(--m);font-family:'DM Sans',sans-serif;font-size:.68rem;text-decoration:none;transition:color .22s ease,transform .22s ease;display:inline-flex;align-items:center;gap:.45rem}
 .cnh-policies-link::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--red);opacity:.85;box-shadow:0 0 10px rgba(224,32,32,.45)}
 .cnh-policies-link:hover,.cnh-policies-link:focus-visible{color:var(--w);transform:translateY(-1px);outline:none}
-@media(max-width:640px){.footer-meta-right{width:100%;justify-content:space-between;gap:.75rem}.cnh-policies-link{font-size:.68rem}}
-@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important;filter:none!important}.cnh-policies-link{transition:none}}
+body> :not(#cnh-policy-portal):not(script):not(style){transition:opacity .56s cubic-bezier(.22,1,.36,1),filter .56s cubic-bezier(.22,1,.36,1);will-change:opacity,filter}
+body.cnh-policy-active{overflow:hidden!important}
+body.cnh-policy-active> :not(#cnh-policy-portal):not(script):not(style){opacity:0!important;filter:blur(5px)!important;pointer-events:none!important}
+#cnh-policy-portal{position:fixed;inset:0;z-index:2147483000;background:#000;opacity:0;visibility:hidden;pointer-events:none;filter:blur(10px);transform:scale(1.006);transition:opacity .56s cubic-bezier(.22,1,.36,1),filter .56s cubic-bezier(.22,1,.36,1),transform .56s cubic-bezier(.22,1,.36,1),visibility 0s linear .56s;will-change:opacity,filter,transform;overflow:hidden}
+body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-events:auto;filter:blur(0);transform:scale(1);transition-delay:0s}
+#cnh-policy-frame{display:block;width:100%;height:100%;border:0;background:#000}
+@media(max-width:640px){.footer-meta-right{justify-content:flex-end}.cnh-policies-link{font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important;filter:none!important}body> :not(#cnh-policy-portal):not(script):not(style),#cnh-policy-portal,.cnh-policies-link{transition-duration:.01ms!important;filter:none!important}}
 </style>
 <link rel="prefetch" href="policies.html">
 
@@ -7445,7 +7450,7 @@ footer .fi{
 </div>
 <div class="fb-bot">
 <p>© 2026 Cut &amp; Hire. All rights reserved.</p>
-<div class="footer-meta-right"><p>Built for creators.</p><a class="cnh-policies-link" href="policies.html" aria-label="Read Cut and Hire policies">Policies</a></div>
+<div class="footer-meta-right"><a class="cnh-policies-link" href="policies.html" aria-label="Read Cut and Hire policies">Policies</a></div>
 </div>
 </footer>
  
@@ -11012,6 +11017,56 @@ ring.style.visibility = 'visible';
   #photo-lb .photo-lb-wrap::after{animation-duration:1.2s}
 }
 </style>
+
+<div id="cnh-policy-portal" aria-hidden="true"><iframe id="cnh-policy-frame" src="policies.html" title="Cut &amp; Hire Policies" loading="eager" tabindex="-1"></iframe></div>
+<script id="cnh-policy-navigation">
+(function(){
+  const body=document.body;
+  const portal=document.getElementById('cnh-policy-portal');
+  const frame=document.getElementById('cnh-policy-frame');
+  let open=false;
+  let savedY=0;
+  function policyUrl(){return new URL('policies.html',location.href)}
+  function show(push){
+    if(open)return;
+    open=true;
+    savedY=window.scrollY||window.pageYOffset||0;
+    portal.setAttribute('aria-hidden','false');
+    frame.setAttribute('tabindex','0');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>body.classList.add('cnh-policy-active')));
+    if(push){
+      try{history.pushState({cnhPolicy:true},'',policyUrl().href)}catch(e){
+        body.classList.remove('cnh-policy-active');
+        setTimeout(()=>{location.href='policies.html'},20);
+      }
+    }
+  }
+  function hide(){
+    if(!open)return;
+    open=false;
+    body.classList.remove('cnh-policy-active');
+    portal.setAttribute('aria-hidden','true');
+    frame.setAttribute('tabindex','-1');
+    requestAnimationFrame(()=>window.scrollTo(0,savedY));
+  }
+  document.addEventListener('click',function(e){
+    const link=e.target.closest&&e.target.closest('a.cnh-policies-link[href]');
+    if(!link||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    e.preventDefault();
+    show(true);
+  });
+  window.addEventListener('message',function(e){
+    if(e.source!==frame.contentWindow||!e.data||e.data.type!=='cnh-policy-close')return;
+    if(history.state&&history.state.cnhPolicy)history.back();else hide();
+  });
+  window.addEventListener('popstate',function(e){
+    if(e.state&&e.state.cnhPolicy)show(false);else hide();
+  });
+  window.addEventListener('pageshow',function(){
+    if(!(history.state&&history.state.cnhPolicy))hide();
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Cut & Hire Terms of Service and policies.">
+<meta name="theme-color" content="#000000">
+<title>Policies | Cut &amp; Hire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--panel:#070707;--text:#f5f0eb;--soft:#a3a3a3;--muted:#767676;--red:#e02020;--line:rgba(255,255,255,.10)}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+@view-transition{navigation:auto}
+::view-transition-group(root){animation-duration:.46s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(root){animation:cnh-page-out .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+::view-transition-new(root){animation:cnh-page-in .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+@keyframes cnh-page-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(3px)}}
+@keyframes cnh-page-in{0%{opacity:0;filter:blur(3px)}100%{opacity:1;filter:blur(0)}}
+.policy-shell{position:relative;min-height:100vh;padding:clamp(80px,9vw,138px) clamp(24px,6vw,96px) clamp(90px,10vw,150px)}
+.policy-shell::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 14% 4%,rgba(224,32,32,.08),transparent 27%),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:auto,100% 72px;mask-image:linear-gradient(to bottom,#000,transparent 52%);opacity:.7}
+.policy-wrap{position:relative;width:min(820px,100%);margin-left:clamp(0px,5vw,84px)}
+.policy-back{display:inline-flex;align-items:center;gap:.65rem;margin-bottom:clamp(42px,6vw,82px);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#8b8b8b;transition:color .22s ease,transform .22s ease}
+.policy-back::before{content:'←';color:var(--red);font-size:1rem;line-height:1}
+.policy-back:hover,.policy-back:focus-visible{color:var(--text);transform:translateX(-3px);outline:none}
+.policy-kicker{display:flex;align-items:center;gap:.7rem;margin:0 0 14px;color:var(--red);font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
+.policy-kicker::before{content:'';display:block;width:28px;height:1px;background:var(--red)}
+h1{margin:0;font-size:clamp(3.2rem,7vw,6.7rem);line-height:.91;letter-spacing:-.065em;font-weight:700;max-width:780px}
+h1 .red{color:var(--red);font-style:italic}
+.last-updated{margin:20px 0 0;color:var(--muted);font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.04em}
+.policy-rule{height:1px;background:linear-gradient(90deg,var(--red),rgba(224,32,32,.2),transparent);margin:clamp(42px,6vw,72px) 0 0}
+.policy-content{padding-top:8px}
+.policy-section{padding:clamp(42px,5vw,66px) 0;border-bottom:1px solid var(--line)}
+.policy-section:last-child{border-bottom:0;padding-bottom:0}
+h2{margin:0 0 24px;font-size:clamp(1.45rem,2.4vw,2.1rem);line-height:1.08;letter-spacing:-.035em;font-weight:600;color:var(--text)}
+.section-number{color:var(--red);font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:-.02em;vertical-align:.08em;margin-right:.22em}
+p{margin:0 0 16px;color:#c9c9c9;font-size:clamp(.96rem,1.2vw,1.05rem);line-height:1.85;max-width:760px}
+p:last-child{margin-bottom:0}
+strong{color:#fff;font-weight:600}
+ul{list-style:none;margin:20px 0 22px;padding:0;display:grid;gap:11px}
+li{position:relative;padding-left:23px;color:#bdbdbd;font-size:clamp(.94rem,1.15vw,1.02rem);line-height:1.7}
+li::before{content:'';position:absolute;left:2px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 12px rgba(224,32,32,.28)}
+.policy-section a{color:#fff;text-decoration-color:rgba(224,32,32,.7);text-underline-offset:4px;transition:color .2s ease,text-decoration-color .2s ease}
+.policy-section a:hover{color:#ff4a4a;text-decoration-color:#ff4a4a}
+.policy-end{margin-top:clamp(70px,8vw,110px);padding-top:24px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}
+.policy-end span{font-family:'DM Mono',monospace;color:#666;font-size:.68rem;letter-spacing:.05em}
+.policy-end a{font-family:'DM Mono',monospace;color:#9b9b9b;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .2s ease}
+.policy-end a:hover{color:var(--red)}
+@media(max-width:700px){.policy-shell{padding-top:62px;padding-left:22px;padding-right:22px}.policy-wrap{margin-left:0}h1{font-size:clamp(2.8rem,16vw,4.7rem)}.policy-section{padding:38px 0}h2{margin-bottom:18px}p{line-height:1.72}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important;filter:none!important}.policy-back{transition:none}}
+</style>
+</head>
+<body>
+<main class="policy-shell">
+<div class="policy-wrap">
+<a class="policy-back" href="index.html">Back to Cut &amp; Hire</a>
+<p class="policy-kicker">Cut &amp; Hire Policies</p>
+<h1>Terms of <span class="red">Service</span></h1>
+<p class="last-updated">Last updated: August 16, 2026</p>
+<div class="policy-rule"></div>
+<div class="policy-content">
+<p><strong>Last updated: August 16, 2026</strong></p>
+<section class="policy-section" id="section-1"><h2><span class="section-number">1.</span> Agreement to Terms</h2>
+<p>By accessing or using the Cut &amp; Hire website, Discord server, services, or any related platform operated by <strong>Cut &amp; Hire</strong> ("Cut &amp; Hire", "we", "our", or "us"), you agree to be bound by these Terms of Service.</p>
+<p>If you do not agree with these Terms, please do not use our services, website, Discord server, or other Cut &amp; Hire platforms.</p>
+</section>
+<section class="policy-section" id="section-2"><h2><span class="section-number">2.</span> Our Services</h2>
+<p>Cut &amp; Hire provides digital creative and business services, including but not limited to:</p>
+<ul>
+<li>Video Editing</li>
+<li>YouTube Editing</li>
+<li>Short-Form Content Editing</li>
+<li>Content Repurposing</li>
+<li>Clipping</li>
+<li>Thumbnail Design</li>
+<li>Graphic Design</li>
+<li>Motion Graphics</li>
+<li>Content Strategy</li>
+<li>Marketing Services</li>
+<li>Other Creative Services</li>
+</ul>
+<p>All services are delivered digitally unless otherwise agreed upon in writing.</p>
+</section>
+<section class="policy-section" id="section-3"><h2><span class="section-number">3.</span> Orders and Payments</h2>
+<p>All prices are charged in United States Dollars (USD) unless otherwise stated.</p>
+<p>Payment must be made according to the agreed proposal, invoice, subscription, or payment schedule before work begins unless otherwise agreed upon in writing.</p>
+<p>Cut &amp; Hire may require an upfront payment, weekly payment, monthly payment, or other agreed payment structure depending on the project.</p>
+<p>Failure to complete payment may result in the suspension or cancellation of services.</p>
+<p>Any payment processing fees associated with a transaction may be the responsibility of the client when agreed upon before payment.</p>
+</section>
+<section class="policy-section" id="section-4"><h2><span class="section-number">4.</span> Cut &amp; Hire Team Payment Rules</h2>
+<p>When a client hires an editor, designer, clipper, or other creative through Cut &amp; Hire, the following rules may apply:</p>
+<ul>
+<li>Client payments must follow the payment method and process provided by Cut &amp; Hire.</li>
+<li>Clients should not send payments directly to individual team members unless explicitly authorized by Cut &amp; Hire.</li>
+<li>Team members are responsible for following the commission structure communicated by Cut &amp; Hire.</li>
+<li>Any applicable Cut &amp; Hire commission must be paid according to the agreed terms.</li>
+<li>Attempting to bypass Cut &amp; Hire's payment or commission system may result in removal from the team and/or termination of the client's project.</li>
+<li>Team members may not independently negotiate or alter agreed payment terms with clients without authorization when doing so would affect Cut &amp; Hire's agreed commission or project arrangement.</li>
+<li>Any disputes regarding payments should be brought to Cut &amp; Hire management before further action is taken.</li>
+</ul>
+<p>Cut &amp; Hire may update its commission structures, payment procedures, and team policies when necessary. Team members will be informed of material changes.</p>
+</section>
+<section class="policy-section" id="section-5"><h2><span class="section-number">5.</span> Communication Rules</h2>
+<p>For projects managed through Cut &amp; Hire:</p>
+<ul>
+<li>Project-related communication should take place through the designated Cut &amp; Hire ticket, private channel, group chat, or other communication method provided by the team.</li>
+<li>Payment negotiations should not be conducted privately when the project is being managed through Cut &amp; Hire.</li>
+<li>Clients and team members are expected to communicate respectfully and professionally.</li>
+<li>Abusive, threatening, fraudulent, or inappropriate behavior may result in immediate termination of the project or removal from Cut &amp; Hire.</li>
+</ul>
+<p>Cut &amp; Hire may supervise project communication to ensure quality, resolve disputes, and maintain the integrity of the service.</p>
+</section>
+<section class="policy-section" id="section-6"><h2><span class="section-number">6.</span> Service Delivery</h2>
+<p>Services are delivered digitally through email, Discord, cloud storage, project management platforms, or other agreed communication channels.</p>
+<p>Delivery timelines are communicated before work begins and may vary depending on the scope, complexity, revisions, and amount of material provided.</p>
+<p>Delays caused by missing footage, scripts, voiceovers, assets, feedback, approvals, or other client-provided materials may extend the delivery timeline.</p>
+</section>
+<section class="policy-section" id="section-7"><h2><span class="section-number">7.</span> Revisions and Client Feedback</h2>
+<p>Clients are expected to provide clear and reasonable feedback.</p>
+<p>The number of revisions included in a project may vary depending on the agreed service or package.</p>
+<p>Additional revisions or substantial changes outside the original scope may result in additional charges.</p>
+<p>A client is responsible for reviewing and approving final deliverables.</p>
+</section>
+<section class="policy-section" id="section-8"><h2><span class="section-number">8.</span> Refunds, Returns &amp; Cancellations</h2>
+<p>Refunds, cancellations, and disputes are evaluated according to the circumstances of the project and any specific refund policy communicated before purchase.</p>
+<p>Generally:</p>
+<ul>
+<li>Refunds may be considered if an agreed service was not delivered.</li>
+<li>Refunds or partial refunds may be considered for eligible cancellations before work has commenced.</li>
+<li>Fully completed or accepted services are generally non-refundable.</li>
+<li>Custom or personalized services are generally non-refundable.</li>
+<li>Work that has already been completed may remain payable even if the client chooses to discontinue the project.</li>
+<li>Deposits or upfront payments may be non-refundable once work has commenced.</li>
+</ul>
+<p>Any refund determination will take into account the work already completed, project scope, communication history, and applicable agreement.</p>
+</section>
+<section class="policy-section" id="section-9"><h2><span class="section-number">9.</span> Client Responsibilities</h2>
+<p>Clients agree to:</p>
+<ul>
+<li>Provide accurate information necessary to complete the project.</li>
+<li>Provide required footage, scripts, voiceovers, assets, references, and other materials in a timely manner.</li>
+<li>Respond to requests for feedback or approvals within a reasonable timeframe.</li>
+<li>Ensure that materials provided to Cut &amp; Hire do not infringe the intellectual property or other rights of third parties.</li>
+<li>Maintain professional communication with Cut &amp; Hire and its team members.</li>
+<li>Follow the agreed payment schedule.</li>
+</ul>
+<p>Delays caused by the client may affect the project's delivery timeline.</p>
+</section>
+<section class="policy-section" id="section-10"><h2><span class="section-number">10.</span> Intellectual Property</h2>
+<p>Unless otherwise agreed in writing:</p>
+<ul>
+<li>The client retains ownership of materials they provide to Cut &amp; Hire.</li>
+<li>Cut &amp; Hire retains ownership of its internal processes, templates, workflows, systems, editing techniques, creative methodologies, and proprietary resources.</li>
+<li>Upon full payment, the client receives the rights to use the final deliverables for their intended business or personal purposes unless otherwise specified.</li>
+<li>Unpaid work remains the property of Cut &amp; Hire or the applicable creator until payment has been completed.</li>
+<li>Cut &amp; Hire may retain internal project files and working files unless otherwise agreed.</li>
+</ul>
+</section>
+<section class="policy-section" id="section-11"><h2><span class="section-number">11.</span> Portfolio and Promotional Rights</h2>
+<p>Unless the client requests otherwise in writing before the project begins, Cut &amp; Hire may use completed work, publicly available client content, screenshots, results, testimonials, or excerpts of completed projects for portfolio, marketing, promotional, and case-study purposes.</p>
+<p>Clients may request that specific work remain confidential where appropriate.</p>
+</section>
+<section class="policy-section" id="section-12"><h2><span class="section-number">12.</span> No Guaranteed Results</h2>
+<p>Cut &amp; Hire provides creative, editing, marketing, and business-related services.</p>
+<p>While we strive to provide high-quality work, we do not guarantee specific results, including:</p>
+<ul>
+<li>Views</li>
+<li>Subscribers</li>
+<li>Followers</li>
+<li>Revenue</li>
+<li>Sales</li>
+<li>Leads</li>
+<li>Viral performance</li>
+<li>Audience growth</li>
+<li>Engagement</li>
+<li>Search rankings</li>
+<li>Advertising performance</li>
+<li>Business growth</li>
+</ul>
+<p>Results may depend on factors outside of Cut &amp; Hire's control, including the platform's algorithm, audience behavior, competition, content quality, publishing strategy, and market conditions.</p>
+</section>
+<section class="policy-section" id="section-13"><h2><span class="section-number">13.</span> Limitation of Liability</h2>
+<p>To the fullest extent permitted by law, Cut &amp; Hire shall not be liable for indirect, incidental, special, consequential, or punitive damages arising from the use of our website, services, Discord server, or other platforms.</p>
+<p>This includes, but is not limited to, loss of revenue, profits, business opportunities, audience growth, data, or other potential business losses.</p>
+</section>
+<section class="policy-section" id="section-14"><h2><span class="section-number">14.</span> Team Member Rules</h2>
+<p>Editors, designers, clippers, and other creatives participating in Cut &amp; Hire agree to:</p>
+<ul>
+<li>Complete assigned work professionally and within agreed deadlines.</li>
+<li>Communicate with clients respectfully.</li>
+<li>Follow Cut &amp; Hire's project instructions and creative guidelines.</li>
+<li>Respect the agreed payment and commission structure.</li>
+<li>Not intentionally bypass Cut &amp; Hire to avoid commissions or fees.</li>
+<li>Not misrepresent themselves as the owner or official representative of Cut &amp; Hire.</li>
+<li>Not share confidential client information or project materials without authorization.</li>
+<li>Not use another team member's work as their own.</li>
+<li>Not engage in fraudulent activity, scams, harassment, or other unlawful behavior.</li>
+<li>Inform Cut &amp; Hire management of significant project issues or payment disputes.</li>
+</ul>
+<p>Violations may result in warnings, loss of access to projects, suspension, removal from the team, or other appropriate action.</p>
+</section>
+<section class="policy-section" id="section-15"><h2><span class="section-number">15.</span> Client-Team Member Relationships</h2>
+<p>When a client is introduced to a team member through Cut &amp; Hire, the relationship may remain subject to Cut &amp; Hire's applicable project and commission policies.</p>
+<p>Clients and team members may not intentionally circumvent Cut &amp; Hire's involvement, payment structure, or commission system for the purpose of avoiding agreed fees.</p>
+<p>Cut &amp; Hire reserves the right to terminate relationships with clients or team members who intentionally attempt to circumvent these policies.</p>
+</section>
+<section class="policy-section" id="section-16"><h2><span class="section-number">16.</span> Termination</h2>
+<p>Cut &amp; Hire reserves the right to suspend or terminate services, projects, accounts, or access to its platforms if:</p>
+<ul>
+<li>Payments are not made.</li>
+<li>A client or team member violates these Terms.</li>
+<li>A person engages in abusive, unlawful, fraudulent, or deceptive behavior.</li>
+<li>A person attempts to circumvent Cut &amp; Hire's payment or commission system.</li>
+<li>A person shares confidential information without authorization.</li>
+<li>A person otherwise acts in a manner that materially harms Cut &amp; Hire, its clients, or its team.</li>
+</ul>
+<p>Any completed work up to the termination date remains payable according to the applicable agreement.</p>
+</section>
+<section class="policy-section" id="section-17"><h2><span class="section-number">17.</span> Privacy</h2>
+<p>Your use of Cut &amp; Hire's website and services may also be governed by our Privacy Policy.</p>
+<p>You are responsible for reviewing the applicable privacy practices before providing personal or confidential information.</p>
+</section>
+<section class="policy-section" id="section-18"><h2><span class="section-number">18.</span> Changes to These Terms</h2>
+<p>Cut &amp; Hire reserves the right to modify these Terms of Service at any time.</p>
+<p>Updated versions may be posted on the Cut &amp; Hire website with a revised "Last updated" date.</p>
+<p>Continued use of our website, services, Discord server, or other Cut &amp; Hire platforms after changes are posted constitutes acceptance of the revised Terms.</p>
+</section>
+<section class="policy-section" id="section-19"><h2><span class="section-number">19.</span> Contact Us</h2>
+<p>If you have any questions regarding these Terms of Service, our services, payments, or Cut &amp; Hire policies, please contact us at:</p>
+<p><strong><a href="mailto:fabribusiness76@gmail.com">fabribusiness76@gmail.com</a></strong></p>
+</section>
+</div>
+<div class="policy-end"><span>© 2026 Cut &amp; Hire. All rights reserved.</span><a href="index.html">Return to website</a></div>
+</div>
+</main>
+</body>
+</html>

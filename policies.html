@@ -13,7 +13,8 @@
 :root{--bg:#000;--panel:#070707;--text:#f5f0eb;--soft:#a3a3a3;--muted:#767676;--red:#e02020;--line:rgba(255,255,255,.10)}
 *,*::before,*::after{box-sizing:border-box}
 html{background:var(--bg);scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:1;filter:blur(0);transition:opacity .52s cubic-bezier(.22,1,.36,1),filter .52s cubic-bezier(.22,1,.36,1)}
+body.cnh-direct-leave{opacity:0;filter:blur(6px)}
 a{color:inherit}
 @view-transition{navigation:auto}
 ::view-transition-group(root){animation-duration:.46s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
@@ -21,15 +22,15 @@ a{color:inherit}
 ::view-transition-new(root){animation:cnh-page-in .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
 @keyframes cnh-page-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(3px)}}
 @keyframes cnh-page-in{0%{opacity:0;filter:blur(3px)}100%{opacity:1;filter:blur(0)}}
-.policy-shell{position:relative;min-height:100vh;padding:clamp(80px,9vw,138px) clamp(24px,6vw,96px) clamp(90px,10vw,150px)}
+.policy-shell{position:relative;min-height:100vh;padding:clamp(76px,8vw,124px) clamp(24px,5vw,72px) clamp(90px,10vw,150px)}
 .policy-shell::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 14% 4%,rgba(224,32,32,.08),transparent 27%),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);background-size:auto,100% 72px;mask-image:linear-gradient(to bottom,#000,transparent 52%);opacity:.7}
-.policy-wrap{position:relative;width:min(820px,100%);margin-left:clamp(0px,5vw,84px)}
+.policy-wrap{position:relative;width:min(980px,100%);margin:0 auto}
 .policy-back{display:inline-flex;align-items:center;gap:.65rem;margin-bottom:clamp(42px,6vw,82px);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:#8b8b8b;transition:color .22s ease,transform .22s ease}
 .policy-back::before{content:'←';color:var(--red);font-size:1rem;line-height:1}
 .policy-back:hover,.policy-back:focus-visible{color:var(--text);transform:translateX(-3px);outline:none}
 .policy-kicker{display:flex;align-items:center;gap:.7rem;margin:0 0 14px;color:var(--red);font-family:'DM Mono',monospace;font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
 .policy-kicker::before{content:'';display:block;width:28px;height:1px;background:var(--red)}
-h1{margin:0;font-size:clamp(3.2rem,7vw,6.7rem);line-height:.91;letter-spacing:-.065em;font-weight:700;max-width:780px}
+h1{margin:0;font-size:clamp(3.2rem,6.4vw,6.25rem);line-height:.92;letter-spacing:-.06em;font-weight:700;max-width:900px}
 h1 .red{color:var(--red);font-style:italic}
 .last-updated{margin:20px 0 0;color:var(--muted);font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.04em}
 .policy-rule{height:1px;background:linear-gradient(90deg,var(--red),rgba(224,32,32,.2),transparent);margin:clamp(42px,6vw,72px) 0 0}
@@ -38,7 +39,7 @@ h1 .red{color:var(--red);font-style:italic}
 .policy-section:last-child{border-bottom:0;padding-bottom:0}
 h2{margin:0 0 24px;font-size:clamp(1.45rem,2.4vw,2.1rem);line-height:1.08;letter-spacing:-.035em;font-weight:600;color:var(--text)}
 .section-number{color:var(--red);font-family:'DM Mono',monospace;font-size:.72em;letter-spacing:-.02em;vertical-align:.08em;margin-right:.22em}
-p{margin:0 0 16px;color:#c9c9c9;font-size:clamp(.96rem,1.2vw,1.05rem);line-height:1.85;max-width:760px}
+p{margin:0 0 16px;color:#c9c9c9;font-size:clamp(.98rem,1.15vw,1.06rem);line-height:1.82;max-width:900px}
 p:last-child{margin-bottom:0}
 strong{color:#fff;font-weight:600}
 ul{list-style:none;margin:20px 0 22px;padding:0;display:grid;gap:11px}
@@ -50,7 +51,7 @@ li::before{content:'';position:absolute;left:2px;top:.72em;width:6px;height:6px;
 .policy-end span{font-family:'DM Mono',monospace;color:#666;font-size:.68rem;letter-spacing:.05em}
 .policy-end a{font-family:'DM Mono',monospace;color:#9b9b9b;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .2s ease}
 .policy-end a:hover{color:var(--red)}
-@media(max-width:700px){.policy-shell{padding-top:62px;padding-left:22px;padding-right:22px}.policy-wrap{margin-left:0}h1{font-size:clamp(2.8rem,16vw,4.7rem)}.policy-section{padding:38px 0}h2{margin-bottom:18px}p{line-height:1.72}}
+@media(max-width:700px){.policy-shell{padding-top:62px;padding-left:22px;padding-right:22px}.policy-wrap{width:100%;margin:0 auto}h1{font-size:clamp(2.8rem,16vw,4.7rem)}.policy-section{padding:38px 0}h2{margin-bottom:18px}p{line-height:1.72}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important;filter:none!important}.policy-back{transition:none}}
 </style>
 </head>
@@ -63,7 +64,6 @@ li::before{content:'';position:absolute;left:2px;top:.72em;width:6px;height:6px;
 <p class="last-updated">Last updated: August 16, 2026</p>
 <div class="policy-rule"></div>
 <div class="policy-content">
-<p><strong>Last updated: August 16, 2026</strong></p>
 <section class="policy-section" id="section-1"><h2><span class="section-number">1.</span> Agreement to Terms</h2>
 <p>By accessing or using the Cut &amp; Hire website, Discord server, services, or any related platform operated by <strong>Cut &amp; Hire</strong> ("Cut &amp; Hire", "we", "our", or "us"), you agree to be bound by these Terms of Service.</p>
 <p>If you do not agree with these Terms, please do not use our services, website, Discord server, or other Cut &amp; Hire platforms.</p>
@@ -238,5 +238,23 @@ li::before{content:'';position:absolute;left:2px;top:.72em;width:6px;height:6px;
 <div class="policy-end"><span>© 2026 Cut &amp; Hire. All rights reserved.</span><a href="index.html">Return to website</a></div>
 </div>
 </main>
+<script>
+(function(){
+  function goMain(e){
+    if(window.parent!==window){
+      e.preventDefault();
+      window.parent.postMessage({type:'cnh-policy-close'},'*');
+      return;
+    }
+    if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    e.preventDefault();
+    document.body.classList.add('cnh-direct-leave');
+    try{sessionStorage.setItem('cnhReturningFromPolicies','1')}catch(_){}
+    setTimeout(()=>{location.href='index.html'},430);
+  }
+  document.querySelectorAll('a[href="index.html"]').forEach(a=>a.addEventListener('click',goMain));
+})();
+</script>
+
 </body>
 </html>

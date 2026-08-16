@@ -6384,6 +6384,24 @@ footer .fi{
 
 </style>
 
+
+<style id="cnh-policy-transition-style">
+@view-transition{navigation:auto}
+::view-transition-group(root){animation-duration:.46s;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+::view-transition-old(root){animation:cnh-page-out .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+::view-transition-new(root){animation:cnh-page-in .46s cubic-bezier(.22,1,.36,1) both;mix-blend-mode:normal}
+@keyframes cnh-page-out{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(3px)}}
+@keyframes cnh-page-in{0%{opacity:0;filter:blur(3px)}100%{opacity:1;filter:blur(0)}}
+.footer-meta-right{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;justify-content:flex-end}
+.footer-meta-right p{margin:0}
+.cnh-policies-link{position:relative;color:var(--m);font-family:'DM Sans',sans-serif;font-size:.68rem;text-decoration:none;transition:color .22s ease,transform .22s ease;display:inline-flex;align-items:center;gap:.45rem}
+.cnh-policies-link::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--red);opacity:.85;box-shadow:0 0 10px rgba(224,32,32,.45)}
+.cnh-policies-link:hover,.cnh-policies-link:focus-visible{color:var(--w);transform:translateY(-1px);outline:none}
+@media(max-width:640px){.footer-meta-right{width:100%;justify-content:space-between;gap:.75rem}.cnh-policies-link{font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation-duration:.01ms!important;filter:none!important}.cnh-policies-link{transition:none}}
+</style>
+<link rel="prefetch" href="policies.html">
+
 </head>
 <body class="hero-start-boost">
 <script>
@@ -7427,7 +7445,7 @@ footer .fi{
 </div>
 <div class="fb-bot">
 <p>© 2026 Cut &amp; Hire. All rights reserved.</p>
-<p>Built for creators.</p>
+<div class="footer-meta-right"><p>Built for creators.</p><a class="cnh-policies-link" href="policies.html" aria-label="Read Cut and Hire policies">Policies</a></div>
 </div>
 </footer>
  

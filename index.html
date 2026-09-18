@@ -8182,8 +8182,39 @@ function videoThumbFromSrc(src){if(!src)return '';const clean=src.split('/').pop
 function getVideoThumb(w){return w.thumb||videoThumbFromSrc(w.src||'')}
 
 
+const YOUTUBE_FIXED_RANDOM_ORDER=[
+      'Video 5.mp4',
+      'Video 21.mp4',
+      'Video 11.mp4',
+      'Video 25.mp4',
+      'Video 4.mp4',
+      'Video 7.mp4',
+      'Video 15.mp4',
+      'Video 17.mp4',
+      'Video 13.mp4',
+      'Video 27.mp4',
+      'Video 19.mp4',
+      'Video 29.mp4',
+      'Video 9.mp4',
+      'Video 2.mp4',
+      'Video 10.mp4',
+      'Video 22.mp4',
+      'Video 28.mp4',
+      'Video 8.mp4',
+      'Video 6.mp4',
+      'Video 12.mp4',
+      'Video 14.mp4'
+];
+
 function orderWorkList(list, activeCat){
   const arr=[...(list||[])];
+
+  // One randomized YouTube Long Form order, hardcoded so EVERY visitor sees the same order.
+  // Reloading, reopening, or using a different device will not reshuffle it.
+  if(activeCat==='youtube'){
+    const rank=new Map(YOUTUBE_FIXED_RANDOM_ORDER.map((src,index)=>[src,index]));
+    return arr.sort((a,b)=>(rank.get(a.src)??9999)-(rank.get(b.src)??9999));
+  }
 
   const CATEGORY_ORDER={
     documentary:[
@@ -8354,7 +8385,8 @@ function preloadCategoryAssets(cat){
     preloadPortfolioThumbnailsNow();
     return;
   }
-  const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
+  const categoryItems=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)));
+  const items=orderWorkList(categoryItems,cat).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
   items.forEach((w,i)=>{
     const src=w.isPhoto?(w.img||''):(w.thumb||'');
     if(!src)return;

@@ -2221,7 +2221,7 @@ body::before{
 
  
 #work .work-grid[data-cat="shorts"]{
-  grid-template-columns:repeat(7,minmax(120px,1fr))!important;
+  grid-template-columns:repeat(8,minmax(120px,1fr))!important;
   gap:18px!important;
 }
 
@@ -2327,9 +2327,9 @@ body::before{
  
 #work .work-grid[data-cat="shorts"] .wc,
 #work .work-grid[data-cat="shorts"] .wc.shortform-card{
-  flex:0 0 calc((100% - 108px) / 7)!important;
-  width:calc((100% - 108px) / 7)!important;
-  max-width:calc((100% - 108px) / 7)!important;
+  flex:0 0 calc((100% - 126px) / 8)!important;
+  width:calc((100% - 126px) / 8)!important;
+  max-width:calc((100% - 126px) / 8)!important;
   aspect-ratio:9 / 16!important;
 }
 
@@ -8241,7 +8241,7 @@ function renderWork(list, activeCat){
     const featuredClass=(w.featured&&w.isPhoto)?' motion-featured-card':'';
     const autoplayClass=w.autoplayPreview?' autoplay-preview':'';
     const cleanTopIconClass=w.cleanTopIcon?' clean-top-source-icon':'';
-    const badge=isShort?'<div class="wc-badge">9:16</div>':'';
+    const badge='';
     const phClass=isShort?'shortform-ph':isThumb?'thumbnail-ph':'';
     const dataCats=cats.join(' ');
 

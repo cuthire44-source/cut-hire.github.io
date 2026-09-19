@@ -610,6 +610,7 @@
 <link as="image" fetchpriority="high" href="Screenshot 2026-07-22 000447.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="c823f1a46230ae563de7074caa4c96f5-modified.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="blue_checkmark.png" rel="preload"/>
+<link as="image" fetchpriority="high" href="faceless.jpg" rel="preload"/>
 <link as="image" fetchpriority="high" href="rveiew8383.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="gpfp83029.png" rel="preload"/>
 <link as="image" fetchpriority="high" href="rveiq221838.png" rel="preload"/>
@@ -3133,6 +3134,7 @@ body.hero-start-boost
 .yt-pricing-img img{object-position:center}
 .reels-pricing-img img{object-position:center}
 .team-pricing-img img{object-position:center}
+.faceless-pricing-img img{object-position:center}
 .pricing-img-shell::after{
   content:"";
   position:absolute;
@@ -3630,6 +3632,78 @@ a.pricing-img-shell.pricing-video-shell:visited{color:inherit;}
 }
 .pricing-card-stream .pricing-img-shell img{
   object-position:center;
+}
+
+/* Faceless Content pricing card artwork */
+.faceless-pricing-img{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 78% 22%,rgba(224,32,32,.24),transparent 34%),
+    radial-gradient(circle at 18% 78%,rgba(255,255,255,.06),transparent 30%),
+    linear-gradient(135deg,#060606 0%,#111 52%,#050505 100%);
+}
+.faceless-pricing-img::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);
+  opacity:.55;
+}
+.faceless-pricing-art{
+  position:relative;
+  z-index:2;
+  width:calc(100% - 32px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:15px;
+  text-align:center;
+}
+.faceless-pricing-label{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.18em;
+  color:#ff3b3b;
+}
+.faceless-pricing-title-art{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(23px,2.2vw,34px);
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.045em;
+  color:#fff;
+  text-shadow:0 0 28px rgba(224,32,32,.22);
+}
+.faceless-pricing-flow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.faceless-pricing-flow span{
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  padding:6px 9px;
+  background:rgba(0,0,0,.48);
+  color:rgba(255,255,255,.82);
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.faceless-pricing-flow i{
+  width:13px;
+  height:1px;
+  background:#e02020;
+  box-shadow:0 0 8px rgba(224,32,32,.65);
 }
 
 
@@ -6834,7 +6908,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For TikTok, Reels and Shorts</p>
-              <h3>Reels Pricing</h3>
+              <h3>Reels / Shorts</h3>
               <div class="pricing-price-wrap pricing-simple-price">
                 <div class="pricing-price-line" aria-label="Reels custom pricing">
                   <strong class="pricing-new-price">Custom Pricing</strong>
@@ -6859,7 +6933,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
             </div>
             <div class="pricing-card-body">
               <p class="pricing-kicker">For creators building bigger videos</p>
-              <h3>YouTube Pricing</h3>
+              <h3>Youtube</h3>
               <div class="pricing-price-wrap pricing-simple-price">
                 <div class="pricing-price-line" aria-label="YouTube custom pricing">
                   <strong class="pricing-new-price">Custom Pricing</strong>
@@ -6874,6 +6948,33 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
                 <li>Dedicated project manager</li>
                 <li>Strategy support</li>
                 <li>Thumbnails available</li>
+              </ul>
+              <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
+            </div>
+          </article>
+
+          <article class="pricing-card pricing-card-faceless" data-pricing-card>
+            <div class="pricing-img-shell faceless-pricing-img">
+              <img src="faceless.jpg" alt="Faceless content workflow thumbnail" loading="lazy" decoding="async">
+            </div>
+            <div class="pricing-card-body">
+              <p class="pricing-kicker">For complete faceless channel production</p>
+              <h3>Faceless Content</h3>
+              <div class="pricing-price-wrap pricing-simple-price">
+                <div class="pricing-price-line" aria-label="Faceless Content custom pricing">
+                  <strong class="pricing-new-price">Custom Pricing</strong>
+                </div>
+              </div>
+              <p class="pricing-includes">Includes a complete faceless content workflow built around your channel.</p>
+              <p class="pricing-copy">From idea to upload, we can handle the entire production process for you.</p>
+              <ul class="pricing-list">
+                <li>Topic &amp; content research</li>
+                <li>Professional scriptwriting</li>
+                <li>Professional voice actors</li>
+                <li>Video editing</li>
+                <li>Thumbnail design available</li>
+                <li>We can post/upload the videos for you</li>
+                <li>Dedicated project management</li>
               </ul>
               <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
             </div>

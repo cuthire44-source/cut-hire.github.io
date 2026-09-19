@@ -3422,7 +3422,7 @@ body.hero-start-boost
   transition:transform .25s ease, border-color .25s ease, background .25s ease;
 }
 .pricing-arrow:hover{
-  transform:scale(1.08);
+  transform:none;
   border-color:rgba(255,45,45,.55);
   background:rgba(255,0,0,.16);
 }
@@ -3450,24 +3450,25 @@ body.hero-start-boost
 }
 @media (max-width:980px){
   .pricing-showcase-section{padding:95px 0 105px}
-  .pricing-carousel-wrap{gap:10px}
+  .pricing-carousel-wrap{gap:10px;padding:0;overflow:visible}
   .pricing-card{flex-basis:calc((100% - 24px) / 2)}
-  .pricing-arrow{position:absolute;z-index:4;top:43%;background:rgba(0,0,0,.78)}
-  .pricing-arrow-left{left:-6px}
-  .pricing-arrow-right{right:-6px}
+  .pricing-arrow{position:absolute;z-index:4;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.78)}
+  .pricing-arrow-left{left:-34px}
+  .pricing-arrow-right{right:-34px}
 }
 @media (max-width:680px){
   .pricing-showcase-head{margin-bottom:30px}
   .pricing-showcase-sub{font-size:14px}
+  .pricing-carousel-wrap{padding:0;overflow:visible}
   .pricing-viewport{padding:4px;border-radius:26px}
   .pricing-track{gap:16px}
   .pricing-card{flex-basis:100%;border-radius:24px}
   .pricing-img-shell{height:190px;margin:10px;border-radius:18px}
   .pricing-card-body{padding:8px 18px 22px}
   .pricing-copy{min-height:auto}
-  .pricing-arrow{width:42px;height:42px;top:38%}
-  .pricing-arrow-left{left:2px}
-  .pricing-arrow-right{right:2px}
+  .pricing-arrow{width:42px;height:42px;top:50%;transform:translateY(-50%)}
+  .pricing-arrow-left{left:-28px}
+  .pricing-arrow-right{right:-28px}
 }
 
 
@@ -6412,6 +6413,63 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 </style>
 <link rel="prefetch" href="policies.html">
 
+<style>
+
+/* === Mobile pricing carousel arrows: stable, larger, screen-safe === */
+.pricing-arrow{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.pricing-arrow:active{
+  transform:none;
+}
+
+@media (max-width:980px){
+  .pricing-arrow,
+  .pricing-arrow:hover,
+  .pricing-arrow:active,
+  .pricing-arrow:focus,
+  .pricing-arrow:focus-visible{
+    transform:translateY(-50%) !important;
+  }
+}
+
+@media (max-width:680px){
+  .pricing-carousel-wrap{
+    padding:0 !important;
+    overflow:visible !important;
+  }
+  .pricing-viewport{
+    width:100% !important;
+  }
+  .pricing-arrow{
+    width:50px !important;
+    height:50px !important;
+    min-width:50px !important;
+    min-height:50px !important;
+    flex:0 0 50px !important;
+    top:50% !important;
+    z-index:8 !important;
+    transition:border-color .25s ease, background .25s ease, box-shadow .25s ease !important;
+  }
+  .pricing-arrow svg{
+    width:24px !important;
+    height:24px !important;
+  }
+  .pricing-arrow-left{
+    left:max(-36px, calc((100% - 100vw) / 2 + 6px)) !important;
+  }
+  .pricing-arrow-right{
+    right:max(-36px, calc((100% - 100vw) / 2 + 6px)) !important;
+  }
+  .pricing-arrow:hover,
+  .pricing-arrow:active,
+  .pricing-arrow:focus,
+  .pricing-arrow:focus-visible{
+    transform:translateY(-50%) !important;
+  }
+}
+</style>
 </head>
 <body class="hero-start-boost">
 <script>
@@ -8124,8 +8182,39 @@ function videoThumbFromSrc(src){if(!src)return '';const clean=src.split('/').pop
 function getVideoThumb(w){return w.thumb||videoThumbFromSrc(w.src||'')}
 
 
+const YOUTUBE_FIXED_RANDOM_ORDER=[
+      'Video 5.mp4',
+      'Video 21.mp4',
+      'Video 11.mp4',
+      'Video 25.mp4',
+      'Video 4.mp4',
+      'Video 7.mp4',
+      'Video 15.mp4',
+      'Video 17.mp4',
+      'Video 13.mp4',
+      'Video 27.mp4',
+      'Video 19.mp4',
+      'Video 29.mp4',
+      'Video 9.mp4',
+      'Video 2.mp4',
+      'Video 10.mp4',
+      'Video 22.mp4',
+      'Video 28.mp4',
+      'Video 8.mp4',
+      'Video 6.mp4',
+      'Video 12.mp4',
+      'Video 14.mp4'
+];
+
 function orderWorkList(list, activeCat){
   const arr=[...(list||[])];
+
+  // One randomized YouTube Long Form order, hardcoded so EVERY visitor sees the same order.
+  // Reloading, reopening, or using a different device will not reshuffle it.
+  if(activeCat==='youtube'){
+    const rank=new Map(YOUTUBE_FIXED_RANDOM_ORDER.map((src,index)=>[src,index]));
+    return arr.sort((a,b)=>(rank.get(a.src)??9999)-(rank.get(b.src)??9999));
+  }
 
   const CATEGORY_ORDER={
     documentary:[
@@ -8296,7 +8385,8 @@ function preloadCategoryAssets(cat){
     preloadPortfolioThumbnailsNow();
     return;
   }
-  const items=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat))).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
+  const categoryItems=(cat==='all'?works:works.filter(w=>getCats(w).includes(cat)));
+  const items=orderWorkList(categoryItems,cat).slice(0, isMobilePortfolioView()?mobilePortfolioLimit(cat):24);
   items.forEach((w,i)=>{
     const src=w.isPhoto?(w.img||''):(w.thumb||'');
     if(!src)return;

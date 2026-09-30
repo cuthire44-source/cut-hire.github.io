@@ -829,7 +829,7 @@ function preloadCategoryAssets(cat){
 function filterWork(cat,el){
   document.querySelectorAll('.cat-tab').forEach(c=>c.classList.remove('on'));
   if(el)el.classList.add('on');
-  document.querySelectorAll('.wc').forEach(c=>{c.style.opacity='0';c.style.transform='scale(.95)'});
+  document.querySelectorAll('#work-grid .wc').forEach(c=>{c.style.opacity='0';c.style.transform='scale(.95)'});
   preloadCategoryAssets(cat);
   const filtered=cat==='all'?works:works.filter(w=>getCats(w).includes(cat));
   setTimeout(()=>renderWork(filtered,cat),cat==='thumbnail'?20:120);
@@ -1001,9 +1001,13 @@ function startMovingPreview(videoEl){
   let playAttempted=false;
 
   videoEl.muted=true;
+  videoEl.defaultMuted=true;
   videoEl.loop=true;
   videoEl.playsInline=true;
-  videoEl.preload='metadata';
+  videoEl.setAttribute('muted','');
+  videoEl.setAttribute('playsinline','');
+  // On hover we actually want the browser to fetch enough media to start playback.
+  videoEl.preload='auto';
 
   function showMoving(){
     if(shown)return;
@@ -1021,17 +1025,24 @@ function startMovingPreview(videoEl){
     }catch(e){}
   }
   function playPreview(){
-    if(playAttempted)return;
+    if(playAttempted || !videoEl.isConnected)return;
     playAttempted=true;
     seekToStart();
-    const p=videoEl.play();
-    if(p&&p.then)p.then(showMoving).catch(()=>{playAttempted=false; if(card)card.classList.remove('preview-loading')});
-    else showMoving();
+    let p;
+    try{p=videoEl.play()}catch(e){playAttempted=false;return;}
+    if(p&&p.then){
+      p.then(showMoving).catch(()=>{
+        playAttempted=false;
+        if(card)card.classList.remove('preview-loading');
+      });
+    }else showMoving();
   }
 
-  videoEl.onloadedmetadata=()=>seekToStart();
+  // loadedmetadata alone is enough to begin a muted hover preview in most browsers;
+  // loadeddata/canplay are fallbacks for slower/local files.
+  videoEl.onloadedmetadata=()=>{seekToStart();playPreview();};
   videoEl.onloadeddata=playPreview;
-  videoEl.oncanplay=null;
+  videoEl.oncanplay=playPreview;
   videoEl.ontimeupdate=()=>{
     if(!videoEl.duration)return;
     const safeEnd=Math.min(endAt,Math.max(.6,videoEl.duration-.15));
@@ -1041,11 +1052,14 @@ function startMovingPreview(videoEl){
   };
   videoEl.onerror=()=>{
     playAttempted=false;
+    shown=false;
     if(candidateIndex<candidates.length-1){
       candidateIndex++;
       videoEl.dataset.candidateIndex=String(candidateIndex);
       videoEl.src=candidates[candidateIndex];
       try{videoEl.load()}catch(e){}
+      // Force a playback request for the newly selected fallback candidate.
+      setTimeout(playPreview,0);
     }else if(card){
       card.classList.remove('preview-loading');
       card.classList.remove('has-moving-thumb');
@@ -1054,8 +1068,11 @@ function startMovingPreview(videoEl){
 
   if(!videoEl.getAttribute('src')){
     videoEl.src=candidates[candidateIndex]||src;
-    videoEl.load();
-  } else if(videoEl.readyState >= 2) {
+    try{videoEl.load()}catch(e){}
+    // This is intentionally immediate: muted play() causes Chrome to fetch media
+    // instead of stopping at metadata-only, which was preventing testimonial previews.
+    playPreview();
+  }else{
     playPreview();
   }
 }

@@ -6316,3 +6316,15 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     opacity:1!important;
   }
 }
+
+
+/* Testimonial preview state — explicit so it cannot be overridden by later testimonial styles. */
+#video-testimonials .testimonial-video-card.has-moving-thumb .testimonial-video-preview,
+#video-testimonials .testimonial-video-card.is-previewing .testimonial-video-preview{
+  opacity:1!important;
+  visibility:visible!important;
+}
+#video-testimonials .testimonial-video-card.has-moving-thumb .testimonial-video-thumb,
+#video-testimonials .testimonial-video-card.is-previewing .testimonial-video-thumb{
+  opacity:0!important;
+}

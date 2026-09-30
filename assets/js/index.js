@@ -962,7 +962,7 @@ function initMovingPreviews(root){
   movingPreviewActive.forEach(v=>stopMovingPreview(v,true));
   movingPreviewActive.clear();
 
-  const cards=Array.from((root||document).querySelectorAll('.wc.is-video'));
+  const cards=Array.from((root||document).querySelectorAll('.wc.is-video')).filter(card=>!card.hasAttribute('data-testimonial-card'));
   cards.forEach(card=>{
     const v=card.querySelector('.wc-preview-video');
     if(!v)return;
@@ -1222,23 +1222,110 @@ window.cnhNormalizeYouTubeEmbedSrc = cnhNormalizeYouTubeEmbedSrc;
 window.vpOpenYouTube = vpOpenYouTube;
 
 
-// Video testimonials intentionally reuse the exact Shorts/Reels card preview + YouTube player logic.
-(function initVideoTestimonialsWithWorkLogic(){
+// Video testimonials: same visual behavior as Shorts/Reels, but with a tiny dedicated
+// hover controller so the two testimonial MP4s are not affected by Work-grid re-renders.
+(function initVideoTestimonials(){
   const grid=document.querySelector('.testimonial-videos-grid');
   if(!grid)return;
 
-  // Same hover/touch MP4 preview engine used by .wc Shorts/Reels cards.
-  initMovingPreviews(grid);
-
   grid.querySelectorAll('[data-testimonial-card]').forEach(card=>{
+    const preview=card.querySelector('.testimonial-video-preview');
+    if(!preview)return;
+
+    const configuredSrc=(preview.getAttribute('data-src')||preview.getAttribute('src')||'').trim();
+    const candidates=getVideoCandidates(configuredSrc);
+    let candidateIndex=0;
+    let hovering=false;
+    let playToken=0;
+
+    preview.muted=true;
+    preview.defaultMuted=true;
+    preview.loop=true;
+    preview.playsInline=true;
+    preview.setAttribute('muted','');
+    preview.setAttribute('playsinline','');
+    preview.setAttribute('webkit-playsinline','');
+
+    function revealPreview(token){
+      if(!hovering || token!==playToken)return;
+      card.classList.add('has-moving-thumb','is-previewing');
+      card.classList.remove('preview-loading');
+    }
+
+    function tryPlay(token){
+      if(!hovering || token!==playToken)return;
+      preview.muted=true;
+      preview.defaultMuted=true;
+      preview.loop=true;
+      preview.playsInline=true;
+      preview.preload='auto';
+      let p;
+      try{p=preview.play()}catch(_){p=null;}
+      if(p&&typeof p.then==='function'){
+        p.then(()=>revealPreview(token)).catch(()=>{
+          if(token===playToken)card.classList.remove('preview-loading');
+        });
+      }else if(!preview.paused){
+        revealPreview(token);
+      }
+    }
+
+    function useCandidate(index,token){
+      const src=candidates[index]||configuredSrc;
+      if(!src)return;
+      const current=(preview.getAttribute('src')||'').trim();
+      if(current!==src){
+        preview.src=src;
+        try{preview.load()}catch(_){}
+      }
+      if(preview.readyState>=2) tryPlay(token);
+      else{
+        const ready=()=>tryPlay(token);
+        preview.addEventListener('loadeddata',ready,{once:true});
+        preview.addEventListener('canplay',ready,{once:true});
+      }
+      // Calling play immediately from the hover gesture helps Chrome start fetching the media.
+      tryPlay(token);
+    }
+
+    function startPreview(){
+      hovering=true;
+      const token=++playToken;
+      card.classList.add('preview-loading');
+      candidateIndex=0;
+      try{preview.currentTime=0}catch(_){}
+      useCandidate(candidateIndex,token);
+    }
+
+    function stopPreview(){
+      hovering=false;
+      ++playToken;
+      try{preview.pause()}catch(_){}
+      try{preview.currentTime=0}catch(_){}
+      card.classList.remove('has-moving-thumb','is-previewing','preview-loading');
+    }
+
+    preview.addEventListener('playing',()=>revealPreview(playToken));
+    preview.addEventListener('error',()=>{
+      if(!hovering)return;
+      candidateIndex++;
+      if(candidateIndex<candidates.length){
+        useCandidate(candidateIndex,playToken);
+      }else{
+        card.classList.remove('has-moving-thumb','is-previewing','preview-loading');
+      }
+    });
+
+    card.addEventListener('mouseenter',startPreview,{passive:true});
+    card.addEventListener('mouseleave',stopPreview,{passive:true});
+    card.addEventListener('focusin',startPreview);
+    card.addEventListener('focusout',stopPreview);
+
     const open=()=>{
+      stopPreview();
       const youtube=(card.getAttribute('data-youtube')||'').trim();
       const title=(card.getAttribute('data-title')||'Client testimonial').trim();
-      if(!youtube)return;
-      const preview=card.querySelector('.wc-preview-video');
-      if(preview)stopMovingPreview(preview,true);
-      // Same portrait YouTube modal/player used by Shorts/Reels portfolio cards.
-      vpOpenYouTube(youtube,title,true,false);
+      if(youtube)vpOpenYouTube(youtube,title,true,false);
     };
 
     card.addEventListener('click',open);

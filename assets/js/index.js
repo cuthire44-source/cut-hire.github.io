@@ -1204,6 +1204,33 @@ function vpOpenYouTube(embedSrc,title,isPortrait,cleanTopIcon){
 window.cnhNormalizeYouTubeEmbedSrc = cnhNormalizeYouTubeEmbedSrc;
 window.vpOpenYouTube = vpOpenYouTube;
 
+
+// Video testimonials intentionally reuse the exact Shorts/Reels card preview + YouTube player logic.
+(function initVideoTestimonialsWithWorkLogic(){
+  const grid=document.querySelector('.testimonial-videos-grid');
+  if(!grid)return;
+
+  // Same hover/touch MP4 preview engine used by .wc Shorts/Reels cards.
+  initMovingPreviews(grid);
+
+  grid.querySelectorAll('[data-testimonial-card]').forEach(card=>{
+    const open=()=>{
+      const youtube=(card.getAttribute('data-youtube')||'').trim();
+      const title=(card.getAttribute('data-title')||'Client testimonial').trim();
+      if(!youtube)return;
+      const preview=card.querySelector('.wc-preview-video');
+      if(preview)stopMovingPreview(preview,true);
+      // Same portrait YouTube modal/player used by Shorts/Reels portfolio cards.
+      vpOpenYouTube(youtube,title,true,false);
+    };
+
+    card.addEventListener('click',open);
+    card.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){event.preventDefault();open();}
+    });
+  });
+})();
+
 function vpOpen(src,title,isPortrait,poster,cleanTopIcon){
   lockPageForVideo(); hardStopVideoPlayer();
   document.querySelectorAll('.wc-preview-video').forEach(v=>v.pause());

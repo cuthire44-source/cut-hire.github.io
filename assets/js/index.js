@@ -520,6 +520,7 @@ const works=[
 {cat:['shorts'],title:'Short 11',src:'assets/videos/Video 36.mp4',thumb:'assets/images/short11.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/LPjW9Ta9g6E?feature=share',youtubeEmbed:'https://www.youtube.com/embed/LPjW9Ta9g6E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 72',src:'assets/videos/video72.mp4',thumb:'assets/images/video72.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/XjHRDJr1Apg?feature=share',youtubeEmbed:'https://www.youtube.com/embed/XjHRDJr1Apg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 2741313123329039446702190',src:'assets/videos/short2741313123329039446702190.mp4',thumb:'assets/images/short6493729.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/NX0p7WbXkyY?feature=share',youtubeEmbed:'https://www.youtube.com/embed/NX0p7WbXkyY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Vidoe 74847484984',src:'assets/videos/Vidoe74847484984.mp4',thumb:'assets/images/Vidoe74847484984',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/aX4OntsnIus?feature=share',youtubeEmbed:'https://www.youtube.com/embed/aX4OntsnIus?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 68',src:'assets/videos/video68.mp4',thumb:'assets/images/video68.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/OXazo3KDe8s?feature=share',youtubeEmbed:'https://www.youtube.com/embed/OXazo3KDe8s?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['vlogs'],title:'Football Edit 443',src:'assets/videos/Video 41.mp4',thumb:'assets/images/Football Edit443.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_skf6972O2I?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['explainer'],title:'Infromative 44',src:'assets/videos/Video 32.mp4',thumb:'assets/images/infromative44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/5sv3G6elUP4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -748,7 +749,7 @@ function mobilePortfolioLimit(activeCat){
   if(cat === 'youtube') return 7;
   if(cat === 'all') return 8;
   if(cat === 'thumbnail') return 8;
-  if(cat === 'shorts') return 20;
+  if(cat === 'shorts') return 21;
   return 6;
 }
 function renderWork(list, activeCat){

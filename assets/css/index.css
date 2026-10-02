@@ -6037,10 +6037,10 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 .testimonial-videos-grid{
-  width:min(100%,620px);
+  width:min(100%,860px);
   margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,272px));
+  grid-template-columns:repeat(3,minmax(0,272px));
   justify-content:center;
   gap:22px;
 }
@@ -6327,4 +6327,46 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 #video-testimonials .testimonial-video-card.has-moving-thumb .testimonial-video-thumb,
 #video-testimonials .testimonial-video-card.is-previewing .testimonial-video-thumb{
   opacity:0!important;
+}
+
+
+/* Reserved Shorts/Reels slots — replace their JS data with real assets when ready. */
+#work .pending-work-card{
+  cursor:default;
+  border:1px solid rgba(255,255,255,.08);
+}
+#work .pending-work-card:hover{
+  transform:none;
+}
+#work .pending-work-card::after{
+  display:none;
+}
+#work .pending-work-placeholder{
+  opacity:1!important;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(224,32,32,.14),transparent 34%),
+    linear-gradient(145deg,#0c0c0c,#030303)!important;
+}
+#work .pending-work-copy{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.45rem;
+  text-align:center;
+  padding:1rem;
+}
+#work .pending-work-kicker{
+  font-family:'DM Mono',monospace;
+  font-size:.58rem;
+  letter-spacing:.18em;
+  color:var(--red);
+}
+#work .pending-work-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;
+  font-weight:800;
+  color:rgba(245,240,235,.86);
 }

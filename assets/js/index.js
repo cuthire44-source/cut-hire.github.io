@@ -507,8 +507,12 @@ const works=[
 {cat:['shorts'],title:'Short 45',src:'assets/videos/Video 33.mp4',thumb:'assets/images/short45.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/Q5HkVgNNj9M?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 99',src:'assets/videos/video99.mp4',thumb:'assets/images/short 99.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/xO1rCs3HHpc?feature=share',youtubeEmbed:'https://www.youtube.com/embed/xO1rCs3HHpc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 98',src:'assets/videos/video98.mp4',thumb:'assets/images/short 98.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/vWRVHY6PDko?feature=share',youtubeEmbed:'https://www.youtube.com/embed/vWRVHY6PDko?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Video 3afaf9',src:'assets/videos/Video3afaf9.mp4',thumb:'assets/images/Video3afaf9.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/B_xFeNypySg?feature=share',youtubeEmbed:'https://www.youtube.com/embed/B_xFeNypySg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 67',src:'assets/videos/video67.mp4',thumb:'assets/images/video67.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/MsVSxAKHBEw?feature=share',youtubeEmbed:'https://www.youtube.com/embed/MsVSxAKHBEw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 71',src:'assets/videos/video71.mp4',thumb:'assets/images/video71.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/nrLJBSUYBkE?feature=share',youtubeEmbed:'https://www.youtube.com/embed/nrLJBSUYBkE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Video 383939',src:'assets/videos/Video383939.mp4',thumb:'assets/images/Video383939.mp4.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/rQXlzs6x8gU?feature=share',youtubeEmbed:'https://www.youtube.com/embed/rQXlzs6x8gU?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Video 34f939',src:'assets/videos/Video34f939.mp4',thumb:'assets/images/Video34f939.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/wx0N1Ed0vwc?feature=share',youtubeEmbed:'https://www.youtube.com/embed/wx0N1Ed0vwc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Video 4553939',src:'assets/videos/Video4553939.mp4',thumb:'assets/images/Video4553939.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/6TDp7j3Corw?feature=share',youtubeEmbed:'https://www.youtube.com/embed/6TDp7j3Corw?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 70',src:'assets/videos/video70.mp4',thumb:'assets/images/video70.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/jjhK1UVCE3c?feature=share',youtubeEmbed:'https://www.youtube.com/embed/jjhK1UVCE3c?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 73',src:'assets/videos/video73.mp4',thumb:'assets/images/video73.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/iik3jC2q6gI?feature=share',youtubeEmbed:'https://www.youtube.com/embed/iik3jC2q6gI?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 69',src:'assets/videos/video69.mp4',thumb:'assets/images/video69.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/xBHdv6woCBk?feature=share',youtubeEmbed:'https://www.youtube.com/embed/xBHdv6woCBk?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -744,7 +748,7 @@ function mobilePortfolioLimit(activeCat){
   if(cat === 'youtube') return 7;
   if(cat === 'all') return 8;
   if(cat === 'thumbnail') return 8;
-  if(cat === 'shorts') return 14;
+  if(cat === 'shorts') return 20;
   return 6;
 }
 function renderWork(list, activeCat){
@@ -764,6 +768,17 @@ function renderWork(list, activeCat){
     const badge='';
     const phClass=isShort?'shortform-ph':isThumb?'thumbnail-ph':'';
     const dataCats=cats.join(' ');
+
+    if(w.pending){
+      return `<div class="wc ${sizeClass} is-video rv pending-work-card" data-idx="${i}" data-cat="${dataCats}" aria-label="Upcoming Shorts/Reels video" style="transition-delay:${Math.min(i*.025,.25)}s">
+        <div class="wc-placeholder shortform-ph pending-work-placeholder">
+          <div class="pending-work-copy">
+            <span class="pending-work-kicker">NEW VIDEO</span>
+            <span class="pending-work-title">Coming soon</span>
+          </div>
+        </div>
+      </div>`;
+    }
 
     if(w.isPhoto&&w.img){
       const photoCandidates=imageCandidates(w.img);
@@ -793,6 +808,7 @@ function renderWork(list, activeCat){
   g.querySelectorAll('.wc').forEach(card=>{
     card.addEventListener('click',()=>{
       const w=list[parseInt(card.dataset.idx)];
+      if(w.pending) return;
       if(w.isPhoto) photoOpen(w.img||'',w.title);
       else if(w.youtubeUrl || w.youtubeEmbed) vpOpenYouTube(w.youtubeUrl || w.youtubeEmbed,w.title,isShortVideo(w),!!w.cleanTopIcon);
       else vpOpen(w.src||'',w.title,isShortVideo(w),card.querySelector('.wc-video-thumb')?.src||'',!!w.cleanTopIcon);
@@ -1223,7 +1239,7 @@ window.vpOpenYouTube = vpOpenYouTube;
 
 
 // Video testimonials: same visual behavior as Shorts/Reels, but with a tiny dedicated
-// hover controller so the two testimonial MP4s are not affected by Work-grid re-renders.
+// hover controller so testimonial MP4s are not affected by Work-grid re-renders.
 (function initVideoTestimonials(){
   const grid=document.querySelector('.testimonial-videos-grid');
   if(!grid)return;

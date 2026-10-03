@@ -500,7 +500,6 @@ const works=[
 {cat:[],title:'Short 6',src:'short6.mp4',isPhoto:false},
 {cat:['documentary'],title:'Short 8',src:'assets/videos/Video 30.mp4',thumb:'assets/images/short8.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/LdZHDHsLaj4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Short 9',src:'short9.mp4',isPhoto:false},
-{cat:['explainer'],title:'Short 10',src:'assets/videos/Video 34.mp4',thumb:'assets/images/short10.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/rok-pcThmjs?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 488',src:'assets/videos/Video 37.mp4',thumb:'assets/images/short488.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/YAiMD58FPbo?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 82',src:'assets/videos/Video 40.mp4',thumb:'assets/images/short82.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/txZZYitchUY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 849',src:'assets/videos/Video 38.mp4',thumb:'assets/images/short849.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/HhB8bHgFRHA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -522,7 +521,6 @@ const works=[
 {cat:['shorts'],title:'Vidoe 74847484984',src:'assets/videos/Vidoe74847484984.mp4',thumb:'assets/images/Vidoe74847484984.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/aX4OntsnIus?feature=share',youtubeEmbed:'https://www.youtube.com/embed/aX4OntsnIus?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 68',src:'assets/videos/video68.mp4',thumb:'assets/images/video68.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/OXazo3KDe8s?feature=share',youtubeEmbed:'https://www.youtube.com/embed/OXazo3KDe8s?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['vlogs'],title:'Football Edit 443',src:'assets/videos/Video 41.mp4',thumb:'assets/images/Football Edit443.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/_skf6972O2I?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
-{cat:['explainer'],title:'Infromative 44',src:'assets/videos/Video 32.mp4',thumb:'assets/images/infromative44.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/5sv3G6elUP4?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:[],title:'Long Form 2',size:'',src:'longform2.mp4',isPhoto:false},
 {cat:[],title:'Long Form 5',size:'wide',src:'longform5.mp4',isPhoto:false},
 {cat:['documentary'],title:'Long Form 6',size:'',src:'assets/videos/Video 26.mp4',thumb:'assets/images/longform6.png',isPhoto:false,youtubeEmbed:'https://www.youtube.com/embed/WCCoity0cDM?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -610,7 +608,7 @@ function isShortVideo(w){
   const cats=getCats(w||{});
   const portraitThumbs=new Set([
     'assets/images/supreme.png','assets/images/formula21speed.png',
-    'assets/images/short8.png','assets/images/short7.png','assets/images/infromative44.png','assets/images/short45.png','assets/images/short10.png','assets/images/short44.png',
+    'assets/images/short8.png','assets/images/short7.png','assets/images/short45.png','assets/images/short44.png',
     'assets/images/short11.png','assets/images/short 98.png','assets/images/short 99.png','assets/images/short488.png','assets/images/short849.png','assets/images/short2.png','assets/images/short82.png','assets/images/Football Edit443.png'
   ]);
   return /^short\d+\.mp4$/i.test(src)
@@ -663,7 +661,7 @@ function orderWorkList(list, activeCat){
       'assets/videos/VIdeo 1.mp4','assets/videos/Video 4.mp4','assets/videos/Video 15.mp4','assets/videos/Video 12.mp4'
     ],
     explainer:[
-      'assets/videos/Video 34.mp4','assets/videos/Video 6.mp4','assets/videos/Video 32.mp4','assets/videos/Video 8.mp4','assets/videos/Video 27.mp4','assets/videos/Video 28.mp4'
+      'assets/videos/Video 6.mp4','assets/videos/Video 8.mp4','assets/videos/Video 27.mp4','assets/videos/Video 28.mp4'
     ],
     motion:[
       'assets/videos/Video 42.mp4','assets/videos/Video 43.mp4','assets/videos/Video 44.mp4','assets/videos/Video 18.mp4','assets/videos/VIdeo 16.mp4',

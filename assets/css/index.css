@@ -6370,3 +6370,42 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   font-weight:800;
   color:rgba(245,240,235,.86);
 }
+
+
+/* Shorts/Reels: keep incomplete rows centered instead of stuck to the left. */
+#work .work-grid[data-cat="shorts"]{
+  justify-content:center!important;
+}
+
+
+/* Explainer/Informative: always 2 x 2, centered, including mobile. */
+#work .work-grid[data-cat="explainer"]{
+  justify-content:center!important;
+  gap:18px!important;
+}
+
+#work .work-grid[data-cat="explainer"] .wc,
+#work .work-grid[data-cat="explainer"] .wc.longform-card,
+#work .work-grid[data-cat="explainer"] .wc.shortform-card,
+#work .work-grid[data-cat="explainer"] .wc.motion-featured-card{
+  flex:0 0 calc((100% - 18px) / 2)!important;
+  width:calc((100% - 18px) / 2)!important;
+  max-width:calc((100% - 18px) / 2)!important;
+  aspect-ratio:16 / 9!important;
+}
+
+@media(max-width:640px){
+  #work .work-grid[data-cat="explainer"]{
+    gap:10px!important;
+  }
+
+  #work .work-grid[data-cat="explainer"] .wc,
+  #work .work-grid[data-cat="explainer"] .wc.longform-card,
+  #work .work-grid[data-cat="explainer"] .wc.shortform-card,
+  #work .work-grid[data-cat="explainer"] .wc.motion-featured-card{
+    flex:0 0 calc((100% - 10px) / 2)!important;
+    width:calc((100% - 10px) / 2)!important;
+    max-width:calc((100% - 10px) / 2)!important;
+    aspect-ratio:16 / 9!important;
+  }
+}

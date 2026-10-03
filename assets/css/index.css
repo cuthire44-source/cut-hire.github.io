@@ -6378,22 +6378,50 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 
-/* Explainer/Informative: always 2 x 2, centered, including mobile. */
+/* Explainer/Informative:
+   keep NORMAL portfolio thumbnail size, but center 2 cards per row. */
 #work .work-grid[data-cat="explainer"]{
-  justify-content:center!important;
+  justify-content:flex-start!important;
   gap:18px!important;
 }
 
-#work .work-grid[data-cat="explainer"] .wc,
-#work .work-grid[data-cat="explainer"] .wc.longform-card,
-#work .work-grid[data-cat="explainer"] .wc.shortform-card,
-#work .work-grid[data-cat="explainer"] .wc.motion-featured-card{
-  flex:0 0 calc((100% - 18px) / 2)!important;
-  width:calc((100% - 18px) / 2)!important;
-  max-width:calc((100% - 18px) / 2)!important;
-  aspect-ratio:16 / 9!important;
+/* Desktop: same exact width as the normal 3-column portfolio cards. */
+@media(min-width:1051px){
+  #work .work-grid[data-cat="explainer"] .wc,
+  #work .work-grid[data-cat="explainer"] .wc.longform-card,
+  #work .work-grid[data-cat="explainer"] .wc.shortform-card,
+  #work .work-grid[data-cat="explainer"] .wc.motion-featured-card{
+    flex:0 0 calc((100% - 36px) / 3)!important;
+    width:calc((100% - 36px) / 3)!important;
+    max-width:calc((100% - 36px) / 3)!important;
+    aspect-ratio:16 / 9!important;
+  }
+
+  /* Balance the unused third-column space on both sides so each 2-card row is centered. */
+  #work .work-grid[data-cat="explainer"] .wc:nth-child(odd){
+    margin-left:calc((((100% - 36px) / 3) + 18px) / 2)!important;
+  }
+  #work .work-grid[data-cat="explainer"] .wc:nth-child(even){
+    margin-right:calc((((100% - 36px) / 3) + 18px) / 2)!important;
+  }
 }
 
+/* Tablet: normal 2-column sizing, still 2 x 2. */
+@media(min-width:641px) and (max-width:1050px){
+  #work .work-grid[data-cat="explainer"] .wc,
+  #work .work-grid[data-cat="explainer"] .wc.longform-card,
+  #work .work-grid[data-cat="explainer"] .wc.shortform-card,
+  #work .work-grid[data-cat="explainer"] .wc.motion-featured-card{
+    flex:0 0 calc((100% - 18px) / 2)!important;
+    width:calc((100% - 18px) / 2)!important;
+    max-width:calc((100% - 18px) / 2)!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    aspect-ratio:16 / 9!important;
+  }
+}
+
+/* Mobile: keep the requested 2 x 2 layout, like the other compact grids. */
 @media(max-width:640px){
   #work .work-grid[data-cat="explainer"]{
     gap:10px!important;
@@ -6406,6 +6434,8 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     flex:0 0 calc((100% - 10px) / 2)!important;
     width:calc((100% - 10px) / 2)!important;
     max-width:calc((100% - 10px) / 2)!important;
+    margin-left:0!important;
+    margin-right:0!important;
     aspect-ratio:16 / 9!important;
   }
 }

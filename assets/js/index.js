@@ -517,6 +517,9 @@ const works=[
 {cat:['shorts'],title:'Short 2732903902190',src:'assets/videos/short2732903902190.mp4',thumb:'assets/images/short13328932988932.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/-M_lW14v43s?feature=share',youtubeEmbed:'https://www.youtube.com/embed/-M_lW14v43s?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 11',src:'assets/videos/Video 36.mp4',thumb:'assets/images/short11.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/LPjW9Ta9g6E?feature=share',youtubeEmbed:'https://www.youtube.com/embed/LPjW9Ta9g6E?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 72',src:'assets/videos/video72.mp4',thumb:'assets/images/video72.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/XjHRDJr1Apg?feature=share',youtubeEmbed:'https://www.youtube.com/embed/XjHRDJr1Apg?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short748adf738',src:'assets/videos/Short748adf738.mp4',thumb:'assets/images/Short748adf738.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/Qn7USd49xJE',youtubeEmbed:'https://www.youtube.com/embed/Qn7USd49xJE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short567adf738',src:'assets/videos/Short567adf738.mp4',thumb:'assets/images/Short567adf738.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/VPsyDA5emzA',youtubeEmbed:'https://www.youtube.com/embed/VPsyDA5emzA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Short55849diejs38',src:'assets/videos/Short55849diejs38.mp4',thumb:'assets/images/Short55849diejs38.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/Tp5J68GyZt0',youtubeEmbed:'https://www.youtube.com/embed/Tp5J68GyZt0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 2741313123329039446702190',src:'assets/videos/short2741313123329039446702190.mp4',thumb:'assets/images/short6493729.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/NX0p7WbXkyY?feature=share',youtubeEmbed:'https://www.youtube.com/embed/NX0p7WbXkyY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Vidoe 74847484984',src:'assets/videos/Vidoe74847484984.mp4',thumb:'assets/images/Vidoe74847484984.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/aX4OntsnIus?feature=share',youtubeEmbed:'https://www.youtube.com/embed/aX4OntsnIus?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Video 68',src:'assets/videos/video68.mp4',thumb:'assets/images/video68.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/OXazo3KDe8s?feature=share',youtubeEmbed:'https://www.youtube.com/embed/OXazo3KDe8s?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -746,7 +749,7 @@ function mobilePortfolioLimit(activeCat){
   if(cat === 'youtube') return 7;
   if(cat === 'all') return 8;
   if(cat === 'thumbnail') return 8;
-  if(cat === 'shorts') return 21;
+  if(cat === 'shorts') return 24;
   return 6;
 }
 function renderWork(list, activeCat){

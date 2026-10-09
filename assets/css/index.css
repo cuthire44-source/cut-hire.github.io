@@ -6439,3 +6439,19 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     aspect-ratio:16 / 9!important;
   }
 }
+
+
+/* Real Creator Results: preserve the full uploaded analytics screenshot inside each card. */
+.results-proof-block .result-card.result-card-full{
+  background:#080808!important;
+}
+.results-proof-block .result-card.result-card-full::before{
+  background:transparent!important;
+}
+.results-proof-block .result-card.result-card-full img,
+.results-proof-block .result-card.result-card-full:hover img{
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  filter:brightness(1) contrast(1.02)!important;
+}

@@ -6455,3 +6455,28 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   transform:none!important;
   filter:brightness(1) contrast(1.02)!important;
 }
+
+
+/* Hero copy: underline only the word "Needs". */
+.hero-h1 .needs-underline-wrap{
+  position:relative!important;
+  display:inline-block!important;
+  z-index:3!important;
+  white-space:nowrap;
+}
+.hero-h1 .needs-underline-wrap .impossible-underline{
+  left:50%!important;
+  width:118%!important;
+}
+
+
+/* About Us: emphasize the scaling promise as the key closing message. */
+.about-scale-emphasis{
+  display:block;
+  margin-top:.55em;
+  color:var(--w);
+  font-weight:800;
+  font-size:1.08em;
+  line-height:1.45;
+  letter-spacing:-.01em;
+}

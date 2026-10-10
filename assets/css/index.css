@@ -6480,3 +6480,11 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   line-height:1.45;
   letter-spacing:-.01em;
 }
+
+
+/* Hero title layout: keep "Channel" beside "Your"; only "Needs" is accented/underlined. */
+.hero-h1 .needs-underline-wrap{
+  position:relative!important;
+  display:inline-block!important;
+  white-space:nowrap;
+}

@@ -6502,3 +6502,19 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   color:var(--w)!important;
   font-style:normal!important;
 }
+
+
+/* Hero title lock: keep "Team Your" together on the first line. */
+.hero-h1 .hero-line-one{
+  display:block;
+  white-space:nowrap;
+}
+.hero-h1 .channel-needs-line{
+  display:block;
+  white-space:nowrap;
+}
+@media(max-width:900px){
+  .hero-h1 .hero-line-one{
+    font-size:.9em;
+  }
+}

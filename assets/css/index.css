@@ -6488,3 +6488,17 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   display:inline-block!important;
   white-space:nowrap;
 }
+
+
+/* Hero title: two-line layout.
+   Line 1: The Only Team Your
+   Line 2: Channel Needs
+   Channel stays white; only Needs is red/italic/underlined. */
+.hero-h1 .channel-needs-line{
+  display:block;
+  white-space:nowrap;
+}
+.hero-h1 .channel-word{
+  color:var(--w)!important;
+  font-style:normal!important;
+}

@@ -6470,16 +6470,6 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 
-/* About Us: emphasize the scaling promise as the key closing message. */
-.about-scale-emphasis{
-  display:block;
-  margin-top:.55em;
-  color:var(--w);
-  font-weight:800;
-  font-size:1.08em;
-  line-height:1.45;
-  letter-spacing:-.01em;
-}
 
 
 /* Hero title layout: keep "Channel" beside "Your"; only "Needs" is accented/underlined. */
@@ -6587,4 +6577,28 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   .hero-h1.hero-h1-fixed .hero-title-line-two{
     gap:.1em!important;
   }
+}
+
+
+/* HERO SPACING: add breathing room between Channel and Needs,
+   and lower the red animated underline without changing the two-line heading. */
+.hero-h1.hero-h1-fixed .hero-title-line-two{
+  gap:.29em!important;
+}
+.hero-h1.hero-h1-fixed .needs-underline-wrap .impossible-underline{
+  bottom:-.22em!important;
+}
+@media(max-width:520px){
+  .hero-h1.hero-h1-fixed .hero-title-line-two{
+    gap:.18em!important;
+  }
+  .hero-h1.hero-h1-fixed .needs-underline-wrap .impossible-underline{
+    bottom:-.19em!important;
+  }
+}
+
+
+/* Keep the subtitle clear of the lower, glowing Needs underline. */
+.hero-h1.hero-h1-fixed + .hero-sub{
+  margin-top:clamp(1.55rem,2.6vw,2.25rem)!important;
 }

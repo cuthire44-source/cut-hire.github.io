@@ -6602,3 +6602,21 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 .hero-h1.hero-h1-fixed + .hero-sub{
   margin-top:clamp(1.55rem,2.6vw,2.25rem)!important;
 }
+
+
+/* Four video testimonials: same design and hover behavior, four centered desktop cards. */
+@media (min-width: 901px){
+  #video-testimonials .testimonial-videos-grid{
+    width:min(100%,1060px);
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:20px;
+  }
+}
+@media (min-width: 761px) and (max-width: 900px){
+  #video-testimonials .testimonial-videos-grid{
+    width:min(100%,610px);
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+}
+/* At mobile widths the pre-existing 2-column layout is preserved. */

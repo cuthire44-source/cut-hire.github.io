@@ -3223,9 +3223,9 @@ ring.style.visibility = 'visible';
 })();
 
 
-// Client video carousel: two visible thumbnails, arrow controls, touch/trackpad
-// horizontal scrolling, mouse dragging, and keyboard support.
-// Individual testimonial click and hover-preview handlers above remain untouched.
+
+// Client video carousel: native swipe + wheel/trackpad scroll, mouse dragging,
+// and side arrow buttons. Reuses all existing testimonial video handlers.
 (function initTestimonialCarousel(){
   const track=document.getElementById('testimonial-video-track');
   const carousel=track&&track.closest('.testimonial-carousel');
@@ -3233,8 +3233,7 @@ ring.style.visibility = 'visible';
   const cards=Array.from(track.querySelectorAll('[data-testimonial-card]'));
   const prev=carousel.querySelector('[data-testimonial-prev]');
   const next=carousel.querySelector('[data-testimonial-next]');
-  const range=carousel.querySelector('[data-testimonial-range]');
-  if(cards.length<2||!prev||!next||!range)return;
+  if(cards.length<2||!prev||!next)return;
 
   let activeIndex=0;
   let animationFrame=0;
@@ -3242,19 +3241,12 @@ ring.style.visibility = 'visible';
   let blockClick=false;
 
   function maxIndex(){return Math.max(0,cards.length-2)}
-  function step(){
-    if(cards.length<2)return 1;
-    return Math.max(1,cards[1].offsetLeft-cards[0].offsetLeft);
-  }
+  function step(){return Math.max(1,cards[1].offsetLeft-cards[0].offsetLeft)}
   function clamp(index){return Math.min(maxIndex(),Math.max(0,index))}
   function showPosition(){
-    const current=clamp(Math.round(track.scrollLeft/step()));
-    activeIndex=current;
-    const first=String(current+1).padStart(2,'0');
-    const last=String(Math.min(cards.length,current+2)).padStart(2,'0');
-    range.textContent=first+'–'+last;
-    prev.disabled=current===0;
-    next.disabled=current>=maxIndex();
+    activeIndex=clamp(Math.round(track.scrollLeft/step()));
+    prev.disabled=activeIndex===0;
+    next.disabled=activeIndex>=maxIndex();
   }
   function toIndex(index){
     activeIndex=clamp(index);
@@ -3262,7 +3254,6 @@ ring.style.visibility = 'visible';
     track.scrollTo({left:activeIndex*step(),behavior:reduceMotion?'instant':'smooth'});
     prev.disabled=activeIndex===0;
     next.disabled=activeIndex>=maxIndex();
-    range.textContent=String(activeIndex+1).padStart(2,'0')+'–'+String(Math.min(cards.length,activeIndex+2)).padStart(2,'0');
   }
   prev.addEventListener('click',()=>toIndex(activeIndex-1));
   next.addEventListener('click',()=>toIndex(activeIndex+1));
@@ -3271,14 +3262,13 @@ ring.style.visibility = 'visible';
     cancelAnimationFrame(animationFrame);
     animationFrame=requestAnimationFrame(showPosition);
   },{passive:true});
-
   track.addEventListener('keydown',event=>{
     if(event.target!==track)return;
     if(event.key==='ArrowRight'){event.preventDefault();toIndex(activeIndex+1)}
     if(event.key==='ArrowLeft'){event.preventDefault();toIndex(activeIndex-1)}
   });
 
-  // Only handle mouse drag here; touch is left to native scroll-snap swipe.
+  // Native touch-scrolling is preferred on phones; mouse drag works on desktop.
   track.addEventListener('pointerdown',event=>{
     if(event.pointerType!=='mouse'||event.button!==0)return;
     drag={startX:event.clientX,startLeft:track.scrollLeft,moved:false};
@@ -3311,11 +3301,9 @@ ring.style.visibility = 'visible';
     blockClick=false;
   },true);
 
-  // Keep the current pair aligned if screen dimensions change.
   window.addEventListener('resize',()=>{
     cancelAnimationFrame(animationFrame);
     animationFrame=requestAnimationFrame(()=>toIndex(activeIndex));
   },{passive:true});
-
   showPosition();
 })();

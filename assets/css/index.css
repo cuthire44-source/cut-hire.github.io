@@ -6604,12 +6604,12 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 
-/* Four video testimonials: same design and hover behavior, four centered desktop cards. */
+/* Five video testimonials: reuse the existing Shorts-style preview/player design. */
 @media (min-width: 901px){
   #video-testimonials .testimonial-videos-grid{
-    width:min(100%,1060px);
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:20px;
+    width:min(100%,1120px);
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:18px;
   }
 }
 @media (min-width: 761px) and (max-width: 900px){
@@ -6619,4 +6619,16 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     gap:18px;
   }
 }
-/* At mobile widths the pre-existing 2-column layout is preserved. */
+/* Center the last card in an odd-numbered mobile/tablet 2-column grid. */
+@media (max-width: 900px){
+  #video-testimonials .testimonial-videos-grid > .testimonial-video-card:nth-child(5):last-child{
+    grid-column:1 / -1;
+    justify-self:center;
+    width:calc((100% - 18px)/2);
+  }
+}
+@media (max-width: 760px){
+  #video-testimonials .testimonial-videos-grid > .testimonial-video-card:nth-child(5):last-child{
+    width:calc((100% - 12px)/2);
+  }
+}

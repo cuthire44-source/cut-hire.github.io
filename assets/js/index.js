@@ -3221,3 +3221,101 @@ ring.style.visibility = 'visible';
     openHeroReel(event);
   }, true);
 })();
+
+
+// Client video carousel: two visible thumbnails, arrow controls, touch/trackpad
+// horizontal scrolling, mouse dragging, and keyboard support.
+// Individual testimonial click and hover-preview handlers above remain untouched.
+(function initTestimonialCarousel(){
+  const track=document.getElementById('testimonial-video-track');
+  const carousel=track&&track.closest('.testimonial-carousel');
+  if(!track||!carousel)return;
+  const cards=Array.from(track.querySelectorAll('[data-testimonial-card]'));
+  const prev=carousel.querySelector('[data-testimonial-prev]');
+  const next=carousel.querySelector('[data-testimonial-next]');
+  const range=carousel.querySelector('[data-testimonial-range]');
+  if(cards.length<2||!prev||!next||!range)return;
+
+  let activeIndex=0;
+  let animationFrame=0;
+  let drag=null;
+  let blockClick=false;
+
+  function maxIndex(){return Math.max(0,cards.length-2)}
+  function step(){
+    if(cards.length<2)return 1;
+    return Math.max(1,cards[1].offsetLeft-cards[0].offsetLeft);
+  }
+  function clamp(index){return Math.min(maxIndex(),Math.max(0,index))}
+  function showPosition(){
+    const current=clamp(Math.round(track.scrollLeft/step()));
+    activeIndex=current;
+    const first=String(current+1).padStart(2,'0');
+    const last=String(Math.min(cards.length,current+2)).padStart(2,'0');
+    range.textContent=first+'–'+last;
+    prev.disabled=current===0;
+    next.disabled=current>=maxIndex();
+  }
+  function toIndex(index){
+    activeIndex=clamp(index);
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollTo({left:activeIndex*step(),behavior:reduceMotion?'instant':'smooth'});
+    prev.disabled=activeIndex===0;
+    next.disabled=activeIndex>=maxIndex();
+    range.textContent=String(activeIndex+1).padStart(2,'0')+'–'+String(Math.min(cards.length,activeIndex+2)).padStart(2,'0');
+  }
+  prev.addEventListener('click',()=>toIndex(activeIndex-1));
+  next.addEventListener('click',()=>toIndex(activeIndex+1));
+
+  track.addEventListener('scroll',()=>{
+    cancelAnimationFrame(animationFrame);
+    animationFrame=requestAnimationFrame(showPosition);
+  },{passive:true});
+
+  track.addEventListener('keydown',event=>{
+    if(event.target!==track)return;
+    if(event.key==='ArrowRight'){event.preventDefault();toIndex(activeIndex+1)}
+    if(event.key==='ArrowLeft'){event.preventDefault();toIndex(activeIndex-1)}
+  });
+
+  // Only handle mouse drag here; touch is left to native scroll-snap swipe.
+  track.addEventListener('pointerdown',event=>{
+    if(event.pointerType!=='mouse'||event.button!==0)return;
+    drag={startX:event.clientX,startLeft:track.scrollLeft,moved:false};
+  });
+  document.addEventListener('pointermove',event=>{
+    if(!drag)return;
+    const dx=event.clientX-drag.startX;
+    if(Math.abs(dx)>8)drag.moved=true;
+    if(!drag.moved)return;
+    track.classList.add('is-dragging');
+    track.scrollLeft=drag.startLeft-dx;
+    event.preventDefault();
+  },{passive:false});
+  function endDrag(){
+    if(!drag)return;
+    if(drag.moved){
+      blockClick=true;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{blockClick=false}));
+    }
+    drag=null;
+    track.classList.remove('is-dragging');
+    showPosition();
+  }
+  document.addEventListener('pointerup',endDrag);
+  document.addEventListener('pointercancel',endDrag);
+  track.addEventListener('click',event=>{
+    if(!blockClick)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    blockClick=false;
+  },true);
+
+  // Keep the current pair aligned if screen dimensions change.
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(animationFrame);
+    animationFrame=requestAnimationFrame(()=>toIndex(activeIndex));
+  },{passive:true});
+
+  showPosition();
+})();

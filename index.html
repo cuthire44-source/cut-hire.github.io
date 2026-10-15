@@ -633,7 +633,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
  
 <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
-<link rel="stylesheet" href="assets/css/index.css?v=testimonial5-20261015">
+<link rel="stylesheet" href="assets/css/index.css?v=testimonial-carousel-20261015">
 
 </meta><meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
 
@@ -1114,7 +1114,21 @@
       </p>
     </div>
 
-    <div class="testimonial-videos-grid">
+    <div class="testimonial-carousel" aria-label="Video testimonials carousel">
+      <div class="testimonial-carousel-toolbar">
+        <span class="testimonial-carousel-status" aria-live="polite" aria-atomic="true">
+          <strong data-testimonial-range>01–02</strong><span class="testimonial-carousel-total"> / 05</span>
+        </span>
+        <div class="testimonial-carousel-arrows" aria-label="Browse testimonials">
+          <button class="testimonial-carousel-arrow" type="button" data-testimonial-prev aria-label="Previous testimonial video" disabled>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="testimonial-carousel-arrow" type="button" data-testimonial-next aria-label="Next testimonial video">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="testimonial-videos-grid" id="testimonial-video-track" role="region" aria-label="Client testimonial videos. Swipe left or right to browse." tabindex="0">
 
       <article class="testimonial-video-card wc is-video has-thumb placeholder-hidden rv" data-testimonial-card
         data-youtube="https://youtube.com/shorts/hWZdI3TpLLw?feature=share"
@@ -1189,7 +1203,7 @@
         data-title="Client Testimonial 05"
         role="button" tabindex="0" aria-label="Open client testimonial 5">
         <div class="testimonial-video-media">
-          <img class="testimonial-video-thumb wc-video-thumb" src="assets/images/Testimonial5.png" data-explicit-thumb="1" data-video-src="assets/videos/Testimonial5.mp4" alt="Client testimonial 4 thumbnail" loading="eager" decoding="async" draggable="false"/>
+          <img class="testimonial-video-thumb wc-video-thumb" src="assets/images/Testimonial5.png" data-explicit-thumb="1" data-video-src="assets/videos/Testimonial5.mp4" alt="Client testimonial 5 thumbnail" loading="lazy" decoding="async" draggable="false"/>
           <video class="testimonial-video-preview wc-preview-video" src="assets/videos/Testimonial5.mp4" data-src="assets/videos/Testimonial5.mp4" muted loop playsinline preload="metadata" disablepictureinpicture controlsList="nodownload noplaybackrate" aria-hidden="true"></video>
           <div class="wc-overlay testimonial-work-overlay" aria-hidden="true">
             <div class="wc-icon-circle">
@@ -1201,6 +1215,7 @@
         </div>
       </article>
 
+      </div>
     </div>
 
   </div>

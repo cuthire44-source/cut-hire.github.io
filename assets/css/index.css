@@ -6658,3 +6658,39 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 @media(prefers-reduced-motion:reduce){
   #video-testimonials .testimonial-carousel-arrow{transition:none!important}
 }
+
+
+/* Testimonial carousel motion belt v2. ScrollLeft/snap are disabled so other
+   preview handlers or browser scroll-smoothing cannot freeze the animation. */
+#video-testimonials .testimonial-carousel .testimonial-videos-grid{
+  display:block!important;
+  position:relative!important;
+  overflow:hidden!important;
+  width:100%!important;
+  max-width:100%!important;
+  scroll-behavior:auto!important;
+  scroll-snap-type:none!important;
+  touch-action:pan-y!important;
+  cursor:grab;
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid:active{cursor:grabbing}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt{
+  display:flex!important;
+  align-items:stretch!important;
+  flex-wrap:nowrap!important;
+  gap:var(--testimonial-carousel-gap)!important;
+  width:max-content!important;
+  min-width:100%;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card{
+  flex:0 0 var(--testimonial-card-w,240px)!important;
+  width:var(--testimonial-card-w,240px)!important;
+  max-width:none!important;
+  min-width:0!important;
+  align-self:stretch!important;
+  margin:0!important;
+  position:relative;
+  scroll-snap-align:none!important;
+}

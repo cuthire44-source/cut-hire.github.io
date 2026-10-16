@@ -7295,8 +7295,45 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   #video-testimonials .testimonial-carousel-arrow{transition:none!important}
 }
 
+
+
+/* Testimonial carousel motion belt v2. ScrollLeft/snap are disabled so other
+   preview handlers or browser scroll-smoothing cannot freeze the animation. */
+#video-testimonials .testimonial-carousel .testimonial-videos-grid{
+  display:block!important;
+  position:relative!important;
+  overflow:hidden!important;
+  width:100%!important;
+  max-width:100%!important;
+  scroll-behavior:auto!important;
+  scroll-snap-type:none!important;
+  touch-action:pan-y!important;
+  cursor:grab;
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid:active{cursor:grabbing}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt{
+  display:flex!important;
+  align-items:stretch!important;
+  flex-wrap:nowrap!important;
+  gap:var(--testimonial-carousel-gap)!important;
+  width:max-content!important;
+  min-width:100%;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card{
+  flex:0 0 var(--testimonial-card-w,240px)!important;
+  width:var(--testimonial-card-w,240px)!important;
+  max-width:none!important;
+  min-width:0!important;
+  align-self:stretch!important;
+  margin:0!important;
+  position:relative;
+  scroll-snap-align:none!important;
+}
+
 </style>
-<link rel="stylesheet" href="assets/css/index.css?v=testimonial-motion-hover-fix-20261016-v4">
+<link rel="stylesheet" href="assets/css/index.css?v=testimonial-belt-transform-v2-20261016">
 
 <meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
 
@@ -7781,6 +7818,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     <div class="testimonial-carousel" aria-label="Video testimonials carousel">
       <div class="testimonial-carousel-stage">
         <div class="testimonial-videos-grid" id="testimonial-video-track" role="region" aria-label="Client testimonials scrolling slowly to the right. Hover to pause or swipe to browse." tabindex="0">
+          <div class="testimonial-motion-belt" data-testimonial-belt>
 
       <article class="testimonial-video-card wc is-video has-thumb placeholder-hidden rv" data-testimonial-card
         data-youtube="https://youtube.com/shorts/hWZdI3TpLLw?feature=share"
@@ -7867,6 +7905,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
         </div>
       </article>
 
+          </div>
         </div>
         <button class="testimonial-carousel-arrow testimonial-carousel-arrow-prev" type="button" data-testimonial-prev aria-label="Previous testimonial video">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
@@ -7881,161 +7920,157 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 </section>
 
 <script id="cut-hire-testimonial-autoscroll">
-/* Dedicated carousel motion controller. Inline so it also works if a separate
-   index.js resource fails to load or stops executing elsewhere on the page. */
+/* Testimonial belt v2: transform-based perpetual rightward movement.
+   No scrollLeft, IntersectionObserver, stale hover flags, or snap animation.
+   Lives here so it can start before other website scripts. */
 (function(){
   'use strict';
-  const track = document.getElementById('testimonial-video-track');
-  const carousel = track && track.closest('.testimonial-carousel');
-  if(!track || !carousel || track.dataset.autoscrollReady) return;
-  const originals = Array.from(track.querySelectorAll('[data-testimonial-card]:not(.testimonial-loop-copy)'));
-  if(originals.length < 2) return;
-  track.dataset.autoscrollReady = 'true';
+  const viewport=document.getElementById('testimonial-video-track');
+  const belt=viewport && viewport.querySelector('[data-testimonial-belt]');
+  const carousel=viewport && viewport.closest('.testimonial-carousel');
+  if(!viewport||!belt||!carousel||viewport.dataset.beltReady)return;
+  const originalCards=Array.from(belt.children).filter(el=>el.matches('[data-testimonial-card]'));
+  if(originalCards.length<2)return;
+  viewport.dataset.beltReady='1';
+  // index.js's testimonial preview binding must not add clones outside the belt.
+  viewport.dataset.loopReady='1';
+  const cloneCard=(original)=>{
+    const clone=original.cloneNode(true);
+    clone.classList.add('testimonial-loop-copy','vis');
+    clone.classList.remove('rv');
+    clone.setAttribute('aria-hidden','true');
+    clone.tabIndex=-1;
+    const img=clone.querySelector('img');
+    if(img){img.loading='lazy';img.removeAttribute('fetchpriority');}
+    const video=clone.querySelector('video');
+    if(video){video.removeAttribute('src');video.preload='none';}
+    return clone;
+  };
+  belt.prepend(...originalCards.map(cloneCard));
+  belt.append(...originalCards.map(cloneCard));
+  const cards=Array.from(belt.querySelectorAll('[data-testimonial-card]'));
+  const prev=carousel.querySelector('[data-testimonial-prev]');
+  const next=carousel.querySelector('[data-testimonial-next]');
+  const pxPerSecond=48;
+  let x=0,cycle=1,step=1,previousTime=0;
+  let drag=null,pausedForHover=false,pauseUntil=0,suppressClick=false;
 
-  // Prepare repeatable sequences first, without requiring the rest of index.js.
-  if(!track.dataset.loopReady){
-    track.dataset.loopReady = '1';
-    const cloneCard = source => {
-      const card = source.cloneNode(true);
-      card.classList.add('testimonial-loop-copy', 'vis');
-      card.classList.remove('rv');
-      card.setAttribute('aria-hidden','true');
-      card.setAttribute('role','presentation');
-      card.tabIndex = -1;
-      const thumb = card.querySelector('img');
-      if(thumb){thumb.loading='lazy';thumb.removeAttribute('fetchpriority');}
-      const video = card.querySelector('video');
-      if(video){video.removeAttribute('src');video.preload='none';}
-      return card;
-    };
-    track.prepend(...originals.map(cloneCard));
-    track.append(...originals.map(cloneCard));
+  function layout(){
+    const gap=parseFloat(getComputedStyle(belt).gap)||16;
+    const visible=window.innerWidth>=900?3:2;
+    const width=Math.max(1,viewport.clientWidth);
+    const cardWidth=(width-gap*(visible-1))/visible;
+    viewport.style.setProperty('--testimonial-card-w',cardWidth+'px');
+    step=cardWidth+gap;
+    cycle=step*originalCards.length;
+    x=-cycle;
+    previousTime=0;
+    render();
   }
-
-  const all = Array.from(track.querySelectorAll('[data-testimonial-card]'));
-  const previous = carousel.querySelector('[data-testimonial-prev]');
-  const next = carousel.querySelector('[data-testimonial-next]');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const speed = 48; // Visible but gentle; pixels per second.
-  let isInView = true;
-  let hovered = false;
-  let touching = false;
-  let drag = null;
-  let blockClick = false;
-  let pausedUntil = 0;
-  let frameLast = 0;
-
-  const step = () => all.length > 1 ? Math.max(1, all[1].offsetLeft - all[0].offsetLeft) : 1;
-  const cycle = () => originals.length * step();
-  const pause = (ms=2600) => {pausedUntil=Math.max(pausedUntil,performance.now()+ms);};
   function normalize(){
-    const distance = cycle();
-    if(!distance) return;
-    if(track.scrollLeft < 1) track.scrollLeft += distance;
-    if(track.scrollLeft >= distance * 2) track.scrollLeft -= distance;
+    if(x>=0)x-=cycle;
+    if(x< -2*cycle)x+=cycle;
   }
-  function reset(){track.scrollLeft = cycle(); frameLast=0;}
-  // Defer one frame to ensure correct card measurements at initial layout.
-  requestAnimationFrame(reset);
+  function render(){belt.style.transform='translate3d('+x.toFixed(3)+'px,0,0)';}
+  function hold(ms){pauseUntil=Math.max(pauseUntil,performance.now()+ms);}
 
-  if('IntersectionObserver' in window){
-    const observer = new IntersectionObserver(entries=>{
-      isInView = !!entries[0] && entries[0].isIntersecting;
-      frameLast = 0;
-    },{rootMargin:'80px 0px', threshold:0});
-    observer.observe(carousel);
-  }
-
-  function animate(now){
-    requestAnimationFrame(animate);
-    const seconds = frameLast ? Math.min(now-frameLast,60)/1000 : 0;
-    frameLast = now;
-    track.dataset.motionState = document.hidden ? 'tab-hidden' :
-      reduced.matches ? 'reduced-motion' : !isInView ? 'out-of-view' :
-      hovered ? 'deliberate-hover' : touching || drag ? 'manual-drag' :
-      now < pausedUntil ? 'temporary-pause' : 'running';
-    if(!seconds || !isInView || document.hidden || reduced.matches ||
-       hovered || touching || drag || now < pausedUntil ||
-       document.querySelector('.vp-wrap.open,.vp-modal.open')) return;
-    track.scrollLeft -= speed * seconds;  // Negative direction: videos move right.
+  // Animation never depends on IntersectionObserver, requestIdleCallback,
+  // scrollLeft, pointer location at mount, or other website event handlers.
+  function frame(t){
+    requestAnimationFrame(frame);
+    const dt=previousTime?Math.min(60,t-previousTime):0;
+    previousTime=t;
+    const active=!document.hidden && !pausedForHover && !drag && t>=pauseUntil;
+    viewport.dataset.motionState=active?'running':document.hidden?'tab-hidden':pausedForHover?'hover':'manual';
+    if(!active||!dt)return;
+    x+=pxPerSecond*dt/1000;
     normalize();
+    render();
   }
-  requestAnimationFrame(animate);
 
-  // A container mouseenter was incorrectly pausing autoplay when the user
-  // simply scrolled this section under a stationary cursor or returned to the
-  // browser tab. Only *actual mouse movement over a VIDEO CARD* engages pause.
-  // Pointer movement caused by layout/scroll re-targeting has unchanged screen
-  // coordinates and deliberately does not count as user hover interaction.
-  let lastPointerPosition = null;
-  function handleMouseMovement(event){
-    if(event.pointerType !== 'mouse') return;
-    const was = lastPointerPosition;
-    lastPointerPosition = {x:event.clientX,y:event.clientY};
-    if(!was || Math.abs(was.x-event.clientX)+Math.abs(was.y-event.clientY)<1) return;
-    hovered = !!(event.target instanceof Element &&
-      event.target.closest('#testimonial-video-track .testimonial-video-card'));
-    if(!hovered) frameLast = 0;
+  // Only deliberate pointer movement over an actual card pauses the belt;
+  // scrolling the page with a stationary pointer does not trigger pause.
+  let pointerLast=null;
+  function pointerMoved(e){
+    if(e.pointerType!=='mouse'||drag)return;
+    const last=pointerLast;
+    pointerLast={x:e.clientX,y:e.clientY};
+    if(!last||Math.hypot(last.x-e.clientX,last.y-e.clientY)<2)return;
+    pausedForHover=!!(e.target instanceof Element &&
+      e.target.closest('#testimonial-video-track [data-testimonial-card]'));
   }
-  document.addEventListener('pointermove',handleMouseMovement,{passive:true,capture:true});
-  carousel.addEventListener('pointerleave',()=>{hovered=false;frameLast=0;});
-  // Tab switches / window focus changes must never retain stale hover state.
-  window.addEventListener('blur',()=>{hovered=false;lastPointerPosition=null;frameLast=0;});
-  carousel.addEventListener('focusin',()=>pause(2000));
+  document.addEventListener('pointermove',pointerMoved,{passive:true});
+  carousel.addEventListener('pointerleave',()=>{pausedForHover=false;pointerLast=null;});
+  window.addEventListener('blur',()=>{pausedForHover=false;pointerLast=null;previousTime=0;});
+  window.addEventListener('focus',()=>{pausedForHover=false;pointerLast=null;previousTime=0;});
+  document.addEventListener('visibilitychange',()=>{pausedForHover=false;previousTime=0;});
 
-  function move(direction){
-    pause(2200);
-    const distance = direction*step();
-    track.scrollTo({left:track.scrollLeft+distance,behavior:reduced.matches?'instant':'smooth'});
-    setTimeout(normalize,550);
+  function advance(n){
+    hold(1100);
+    x+=n*step;
+    normalize();render();
   }
-  if(previous){previous.disabled=false;previous.addEventListener('click',()=>move(-1));}
-  if(next){next.disabled=false;next.addEventListener('click',()=>move(1));}
-  track.addEventListener('wheel',()=>pause(2600),{passive:true});
-  track.addEventListener('touchstart',()=>{touching=true;pause(2600);},{passive:true});
-  function endTouch(){touching=false;frameLast=0;pause(1800);normalize();}
-  track.addEventListener('touchend',endTouch,{passive:true});
-  track.addEventListener('touchcancel',endTouch,{passive:true});
-  track.addEventListener('keydown',event=>{
-    if(event.target!==track) return;
-    if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
-    if(event.key==='ArrowRight'){event.preventDefault();move(1);}
+  if(prev){prev.disabled=false;prev.addEventListener('click',()=>advance(1));}
+  if(next){next.disabled=false;next.addEventListener('click',()=>advance(-1));}
+  viewport.addEventListener('keydown',e=>{
+    if(e.target!==viewport)return;
+    if(e.key==='ArrowRight'){e.preventDefault();advance(-1);}
+    if(e.key==='ArrowLeft'){e.preventDefault();advance(1);}
   });
-
-  track.addEventListener('pointerdown',event=>{
-    if(event.pointerType==='mouse' && event.button===0){
-      drag={startX:event.clientX,startLeft:track.scrollLeft,moved:false};
-      pause(2600);
-    }
-  });
-  document.addEventListener('pointermove',event=>{
-    if(!drag) return;
-    const dx = event.clientX-drag.startX;
-    if(Math.abs(dx)>8) drag.moved=true;
-    if(!drag.moved) return;
-    track.classList.add('is-dragging');
-    track.scrollLeft = drag.startLeft - dx;
-    event.preventDefault();
+  // Trackpad horizontal gestures still work although the belt no longer uses
+  // native scrollLeft. Vertical mouse-wheel scrolling remains normal.
+  viewport.addEventListener('wheel',e=>{
+    if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
+    e.preventDefault();
+    hold(950);
+    x-=e.deltaX;
+    normalize();render();
   },{passive:false});
-  function endDrag(){
-    if(!drag) return;
-    if(drag.moved){blockClick=true;setTimeout(()=>{blockClick=false;},300);}
-    drag=null;
-    track.classList.remove('is-dragging');
-    pause(2200);
-    normalize();
+
+  // Dragging adjusts the same translate value on mobile and desktop.
+  viewport.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    drag={id:e.pointerId,start:e.clientX,base:x,moved:false};
+    pauseUntil=0;
+  });
+  viewport.addEventListener('pointermove',e=>{
+    if(!drag||e.pointerId!==drag.id)return;
+    const dx=e.clientX-drag.start;
+    if(Math.abs(dx)>7){
+      drag.moved=true;
+      if(viewport.hasPointerCapture && !viewport.hasPointerCapture(e.pointerId)){
+        try{viewport.setPointerCapture(e.pointerId);}catch(_){}
+      }
+    }
+    if(!drag.moved)return;
+    pausedForHover=false;
+    x=drag.base+dx;
+    normalize();render();
+  },{passive:true});
+  function release(e){
+    if(!drag||e.pointerId!==drag.id)return;
+    if(drag.moved){
+      suppressClick=true;
+      setTimeout(()=>{suppressClick=false;},100);
+      hold(800);
+    }
+    drag=null;previousTime=0;
   }
-  document.addEventListener('pointerup',endDrag);
-  document.addEventListener('pointercancel',endDrag);
-  track.addEventListener('click',event=>{
-    if(!blockClick) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    blockClick=false;
+  viewport.addEventListener('pointerup',release);
+  viewport.addEventListener('pointercancel',release);
+  viewport.addEventListener('click',e=>{
+    if(!suppressClick)return;
+    e.preventDefault();e.stopImmediatePropagation();suppressClick=false;
   },true);
 
-  window.addEventListener('resize',()=>requestAnimationFrame(reset),{passive:true});
-  document.addEventListener('visibilitychange',()=>{frameLast=0;hovered=false;lastPointerPosition=null;});
+  // Avoid full belt resets on unrelated page mutations or media loads.
+  let resizeTimer=0;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(layout,100);
+  },{passive:true});
+  layout();
+  requestAnimationFrame(frame);
 })();
 </script>
 
@@ -8637,7 +8672,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 <button class="photo-lb-fs" onclick="photoFullscreen()">⛶ Fullscreen</button>
 </div>
 </div>
-<script src="assets/js/index.js?v=testimonial-motion-hover-fix-20261016-v4"></script>
+<script src="assets/js/index.js?v=testimonial-belt-transform-v2-20261016"></script>
 
 <div aria-hidden="true" class="creator-modal" id="creator-reviews-modal">
   <div aria-label="Creator Reviews" aria-modal="true" class="creator-modal-card" role="dialog">

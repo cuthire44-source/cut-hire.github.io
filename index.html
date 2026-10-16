@@ -7296,7 +7296,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 </style>
-<link rel="stylesheet" href="assets/css/index.css?v=css-fix-20261016-v2">
+<link rel="stylesheet" href="assets/css/index.css?v=testimonial-autoscroll-20261016-v3">
 
 <meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
 
@@ -7879,6 +7879,145 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 
   </div>
 </section>
+
+<script id="cut-hire-testimonial-autoscroll">
+/* Dedicated carousel motion controller. Inline so it also works if a separate
+   index.js resource fails to load or stops executing elsewhere on the page. */
+(function(){
+  'use strict';
+  const track = document.getElementById('testimonial-video-track');
+  const carousel = track && track.closest('.testimonial-carousel');
+  if(!track || !carousel || track.dataset.autoscrollReady) return;
+  const originals = Array.from(track.querySelectorAll('[data-testimonial-card]:not(.testimonial-loop-copy)'));
+  if(originals.length < 2) return;
+  track.dataset.autoscrollReady = 'true';
+
+  // Prepare repeatable sequences first, without requiring the rest of index.js.
+  if(!track.dataset.loopReady){
+    track.dataset.loopReady = '1';
+    const cloneCard = source => {
+      const card = source.cloneNode(true);
+      card.classList.add('testimonial-loop-copy', 'vis');
+      card.classList.remove('rv');
+      card.setAttribute('aria-hidden','true');
+      card.setAttribute('role','presentation');
+      card.tabIndex = -1;
+      const thumb = card.querySelector('img');
+      if(thumb){thumb.loading='lazy';thumb.removeAttribute('fetchpriority');}
+      const video = card.querySelector('video');
+      if(video){video.removeAttribute('src');video.preload='none';}
+      return card;
+    };
+    track.prepend(...originals.map(cloneCard));
+    track.append(...originals.map(cloneCard));
+  }
+
+  const all = Array.from(track.querySelectorAll('[data-testimonial-card]'));
+  const previous = carousel.querySelector('[data-testimonial-prev]');
+  const next = carousel.querySelector('[data-testimonial-next]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const speed = 48; // Visible but gentle; pixels per second.
+  let isInView = true;
+  let hovered = false;
+  let touching = false;
+  let drag = null;
+  let blockClick = false;
+  let pausedUntil = 0;
+  let frameLast = 0;
+
+  const step = () => all.length > 1 ? Math.max(1, all[1].offsetLeft - all[0].offsetLeft) : 1;
+  const cycle = () => originals.length * step();
+  const pause = (ms=2600) => {pausedUntil=Math.max(pausedUntil,performance.now()+ms);};
+  function normalize(){
+    const distance = cycle();
+    if(!distance) return;
+    if(track.scrollLeft < 1) track.scrollLeft += distance;
+    if(track.scrollLeft >= distance * 2) track.scrollLeft -= distance;
+  }
+  function reset(){track.scrollLeft = cycle(); frameLast=0;}
+  // Defer one frame to ensure correct card measurements at initial layout.
+  requestAnimationFrame(reset);
+
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(entries=>{
+      isInView = !!entries[0] && entries[0].isIntersecting;
+      frameLast = 0;
+    },{rootMargin:'80px 0px', threshold:0});
+    observer.observe(carousel);
+  }
+
+  function animate(now){
+    requestAnimationFrame(animate);
+    const seconds = frameLast ? Math.min(now-frameLast,60)/1000 : 0;
+    frameLast = now;
+    if(!seconds || !isInView || document.hidden || reduced.matches ||
+       hovered || touching || drag || now < pausedUntil ||
+       document.querySelector('.vp-wrap.open,.vp-modal.open')) return;
+    track.scrollLeft -= speed * seconds;  // Negative direction: videos move right.
+    normalize();
+  }
+  requestAnimationFrame(animate);
+
+  carousel.addEventListener('mouseenter',()=>{hovered=true;});
+  carousel.addEventListener('mouseleave',()=>{hovered=false;frameLast=0;});
+  carousel.addEventListener('focusin',()=>pause(2000));
+
+  function move(direction){
+    pause(2200);
+    const distance = direction*step();
+    track.scrollTo({left:track.scrollLeft+distance,behavior:reduced.matches?'instant':'smooth'});
+    setTimeout(normalize,550);
+  }
+  if(previous){previous.disabled=false;previous.addEventListener('click',()=>move(-1));}
+  if(next){next.disabled=false;next.addEventListener('click',()=>move(1));}
+  track.addEventListener('wheel',()=>pause(2600),{passive:true});
+  track.addEventListener('touchstart',()=>{touching=true;pause(2600);},{passive:true});
+  function endTouch(){touching=false;frameLast=0;pause(1800);normalize();}
+  track.addEventListener('touchend',endTouch,{passive:true});
+  track.addEventListener('touchcancel',endTouch,{passive:true});
+  track.addEventListener('keydown',event=>{
+    if(event.target!==track) return;
+    if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
+    if(event.key==='ArrowRight'){event.preventDefault();move(1);}
+  });
+
+  track.addEventListener('pointerdown',event=>{
+    if(event.pointerType==='mouse' && event.button===0){
+      drag={startX:event.clientX,startLeft:track.scrollLeft,moved:false};
+      pause(2600);
+    }
+  });
+  document.addEventListener('pointermove',event=>{
+    if(!drag) return;
+    const dx = event.clientX-drag.startX;
+    if(Math.abs(dx)>8) drag.moved=true;
+    if(!drag.moved) return;
+    track.classList.add('is-dragging');
+    track.scrollLeft = drag.startLeft - dx;
+    event.preventDefault();
+  },{passive:false});
+  function endDrag(){
+    if(!drag) return;
+    if(drag.moved){blockClick=true;setTimeout(()=>{blockClick=false;},300);}
+    drag=null;
+    track.classList.remove('is-dragging');
+    pause(2200);
+    normalize();
+  }
+  document.addEventListener('pointerup',endDrag);
+  document.addEventListener('pointercancel',endDrag);
+  track.addEventListener('click',event=>{
+    if(!blockClick) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    blockClick=false;
+  },true);
+
+  window.addEventListener('resize',()=>requestAnimationFrame(reset),{passive:true});
+  document.addEventListener('visibilitychange',()=>{frameLast=0;});
+})();
+</script>
+
 
 <section id="reviews">
 <div class="con reviews-shell">
@@ -8477,7 +8616,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 <button class="photo-lb-fs" onclick="photoFullscreen()">⛶ Fullscreen</button>
 </div>
 </div>
-<script src="assets/js/index.js?v=css-fix-20261016-v2"></script>
+<script src="assets/js/index.js?v=testimonial-autoscroll-20261016-v3"></script>
 
 <div aria-hidden="true" class="creator-modal" id="creator-reviews-modal">
   <div aria-label="Creator Reviews" aria-modal="true" class="creator-modal-card" role="dialog">

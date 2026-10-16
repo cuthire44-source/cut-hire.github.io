@@ -1245,6 +1245,29 @@ window.vpOpenYouTube = vpOpenYouTube;
   const grid=document.querySelector('.testimonial-videos-grid');
   if(!grid)return;
 
+  // Three copies of the same five cards provide a seamless infinite loop.
+  // This is done before attaching video-preview and click handlers so the
+  // visible duplicates are playable too.
+  const originals=Array.from(grid.querySelectorAll('[data-testimonial-card]'));
+  if(originals.length>1 && !grid.dataset.loopReady){
+    grid.dataset.loopReady='1';
+    const cloneCard=card=>{
+      const copy=card.cloneNode(true);
+      copy.classList.add('testimonial-loop-copy','vis');
+      copy.classList.remove('rv');
+      copy.setAttribute('aria-hidden','true');
+      copy.setAttribute('role','presentation');
+      copy.tabIndex=-1;
+      const img=copy.querySelector('img');
+      if(img){img.loading='lazy';img.removeAttribute('fetchpriority');}
+      const vid=copy.querySelector('video');
+      if(vid)vid.removeAttribute('src'); // MP4 loads only when hovered.
+      return copy;
+    };
+    grid.prepend(...originals.map(cloneCard));
+    grid.append(...originals.map(cloneCard));
+  }
+
   grid.querySelectorAll('[data-testimonial-card]').forEach(card=>{
     const preview=card.querySelector('.testimonial-video-preview');
     if(!preview)return;
@@ -3224,86 +3247,90 @@ ring.style.visibility = 'visible';
 
 
 
-// Client video carousel: native swipe + wheel/trackpad scroll, mouse dragging,
-// and side arrow buttons. Reuses all existing testimonial video handlers.
+
+// Slow auto-scrolling, right-moving testimonial carousel. Pause on hover,
+// touch/drag, reduced motion, when offscreen, or during video playback.
 (function initTestimonialCarousel(){
   const track=document.getElementById('testimonial-video-track');
   const carousel=track&&track.closest('.testimonial-carousel');
   if(!track||!carousel)return;
+  const real=Array.from(track.querySelectorAll('[data-testimonial-card]:not(.testimonial-loop-copy)'));
   const cards=Array.from(track.querySelectorAll('[data-testimonial-card]'));
   const prev=carousel.querySelector('[data-testimonial-prev]');
   const next=carousel.querySelector('[data-testimonial-next]');
-  if(cards.length<2||!prev||!next)return;
+  if(real.length<2||cards.length!==real.length*3||!prev||!next)return;
 
-  let activeIndex=0;
-  let animationFrame=0;
-  let drag=null;
-  let blockClick=false;
-
-  function maxIndex(){return Math.max(0,cards.length-2)}
+  let last=0, until=0, hovering=false, touch=false, visible=false;
+  let drag=null, suppressClick=false;
+  const reduced=window.matchMedia('(prefers-reduced-motion:reduce)');
   function step(){return Math.max(1,cards[1].offsetLeft-cards[0].offsetLeft)}
-  function clamp(index){return Math.min(maxIndex(),Math.max(0,index))}
-  function showPosition(){
-    activeIndex=clamp(Math.round(track.scrollLeft/step()));
-    prev.disabled=activeIndex===0;
-    next.disabled=activeIndex>=maxIndex();
+  function cycle(){return real.length*step()}
+  function normalize(){
+    const w=cycle();
+    if(!w)return;
+    if(track.scrollLeft<1)track.scrollLeft+=w;
+    else if(track.scrollLeft>=w*2)track.scrollLeft-=w;
   }
-  function toIndex(index){
-    activeIndex=clamp(index);
-    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.scrollTo({left:activeIndex*step(),behavior:reduceMotion?'instant':'smooth'});
-    prev.disabled=activeIndex===0;
-    next.disabled=activeIndex>=maxIndex();
+  function hold(ms=3000){until=Math.max(until,performance.now()+ms)}
+  function reset(){track.scrollLeft=cycle()}
+  reset();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(e=>{visible=e[0].isIntersecting;last=0},{threshold:.05}).observe(carousel);
+  }else visible=true;
+  function tick(now){
+    requestAnimationFrame(tick);
+    const dt=last?Math.min(48,now-last):0;last=now;
+    if(!visible||document.hidden||reduced.matches||hovering||touch||drag||now<until||
+       document.querySelector('.vp-wrap.open,.vp-modal.open'))return;
+    track.scrollLeft-=22*dt/1000; // Slow rightward travel (22 pixels/second).
+    normalize();
   }
-  prev.addEventListener('click',()=>toIndex(activeIndex-1));
-  next.addEventListener('click',()=>toIndex(activeIndex+1));
-
-  track.addEventListener('scroll',()=>{
-    cancelAnimationFrame(animationFrame);
-    animationFrame=requestAnimationFrame(showPosition);
-  },{passive:true});
-  track.addEventListener('keydown',event=>{
-    if(event.target!==track)return;
-    if(event.key==='ArrowRight'){event.preventDefault();toIndex(activeIndex+1)}
-    if(event.key==='ArrowLeft'){event.preventDefault();toIndex(activeIndex-1)}
+  requestAnimationFrame(tick);
+  carousel.addEventListener('mouseenter',()=>{hovering=true});
+  carousel.addEventListener('mouseleave',()=>{hovering=false;last=0});
+  carousel.addEventListener('focusin',()=>hold(4000));
+  function move(dir){
+    hold(3200);
+    track.scrollTo({left:track.scrollLeft+dir*step(),behavior:reduced.matches?'instant':'smooth'});
+    setTimeout(normalize,450);
+  }
+  prev.disabled=false;next.disabled=false;
+  prev.addEventListener('click',()=>move(-1));
+  next.addEventListener('click',()=>move(1));
+  track.addEventListener('wheel',()=>hold(4000),{passive:true});
+  track.addEventListener('touchstart',()=>{touch=true;hold(4000)},{passive:true});
+  function stopTouch(){touch=false;last=0;hold(2200);normalize()}
+  track.addEventListener('touchend',stopTouch,{passive:true});
+  track.addEventListener('touchcancel',stopTouch,{passive:true});
+  track.addEventListener('keydown',e=>{
+    if(e.target!==track)return;
+    if(e.key==='ArrowRight'){e.preventDefault();move(1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}
   });
-
-  // Native touch-scrolling is preferred on phones; mouse drag works on desktop.
-  track.addEventListener('pointerdown',event=>{
-    if(event.pointerType!=='mouse'||event.button!==0)return;
-    drag={startX:event.clientX,startLeft:track.scrollLeft,moved:false};
+  track.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse'||e.button!==0)return;
+    drag={x:e.clientX,left:track.scrollLeft,moved:false};hold(4000);
   });
-  document.addEventListener('pointermove',event=>{
+  document.addEventListener('pointermove',e=>{
     if(!drag)return;
-    const dx=event.clientX-drag.startX;
+    const dx=e.clientX-drag.x;
     if(Math.abs(dx)>8)drag.moved=true;
     if(!drag.moved)return;
     track.classList.add('is-dragging');
-    track.scrollLeft=drag.startLeft-dx;
-    event.preventDefault();
+    track.scrollLeft=drag.left-dx;
+    e.preventDefault();
   },{passive:false});
   function endDrag(){
     if(!drag)return;
-    if(drag.moved){
-      blockClick=true;
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{blockClick=false}));
-    }
-    drag=null;
-    track.classList.remove('is-dragging');
-    showPosition();
+    if(drag.moved){suppressClick=true;setTimeout(()=>suppressClick=false,350)}
+    drag=null;track.classList.remove('is-dragging');hold(2500);normalize();
   }
   document.addEventListener('pointerup',endDrag);
   document.addEventListener('pointercancel',endDrag);
-  track.addEventListener('click',event=>{
-    if(!blockClick)return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    blockClick=false;
+  track.addEventListener('click',e=>{
+    if(!suppressClick)return;
+    e.preventDefault();e.stopImmediatePropagation();suppressClick=false;
   },true);
-
-  window.addEventListener('resize',()=>{
-    cancelAnimationFrame(animationFrame);
-    animationFrame=requestAnimationFrame(()=>toIndex(activeIndex));
-  },{passive:true});
-  showPosition();
+  window.addEventListener('resize',()=>{reset();last=0},{passive:true});
+  document.addEventListener('visibilitychange',()=>{last=0});
 })();

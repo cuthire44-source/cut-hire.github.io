@@ -6603,109 +6603,58 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   margin-top:clamp(1.55rem,2.6vw,2.25rem)!important;
 }
 
-/* Five client videos — two visible with side arrows and native horizontal swipe. */
+
+/* Slow auto-scrolling video testimonials; three desktop, two mobile. */
 #video-testimonials .testimonial-carousel{
   --testimonial-carousel-gap:16px;
-  width:min(560px,calc(100% - 32px));
-  max-width:100%;
-  margin:0 auto;
+  width:min(880px,calc(100% - 56px));max-width:100%;margin:0 auto;
 }
-#video-testimonials .testimonial-carousel-stage{
-  position:relative;
-  width:100%;
-  isolation:isolate;
-}
+#video-testimonials .testimonial-carousel-stage{position:relative;width:100%;isolation:isolate}
 #video-testimonials .testimonial-carousel-arrow{
-  position:absolute;
-  top:50%;
-  z-index:8;
-  transform:translateY(-50%);
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(224,32,32,.55);
-  border-radius:50%;
-  color:#fff;
-  background:rgba(12,10,11,.89);
-  box-shadow:0 5px 20px rgba(0,0,0,.45);
-  cursor:pointer;
-  transition:background .2s ease,border-color .2s ease,opacity .2s ease,transform .2s ease;
-  -webkit-tap-highlight-color:transparent;
+  position:absolute;top:50%;z-index:8;transform:translateY(-50%);
+  width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid rgba(224,32,32,.55);border-radius:50%;
+  color:white;background:rgba(12,10,11,.9);box-shadow:0 5px 20px #0008;
+  cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
 }
 #video-testimonials .testimonial-carousel-arrow-prev{left:-24px}
 #video-testimonials .testimonial-carousel-arrow-next{right:-24px}
-#video-testimonials .testimonial-carousel-arrow:not(:disabled):hover{
-  background:#d62828;
-  border-color:#f34545;
-  transform:translateY(-50%) scale(1.06);
-}
-#video-testimonials .testimonial-carousel-arrow:focus-visible{
-  outline:2px solid #ff6666;
-  outline-offset:3px;
-}
-#video-testimonials .testimonial-carousel-arrow:disabled{
-  opacity:.33;
-  cursor:default;
-  background:rgba(12,10,11,.75);
-  border-color:rgba(255,255,255,.24);
-}
+#video-testimonials .testimonial-carousel-arrow:hover{background:#d62828;border-color:#f34545;transform:translateY(-50%) scale(1.06)}
+#video-testimonials .testimonial-carousel-arrow:focus-visible{outline:2px solid #ff6666;outline-offset:3px}
 #video-testimonials .testimonial-carousel .testimonial-videos-grid{
-  display:grid!important;
-  grid-auto-flow:column!important;
-  grid-auto-columns:calc((100% - var(--testimonial-carousel-gap))/2)!important;
-  grid-template-columns:none!important;
-  grid-template-rows:1fr!important;
-  justify-content:start!important;
-  align-items:stretch!important;
-  gap:var(--testimonial-carousel-gap)!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0;
-  padding:0 0 8px!important;
-  margin:0!important;
-  overflow-x:auto;
-  overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  scroll-padding-left:0;
-  scroll-behavior:smooth;
-  overscroll-behavior-x:contain;
-  scrollbar-width:none;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-x pan-y;
+  display:grid!important;grid-auto-flow:column!important;
+  grid-auto-columns:calc((100% - 2 * var(--testimonial-carousel-gap))/3)!important;
+  grid-template-columns:none!important;grid-template-rows:1fr!important;
+  justify-content:start!important;align-items:stretch!important;
+  gap:var(--testimonial-carousel-gap)!important;width:100%!important;max-width:100%!important;
+  min-width:0;padding:0 0 8px!important;margin:0!important;
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:none!important;
+  scroll-behavior:auto!important;overscroll-behavior-x:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;
 }
 #video-testimonials .testimonial-carousel .testimonial-videos-grid::-webkit-scrollbar{display:none}
 #video-testimonials .testimonial-carousel .testimonial-video-card{
-  width:100%!important;
-  min-width:0;
-  grid-column:auto!important;
-  grid-row:auto!important;
-  justify-self:stretch!important;
-  margin:0!important;
-  aspect-ratio:9/16;
-  scroll-snap-align:start;
-  scroll-snap-stop:normal;
+  width:100%!important;min-width:0;grid-column:auto!important;grid-row:auto!important;
+  justify-self:stretch!important;margin:0!important;aspect-ratio:9/16;
+  scroll-snap-align:none!important;
 }
-#video-testimonials .testimonial-carousel .testimonial-videos-grid.is-dragging{
-  scroll-behavior:auto!important;
-  scroll-snap-type:none!important;
-  cursor:grabbing;
+#video-testimonials .testimonial-carousel .testimonial-video-card.testimonial-loop-copy{
+  opacity:1!important;transform:none;
 }
+#video-testimonials .testimonial-carousel .testimonial-video-card.testimonial-loop-copy:hover{
+  transform:translateY(-7px) scale(1.012);
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid.is-dragging{cursor:grabbing;user-select:none}
 #video-testimonials .testimonial-carousel .testimonial-videos-grid.is-dragging .testimonial-video-card{cursor:grabbing}
-@media(max-width:760px){
-  #video-testimonials .testimonial-carousel{
-    --testimonial-carousel-gap:12px;
-    width:min(430px,calc(100% - 32px));
+@media(max-width:899px){
+  #video-testimonials .testimonial-carousel{--testimonial-carousel-gap:12px;width:min(430px,calc(100% - 32px))}
+  #video-testimonials .testimonial-carousel .testimonial-videos-grid{
+    grid-auto-columns:calc((100% - var(--testimonial-carousel-gap))/2)!important;padding-bottom:6px!important;
   }
-  #video-testimonials .testimonial-carousel-arrow{
-    width:36px;
-    height:36px;
-  }
+  #video-testimonials .testimonial-carousel-arrow{width:36px;height:36px}
   #video-testimonials .testimonial-carousel-arrow-prev{left:-12px}
   #video-testimonials .testimonial-carousel-arrow-next{right:-12px}
-  #video-testimonials .testimonial-carousel .testimonial-videos-grid{padding-bottom:6px!important}
 }
 @media(prefers-reduced-motion:reduce){
-  #video-testimonials .testimonial-carousel .testimonial-videos-grid{scroll-behavior:auto!important}
   #video-testimonials .testimonial-carousel-arrow{transition:none!important}
 }

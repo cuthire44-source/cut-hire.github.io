@@ -7296,7 +7296,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 </style>
-<link rel="stylesheet" href="assets/css/index.css?v=testimonial-autoscroll-20261016-v3">
+<link rel="stylesheet" href="assets/css/index.css?v=testimonial-motion-hover-fix-20261016-v4">
 
 <meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
 
@@ -7950,6 +7950,10 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     requestAnimationFrame(animate);
     const seconds = frameLast ? Math.min(now-frameLast,60)/1000 : 0;
     frameLast = now;
+    track.dataset.motionState = document.hidden ? 'tab-hidden' :
+      reduced.matches ? 'reduced-motion' : !isInView ? 'out-of-view' :
+      hovered ? 'deliberate-hover' : touching || drag ? 'manual-drag' :
+      now < pausedUntil ? 'temporary-pause' : 'running';
     if(!seconds || !isInView || document.hidden || reduced.matches ||
        hovered || touching || drag || now < pausedUntil ||
        document.querySelector('.vp-wrap.open,.vp-modal.open')) return;
@@ -7958,8 +7962,25 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   }
   requestAnimationFrame(animate);
 
-  carousel.addEventListener('mouseenter',()=>{hovered=true;});
-  carousel.addEventListener('mouseleave',()=>{hovered=false;frameLast=0;});
+  // A container mouseenter was incorrectly pausing autoplay when the user
+  // simply scrolled this section under a stationary cursor or returned to the
+  // browser tab. Only *actual mouse movement over a VIDEO CARD* engages pause.
+  // Pointer movement caused by layout/scroll re-targeting has unchanged screen
+  // coordinates and deliberately does not count as user hover interaction.
+  let lastPointerPosition = null;
+  function handleMouseMovement(event){
+    if(event.pointerType !== 'mouse') return;
+    const was = lastPointerPosition;
+    lastPointerPosition = {x:event.clientX,y:event.clientY};
+    if(!was || Math.abs(was.x-event.clientX)+Math.abs(was.y-event.clientY)<1) return;
+    hovered = !!(event.target instanceof Element &&
+      event.target.closest('#testimonial-video-track .testimonial-video-card'));
+    if(!hovered) frameLast = 0;
+  }
+  document.addEventListener('pointermove',handleMouseMovement,{passive:true,capture:true});
+  carousel.addEventListener('pointerleave',()=>{hovered=false;frameLast=0;});
+  // Tab switches / window focus changes must never retain stale hover state.
+  window.addEventListener('blur',()=>{hovered=false;lastPointerPosition=null;frameLast=0;});
   carousel.addEventListener('focusin',()=>pause(2000));
 
   function move(direction){
@@ -8014,7 +8035,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   },true);
 
   window.addEventListener('resize',()=>requestAnimationFrame(reset),{passive:true});
-  document.addEventListener('visibilitychange',()=>{frameLast=0;});
+  document.addEventListener('visibilitychange',()=>{frameLast=0;hovered=false;lastPointerPosition=null;});
 })();
 </script>
 
@@ -8616,7 +8637,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 <button class="photo-lb-fs" onclick="photoFullscreen()">⛶ Fullscreen</button>
 </div>
 </div>
-<script src="assets/js/index.js?v=testimonial-autoscroll-20261016-v3"></script>
+<script src="assets/js/index.js?v=testimonial-motion-hover-fix-20261016-v4"></script>
 
 <div aria-hidden="true" class="creator-modal" id="creator-reviews-modal">
   <div aria-label="Creator Reviews" aria-modal="true" class="creator-modal-card" role="dialog">

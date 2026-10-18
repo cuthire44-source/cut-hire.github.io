@@ -1245,7 +1245,7 @@ window.vpOpenYouTube = vpOpenYouTube;
   const grid=document.querySelector('.testimonial-videos-grid');
   if(!grid)return;
 
-  // Three copies of the same five cards provide a seamless infinite loop.
+  // Three copies of the testimonial cards provide a seamless infinite loop.
   // This is done before attaching video-preview and click handlers so the
   // visible duplicates are playable too.
   const originals=Array.from(grid.querySelectorAll('[data-testimonial-card]'));

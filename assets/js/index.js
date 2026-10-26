@@ -1366,7 +1366,7 @@ window.vpOpenYouTube = vpOpenYouTube;
       stopPreview();
       const youtube=(card.getAttribute('data-youtube')||'').trim();
       const title=(card.getAttribute('data-title')||'Client testimonial').trim();
-      if(youtube)vpOpenYouTube(youtube,title,true,false);
+      if(youtube)vpOpenYouTube(youtube,title,!card.classList.contains('testimonial-landscape'),false);
     };
 
     card.addEventListener('click',open);

@@ -7333,8 +7333,23 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   scroll-snap-align:none!important;
 }
 
+
+/* Testimonial 10: real landscape (16:9) card among the portrait testimonials.
+   Width takes two portrait slots; no portrait cropping/letterboxing. */
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card.testimonial-landscape{
+  flex:0 0 calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  width:calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  height:auto!important;
+  aspect-ratio:16 / 9!important;
+  align-self:center!important;
+}
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-thumb,
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-preview{
+  object-fit:cover;
+}
+
 </style>
-<link rel="stylesheet" href="assets/css/index.css?v=results8-20261023">
+<link rel="stylesheet" href="assets/css/index.css?v=testimonial10-landscape-20261026">
 
 <meta content="100" name="seo-keyword-count"/><meta content="Relevant Cut &amp; Hire search targets based on the visible site services: YouTube long form, Shorts/Reels, motion graphics, gaming, documentary, explainer/informative, vlogs/IRL, thumbnails, brands, ads and corporate work." name="seo-keyword-note"/>
 
@@ -7974,6 +7989,24 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
         </div>
       </article>
 
+      <article class="testimonial-video-card testimonial-landscape wc is-video has-thumb placeholder-hidden rv"
+        data-testimonial-card
+        data-youtube="https://youtu.be/T2Dt1P8g_oY"
+        data-title="Client Testimonial 10"
+        role="button" tabindex="0" aria-label="Open client testimonial 10 (landscape video)">
+        <div class="testimonial-video-media">
+          <img class="testimonial-video-thumb wc-video-thumb" src="assets/images/Testimonial11.png" data-explicit-thumb="1" data-video-src="assets/videos/Testimonial11.mp4" alt="Client testimonial 10 landscape thumbnail" loading="lazy" decoding="async" draggable="false"/>
+          <video class="testimonial-video-preview wc-preview-video" src="assets/videos/Testimonial11.mp4" data-src="assets/videos/Testimonial11.mp4" muted loop playsinline preload="metadata" disablepictureinpicture controlsList="nodownload noplaybackrate" aria-hidden="true"></video>
+          <div class="wc-overlay testimonial-work-overlay" aria-hidden="true">
+            <div class="wc-icon-circle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,.95)">
+                <polygon points="6,3 20,12 6,21"></polygon>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
           </div>
         </div>
         <button class="testimonial-carousel-arrow testimonial-carousel-arrow-prev" type="button" data-testimonial-prev aria-label="Previous testimonial video">
@@ -8031,7 +8064,13 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
     const cardWidth=(width-gap*(visible-1))/visible;
     viewport.style.setProperty('--testimonial-card-w',cardWidth+'px');
     step=cardWidth+gap;
-    cycle=step*originalCards.length;
+    // Mixed portrait/landscape cards have different widths. Measure the
+    // distance from the first clone to the first original in the flex belt.
+    // The old uniform-width formula caused a visible jump after card 10.
+    const allCards=belt.querySelectorAll('[data-testimonial-card]');
+    cycle=allCards[originalCards.length].getBoundingClientRect().left
+      - allCards[0].getBoundingClientRect().left;
+    if(!(cycle>0)) cycle=step*originalCards.length;
     x=-cycle;
     previousTime=0;
     render();
@@ -8777,7 +8816,7 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 <button class="photo-lb-fs" onclick="photoFullscreen()">⛶ Fullscreen</button>
 </div>
 </div>
-<script src="assets/js/index.js?v=shorts-two-added-20261025"></script>
+<script src="assets/js/index.js?v=testimonial10-landscape-20261026"></script>
 
 <div aria-hidden="true" class="creator-modal" id="creator-reviews-modal">
   <div aria-label="Creator Reviews" aria-modal="true" class="creator-modal-card" role="dialog">

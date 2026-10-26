@@ -6694,3 +6694,18 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   position:relative;
   scroll-snap-align:none!important;
 }
+
+
+/* Testimonial 10: real landscape (16:9) card among the portrait testimonials.
+   Width takes two portrait slots; no portrait cropping/letterboxing. */
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card.testimonial-landscape{
+  flex:0 0 calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  width:calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  height:auto!important;
+  aspect-ratio:16 / 9!important;
+  align-self:center!important;
+}
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-thumb,
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-preview{
+  object-fit:cover;
+}

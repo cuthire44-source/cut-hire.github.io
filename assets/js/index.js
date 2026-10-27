@@ -520,6 +520,9 @@ const works=[
 {cat:['shorts'],title:'Short748adf738',src:'assets/videos/Short748adf738.mp4',thumb:'assets/images/Short748adf738.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/Qn7USd49xJE',youtubeEmbed:'https://www.youtube.com/embed/Qn7USd49xJE?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short567adf738',src:'assets/videos/Short567adf738.mp4',thumb:'assets/images/Short567adf738.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/VPsyDA5emzA',youtubeEmbed:'https://www.youtube.com/embed/VPsyDA5emzA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short55849diejs38',src:'assets/videos/Short55849diejs38.mp4',thumb:'assets/images/Short55849diejs38.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/Tp5J68GyZt0',youtubeEmbed:'https://www.youtube.com/embed/Tp5J68GyZt0?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Vidoe4749837',src:'assets/videos/Vidoe4749837.mp4',thumb:'assets/images/Vidoe474983.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/dKJL_DGngKc',youtubeEmbed:'https://www.youtube.com/embed/dKJL_DGngKc?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Vidoe47444983',src:'assets/videos/Vidoe47444983.mp4',thumb:'assets/images/Vidoe47444983.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/IzII6rRQb_Y',youtubeEmbed:'https://www.youtube.com/embed/IzII6rRQb_Y?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
+{cat:['shorts'],title:'Vidoe4675844983',src:'assets/videos/Vidoe4675844983.mp4',thumb:'assets/images/Vidoe4675844983.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/_nxGAIDzFNA',youtubeEmbed:'https://www.youtube.com/embed/_nxGAIDzFNA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short8403930367',src:'assets/videos/Short8403930367.mp4',thumb:'assets/images/Short8403930367.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/AFahMiSzTdA?feature=share',youtubeEmbed:'https://www.youtube.com/embed/AFahMiSzTdA?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Short 2741313123329039446702190',src:'assets/videos/short2741313123329039446702190.mp4',thumb:'assets/images/short6493729.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/NX0p7WbXkyY?feature=share',youtubeEmbed:'https://www.youtube.com/embed/NX0p7WbXkyY?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
 {cat:['shorts'],title:'Vidoe 74847484984',src:'assets/videos/Vidoe74847484984.mp4',thumb:'assets/images/Vidoe74847484984.png',isPhoto:false,youtubeUrl:'https://youtube.com/shorts/aX4OntsnIus?feature=share',youtubeEmbed:'https://www.youtube.com/embed/aX4OntsnIus?autoplay=1&rel=0&playsinline=1&modestbranding=1'},
@@ -750,7 +753,7 @@ function mobilePortfolioLimit(activeCat){
   if(cat === 'youtube') return 7;
   if(cat === 'all') return 8;
   if(cat === 'thumbnail') return 8;
-  if(cat === 'shorts') return 24;
+  if(cat === 'shorts') return 27;
   return 6;
 }
 function renderWork(list, activeCat){

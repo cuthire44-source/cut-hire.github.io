@@ -541,8 +541,6 @@ const works=[
 {cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'assets/images/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
 {cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'assets/images/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
 {cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'assets/images/e837326a-3c9d-4142-a663-1d32cff2edef.webp'},
-{cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'assets/images/5.webp'},
-{cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'assets/images/image.webp'},
 {cat:['thumbnail'],title:'Thumbnail 7',src:'',isPhoto:true,img:'assets/images/bvcvcbvcbvcb43541.webp'},
 {cat:['thumbnail'],title:'Thumbnail 8',src:'',isPhoto:true,img:'assets/images/I_tested_10_Spy_Gadgets_Thumbnail.webp'},
 {cat:['thumbnail'],title:'Thumbnail 9',src:'',isPhoto:true,img:'assets/images/Illustrator_vid.webp'},

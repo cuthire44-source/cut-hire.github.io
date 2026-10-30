@@ -6470,16 +6470,6 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 }
 
 
-/* About Us: emphasize the scaling promise as the key closing message. */
-.about-scale-emphasis{
-  display:block;
-  margin-top:.55em;
-  color:var(--w);
-  font-weight:800;
-  font-size:1.08em;
-  line-height:1.45;
-  letter-spacing:-.01em;
-}
 
 
 /* Hero title layout: keep "Channel" beside "Your"; only "Needs" is accented/underlined. */
@@ -6587,4 +6577,135 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   .hero-h1.hero-h1-fixed .hero-title-line-two{
     gap:.1em!important;
   }
+}
+
+
+/* HERO SPACING: add breathing room between Channel and Needs,
+   and lower the red animated underline without changing the two-line heading. */
+.hero-h1.hero-h1-fixed .hero-title-line-two{
+  gap:.29em!important;
+}
+.hero-h1.hero-h1-fixed .needs-underline-wrap .impossible-underline{
+  bottom:-.22em!important;
+}
+@media(max-width:520px){
+  .hero-h1.hero-h1-fixed .hero-title-line-two{
+    gap:.18em!important;
+  }
+  .hero-h1.hero-h1-fixed .needs-underline-wrap .impossible-underline{
+    bottom:-.19em!important;
+  }
+}
+
+
+/* Keep the subtitle clear of the lower, glowing Needs underline. */
+.hero-h1.hero-h1-fixed + .hero-sub{
+  margin-top:clamp(1.55rem,2.6vw,2.25rem)!important;
+}
+
+
+/* Slow auto-scrolling video testimonials; three desktop, two mobile. */
+#video-testimonials .testimonial-carousel{
+  --testimonial-carousel-gap:16px;
+  width:min(880px,calc(100% - 56px));max-width:100%;margin:0 auto;
+}
+#video-testimonials .testimonial-carousel-stage{position:relative;width:100%;isolation:isolate}
+#video-testimonials .testimonial-carousel-arrow{
+  position:absolute;top:50%;z-index:8;transform:translateY(-50%);
+  width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid rgba(224,32,32,.55);border-radius:50%;
+  color:white;background:rgba(12,10,11,.9);box-shadow:0 5px 20px #0008;
+  cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
+}
+#video-testimonials .testimonial-carousel-arrow-prev{left:-24px}
+#video-testimonials .testimonial-carousel-arrow-next{right:-24px}
+#video-testimonials .testimonial-carousel-arrow:hover{background:#d62828;border-color:#f34545;transform:translateY(-50%) scale(1.06)}
+#video-testimonials .testimonial-carousel-arrow:focus-visible{outline:2px solid #ff6666;outline-offset:3px}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid{
+  display:grid!important;grid-auto-flow:column!important;
+  grid-auto-columns:calc((100% - 2 * var(--testimonial-carousel-gap))/3)!important;
+  grid-template-columns:none!important;grid-template-rows:1fr!important;
+  justify-content:start!important;align-items:stretch!important;
+  gap:var(--testimonial-carousel-gap)!important;width:100%!important;max-width:100%!important;
+  min-width:0;padding:0 0 8px!important;margin:0!important;
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:none!important;
+  scroll-behavior:auto!important;overscroll-behavior-x:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid::-webkit-scrollbar{display:none}
+#video-testimonials .testimonial-carousel .testimonial-video-card{
+  width:100%!important;min-width:0;grid-column:auto!important;grid-row:auto!important;
+  justify-self:stretch!important;margin:0!important;aspect-ratio:9/16;
+  scroll-snap-align:none!important;
+}
+#video-testimonials .testimonial-carousel .testimonial-video-card.testimonial-loop-copy{
+  opacity:1!important;transform:none;
+}
+#video-testimonials .testimonial-carousel .testimonial-video-card.testimonial-loop-copy:hover{
+  transform:translateY(-7px) scale(1.012);
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid.is-dragging{cursor:grabbing;user-select:none}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid.is-dragging .testimonial-video-card{cursor:grabbing}
+@media(max-width:899px){
+  #video-testimonials .testimonial-carousel{--testimonial-carousel-gap:12px;width:min(430px,calc(100% - 32px))}
+  #video-testimonials .testimonial-carousel .testimonial-videos-grid{
+    grid-auto-columns:calc((100% - var(--testimonial-carousel-gap))/2)!important;padding-bottom:6px!important;
+  }
+  #video-testimonials .testimonial-carousel-arrow{width:36px;height:36px}
+  #video-testimonials .testimonial-carousel-arrow-prev{left:-12px}
+  #video-testimonials .testimonial-carousel-arrow-next{right:-12px}
+}
+@media(prefers-reduced-motion:reduce){
+  #video-testimonials .testimonial-carousel-arrow{transition:none!important}
+}
+
+
+/* Testimonial carousel motion belt v2. ScrollLeft/snap are disabled so other
+   preview handlers or browser scroll-smoothing cannot freeze the animation. */
+#video-testimonials .testimonial-carousel .testimonial-videos-grid{
+  display:block!important;
+  position:relative!important;
+  overflow:hidden!important;
+  width:100%!important;
+  max-width:100%!important;
+  scroll-behavior:auto!important;
+  scroll-snap-type:none!important;
+  touch-action:pan-y!important;
+  cursor:grab;
+}
+#video-testimonials .testimonial-carousel .testimonial-videos-grid:active{cursor:grabbing}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt{
+  display:flex!important;
+  align-items:stretch!important;
+  flex-wrap:nowrap!important;
+  gap:var(--testimonial-carousel-gap)!important;
+  width:max-content!important;
+  min-width:100%;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card{
+  flex:0 0 var(--testimonial-card-w,240px)!important;
+  width:var(--testimonial-card-w,240px)!important;
+  max-width:none!important;
+  min-width:0!important;
+  align-self:stretch!important;
+  margin:0!important;
+  position:relative;
+  scroll-snap-align:none!important;
+}
+
+
+/* Testimonial 10: real landscape (16:9) card among the portrait testimonials.
+   Width takes two portrait slots; no portrait cropping/letterboxing. */
+#video-testimonials .testimonial-carousel .testimonial-motion-belt > .testimonial-video-card.testimonial-landscape{
+  flex:0 0 calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  width:calc(2 * var(--testimonial-card-w,240px) + var(--testimonial-carousel-gap,16px))!important;
+  height:auto!important;
+  aspect-ratio:16 / 9!important;
+  align-self:center!important;
+}
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-thumb,
+#video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-preview{
+  object-fit:cover;
 }

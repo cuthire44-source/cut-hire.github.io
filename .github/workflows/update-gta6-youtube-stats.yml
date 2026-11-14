@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Every 3 hours in UTC; scheduled runs may be delayed.
-    - cron: '17 */3 * * *'
+    - cron: '29 */3 * * *'
 
 permissions:
   contents: write

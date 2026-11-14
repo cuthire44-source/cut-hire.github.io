@@ -272,12 +272,30 @@ document.querySelector('[data-results-next]')?.addEventListener('click',()=>scro
  
 (function(){
   const orig=document.title;
-  const away=["Still need an editor? 👀","Your video is waiting 🎬","Don't leave the cut unfinished ✂️","Need clean edits? 🔥","Come back to Cut & Hire 💼"];
-  const back=["Welcome back 🔥","Good to see you again 👋","Back to creating 🎬","Let's finish the cut ✂️"];
-  let t=null,i=0;
+  // Short, distinct titles like the original rotation — without salesy copy.
+  const away=[
+    "🎬 Editing, elevated",
+    "✂️ Crafted frame by frame",
+    "✨ Creativity in every detail",
+    "🎞️ Stories worth watching",
+    "🚀 Cut & Hire Studio"
+  ];
+  const back=[
+    "👋 Welcome back",
+    "🎬 Back to Cut & Hire",
+    "✨ Explore our work"
+  ];
+  let timer=null,index=0,restoreTimer=null;
   document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){clearInterval(t);document.title=away[i%away.length];i++;t=setInterval(()=>{document.title=away[i%away.length];i++},2200)}
-    else{clearInterval(t);document.title=back[Math.floor(Math.random()*back.length)];setTimeout(()=>document.title=orig,1800)}
+    clearInterval(timer);
+    clearTimeout(restoreTimer);
+    if(document.hidden){
+      document.title=away[index++%away.length];
+      timer=setInterval(()=>{document.title=away[index++%away.length];},3200);
+    }else{
+      document.title=back[Math.floor(Math.random()*back.length)];
+      restoreTimer=setTimeout(()=>{document.title=orig;},1800);
+    }
   });
 })();
 
@@ -3248,3 +3266,474 @@ ring.style.visibility = 'visible';
     openHeroReel(event);
   }, true);
 })();
+
+
+// GTA VI showcase: independent long-form/shorts tabs + local themed YouTube modal.
+// YouTube owns its in-frame playback controls; this modal provides the GTA VI visual shell.
+(function initGtaShowcaseV2(){
+  const root=document.getElementById('gta-showcase');
+  const modal=document.getElementById('gta-video-modal');
+  if(!root || !modal)return;
+  const tabs=Array.from(root.querySelectorAll('[data-gta-category]'));
+  const panels=Array.from(root.querySelectorAll('[data-gta-panel]'));
+  const videoButtons=Array.from(root.querySelectorAll('[data-gta-video]'));
+  const frame=document.getElementById('gta-video-iframe');
+  const dialog=modal.querySelector('.gta-video-dialog');
+  const close=modal.querySelector('[data-gta-close]');
+  let previouslyFocused=null;
+  let scrollLockWas='';
+  const previews=new WeakMap();
+  const reduced=window.matchMedia('(prefers-reduced-motion:reduce)');
+
+  // Like the Our Work hover cards: the thumbnail stays visible until a real
+  // decoded MP4 frame can be painted. No empty/black preview layer on hover.
+  function stopPreview(btn){
+    const state=previews.get(btn);
+    if(state?.timer)clearTimeout(state.timer);
+    if(state?.fallbackTimer)clearTimeout(state.fallbackTimer);
+    const preview=btn.querySelector('.gta-showcase-preview');
+    if(preview){
+      if(preview.tagName==='VIDEO'){
+        preview.pause();
+        preview.removeAttribute('src');
+        preview.load();
+      }else{
+        preview.src='about:blank';
+      }
+      preview.remove();
+    }
+    btn.classList.remove('is-previewing','has-local-preview');
+    previews.delete(btn);
+  }
+  function stopAllPreviews(){videoButtons.forEach(stopPreview)}
+  function startPreview(btn){
+    if(reduced.matches || document.hidden || !root.classList.contains('gta-in-view')
+       || window.matchMedia('(hover:none)').matches || previews.has(btn))return;
+    stopAllPreviews();
+    const id=btn.dataset.gtaVideo;
+    if(!/^[\w-]{11}$/.test(id))return;
+    const seconds=Math.max(0,parseInt(btn.dataset.start||'0',10)||0);
+    const state={timer:0,fallbackTimer:0};
+    previews.set(btn,state);
+    const localMp4=btn.dataset.gtaHoverMp4;
+    // Local previews begin loading immediately on hover; the thumbnail never disappears
+    // while downloading, seeking, buffering or waiting for the first decoded frame.
+    state.timer=setTimeout(()=>{
+      if(!btn.isConnected || !btn.matches(':hover') || btn.closest('[hidden]'))return stopPreview(btn);
+      if(localMp4){
+        const preview=document.createElement('video');
+        preview.className='gta-showcase-preview gta-local-preview';
+        preview.setAttribute('aria-hidden','true');
+        preview.tabIndex=-1;
+        preview.muted=true;
+        preview.defaultMuted=true;
+        preview.autoplay=false;
+        preview.loop=true;
+        preview.playsInline=true;
+        preview.preload='auto';
+        preview.disablePictureInPicture=true;
+        preview.setAttribute('muted','');
+        preview.setAttribute('playsinline','');
+        btn.classList.add('has-local-preview');
+        let started=false;
+        let shown=false;
+        let startAt=0;
+        let endAt=0;
+        let seekRequested=false;
+        let readyFallback=0;
+        function reveal(){
+          if(shown || previews.get(btn)!==state || !btn.matches(':hover'))return;
+          // The video is already displaying an actual frame at this point.
+          shown=true;
+          btn.classList.add('is-previewing');
+        }
+        function waitForFirstFrame(){
+          if(typeof preview.requestVideoFrameCallback==='function'){
+            preview.requestVideoFrameCallback(()=>{
+              // Video frame has reached the compositor. Keep underlying thumbnail
+              // visible until this callback instead of flashing a blank video surface.
+              reveal();
+            });
+          }else{
+            // Older browsers: require frame data AND advancing playback.
+            const check=()=>{
+              if(previews.get(btn)!==state)return;
+              if(preview.readyState>=HTMLMediaElement.HAVE_CURRENT_DATA &&
+                 !preview.paused && preview.currentTime>0){
+                reveal();
+              }else state.fallbackTimer=setTimeout(check,65);
+            };
+            state.fallbackTimer=setTimeout(check,80);
+          }
+        }
+        function playLocal(){
+          if(started || previews.get(btn)!==state)return;
+          started=true;
+          const playing=preview.play();
+          if(playing?.then){
+            playing.then(waitForFirstFrame).catch(()=>{
+              if(previews.get(btn)===state)stopPreview(btn);
+            });
+          }else waitForFirstFrame();
+        }
+        preview.addEventListener('loadedmetadata',()=>{
+          // Reuse Our Work's short 2–5s preview window for sufficiently long MP4s.
+          // Tiny clips play from the beginning instead of seeking beyond their end.
+          const duration=Number.isFinite(preview.duration)?preview.duration:0;
+          startAt=duration>4.5?2:0;
+          endAt=duration>5.3?5:0;
+          if(startAt && !seekRequested){
+            seekRequested=true;
+            preview.currentTime=startAt;
+          }else playLocal();
+        },{once:true});
+        preview.addEventListener('seeked',playLocal,{once:true});
+        preview.addEventListener('loadeddata',()=>{
+          if(!seekRequested)playLocal();
+        });
+        preview.addEventListener('timeupdate',()=>{
+          if(endAt && preview.currentTime>=endAt && !preview.seeking){
+            try{preview.currentTime=startAt;}catch(_){}
+          }
+        });
+        preview.addEventListener('error',()=>{
+          if(previews.get(btn)===state)stopPreview(btn);
+        },{once:true});
+        btn.appendChild(preview);
+        preview.src=encodeURI(localMp4);
+        preview.load();
+      }else{
+        // Existing 4–5 YouTube preview behavior is unchanged.
+        const preview=document.createElement('iframe');
+        preview.className='gta-showcase-preview';
+        preview.title='Muted GTA VI hover preview';
+        preview.tabIndex=-1;
+        preview.setAttribute('aria-hidden','true');
+        preview.allow='autoplay; encrypted-media; picture-in-picture';
+        preview.referrerPolicy='strict-origin-when-cross-origin';
+        preview.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)
+          +'?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist='+encodeURIComponent(id)
+          +'&start='+seconds+'&rel=0';
+        btn.appendChild(preview);
+        btn.classList.add('is-previewing');
+      }
+    },localMp4?0:900);
+  }
+
+  // Pause animated palms and dispose previews when the GTA VI section is offscreen.
+  const visibilityObserver=new IntersectionObserver(entries=>{
+    const visible=Boolean(entries[0]?.isIntersecting && !document.hidden);
+    root.classList.toggle('gta-in-view',visible);
+    if(!visible)stopAllPreviews();
+  },{rootMargin:'80px 0px 80px 0px',threshold:0});
+  visibilityObserver.observe(root);
+
+  // Desktop restores the original smooth gallery-height transition.
+  // Mobile keeps the lightweight fast fade and immediate layout change.
+  const stage=root.querySelector('.gta-feature-stage');
+  const desktopLayout=window.matchMedia('(min-width:701px)');
+  let activeCategory='long';
+  let pendingCategory=null;
+  let switchTimer=0;
+  let enterFrame=0;
+  let heightAnimation=null;
+  const fadeOutMs=115;
+
+  if(stage)stage.dataset.gtaReady='1';
+  panels.forEach(panel=>{
+    const active=panel.dataset.gtaPanel===activeCategory;
+    panel.hidden=!active;
+    panel.inert=!active;
+    panel.classList.toggle('is-current',active);
+    panel.classList.remove('is-leaving');
+    if(active)panel.removeAttribute('aria-hidden');
+    else panel.setAttribute('aria-hidden','true');
+  });
+
+  function selectTab(category){
+    tabs.forEach(tab=>{
+      const selected=tab.dataset.gtaCategory===category;
+      tab.classList.toggle('is-active',selected);
+      tab.setAttribute('aria-selected',String(selected));
+      tab.tabIndex=selected?0:-1;
+    });
+  }
+  function releaseStage(){
+    if(heightAnimation){
+      heightAnimation.onfinish=null;
+      heightAnimation.cancel();
+      heightAnimation=null;
+    }
+    if(stage){stage.style.removeProperty('height');stage.style.removeProperty('overflow');}
+  }
+  function lockStageHeight(){
+    if(!stage || !desktopLayout.matches || reduced.matches)return;
+    const currentHeight=stage.getBoundingClientRect().height;
+    // Freeze the CURRENT animated height to support quick repeated tab switches.
+    if(heightAnimation){
+      heightAnimation.onfinish=null;
+      heightAnimation.cancel();
+      heightAnimation=null;
+    }
+    stage.style.height=currentHeight+'px';
+    stage.style.overflow='hidden';
+  }
+  function finishSwitch(category){
+    if(enterFrame)cancelAnimationFrame(enterFrame);
+    if(!stage)return;
+    stage.classList.remove('is-switching-out');
+    stage.classList.add('is-switching-in');
+    panels.forEach(panel=>{
+      const active=panel.dataset.gtaPanel===category;
+      panel.hidden=!active;
+      panel.inert=!active;
+      panel.classList.toggle('is-current',active);
+      panel.classList.remove('is-leaving');
+      if(active)panel.removeAttribute('aria-hidden');
+      else panel.setAttribute('aria-hidden','true');
+    });
+    activeCategory=category;
+    root.dataset.gtaActive=category;
+    if(desktopLayout.matches && !reduced.matches){
+      const incoming=panels.find(panel=>panel.dataset.gtaPanel===category);
+      const from=parseFloat(stage.style.height)||stage.getBoundingClientRect().height;
+      const to=incoming?.getBoundingClientRect().height||from;
+      stage.style.height=to+'px';
+      stage.style.overflow='hidden';
+      if(Math.abs(to-from)>2 && typeof stage.animate==='function'){
+        const animation=stage.animate([{height:from+'px'},{height:to+'px'}],{
+          duration:540,easing:'cubic-bezier(.2,.7,.2,1)'
+        });
+        heightAnimation=animation;
+        animation.onfinish=()=>{
+          if(heightAnimation===animation)releaseStage();
+        };
+      }else releaseStage();
+    }else releaseStage();
+    // Force the fade-in to begin in its initial state, then ease the new grid in.
+    stage.getBoundingClientRect();
+    enterFrame=requestAnimationFrame(()=>{
+      stage.classList.remove('is-switching-in');
+      enterFrame=0;
+    });
+  }
+  function switchPanel(category,focusTab=false){
+    const tab=tabs.find(t=>t.dataset.gtaCategory===category);
+    if(!tab)return;
+    if(category===activeCategory && pendingCategory===null){
+      if(focusTab)tab.focus({preventScroll:true});
+      return;
+    }
+    stopAllPreviews();
+    if(enterFrame){
+      cancelAnimationFrame(enterFrame);
+      enterFrame=0;
+      stage?.classList.remove('is-switching-in');
+    }
+    selectTab(category);
+    if(focusTab)tab.focus({preventScroll:true});
+    pendingCategory=category;
+    if(switchTimer)return; // Reuse existing fade on rapid switches.
+    if(reduced.matches){
+      const next=pendingCategory;
+      pendingCategory=null;
+      finishSwitch(next);
+      return;
+    }
+    lockStageHeight();
+    stage?.classList.add('is-switching-out');
+    switchTimer=setTimeout(()=>{
+      switchTimer=0;
+      const next=pendingCategory;
+      pendingCategory=null;
+      if(next===activeCategory){
+        stage?.classList.remove('is-switching-out');
+        if(desktopLayout.matches && heightAnimation===null)releaseStage();
+      }else finishSwitch(next);
+    },fadeOutMs);
+  }
+  // Clear fixed heights on device rotation / breakpoint changes.
+  let lastDesktop=desktopLayout.matches;
+  window.addEventListener('resize',()=>{
+    const now=desktopLayout.matches;
+    if(now!==lastDesktop){lastDesktop=now;releaseStage();}
+  },{passive:true});
+  tabs.forEach((tab,i)=>{
+    tab.addEventListener('click',()=>switchPanel(tab.dataset.gtaCategory));
+    tab.addEventListener('keydown',ev=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(ev.key))return;
+      ev.preventDefault();
+      const n=ev.key==='Home'?0:ev.key==='End'?tabs.length-1:
+        (i+(ev.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+      switchPanel(tabs[n].dataset.gtaCategory,true);
+    });
+  });
+
+  function openVideo(btn){
+    const id=btn.dataset.gtaVideo;
+    if(!/^[\w-]{11}$/.test(id))return;
+    stopAllPreviews();
+    const sec=Math.max(0,parseInt(btn.dataset.start||'0',10)||0);
+    previouslyFocused=document.activeElement;
+    scrollLockWas=document.body.style.overflow;
+    frame.title=btn.dataset.gtaTitle||'GTA VI featured YouTube video';
+    dialog.classList.toggle('is-shorts',Boolean(btn.closest('[data-gta-panel="shorts"]')));
+    modal.hidden=false;
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    // Show the YouTube thumbnail/play button, as in the original Cut & Hire modal.
+    // Starting offsets are preserved for the second and third GTA VI videos.
+    frame.src='https://www.youtube.com/embed/'+encodeURIComponent(id)
+      +'?playsinline=1&rel=0&start='+sec;
+    close.focus({preventScroll:true});
+  }
+  function closeVideo(){
+    if(modal.hidden)return;
+    // Clearing the src halts YouTube playback immediately.
+    frame.removeAttribute('src');
+    dialog.classList.remove('is-shorts');
+    modal.hidden=true;
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow=scrollLockWas;
+    if(previouslyFocused && previouslyFocused.isConnected)previouslyFocused.focus({preventScroll:true});
+  }
+  videoButtons.forEach(btn=>{
+    btn.addEventListener('pointerenter',ev=>{if(ev.pointerType!=='touch')startPreview(btn);});
+    btn.addEventListener('pointerleave',()=>stopPreview(btn));
+    btn.addEventListener('click',()=>openVideo(btn));
+  });
+  close.addEventListener('click',closeVideo);
+  modal.addEventListener('click',ev=>{if(ev.target===modal)closeVideo()});
+  document.addEventListener('keydown',ev=>{
+    if(modal.hidden)return;
+    if(ev.key==='Escape'){ev.preventDefault();closeVideo();}
+    // Keep focus within the player while open.
+    if(ev.key==='Tab'){
+      const focusable=[close,frame];
+      const idx=focusable.indexOf(document.activeElement);
+      if(ev.shiftKey && idx<=0){ev.preventDefault();focusable[1].focus();}
+      else if(!ev.shiftKey && idx===1){ev.preventDefault();close.focus();}
+    }
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){stopAllPreviews();root.classList.remove('gta-in-view');}
+    else if(root.getBoundingClientRect().top<window.innerHeight+80 &&
+            root.getBoundingClientRect().bottom>-80){root.classList.add('gta-in-view');}
+  });
+  window.addEventListener('pagehide',stopAllPreviews);
+})();;
+
+// GTA VI — real public YouTube video metadata (title, channel, avatar, views, likes).
+// GitHub Actions + yt-dlp update one static JSON without a YouTube API key.
+(function initGtaShowcaseMetadata(){
+  const root=document.getElementById('gta-showcase');
+  if(!root)return;
+  const cards=Array.from(root.querySelectorAll('.gta-card-details[data-gta-stats-for]'));
+  if(!cards.length)return;
+  const localUrl='assets/data/gta6-video-stats.json';
+  const githubUrl='https://raw.githubusercontent.com/cuthire44-source/cut-hire.github.io/main/assets/data/gta6-video-stats.json';
+  const isLocal=/^(?:localhost|127\.0\.0\.1)$/.test(location.hostname);
+  // Apply the secondary source first, then the preferred one. Missing fields
+  // from either source never wipe good data from the other.
+  const urls=isLocal?[githubUrl,localUrl]:[localUrl,githubUrl];
+  const compact=new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1});
+  function youtubeChannelUrl(raw){
+    if(typeof raw!=='string')return null;
+    try{
+      const u=new URL(raw);
+      return u.protocol==='https:' && ['youtube.com','www.youtube.com','m.youtube.com'].includes(u.hostname)
+        && (/^\/channel\/UC[\w-]+/.test(u.pathname)||u.pathname.startsWith('/@'))?u.href:null;
+    }catch(_){return null;}
+  }
+  const AVATAR_ASSET_DIR='assets/images/youtube-channel-avatars/';
+  const AVATAR_RAW_DIR='https://raw.githubusercontent.com/cuthire44-source/cut-hire.github.io/main/'+AVATAR_ASSET_DIR;
+  function channelAvatarUrl(raw,videoId){
+    if(typeof raw!=='string')return null;
+    if(raw.startsWith(AVATAR_ASSET_DIR)){
+      const file=raw.slice(AVATAR_ASSET_DIR.length);
+      return file===videoId+'.jpg'||file===videoId+'.png'||file===videoId+'.webp' ? raw : null;
+    }
+    try{
+      const u=new URL(raw);
+      return u.protocol==='https:' && ['yt3.ggpht.com','yt3.googleusercontent.com','yt3.google.com'].includes(u.hostname)?u.href:null;
+    }catch(_){return null;}
+  }
+  function updateAvatar(avatar,metadata,videoId){
+    if(!avatar)return;
+    const candidate=channelAvatarUrl(metadata.avatar,videoId);
+    const source=channelAvatarUrl(metadata.avatarSource,videoId);
+    const variants=[];
+    if(candidate){
+      variants.push(candidate);
+      if(candidate.startsWith(AVATAR_ASSET_DIR))variants.push(AVATAR_RAW_DIR+candidate.slice(AVATAR_ASSET_DIR.length));
+    }
+    if(source && source!==candidate)variants.push(source);
+    if(!variants.length)return;
+    const signature=variants.join('|');
+    if(avatar.dataset.avatarSources===signature)return;
+    avatar.dataset.avatarSources=signature;
+    avatar.loading='eager'; // Hidden lazy images can be deferred indefinitely.
+    let index=0;
+    avatar.hidden=true;
+    avatar.onload=()=>{avatar.hidden=false;};
+    avatar.onerror=()=>{
+      if(index<variants.length)avatar.src=variants[index++];
+      else {avatar.hidden=true;avatar.removeAttribute('src');}
+    };
+    avatar.src=variants[index++];
+  }
+  function applyMetadata(data){
+    if(!data || typeof data!=='object' || !data.videos || typeof data.videos!=='object')return 0;
+    let changed=0;
+    cards.forEach(card=>{
+      const metadata=data.videos[card.dataset.gtaStatsFor];
+      if(!metadata || typeof metadata!=='object')return;
+      changed++;
+      const title=card.querySelector('[data-gta-video-title]');
+      const channel=card.querySelector('[data-gta-channel]');
+      const views=card.querySelector('[data-gta-views]');
+      const likes=card.querySelector('[data-gta-likes]');
+      if(typeof metadata.title==='string' && metadata.title.trim()){
+        title.textContent=metadata.title.trim();title.title=metadata.title.trim();
+        const btn=card.parentElement.querySelector('[data-gta-video]');
+        if(btn){btn.dataset.gtaTitle=metadata.title.trim();btn.setAttribute('aria-label','Play '+metadata.title.trim());}
+      }
+      if(typeof metadata.channel==='string' && metadata.channel.trim()){
+        channel.textContent=metadata.channel.trim();channel.title=metadata.channel.trim();
+      }
+      const channelUrl=youtubeChannelUrl(metadata.channelUrl);
+      if(channelUrl){channel.dataset.channelUrl=channelUrl;}
+      updateAvatar(card.querySelector('[data-gta-avatar]'),metadata,card.dataset.gtaStatsFor);
+      if(views && metadata.views!==null && Number.isFinite(metadata.views) && metadata.views>=0)
+        views.textContent=compact.format(metadata.views);
+      if(likes && metadata.likes!==null && Number.isFinite(metadata.likes) && metadata.likes>=0)
+        likes.textContent=compact.format(metadata.likes);
+      if(data.updatedAt && !Number.isNaN(Date.parse(data.updatedAt)))
+        card.title='YouTube details last checked: '+new Date(data.updatedAt).toLocaleString();
+    });
+    return changed;
+  }
+  let activeFetch=null;
+  async function refresh(){
+    if(activeFetch || document.hidden)return;
+    const controller=new AbortController();activeFetch=controller;
+    try{
+      // Process both sources: local metadata wins on Live Server; GitHub
+      // metadata wins on the published site. Missing values are retained.
+      for(const url of urls){
+        try{
+          const response=await fetch(url+'?t='+Math.floor(Date.now()/600000),
+            {signal:controller.signal,cache:'no-store'});
+          if(!response.ok)continue;
+          const data=await response.json();
+          applyMetadata(data);
+        }catch(error){if(error.name==='AbortError')break;}
+      }
+    }catch(_){/* Missing data / offline / YouTube unavailable; never invent details. */}
+    finally{if(activeFetch===controller)activeFetch=null;}
+  }
+  refresh();
+  setInterval(refresh,10*60*1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+})();
+

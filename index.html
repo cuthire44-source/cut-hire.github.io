@@ -7870,6 +7870,33 @@ body > #creator-intro-banner.creator-intro-banner{
 
 <link rel="prefetch" href="policies.html">
 
+<style id="cnh-youtube-opening-cover-style">
+/* A short, clean loading cover avoids exposing YouTube's initial red splash screen.
+   It clears as soon as the embedded player reports playback, or yields to the
+   native player if autoplay is blocked. We never cover the actual playing video. */
+#vp-screen .cnh-youtube-opening-cover{
+  position:absolute;inset:0;z-index:12;
+  background-color:#090909;background-size:cover;background-position:center;
+  opacity:0;visibility:hidden;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .3s ease,visibility 0s linear .3s;
+}
+#vp-screen .cnh-youtube-opening-cover.is-waiting{
+  opacity:1;visibility:visible;pointer-events:none;
+  transition:opacity .24s ease,visibility 0s;
+}
+#vp-screen .cnh-youtube-opening-cover::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.42));
+}
+#vp-screen .cnh-youtube-opening-spinner{
+  position:relative;width:38px;height:38px;border:2px solid rgba(255,255,255,.19);
+  border-top-color:rgba(255,255,255,.82);border-radius:50%;
+  animation:cnh-youtube-loading-spin .75s linear infinite;
+}
+@keyframes cnh-youtube-loading-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#vp-screen .cnh-youtube-opening-cover{transition:none!important}#vp-screen .cnh-youtube-opening-spinner{animation:none}}
+</style>
 <style id="cnh-work-player-parity-style">
 /* Match Our Work's .rv fade/slide entrance without disturbing layout or card hover. */
 #about .about-reel-feature.cnh-work-reveal {
@@ -7891,9 +7918,27 @@ body > #creator-intro-banner.creator-intro-banner{
   transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);
 }
 #gta-showcase .gta-feature-cta.cnh-work-reveal.vis{opacity:1;transform:none;}
-/* Keep hover image until a video frame is ready, exactly like Our Work's video cards. */
-#gta-showcase .gta-showcase-thumb.cnh-work-hover .gta-local-preview {opacity:0;transition:opacity .28s ease;}
-#gta-showcase .gta-showcase-thumb.cnh-work-hover.is-previewing .gta-local-preview {opacity:1;}
+/* GTA VI uses Our Work's reveal-on-playing hover preview behavior. */
+#gta-showcase .gta-feature-thumb.cnh-work-hover > img {
+  transition:opacity .28s ease,transform .5s cubic-bezier(.2,.8,.2,1),filter .35s ease;
+}
+#gta-showcase .gta-feature-thumb.cnh-work-hover .gta-local-preview {
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  z-index:2;pointer-events:none;object-fit:cover;
+  opacity:0;transform:scale(1);
+  background:transparent;
+  transition:opacity .28s ease,transform .5s cubic-bezier(.2,.8,.2,1),filter .35s ease;
+}
+#gta-showcase .gta-feature-thumb.cnh-work-hover.is-previewing .gta-local-preview {opacity:1;}
+#gta-showcase .gta-feature-thumb.cnh-work-hover.is-previewing > img {opacity:0!important;}
+#gta-showcase .gta-feature-thumb.cnh-work-hover:hover > img,
+#gta-showcase .gta-feature-thumb.cnh-work-hover:hover .gta-local-preview {
+  transform:scale(1.04);filter:brightness(.86);
+}
+@media(prefers-reduced-motion:reduce){
+ #gta-showcase .gta-feature-thumb.cnh-work-hover > img,
+ #gta-showcase .gta-feature-thumb.cnh-work-hover .gta-local-preview {transition:none!important;}
+}
 @media(prefers-reduced-motion:reduce){
  #about .about-reel-feature.cnh-work-reveal,
  #gta-showcase .gta-feature-card.cnh-work-reveal,
@@ -9850,59 +9895,111 @@ body > #creator-intro-banner.creator-intro-banner{
     });
     current=gta.querySelector('.gta-feature-panel.is-current:not([hidden])');
 
-    // Work's preview range is 2–5 seconds. Apply the SAME bounds to GTA's
-    // existing MP4 preview nodes, with a lazy fallback if older JS provides none.
+    // Exactly like Our Work: muted 2–5s loop, only reveal after actual playback,
+    // unload on exit, and limit concurrent video decoders to two.
+    var maxActive=2;
+    var active=new Set();
     var managed=new WeakSet();
-    function limitPreview(button,video){
-      if(managed.has(video))return;
-      managed.add(video);
-      button.classList.add('cnh-work-hover');
-      video.muted=true;video.defaultMuted=true;video.loop=true;video.playsInline=true;
-      video.setAttribute('muted','');video.setAttribute('playsinline','');
-      function seekStart(){try{if(video.readyState>=1)video.currentTime=Math.min(2,Math.max(0,(Number.isFinite(video.duration)?video.duration:5)-.25));}catch(_){}}
-      video.addEventListener('timeupdate',function(){
-        if(video.currentTime>=5){seekStart();if(!video.paused)video.play().catch(function(){});}
-      });
-      video.addEventListener('ended',function(){if(button.matches(':hover')){seekStart();video.play().catch(function(){});}});
-      // Preserve any pre-existing hover listeners (and their media preloading).
-      if(video.dataset.cnhWorkOwned==='1'){
-        var active=false;
-        function start(){
-          if(reduced.matches || !window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-          active=true;
-          if(!video.getAttribute('src')){video.src=video.dataset.src;video.load();}
-          video.preload='auto';seekStart();
-          var p=video.play();if(p&&p.catch)p.catch(function(){});
-        }
-        function stop(){active=false;video.pause();seekStart();button.classList.remove('is-previewing');}
-        video.addEventListener('loadedmetadata',function(){if(active)seekStart();});
-        video.addEventListener('playing',function(){if(active)button.classList.add('is-previewing');});
-        button.addEventListener('mouseenter',start);
-        button.addEventListener('mouseleave',stop);
-        button.addEventListener('focusout',stop);
-        document.addEventListener('visibilitychange',function(){if(document.hidden)stop();});
-      }
-    }
     function setupGtaPreviews(){
       gta.querySelectorAll('.gta-feature-thumb[data-gta-hover-mp4]').forEach(function(button){
+        if(managed.has(button))return;
+        managed.add(button);
+        button.classList.add('cnh-work-hover');
         var video=button.querySelector('video.gta-showcase-preview');
         if(!video){
           video=document.createElement('video');
           video.className='gta-showcase-preview gta-local-preview';
-          video.dataset.src=button.dataset.gtaHoverMp4;
-          video.dataset.cnhWorkOwned='1';
-          video.preload='none';video.muted=true;video.loop=true;video.playsInline=true;
           var scan=button.querySelector('.gta-showcase-scan');
           button.insertBefore(video,scan||null);
         }
-        limitPreview(button,video);
+        video.classList.add('gta-local-preview');
+        video.muted=true;video.defaultMuted=true;video.loop=true;video.playsInline=true;
+        video.setAttribute('muted','');video.setAttribute('playsinline','');
+        video.setAttribute('webkit-playsinline','');video.setAttribute('disablepictureinpicture','');
+        video.preload='none';
+        var source=button.getAttribute('data-gta-hover-mp4')||'';
+        var hovering=false;
+        var playToken=0;
+        var startAt=2,endAt=5;
+        function seekStart(){
+          try{
+            var dur=Number.isFinite(video.duration)?video.duration:0;
+            var safeStart=dur?Math.min(startAt,Math.max(0,dur-.4)):startAt;
+            if(Math.abs(video.currentTime-safeStart)>.25)video.currentTime=safeStart;
+          }catch(_){}
+        }
+        function showIfReady(token){
+          if(token!==playToken || !hovering || video.paused || video.readyState<2 || video.seeking)return;
+          button.classList.add('is-previewing');
+          button.classList.remove('preview-loading');
+        }
+        function playPreview(token){
+          if(!hovering || token!==playToken)return;
+          var result;
+          try{result=video.play();}catch(_){return;}
+          if(result&&result.then)result.then(function(){showIfReady(token);}).catch(function(){
+            if(token===playToken)button.classList.remove('preview-loading');
+          });
+          else showIfReady(token);
+        }
+        function stopPreview(){
+          hovering=false;
+          playToken++;
+          active.delete(button);
+          try{video.pause();}catch(_){}
+          button.classList.remove('is-previewing','preview-loading');
+          video.removeAttribute('src');
+          try{video.load();}catch(_){}
+        }
+        function startPreview(){
+          if(hovering || reduced.matches || !source || !window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+          while(active.size>=maxActive){
+            var oldest=active.values().next().value;
+            if(oldest&&typeof oldest.__cnhStopGtaPreview==='function')oldest.__cnhStopGtaPreview();
+            else active.delete(oldest);
+          }
+          hovering=true;
+          var token=++playToken;
+          active.add(button);
+          button.classList.add('preview-loading');
+          video.preload='auto';
+          if(video.getAttribute('src')!==source){video.src=source;try{video.load();}catch(_){}}
+          seekStart();
+          playPreview(token);
+        }
+        button.__cnhStopGtaPreview=stopPreview;
+        video.addEventListener('loadedmetadata',function(){if(hovering){seekStart();playPreview(playToken);}});
+        video.addEventListener('loadeddata',function(){if(hovering)showIfReady(playToken);});
+        video.addEventListener('canplay',function(){if(hovering){playPreview(playToken);showIfReady(playToken);}});
+        video.addEventListener('playing',function(){showIfReady(playToken);});
+        video.addEventListener('seeked',function(){showIfReady(playToken);});
+        video.addEventListener('timeupdate',function(){
+          if(!hovering)return;
+          showIfReady(playToken);
+          if(video.currentTime>=Math.min(endAt,Math.max(.6,Number.isFinite(video.duration)?video.duration-.15:endAt))){
+            seekStart();
+          }
+        });
+        video.addEventListener('error',function(){if(hovering){button.classList.remove('preview-loading');stopPreview();}});
+        button.addEventListener('mouseenter',startPreview,{passive:true});
+        button.addEventListener('mouseleave',stopPreview,{passive:true});
+        button.addEventListener('focusin',startPreview);
+        button.addEventListener('focusout',stopPreview);
       });
     }
-    // Give the site's own preview controller the first chance to create its nodes.
-    window.setTimeout(setupGtaPreviews,150);
-    new MutationObserver(function(records){
-      if(records.some(function(r){return r.addedNodes.length;})) setupGtaPreviews();
-    }).observe(gta.querySelector('.gta-feature-stage'),{subtree:true,childList:true});
+    function stopAllGtaPreviews(){
+      Array.from(active).forEach(function(button){if(button.__cnhStopGtaPreview)button.__cnhStopGtaPreview();});
+    }
+    window.setTimeout(setupGtaPreviews,60);
+    setupGtaPreviews();
+    var stage=gta.querySelector('.gta-feature-stage');
+    if(stage)new MutationObserver(function(records){
+      if(records.some(function(r){return r.addedNodes.length;}))setupGtaPreviews();
+    }).observe(stage,{subtree:true,childList:true});
+    document.addEventListener('visibilitychange',function(){if(document.hidden)stopAllGtaPreviews();});
+    var player=document.getElementById('vp-wrap');
+    if(player)new MutationObserver(function(){if(player.classList.contains('open'))stopAllGtaPreviews();})
+      .observe(player,{attributes:true,attributeFilter:['class']});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});
   else setup();
@@ -9912,6 +10009,78 @@ body > #creator-intro-banner.creator-intro-banner{
 <!-- Three new Our Work / Shorts-Reels items; use the standard website cards and player. -->
 <script src="assets/js/work-shorts-additions.js?v=20261114-2"></script>
 
+<!-- Clean, short YouTube loading screen. Video playback stays inside the original YouTube player. -->
+<script id="cnh-youtube-opening-cover-script">
+(function(){
+  'use strict';
+  var wrap=document.getElementById('vp-wrap');
+  var screen=document.getElementById('vp-screen');
+  var iframe=document.getElementById('vp-embed-iframe');
+  if(!wrap||!screen||!iframe)return;
+  var cover=document.createElement('div');
+  cover.className='cnh-youtube-opening-cover';
+  cover.setAttribute('aria-hidden','true');
+  var spinner=document.createElement('span');
+  spinner.className='cnh-youtube-opening-spinner';
+  cover.appendChild(spinner);
+  screen.appendChild(cover);
+  var token=0,timeoutId=0,currentSrc='';
+  function hide(){
+    window.clearTimeout(timeoutId);
+    cover.classList.remove('is-waiting');
+  }
+  function receive(event){
+    try{
+      var origin=new URL(event.origin);
+      if(!/^(?:www\.)?youtube(?:-nocookie)?\.com$/.test(origin.hostname))return;
+    }catch(_){return;}
+    if(event.source!==iframe.contentWindow)return;
+    var data=event.data;
+    if(typeof data==='string'){try{data=JSON.parse(data);}catch(_){return;}}
+    if(!data||typeof data!=='object')return;
+    // YouTube IFrame API: 1 = playing; -1/2 = unstarted/paused.
+    if((data.event==='onStateChange'&&data.info===1)||
+       (data.event==='infoDelivery'&&data.info&&data.info.playerState===1))hide();
+  }
+  window.addEventListener('message',receive);
+  function listen(){
+    try{
+      iframe.contentWindow.postMessage(JSON.stringify({event:'listening',id:'vp-embed-iframe'}),'https://www.youtube.com');
+      iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:'playVideo',args:[],id:'vp-embed-iframe'}),'https://www.youtube.com');
+    }catch(_){}
+  }
+  iframe.addEventListener('load',listen);
+  function update(){
+    var open=wrap.classList.contains('open')&&wrap.classList.contains('youtube-active');
+    var src=iframe.getAttribute('src')||'';
+    if(!open||!src){currentSrc='';token++;hide();return;}
+    if(src===currentSrc)return;
+    currentSrc=src;
+    var idMatch=src.match(/\/embed\/([a-zA-Z0-9_-]{11})(?:[?&#]|$)/);
+    if(!idMatch)return;
+    var thisToken=++token;
+    window.clearTimeout(timeoutId);
+    cover.style.backgroundImage='url("https://i.ytimg.com/vi/'+idMatch[1]+'/hqdefault.jpg")';
+    cover.classList.add('is-waiting');
+    try{
+      var url=new URL(src,location.href);
+      if(url.searchParams.get('enablejsapi')!=='1'){
+        url.searchParams.set('enablejsapi','1');
+        if(location.protocol==='https:'||location.protocol==='http:')url.searchParams.set('origin',location.origin);
+        // Loading the same video with the JavaScript playback API enabled
+        // allows us to clear the cover as soon as real playback starts.
+        iframe.setAttribute('src',url.toString());
+        currentSrc=url.toString();
+      }
+    }catch(_){}
+    // Never trap an autoplay-blocked or failed embed behind a cover.
+    timeoutId=window.setTimeout(function(){if(token===thisToken)hide();},5200);
+  }
+  new MutationObserver(update).observe(wrap,{attributes:true,attributeFilter:['class']});
+  new MutationObserver(update).observe(iframe,{attributes:true,attributeFilter:['src']});
+  update();
+})();
+</script>
 <!-- GTA VI video 06: public YouTube metadata fallback (the standard GTA metadata loader remains primary). -->
 <script id="cnh-gta-six-metadata-fallback">
 (function () {

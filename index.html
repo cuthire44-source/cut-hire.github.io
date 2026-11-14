@@ -7870,33 +7870,6 @@ body > #creator-intro-banner.creator-intro-banner{
 
 <link rel="prefetch" href="policies.html">
 
-<style id="cnh-youtube-opening-cover-style">
-/* A short, clean loading cover avoids exposing YouTube's initial red splash screen.
-   It clears as soon as the embedded player reports playback, or yields to the
-   native player if autoplay is blocked. We never cover the actual playing video. */
-#vp-screen .cnh-youtube-opening-cover{
-  position:absolute;inset:0;z-index:12;
-  background-color:#090909;background-size:cover;background-position:center;
-  opacity:0;visibility:hidden;pointer-events:none;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .3s ease,visibility 0s linear .3s;
-}
-#vp-screen .cnh-youtube-opening-cover.is-waiting{
-  opacity:1;visibility:visible;pointer-events:none;
-  transition:opacity .24s ease,visibility 0s;
-}
-#vp-screen .cnh-youtube-opening-cover::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.42));
-}
-#vp-screen .cnh-youtube-opening-spinner{
-  position:relative;width:38px;height:38px;border:2px solid rgba(255,255,255,.19);
-  border-top-color:rgba(255,255,255,.82);border-radius:50%;
-  animation:cnh-youtube-loading-spin .75s linear infinite;
-}
-@keyframes cnh-youtube-loading-spin{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){#vp-screen .cnh-youtube-opening-cover{transition:none!important}#vp-screen .cnh-youtube-opening-spinner{animation:none}}
-</style>
 <style id="cnh-work-player-parity-style">
 /* Match Our Work's .rv fade/slide entrance without disturbing layout or card hover. */
 #about .about-reel-feature.cnh-work-reveal {
@@ -8136,6 +8109,20 @@ body > #creator-intro-banner.creator-intro-banner{
   #gta-showcase .gta-showcase-heading { margin-bottom:clamp(1.9rem,3vw,2.8rem); }
   #gta-showcase .gta-feature-stage { height:auto!important; }
   #gta-showcase #gta-panel-long { position:relative!important;display:block!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important; }
+</style>
+
+<style id="cnh-hide-hero-arrow-over-video-popups">
+/* The fixed hero scroll cue must never appear behind an open video player.
+   Preserve the existing arrow behavior when the viewer closes. */
+body.video-modal-locked #hero-scroll-arrow,
+body.cnh-video-scroll-locked #hero-scroll-arrow,
+html:has(#vp-wrap.open) #hero-scroll-arrow,
+html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
 </style>
 </head>
 <body class="hero-start-boost">
@@ -10009,78 +9996,6 @@ body > #creator-intro-banner.creator-intro-banner{
 <!-- Three new Our Work / Shorts-Reels items; use the standard website cards and player. -->
 <script src="assets/js/work-shorts-additions.js?v=20261114-2"></script>
 
-<!-- Clean, short YouTube loading screen. Video playback stays inside the original YouTube player. -->
-<script id="cnh-youtube-opening-cover-script">
-(function(){
-  'use strict';
-  var wrap=document.getElementById('vp-wrap');
-  var screen=document.getElementById('vp-screen');
-  var iframe=document.getElementById('vp-embed-iframe');
-  if(!wrap||!screen||!iframe)return;
-  var cover=document.createElement('div');
-  cover.className='cnh-youtube-opening-cover';
-  cover.setAttribute('aria-hidden','true');
-  var spinner=document.createElement('span');
-  spinner.className='cnh-youtube-opening-spinner';
-  cover.appendChild(spinner);
-  screen.appendChild(cover);
-  var token=0,timeoutId=0,currentSrc='';
-  function hide(){
-    window.clearTimeout(timeoutId);
-    cover.classList.remove('is-waiting');
-  }
-  function receive(event){
-    try{
-      var origin=new URL(event.origin);
-      if(!/^(?:www\.)?youtube(?:-nocookie)?\.com$/.test(origin.hostname))return;
-    }catch(_){return;}
-    if(event.source!==iframe.contentWindow)return;
-    var data=event.data;
-    if(typeof data==='string'){try{data=JSON.parse(data);}catch(_){return;}}
-    if(!data||typeof data!=='object')return;
-    // YouTube IFrame API: 1 = playing; -1/2 = unstarted/paused.
-    if((data.event==='onStateChange'&&data.info===1)||
-       (data.event==='infoDelivery'&&data.info&&data.info.playerState===1))hide();
-  }
-  window.addEventListener('message',receive);
-  function listen(){
-    try{
-      iframe.contentWindow.postMessage(JSON.stringify({event:'listening',id:'vp-embed-iframe'}),'https://www.youtube.com');
-      iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:'playVideo',args:[],id:'vp-embed-iframe'}),'https://www.youtube.com');
-    }catch(_){}
-  }
-  iframe.addEventListener('load',listen);
-  function update(){
-    var open=wrap.classList.contains('open')&&wrap.classList.contains('youtube-active');
-    var src=iframe.getAttribute('src')||'';
-    if(!open||!src){currentSrc='';token++;hide();return;}
-    if(src===currentSrc)return;
-    currentSrc=src;
-    var idMatch=src.match(/\/embed\/([a-zA-Z0-9_-]{11})(?:[?&#]|$)/);
-    if(!idMatch)return;
-    var thisToken=++token;
-    window.clearTimeout(timeoutId);
-    cover.style.backgroundImage='url("https://i.ytimg.com/vi/'+idMatch[1]+'/hqdefault.jpg")';
-    cover.classList.add('is-waiting');
-    try{
-      var url=new URL(src,location.href);
-      if(url.searchParams.get('enablejsapi')!=='1'){
-        url.searchParams.set('enablejsapi','1');
-        if(location.protocol==='https:'||location.protocol==='http:')url.searchParams.set('origin',location.origin);
-        // Loading the same video with the JavaScript playback API enabled
-        // allows us to clear the cover as soon as real playback starts.
-        iframe.setAttribute('src',url.toString());
-        currentSrc=url.toString();
-      }
-    }catch(_){}
-    // Never trap an autoplay-blocked or failed embed behind a cover.
-    timeoutId=window.setTimeout(function(){if(token===thisToken)hide();},5200);
-  }
-  new MutationObserver(update).observe(wrap,{attributes:true,attributeFilter:['class']});
-  new MutationObserver(update).observe(iframe,{attributes:true,attributeFilter:['src']});
-  update();
-})();
-</script>
 <!-- GTA VI video 06: public YouTube metadata fallback (the standard GTA metadata loader remains primary). -->
 <script id="cnh-gta-six-metadata-fallback">
 (function () {

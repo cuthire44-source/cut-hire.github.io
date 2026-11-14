@@ -8188,7 +8188,7 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
   margin:0;border:none;border-radius:99px;cursor:pointer;
   background:linear-gradient(90deg,var(--red) var(--voice-pct,0%),#66666a var(--voice-pct,0%));
 }
-#work #work-grid[data-cat="voice"] .cnh-voice-volume{--voice-pct:75%;}
+#work #work-grid[data-cat="voice"] .cnh-voice-volume{--voice-pct:100%;}
 #work #work-grid[data-cat="voice"] input[type="range"]::-webkit-slider-thumb{
   appearance:none;-webkit-appearance:none;width:12px;height:12px;border-radius:50%;
   border:0;background:#f3f1ef;box-shadow:0 0 0 2px rgba(0,0,0,.1);
@@ -10206,7 +10206,7 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
             <input class="cnh-voice-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="${name} audio position"/>
             <span class="cnh-voice-time" aria-live="off">0:00</span>
             <button type="button" class="cnh-voice-icon cnh-voice-mute" aria-label="Mute ${name} audio">${icons.volume}</button>
-            <input class="cnh-voice-volume" type="range" min="0" max="1" step="0.05" value="0.75" aria-label="${name} volume"/>
+            <input class="cnh-voice-volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="${name} volume"/>
             <div class="cnh-voice-settings-wrap">
               <button type="button" class="cnh-voice-icon cnh-voice-settings" aria-haspopup="true" aria-expanded="false" aria-label="${name} playback speed settings">${icons.settings}</button>
               <div class="cnh-voice-settings-menu" role="menu" aria-label="${name} playback speed" hidden>
@@ -10274,7 +10274,7 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
       requestAnimationFrame(()=>{if(menuOpen)menu.classList.add('is-open');});
     }
     controllers.push({audio,hideMenu});
-    audio.volume=.75;
+    audio.volume=Number(volume.value);
     ['loadedmetadata','durationchange','timeupdate','seeking','seeked','ended'].forEach(evt=>audio.addEventListener(evt,refreshTime));
     ['play','pause','ended'].forEach(evt=>audio.addEventListener(evt,refreshPlay));
     ['volumechange'].forEach(evt=>audio.addEventListener(evt,refreshVolume));

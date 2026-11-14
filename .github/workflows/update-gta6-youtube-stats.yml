@@ -1,0 +1,49 @@
+name: Refresh GTA VI YouTube video details (no API key)
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 3 hours (UTC). GitHub may delay or skip scheduled runs.
+    - cron: '17 */3 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gta-vi-youtube-stats
+  cancel-in-progress: false
+
+jobs:
+  update-youtube-stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the current repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Deno (for yt-dlp's YouTube JS challenges)
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Install yt-dlp with YouTube JS challenge support
+        run: python -m pip install --upgrade 'yt-dlp[default]'
+      - name: Read YouTube titles, channels, avatars, views and likes (no API key)
+        run: python scripts/update_gta6_stats.py
+      - name: Commit refreshed JSON only when it changed
+        run: |
+          git add assets/data/gta6-video-stats.json
+          if [ -d assets/images/youtube-channel-avatars ]; then
+            git add assets/images/youtube-channel-avatars/
+          fi
+          if git diff --cached --quiet; then
+            echo 'Statistics have not changed.'
+          else
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh GTA VI public video stats [skip ci]'
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

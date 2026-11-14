@@ -6709,3 +6709,1774 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
 #video-testimonials .testimonial-video-card.testimonial-landscape .testimonial-video-preview{
   object-fit:cover;
 }
+
+
+/* -------------------------------------------------------------------------
+   GTA VI FEATURED SHOWCASE — 2026-11-10 | standalone, above #work
+   Same Cut & Hire type system; cinematic neon-sunset accents.
+   ------------------------------------------------------------------------- */
+#gta-showcase {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:6.7rem 2rem 6.5rem;
+  background:linear-gradient(to bottom,#000 0%,#070408 22%,#09040c 50%,#050308 82%,#000 100%);
+}
+#gta-showcase .gta-showcase-glow {
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(ellipse 52% 50% at 79% 51%,rgba(224,32,87,.13),transparent 75%),
+    radial-gradient(ellipse 40% 39% at 27% 49%,rgba(255,147,103,.09),transparent 80%),
+    radial-gradient(ellipse 60% 35% at 60% 20%,rgba(132,50,128,.07),transparent 80%);
+}
+#gta-showcase .gta-showcase-inner{position:relative;max-width:1170px;}
+#gta-showcase .gta-showcase-heading{text-align:center;margin:0 auto 3.2rem;max-width:770px;}
+#gta-showcase .gta-showcase-kicker{
+  color:#ff7399;
+  justify-content:center;
+  font-size:.66rem;
+  letter-spacing:.24em;
+  margin-bottom:1.15rem;
+}
+#gta-showcase .gta-showcase-kicker::before{background:#fa668f;}
+#gta-showcase .gta-showcase-title{
+  font-size:clamp(2.6rem,5.4vw,5rem);
+  letter-spacing:-.04em;
+  line-height:1.08;
+  margin-bottom:.7rem;
+}
+#gta-showcase .gta-showcase-title em{
+  background:linear-gradient(110deg,#ffb18d 0%,#ff789f 40%,#e83278 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  /* Italic Playfair's final ? overhangs the text-run paint box.
+     Extend the clip without visibly shifting the centered heading. */
+  display:inline-block;
+  padding-inline-end:.18em;
+  margin-inline-end:-.18em;
+}
+#gta-showcase .gta-showcase-heading>p{
+  color:rgba(245,240,235,.58);
+  font-size:clamp(.9rem,1.35vw,1.1rem);
+  line-height:1.55;
+}
+#gta-showcase .gta-showcase-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  align-items:stretch;
+  gap:clamp(1.1rem,2.25vw,2rem);
+}
+#gta-showcase .gta-showcase-videos{display:flex;flex-direction:column;gap:14px;min-width:0;}
+#gta-showcase .gta-showcase-video{
+  display:grid;
+  grid-template-columns:minmax(160px,1.22fr) minmax(122px,.88fr);
+  min-width:0;
+  overflow:hidden;
+  min-height:138px;
+  border-radius:17px;
+  border:1px solid rgba(255,186,196,.14);
+  background:linear-gradient(116deg,rgba(255,255,255,.065),rgba(255,255,255,.016));
+}
+#gta-showcase .gta-showcase-video:hover{border-color:rgba(255,142,164,.5);}
+#gta-showcase .gta-showcase-thumb{
+  position:relative;
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:100%;
+  overflow:hidden;
+  cursor:pointer;
+  border:0;
+  padding:0;
+  background:#18101d;
+  color:white;
+  isolation:isolate;
+}
+#gta-showcase .gta-showcase-thumb img{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  z-index:1;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .35s ease;
+}
+#gta-showcase .gta-showcase-thumb:hover img{transform:scale(1.045);}
+#gta-showcase .gta-showcase-thumb .gta-showcase-preview{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  border:0;
+  z-index:0;
+  pointer-events:none;
+  background:#130b17;
+}
+#gta-showcase .gta-showcase-thumb.is-previewing img{opacity:.15;}
+#gta-showcase .gta-showcase-scan{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(0deg,rgba(0,0,0,.21),transparent 70%);
+}
+#gta-showcase .gta-showcase-play{
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(.88);
+  width:48px;height:48px;
+  z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,154,167,.62);
+  border-radius:50%;
+  color:#fff;
+  background:linear-gradient(135deg,rgba(225,32,49,.93),rgba(244,94,111,.94));
+  box-shadow:0 0 26px rgba(224,32,48,.34);
+  opacity:0;
+  transition:opacity .2s,transform .26s;
+  pointer-events:none;
+}
+#gta-showcase .gta-showcase-play svg{width:22px;height:22px;fill:currentColor;margin-left:2px;}
+#gta-showcase .gta-showcase-thumb:hover .gta-showcase-play,
+#gta-showcase .gta-showcase-thumb:focus-visible .gta-showcase-play{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+@media(hover:none){#gta-showcase .gta-showcase-play{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+#gta-showcase .gta-showcase-thumb:focus-visible{outline:2px solid #ff8daa;outline-offset:-2px;}
+#gta-showcase .gta-showcase-video-meta{
+  min-width:0;
+  padding:16px clamp(12px,1.7vw,24px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:9px;
+}
+#gta-showcase .gta-showcase-video-number{
+  font:700 .64rem 'DM Mono',monospace;
+  letter-spacing:.17em;
+  color:#ffb19e;
+}
+#gta-showcase .gta-showcase-separator{opacity:.5;}
+#gta-showcase .gta-showcase-video-meta h3{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(.85rem,1.1vw,1.03rem);
+  font-weight:800;
+  letter-spacing:.005em;
+  line-height:1.2;
+  color:var(--w);
+}
+#gta-showcase .gta-showcase-video-meta a{
+  color:rgba(245,240,235,.62);
+  font:600 .68rem 'DM Sans',sans-serif;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color .2s;
+}
+#gta-showcase .gta-showcase-video-meta a:hover{color:#ff91a0;}
+#gta-showcase .gta-showcase-promo{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:100%;
+  border:1px solid rgba(255,155,180,.23);
+  border-radius:23px;
+  padding:clamp(24px,3.3vw,46px);
+  background:
+    radial-gradient(ellipse at 86% 0%,rgba(255,176,129,.32),transparent 54%),
+    linear-gradient(155deg,#201021 0%,#37142d 37%,#1d0b1d 69%,#100710 100%);
+  box-shadow:inset 0 0 70px rgba(255,140,160,.045);
+}
+#gta-showcase .gta-showcase-promo::before{
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.45) 100%),
+    repeating-linear-gradient(0deg,transparent,transparent 25px,rgba(255,255,255,.017) 26px);
+}
+#gta-showcase .gta-showcase-promo::after{
+  content:'';
+  position:absolute;
+  width:330px;height:330px;
+  border-radius:50%;
+  top:18%;right:-190px;
+  border:32px solid rgba(255,148,132,.11);
+  box-shadow:0 0 0 26px rgba(255,148,132,.055),0 0 0 53px rgba(255,148,132,.026);
+  pointer-events:none;
+}
+#gta-showcase .gta-showcase-promo-top,
+#gta-showcase .gta-showcase-promo-main,
+#gta-showcase .gta-showcase-promo-bottom{position:relative;z-index:1;}
+#gta-showcase .gta-showcase-promo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+#gta-showcase .gta-showcase-promo-overline{font:700 .62rem 'DM Mono',monospace;letter-spacing:.18em;color:#ffc0b6;}
+#gta-showcase .gta-showcase-sparkle{margin-right:.35rem;color:#ffb58c;}
+#gta-showcase .gta-showcase-promo-icon{
+  display:block;
+  font:italic 900 2.9rem 'Playfair Display',serif;
+  color:rgba(255,177,163,.8);
+  line-height:.9;
+}
+#gta-showcase .gta-showcase-promo-main{padding:clamp(34px,5vw,64px) 0;}
+#gta-showcase .gta-showcase-eyebrow{
+  font:700 .65rem 'DM Mono',monospace;
+  color:#ff9baf;letter-spacing:.16em;margin-bottom:19px;
+}
+#gta-showcase .gta-showcase-promo-main h3{
+  max-width:440px;
+  font:900 clamp(2.35rem,4.1vw,4.3rem)/1.07 'Playfair Display',serif;
+  letter-spacing:-.045em;
+  color:#fff4f1;
+}
+#gta-showcase .gta-showcase-promo-main h3 em{
+  color:#ffa3ab;font-style:italic;
+}
+#gta-showcase .gta-showcase-promo-main>p:not(.gta-showcase-eyebrow){
+  max-width:400px;
+  color:rgba(245,240,235,.69);
+  margin:21px 0 26px;
+  font-size:clamp(.9rem,1.2vw,1rem);
+  line-height:1.55;
+}
+#gta-showcase .gta-showcase-hire{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  min-height:48px;
+  padding:13px 23px;
+  border:1px solid rgba(255,219,211,.4);
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(110deg,#dc202e,#ed416b 56%,#ee6b75);
+  box-shadow:0 8px 30px rgba(207,40,85,.24);
+  font:800 .83rem 'DM Sans',sans-serif;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s,filter .2s;
+}
+#gta-showcase .gta-showcase-hire:hover{transform:translateY(-2px);filter:brightness(1.12);box-shadow:0 12px 36px rgba(234,50,99,.34);}
+#gta-showcase .gta-showcase-hire svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+#gta-showcase .gta-showcase-promo-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  border-top:1px solid rgba(255,197,191,.18);
+  padding-top:20px;
+  color:rgba(255,206,208,.57);
+  letter-spacing:.13em;
+  font:600 .55rem 'DM Mono',monospace;
+}
+@media(max-width:870px){
+  #gta-showcase{padding:4.7rem 1.25rem 5rem;}
+  #gta-showcase .gta-showcase-grid{grid-template-columns:1fr;}
+  #gta-showcase .gta-showcase-videos{max-width:none;}
+  #gta-showcase .gta-showcase-promo{min-height:340px;}
+  #gta-showcase .gta-showcase-promo-main{padding:35px 0;}
+  #gta-showcase .gta-showcase-promo-main h3{font-size:clamp(2.35rem,5.5vw,3.6rem);}
+}
+@media(max-width:510px){
+  #gta-showcase{padding:4.1rem 1rem 4.4rem;}
+  #gta-showcase .gta-showcase-heading{margin-bottom:2.1rem;}
+  #gta-showcase .gta-showcase-title{font-size:clamp(2.3rem,10vw,3.3rem);}
+  #gta-showcase .gta-showcase-video{grid-template-columns:minmax(0,1.32fr) minmax(0,.9fr);border-radius:13px;min-height:108px;}
+  #gta-showcase .gta-showcase-videos{gap:10px;}
+  #gta-showcase .gta-showcase-video-meta{padding:9px 10px;gap:5px;}
+  #gta-showcase .gta-showcase-video-meta h3{font-size:.73rem;line-height:1.23;}
+  #gta-showcase .gta-showcase-video-meta a{font-size:.63rem;white-space:normal;}
+  #gta-showcase .gta-showcase-video-number{font-size:.58rem;}
+  #gta-showcase .gta-showcase-play{width:39px;height:39px;}
+  #gta-showcase .gta-showcase-play svg{width:19px;height:19px;}
+  #gta-showcase .gta-showcase-promo{padding:22px;min-height:375px;}
+  #gta-showcase .gta-showcase-promo-overline{font-size:.55rem;}
+  #gta-showcase .gta-showcase-promo-icon{font-size:2.5rem;}
+  #gta-showcase .gta-showcase-promo-main h3{font-size:clamp(2.4rem,11vw,3.3rem);}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-showcase-play,
+  #gta-showcase .gta-showcase-thumb img,
+  #gta-showcase .gta-showcase-hire{transition:none!important;}
+}
+
+/* Fallback brand artwork when a YouTube thumbnail cannot load. */
+#gta-showcase .gta-showcase-thumb{
+  background:radial-gradient(circle at 70% 35%,rgba(244,114,147,.33),transparent 52%),linear-gradient(135deg,#271127 10%,#090b16 100%);
+}
+#gta-showcase .gta-showcase-thumb-fallback{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:0;
+  color:rgba(255,166,173,.35);
+  font:italic 900 clamp(2.7rem,6vw,5rem) 'Playfair Display',serif;
+  letter-spacing:-.11em;
+  user-select:none;
+  pointer-events:none;
+}
+
+
+/* ===== GTA VI MIAMI SUNSET | HTML/SVG VECTOR ART — NO GENERATED IMAGE =====
+   Uses real vector palm leaf silhouettes with slow independent motion.
+   Scoped to #gta-showcase to preserve all other Cut & Hire sections. */
+#gta-showcase{
+  background:#110819!important;
+  isolation:isolate;
+  overflow:hidden;
+}
+#gta-showcase .gta-sunset-sky,
+#gta-showcase .gta-palm-silhouettes,
+#gta-showcase .gta-sunset-atmosphere{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  user-select:none;
+}
+#gta-showcase .gta-sunset-sky{
+  z-index:0;
+  background:
+    radial-gradient(ellipse 82% 30% at 52% 84%,rgba(255,211,151,.54),transparent 90%),
+    radial-gradient(ellipse 50% 35% at 66% 40%,rgba(236,111,171,.3),transparent 85%),
+    linear-gradient(180deg,#62618f 0%,#8974a8 22%,#bc7fa8 44%,#e995aa 64%,#ffac96 83%,#ffbc8e 100%);
+}
+#gta-showcase .gta-sunset-sky::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 47% 14% at 48% 87%,rgba(255,233,175,.37),transparent 100%),
+    radial-gradient(ellipse 64% 12% at 51% 70%,rgba(255,171,193,.17),transparent 100%);
+  animation:none;
+}
+#gta-showcase .gta-palm-silhouettes{
+  z-index:1;
+  height:100%;
+  opacity:.88;
+  overflow:visible;
+  filter:none;
+}
+#gta-showcase .gta-palm-frond{
+  animation:gtaPalmBreeze var(--palm-duration,9s) ease-in-out var(--palm-delay,0s) infinite alternate;
+  transform-box:view-box;
+  will-change:transform;
+}
+@keyframes gtaPalmBreeze{
+  0%{transform:rotate(calc(var(--palm-angle,1deg) * -1));}
+  100%{transform:rotate(var(--palm-angle,1deg));}
+}
+@keyframes gtaSunsetBreathing{
+  from{opacity:.7;transform:translateY(0)}
+  to{opacity:1;transform:translateY(-8px)}
+}
+#gta-showcase .gta-sunset-atmosphere{
+  z-index:2;
+  background:
+    linear-gradient(180deg,#000 0%,rgba(0,0,0,.62) 9%,rgba(0,0,0,.08) 24%,rgba(13,3,21,.11) 52%,rgba(22,3,16,.24) 75%,rgba(0,0,0,.78) 94%,#000 100%),
+    radial-gradient(ellipse 63% 60% at 50% 57%,rgba(5,1,13,.45),transparent 93%),
+    linear-gradient(90deg,rgba(10,3,21,.26),transparent 20%,transparent 80%,rgba(10,3,21,.26));
+}
+#gta-showcase .gta-showcase-glow{
+  z-index:3;
+  opacity:.4;
+  background:
+    radial-gradient(ellipse 46% 50% at 74% 52%,rgba(244,75,147,.18),transparent 76%),
+    radial-gradient(ellipse 40% 35% at 22% 52%,rgba(255,178,121,.13),transparent 79%);
+}
+#gta-showcase .gta-showcase-inner{position:relative;z-index:4;}
+#gta-showcase .gta-showcase-title,
+#gta-showcase .gta-showcase-promo-main h3{
+  text-shadow:0 3px 24px rgba(29,5,39,.43);
+}
+#gta-showcase .gta-showcase-heading>p{
+  color:rgba(255,246,248,.86);
+  text-shadow:0 2px 18px rgba(25,4,37,.65);
+}
+#gta-showcase .gta-showcase-kicker{color:#ffd1de;}
+#gta-showcase .gta-showcase-kicker::before{background:#ffd1de;}
+#gta-showcase .gta-showcase-video{
+  background:rgba(18,8,29,.8);
+  border-color:rgba(255,211,222,.31);
+  box-shadow:0 12px 37px rgba(20,5,26,.20);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+}
+#gta-showcase .gta-showcase-video-meta h3{color:#fff6f5;}
+#gta-showcase .gta-showcase-video-meta a{color:rgba(255,245,247,.84);}
+#gta-showcase .gta-showcase-video-number{color:#ffc3cf;}
+#gta-showcase .gta-showcase-promo{
+  background:
+    radial-gradient(ellipse at 85% 4%,rgba(245,151,174,.22),transparent 64%),
+    linear-gradient(155deg,rgba(39,13,47,.92),rgba(54,20,53,.88) 48%,rgba(16,7,26,.95) 100%)!important;
+  border:1px solid rgba(255,201,227,.38);
+  box-shadow:0 26px 75px rgba(28,5,30,.29),inset 0 1px 0 rgba(255,226,241,.15);
+  backdrop-filter:blur(10px) saturate(1.1);
+  -webkit-backdrop-filter:blur(10px) saturate(1.1);
+}
+/* Identical glossy pill structure and animated border as Start Today/Watch Our Reel. */
+#gta-showcase .btn-primary.main-mrbeast-glint-btn.gta-showcase-hire{
+  min-width:230px!important;
+  min-height:50px!important;
+  width:max-content!important;
+  padding:1rem 2.55rem!important;
+  gap:0!important;
+  border:2.8px solid rgba(0,0,0,.76)!important;
+  border-radius:999px!important;
+  background:linear-gradient(115deg,#f35c8c 0%,#ee709f 36%,#c27bc6 72%,#a87fe3 100%)!important;
+  color:#fff!important;
+  font:700 1rem 'DM Sans',sans-serif!important;
+  letter-spacing:.035em!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.21),
+    inset 0 -2px 0 rgba(55,17,60,.3),
+    0 0 0 1px rgba(255,255,255,.06),
+    0 12px 28px rgba(0,0,0,.38),
+    0 12px 28px rgba(194,94,176,.24)!important;
+}
+#gta-showcase .btn-primary.main-mrbeast-glint-btn.gta-showcase-hire:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -2px 0 rgba(55,17,60,.32),
+    0 0 0 1px rgba(255,255,255,.09),
+    0 12px 28px rgba(0,0,0,.36),
+    0 14px 37px rgba(194,94,176,.32)!important;
+}
+@media(max-width:870px){
+  #gta-showcase .gta-palm-silhouettes{opacity:.66;}
+}
+@media(max-width:510px){
+  #gta-showcase .gta-palm-silhouettes{width:100%;left:0;opacity:.7;}
+  #gta-showcase .gta-showcase-video{background:rgba(18,7,29,.87);}
+  #gta-showcase .gta-showcase-heading>p{color:rgba(255,247,250,.92);}
+  #gta-showcase .btn-primary.main-mrbeast-glint-btn.gta-showcase-hire{
+    min-width:210px!important;
+    width:min(100%,250px)!important;
+    padding:.89rem 1.8rem!important;
+    font-size:.94rem!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-palm-frond,
+  #gta-showcase .gta-sunset-sky::before{animation:none!important;}
+}
+
+
+/* GTA VI — four actual user-supplied palm shapes, rendered purely as monochrome silhouettes.
+   Original palm photographs are used ONLY for transparency masks (no realistic textures/color).
+   Every palm is an independent layer, moving barely in the sunset breeze. */
+#gta-showcase .gta-asset-palms{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+  width:100%; height:100%;
+  opacity:1;
+  pointer-events:none;
+  isolation:isolate;
+}
+#gta-showcase .gta-asset-palms .gta-palm-tree{
+  position:absolute;
+  display:block;
+  pointer-events:none;
+  transform-origin:50% 100%;
+  will-change:auto;
+  animation:gtaPalmWholeBreeze var(--tree-duration,31s) ease-in-out var(--tree-delay,0s) infinite;
+  animation-play-state:paused;
+  opacity:var(--tree-opacity,.82);
+  filter:none;
+}
+#gta-showcase .gta-asset-palms .gta-palm-shape,
+#gta-showcase .gta-asset-palms .gta-palm-shape::before,
+#gta-showcase .gta-asset-palms .gta-palm-shape::after{
+  position:absolute;
+  inset:0;
+  display:block;
+  pointer-events:none;
+}
+#gta-showcase .gta-asset-palms .gta-palm-shape::before{
+  content:'';
+  background:transparent var(--tree-image) center bottom / contain no-repeat;
+}
+#gta-showcase .gta-asset-palms .gta-palm-shape::after{
+  display:none;
+  content:none;
+  animation:none;
+}
+/* The original full silhouette is the anchor. A subtly offset crown layer
+   gives delicate leaf shimmer without revealing photographic imagery. */
+#gta-showcase .gta-asset-palms .gta-palm-shape::after{
+  clip-path:inset(0 0 var(--tree-crown-clip,66%) 0);
+  transform-origin:50% 28%;
+  opacity:.24;
+  animation:gtaPalmLeaves var(--leaf-duration,8s) ease-in-out var(--leaf-delay,0s) infinite;
+}
+/* Very faint breeze: near-still trunks and delicate crown drift. */
+@keyframes gtaPalmWholeBreeze{
+  0%,100%{transform:translate3d(-.45px,0,0) rotate(-.14deg)}
+  28%{transform:translate3d(.15px,0,0) rotate(.05deg)}
+  57%{transform:translate3d(.55px,0,0) rotate(.17deg)}
+  79%{transform:translate3d(0,0,0) rotate(-.04deg)}
+}
+@keyframes gtaPalmLeaves{
+  0%,100%{transform:translate3d(-.35px,0,0) rotate(-.30deg)}
+  31%{transform:translate3d(.2px,-.15px,0) rotate(.09deg)}
+  62%{transform:translate3d(.48px,0,0) rotate(.32deg)}
+  82%{transform:translate3d(0,0,0) rotate(-.06deg)}
+}
+/* Large palms frame the scene: trunks at the outside edges, foliage curling inward. */
+#gta-showcase .gta-palm-tree-left-front{
+  --tree-image:url('../images/gta-vi-palm-4-silhouette.webp');
+  --tree-color:#4c2d60;
+  --tree-opacity:.9;
+  --tree-duration:31s;
+  --tree-delay:-8s;
+  --leaf-duration:23s;
+  --leaf-delay:-2s;
+  --tree-crown-clip:61%;
+  width:min(56vw,770px);height:113%;
+  left:clamp(-350px,-18vw,-140px);bottom:-20%;
+}
+#gta-showcase .gta-palm-tree-left-back{
+  --tree-image:url('../images/gta-vi-palm-1-silhouette.webp');
+  --tree-color:#70507c;
+  --tree-opacity:.48;
+  --tree-duration:37s;
+  --tree-delay:-7s;
+  --leaf-duration:28s;
+  --leaf-delay:-4s;
+  --tree-crown-clip:62%;
+  width:min(40vw,520px);height:83%;
+  left:2%;bottom:-20%;
+}
+#gta-showcase .gta-palm-tree-right-front{
+  --tree-image:url('../images/gta-vi-palm-3-silhouette.webp');
+  --tree-color:#4e305f;
+  --tree-opacity:.89;
+  --tree-duration:34s;
+  --tree-delay:-13s;
+  --leaf-duration:25s;
+  --leaf-delay:-3s;
+  --tree-crown-clip:62%;
+  width:min(57vw,760px);height:119%;
+  right:clamp(-345px,-17vw,-140px);bottom:-27%;
+}
+#gta-showcase .gta-palm-tree-right-back{
+  --tree-image:url('../images/gta-vi-palm-2-silhouette.webp');
+  --tree-color:#6e4878;
+  --tree-opacity:.57;
+  --tree-duration:40s;
+  --tree-delay:-4s;
+  --leaf-duration:30s;
+  --leaf-delay:-6s;
+  --tree-crown-clip:69%;
+  width:min(38vw,500px);height:83%;
+  right:4%;bottom:-24%;
+}
+@media(max-width:870px){
+  #gta-showcase .gta-asset-palms{opacity:.82;}
+  #gta-showcase .gta-palm-tree-left-front{left:-23vw;width:65vw;height:98%;bottom:-22%;}
+  #gta-showcase .gta-palm-tree-right-front{right:-25vw;width:65vw;height:104%;bottom:-27%;}
+  #gta-showcase .gta-palm-tree-left-back{left:-10vw;width:45vw;height:68%;bottom:-20%;}
+  #gta-showcase .gta-palm-tree-right-back{right:-10vw;width:45vw;height:67%;bottom:-20%;}
+}
+@media(max-width:560px){
+  #gta-showcase .gta-asset-palms{opacity:.73;}
+  #gta-showcase .gta-palm-tree-left-front{left:-48vw;bottom:auto;top:-2%;width:105vw;height:72%;}
+  #gta-showcase .gta-palm-tree-right-front{right:-50vw;bottom:auto;top:0;width:102vw;height:75%;}
+  #gta-showcase .gta-palm-tree-left-back{left:-29vw;bottom:-12%;top:auto;width:70vw;height:49%;}
+  #gta-showcase .gta-palm-tree-right-back{right:-30vw;bottom:-13%;top:auto;width:74vw;height:49%;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-asset-palms .gta-palm-tree,
+  #gta-showcase .gta-asset-palms .gta-palm-shape::after{animation:none!important;}
+}
+
+
+/* GTA VI showcase: clean, OPEN-AIR CTA — no enclosing box, ornaments or labels.
+   Video cards, palm silhouettes, sunset, and all other page sections stay unchanged. */
+#gta-showcase .gta-showcase-promo{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:0!important;
+  padding:clamp(10px,2.5vw,34px)!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  overflow:visible!important;
+  isolation:auto!important;
+}
+#gta-showcase .gta-showcase-promo::before,
+#gta-showcase .gta-showcase-promo::after{
+  content:none!important;
+  display:none!important;
+}
+#gta-showcase .gta-showcase-promo-main{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  width:100%;
+  max-width:460px;
+  padding:0!important;
+  margin:0;
+  text-align:left;
+  position:relative;
+  z-index:2;
+}
+#gta-showcase .gta-showcase-promo-main h3{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.65rem,4.1vw,4.15rem);
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:-.045em;
+  max-width:460px;
+  color:#fff7f4;
+  text-wrap:balance;
+  text-shadow:0 2px 22px rgba(26,9,31,.32);
+}
+#gta-showcase .gta-showcase-promo-main h3 em{
+  font-style:italic;
+  color:#ffa4ba;
+}
+#gta-showcase .btn-primary.main-mrbeast-glint-btn.gta-showcase-hire{
+  align-self:flex-start;
+  margin-top:clamp(28px,3vw,42px)!important;
+  position:relative;
+  z-index:2;
+}
+@media(max-width:870px){
+  #gta-showcase .gta-showcase-promo{
+    min-height:0!important;
+    padding:clamp(26px,5vw,44px) 10px 12px!important;
+  }
+  #gta-showcase .gta-showcase-promo-main{
+    align-items:center;
+    text-align:center;
+    max-width:580px;
+  }
+  #gta-showcase .gta-showcase-promo-main h3{
+    max-width:560px;
+    font-size:clamp(2.4rem,6vw,3.5rem);
+  }
+  #gta-showcase .btn-primary.main-mrbeast-glint-btn.gta-showcase-hire{
+    align-self:center;
+    margin-top:26px!important;
+  }
+}
+@media(max-width:510px){
+  #gta-showcase .gta-showcase-promo{
+    padding:26px 6px 4px!important;
+  }
+  #gta-showcase .gta-showcase-promo-main h3{
+    font-size:clamp(2.25rem,9vw,2.9rem);
+    line-height:1.13;
+  }
+}
+
+
+/* 2026-11-10 · GTA VI showcase — compact category shortcuts, full-width thumbnails,
+   and slow whole-tree sway. Scoped to this showcase; portfolio styling is untouched. */
+#gta-showcase .gta-showcase-heading{
+  max-width:900px;
+  margin-bottom:clamp(1.45rem, 2.5vw, 2.2rem);
+}
+#gta-showcase .gta-showcase-work-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:clamp(.55rem, 1.2vw, .85rem);
+  margin-top:clamp(1.35rem, 2.7vw, 2rem);
+}
+#gta-showcase .gta-showcase-work-tab{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:41px;
+  min-width:177px;
+  padding:.78rem 1.35rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(.72rem, .9vw, .84rem);
+  font-weight:800;
+  letter-spacing:.085em;
+  line-height:1;
+  text-transform:uppercase;
+  white-space:nowrap;
+  color:#fff5fb;
+  background:linear-gradient(125deg,rgba(54,24,69,.42),rgba(78,30,72,.3));
+  border:1px solid rgba(255,179,200,.56);
+  border-radius:999px;
+  box-shadow:0 5px 22px rgba(51,13,58,.14), inset 0 1px 0 rgba(255,255,255,.10);
+  cursor:pointer;
+  transition:transform .22s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+#gta-showcase .gta-showcase-work-tab.is-active{
+  color:#fff;
+  border-color:rgba(255,183,214,.9);
+  background:linear-gradient(115deg,#ef6596 0%,#d95fbc 48%,#9d76df 100%);
+  box-shadow:0 7px 26px rgba(188,60,139,.26),inset 0 1px 0 rgba(255,255,255,.25);
+}
+#gta-showcase .gta-showcase-work-tab:hover{
+  transform:translateY(-2px);
+  border-color:#ffc2d6;
+  box-shadow:0 10px 26px rgba(188,60,139,.25);
+}
+#gta-showcase .gta-showcase-work-tab:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:3px;
+}
+
+/* The red-crossed-out information columns are gone; videos use the whole card. */
+#gta-showcase .gta-showcase-videos{gap:14px;}
+#gta-showcase .gta-showcase-video{
+  display:block!important;
+  height:clamp(166px, 13vw, 205px)!important;
+  min-height:0!important;
+  grid-template-columns:none!important;
+  overflow:hidden;
+  background:rgba(33,13,40,.20);
+}
+#gta-showcase .gta-showcase-thumb{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+}
+#gta-showcase .gta-showcase-thumb img{
+  object-fit:cover;
+  object-position:center 49%;
+}
+#gta-showcase .gta-showcase-video-meta{display:none!important;}
+
+/* Trees sway as single silhouettes: no independently moving leaf/crown overlay. */
+#gta-showcase .gta-asset-palms .gta-palm-shape::after{
+  display:none!important;
+  animation:none!important;
+  content:none!important;
+}
+@keyframes gtaPalmWholeBreeze{
+  0%,100%{transform:translate3d(-1.2px,0,0) rotate(-.40deg)}
+  25%{transform:translate3d(.5px,0,0) rotate(.16deg)}
+  54%{transform:translate3d(1.5px,0,0) rotate(.46deg)}
+  80%{transform:translate3d(-.3px,0,0) rotate(-.10deg)}
+}
+#gta-showcase .gta-palm-tree-left-front{--tree-duration:27s;}
+#gta-showcase .gta-palm-tree-left-back{--tree-duration:33s;}
+#gta-showcase .gta-palm-tree-right-front{--tree-duration:31s;}
+#gta-showcase .gta-palm-tree-right-back{--tree-duration:37s;}
+@media(max-width:870px){
+  #gta-showcase .gta-showcase-video{height:clamp(165px, 29vw, 215px)!important;}
+}
+@media(max-width:560px){
+  #gta-showcase .gta-showcase-work-links{gap:.55rem;margin-top:1.2rem;}
+  #gta-showcase .gta-showcase-work-tab{
+    min-width:0;
+    flex:1 1 0;
+    padding:.79rem .4rem;
+    font-size:clamp(.61rem,2.5vw,.75rem);
+    letter-spacing:.025em;
+  }
+  #gta-showcase .gta-showcase-video{height:clamp(156px, 45vw, 192px)!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-asset-palms .gta-palm-tree{animation:none!important;}
+  #gta-showcase .gta-showcase-work-tab{transition:none!important;}
+}
+
+
+/* === GTA VI FEATURED SHOWCASE V2 — independent 6 + 10 video galleries ===
+   Added after legacy GTA rules; intentionally scoped so the original portfolio,
+   video player, and other site sections remain unchanged. */
+#gta-showcase {padding:clamp(4.6rem,7vw,7rem) clamp(1rem,3vw,2rem) clamp(5rem,7vw,7rem);}
+#gta-showcase .gta-showcase-inner{max-width:1190px;}
+#gta-showcase .gta-showcase-heading{margin-bottom:clamp(1.9rem,3vw,2.8rem);max-width:1050px;}
+#gta-showcase .gta-showcase-heading>p{max-width:760px;margin:0 auto;}
+#gta-showcase .gta-showcase-work-links{margin-top:clamp(1.4rem,2.4vw,2rem);gap:12px;}
+#gta-showcase .gta-showcase-work-tab{min-width:192px;min-height:46px;}
+#gta-showcase .gta-showcase-work-tab[aria-selected="true"]{
+  background:linear-gradient(110deg,#f4779f,#cd6ab7 60%,#9a78d8);
+  border-color:rgba(255,228,239,.85);
+  box-shadow:0 10px 27px rgba(97,24,95,.24),inset 0 1px 0 rgba(255,255,255,.32);
+}
+#gta-showcase .gta-feature-panel[hidden],
+.gta-video-modal[hidden]{display:none!important;}
+#gta-showcase .gta-feature-panel{animation:gtaGalleryFade .34s ease-out both;}
+@keyframes gtaGalleryFade{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#gta-showcase .gta-feature-grid{
+  display:grid;
+  justify-content:center;
+  width:100%;
+  margin:0 auto;
+  gap:clamp(12px,1.5vw,18px);
+}
+#gta-showcase .gta-feature-grid-long{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px;}
+#gta-showcase .gta-feature-grid-shorts{grid-template-columns:repeat(5,minmax(0,1fr));max-width:1140px;}
+#gta-showcase .gta-feature-card{
+  position:relative;
+  display:block;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(255,211,231,.27);
+  border-radius:clamp(14px,1.6vw,20px);
+  background:linear-gradient(155deg,rgba(33,14,42,.71),rgba(13,5,27,.54));
+  box-shadow:0 9px 32px rgba(34,7,35,.17),inset 0 1px 0 rgba(255,255,255,.055);
+  transition:border-color .28s ease,box-shadow .28s ease,transform .28s ease;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card{aspect-ratio:16/9;}
+#gta-showcase .gta-feature-grid-shorts .gta-feature-card{aspect-ratio:9/16;}
+#gta-showcase .gta-feature-card-live:hover{
+  transform:translateY(-3px);border-color:rgba(255,198,220,.82);
+  box-shadow:0 15px 38px rgba(73,17,69,.23),0 0 0 1px rgba(255,190,224,.14);
+}
+#gta-showcase .gta-feature-card .gta-feature-thumb{
+  display:block;
+  width:100%;height:100%;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  border:0;
+  border-radius:inherit;
+  background:#27142d;
+}
+#gta-showcase .gta-feature-card .gta-feature-thumb img{width:100%;height:100%;object-fit:cover;}
+#gta-showcase .gta-feature-card .gta-showcase-play{
+  background:linear-gradient(125deg,#f977a0,#be67be 68%,#9a7edf);
+  box-shadow:0 12px 32px rgba(75,18,60,.40),inset 0 1px 0 rgba(255,255,255,.3);
+}
+#gta-showcase .gta-feature-card-empty{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:clamp(.5rem,1.2vw,.85rem);
+  border:1px dashed rgba(255,205,231,.48);
+  background:linear-gradient(150deg,rgba(38,14,49,.70),rgba(42,12,47,.25));
+  cursor:default;
+}
+#gta-showcase .gta-feature-card-empty::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 35%,rgba(245,116,157,.14),transparent 53%),linear-gradient(135deg,transparent,rgba(146,89,164,.09));
+  pointer-events:none;
+}
+#gta-showcase .gta-feature-slot-mark{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.2rem;}
+#gta-showcase .gta-slot-plus{
+  display:flex;align-items:center;justify-content:center;
+  width:clamp(34px,4vw,52px);height:clamp(34px,4vw,52px);
+  border:1px solid rgba(255,186,218,.48);
+  border-radius:50%;
+  background:rgba(227,123,179,.09);
+  font:300 clamp(22px,2.6vw,31px)/1 'DM Sans',sans-serif;
+  color:#ffb5d1;
+}
+#gta-showcase .gta-slot-index,#gta-showcase .gta-feature-slot-caption{
+  font-family:'DM Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:rgba(255,224,236,.72);
+}
+#gta-showcase .gta-slot-index{font-size:clamp(.5rem,.65vw,.66rem);}
+#gta-showcase .gta-feature-slot-caption{position:relative;z-index:1;font-size:clamp(.52rem,.74vw,.69rem);}
+
+/* The hiring message is integrated below the gallery, without a separate panel. */
+#gta-showcase .gta-feature-cta{
+  margin:clamp(2.7rem,5vw,4.8rem) auto 0;
+  padding:0 1rem;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(1.25rem,2vw,1.75rem);
+  text-align:center;
+  max-width:900px;
+}
+#gta-showcase .gta-feature-cta h3{
+  margin:0;max-width:840px;
+  font-family:'Playfair Display',serif;
+  font-weight:900;font-size:clamp(2.15rem,4.4vw,4.55rem);
+  line-height:1.1;letter-spacing:-.035em;
+  text-shadow:0 3px 18px rgba(44,8,53,.22);
+  text-wrap:balance;
+}
+#gta-showcase .gta-feature-cta h3 em{color:#ffb3cd;font-style:italic;}
+#gta-showcase .gta-feature-cta .gta-showcase-hire{align-self:center!important;margin:0!important;}
+
+/* GTA VI player: same clean fullscreen overlay as the existing portfolio player.
+   No purple card, header, title bar, or footer; just YouTube and a corner close button. */
+.gta-video-modal{
+  position:fixed;
+  inset:0;
+  z-index:20050;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(12px,2.5vw,30px);
+  background:rgba(0,0,0,.89);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  animation:gtaModalAppear .2s ease both;
+}
+@keyframes gtaModalAppear{from{opacity:0}to{opacity:1}}
+.gta-video-dialog{
+  position:relative;
+  display:block;
+  width:min(900px,92vw);
+  max-width:100%;
+  background:transparent;
+  border:0;
+  outline:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
+}
+.gta-video-main{padding:0;background:transparent;}
+.gta-video-viewport{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:#000;
+}
+.gta-video-viewport iframe{display:block;width:100%;height:100%;border:0;background:#000;}
+.gta-video-close{
+  position:fixed;
+  top:clamp(16px,3vw,35px);
+  right:clamp(16px,2.7vw,38px);
+  z-index:20051;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  padding:0;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.40);
+  background:rgba(0,0,0,.32);
+  color:#fff;
+  font:400 31px/1 Arial,sans-serif;
+  cursor:pointer;
+  transition:border-color .2s,background .2s,transform .2s;
+}
+.gta-video-close:hover{
+  background:rgba(255,255,255,.13);
+  border-color:rgba(255,255,255,.85);
+  transform:scale(1.05);
+}
+.gta-video-close:focus-visible{outline:2px solid #fff;outline-offset:4px;}
+/* Future GTA VI Shorts use portrait framing without affecting long-form videos. */
+.gta-video-dialog.is-shorts{width:min(410px, min(86vw, 54dvh));}
+.gta-video-dialog.is-shorts .gta-video-viewport{aspect-ratio:9/16;}
+@media(max-width:950px){
+  #gta-showcase .gta-feature-grid-shorts{grid-template-columns:repeat(3,minmax(0,1fr));max-width:730px;}
+}
+@media(max-width:650px){
+  #gta-showcase .gta-feature-grid-long{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #gta-showcase .gta-feature-grid-shorts{grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px;}
+  #gta-showcase .gta-feature-grid{gap:10px;}
+  #gta-showcase .gta-showcase-heading{margin-bottom:1.7rem;}
+  #gta-showcase .gta-showcase-work-tab{min-width:0;min-height:40px;}
+  #gta-showcase .gta-feature-cta{margin-top:2.5rem;}
+  #gta-showcase .gta-feature-cta h3{font-size:clamp(2.1rem,9vw,3rem);}
+  .gta-video-modal{padding:12px;}
+  .gta-video-dialog{width:min(900px,calc(100vw - 24px));}
+  .gta-video-close{width:40px;height:40px;top:16px;right:16px;}
+}
+@media(max-width:360px){
+  #gta-showcase .gta-feature-slot-caption{font-size:.47rem;letter-spacing:.04em;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-feature-panel,.gta-video-modal{animation:none!important;}
+  #gta-showcase .gta-feature-card{transition:none!important;}
+}
+
+
+/* GTA VI · same mobile card sizing as the original Our Work gallery.
+   Long form: one full-width 16:9 card. Shorts: two 9:16 cards per row.
+   Transitions layer the outgoing and incoming grids while animating container height. */
+#gta-showcase .gta-feature-stage{
+  position:relative;
+  width:100%;
+  margin-inline:auto;
+  height:auto;
+  transition:height .54s cubic-bezier(.2,.7,.2,1);
+  will-change:auto;
+}
+/* Without JavaScript, the initially visible Long Form gallery stays in document flow. */
+#gta-showcase .gta-feature-stage:not([data-gta-ready]) .gta-feature-panel:not([hidden]){
+  position:relative;
+  opacity:1;
+  visibility:visible;
+  transform:none;
+  pointer-events:auto;
+}
+#gta-showcase .gta-feature-stage .gta-feature-panel{
+  position:absolute;
+  inset:0 0 auto 0;
+  width:100%;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(14px) scale(.992);
+  transition:opacity .42s ease, transform .54s cubic-bezier(.2,.7,.2,1),visibility 0s linear .54s;
+  animation:none!important;
+  z-index:1;
+}
+#gta-showcase .gta-feature-stage .gta-feature-panel.is-current{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+  transition:opacity .47s ease .06s, transform .54s cubic-bezier(.2,.7,.2,1),visibility 0s;
+  z-index:3;
+}
+#gta-showcase .gta-feature-stage .gta-feature-panel.is-leaving{
+  opacity:0;
+  visibility:visible;
+  pointer-events:none;
+  transform:translateY(-10px) scale(.99);
+  z-index:2;
+}
+/* So the scene smoothly warms/cools when switching category, instead of abruptly changing. */
+#gta-showcase .gta-sunset-sky::after{
+  content:'';
+  position:absolute;
+  inset:0 0 auto;
+  height:min(700px,100%);
+  pointer-events:none;
+  background:linear-gradient(150deg,rgba(186,73,150,.15),rgba(75,50,157,.12) 48%,rgba(249,116,172,.08));
+  /* Fade the 700px color wash to zero instead of ending on a hard horizontal edge. */
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 43%,rgba(0,0,0,.76) 64%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 43%,rgba(0,0,0,.76) 64%,transparent 100%);
+  opacity:0;
+  transition:opacity .85s ease-in-out;
+}
+#gta-showcase[data-gta-active="shorts"] .gta-sunset-sky::after{opacity:1;}
+
+@media(max-width:640px){
+  #gta-showcase{
+    padding-left:.75rem!important;
+    padding-right:.75rem!important;
+  }
+  #gta-showcase .gta-showcase-inner{
+    max-width:560px;
+    width:100%;
+  }
+  #gta-showcase .gta-feature-grid{
+    width:100%;
+    max-width:560px;
+    gap:14px;
+  }
+  #gta-showcase .gta-feature-grid-long{grid-template-columns:minmax(0,1fr);}
+  #gta-showcase .gta-feature-grid-shorts{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #gta-showcase .gta-feature-card{
+    border-radius:18px;
+    box-shadow:0 18px 42px rgba(0,0,0,.35);
+  }
+  #gta-showcase .gta-feature-grid-long .gta-feature-card{aspect-ratio:16/9;}
+  #gta-showcase .gta-feature-grid-shorts .gta-feature-card{aspect-ratio:9/16;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-feature-stage,
+  #gta-showcase .gta-feature-stage .gta-feature-panel,
+  #gta-showcase .gta-sunset-sky::after{transition:none!important;animation:none!important;}
+}
+
+/* GTA VI palm composition: phone-specific framing.
+   Keep the full palm silhouettes near the outer edges instead of sizing them
+   relative to the tall, six-video gallery (which produced a giant central trunk). */
+@media (max-width: 640px) {
+  #gta-showcase .gta-asset-palms {
+    opacity: .62;
+    overflow: hidden;
+  }
+  #gta-showcase .gta-palm-tree-left-front {
+    left: -165px;
+    right: auto;
+    top: 42px;
+    bottom: auto;
+    width: 270px;
+    height: 445px;
+    --tree-opacity: .74;
+  }
+  #gta-showcase .gta-palm-tree-right-front {
+    right: -185px;
+    left: auto;
+    top: 155px;
+    bottom: auto;
+    width: 295px;
+    height: 455px;
+    --tree-opacity: .68;
+  }
+  #gta-showcase .gta-palm-tree-left-back {
+    left: -130px;
+    right: auto;
+    top: auto;
+    bottom: -82px;
+    width: 215px;
+    height: 330px;
+    --tree-opacity: .50;
+  }
+  #gta-showcase .gta-palm-tree-right-back {
+    right: -140px;
+    left: auto;
+    top: auto;
+    bottom: -90px;
+    width: 215px;
+    height: 350px;
+    --tree-opacity: .50;
+  }
+}
+
+/* GTA VI PERFORMANCE PASS: static sunset, precolored WebP palms, offscreen animation paused. */
+#gta-showcase.gta-in-view .gta-asset-palms .gta-palm-tree{
+  animation-play-state:running;
+  will-change:transform;
+}
+#gta-showcase:not(.gta-in-view) .gta-asset-palms .gta-palm-tree{
+  animation-play-state:paused;
+  will-change:auto;
+}
+#gta-showcase .gta-sunset-sky::before{
+  animation:none!important;
+  transform:none!important;
+}
+@media(max-width:640px){
+  #gta-showcase .gta-palm-tree-left-back,
+  #gta-showcase .gta-palm-tree-right-back{animation:none!important;will-change:auto!important;}
+  #gta-showcase .gta-feature-card{box-shadow:0 6px 17px rgba(0,0,0,.2);}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-asset-palms .gta-palm-tree{animation:none!important;will-change:auto!important;}
+}
+
+/* MOBILE GTA VI: tilt right-side foreground palm and hide the lower trunk.
+   All other trees, desktop layout, animations, and performance tweaks unchanged. */
+@media (max-width:640px) {
+  #gta-showcase .gta-palm-tree-right-front {
+    right:-85px;
+    top:147px;
+    bottom:auto;
+    width:295px;
+    height:455px;
+  }
+  #gta-showcase .gta-palm-tree-right-front .gta-palm-shape {
+    transform-origin:50% 19%;
+    transform:rotate(-43deg);
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 45%,rgba(0,0,0,.82) 51%,transparent 67%);
+    mask-image:linear-gradient(to bottom,#000 0%,#000 45%,rgba(0,0,0,.82) 51%,transparent 67%);
+  }
+}
+
+
+/* GTA VI: Long Form uses Our Work's desktop/tablet video dimensions.
+   Same 3 / 2 / 1 column layout, 16:9 aspect and 18px desktop gap.
+   Shorts styling and mobile single-column Long Form are not altered. */
+#gta-showcase .gta-showcase-inner{max-width:1200px;}
+#gta-showcase .gta-feature-grid-long{
+  width:100%;
+  max-width:1200px;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+@media (min-width:641px) and (max-width:1050px){
+  #gta-showcase .gta-feature-grid-long{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:640px){
+  #gta-showcase .gta-feature-grid-long{
+    grid-template-columns:minmax(0,1fr);
+    max-width:560px;
+    gap:14px;
+  }
+}
+
+
+/* 2026-11-11 — GTA VI stats ribbons and optimized local MP4 hover previews. */
+#gta-showcase .gta-feature-card .gta-showcase-preview{
+  z-index:2;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  pointer-events:none;
+}
+#gta-showcase .gta-feature-card .gta-showcase-scan{z-index:3;}
+#gta-showcase .gta-feature-card .gta-showcase-play{z-index:4;}
+#gta-showcase .gta-feature-card .gta-showcase-thumb.is-previewing img{
+  opacity:0;
+}
+
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-feature-card .gta-showcase-thumb img{transition:none!important;}
+}
+
+
+/* 2026-11-11 GTA VI lightweight category change.
+   Switch only the visible gallery's opacity. No animated grid height, no
+   overlapping full grids, no full-section gradient repaint on every frame. */
+#gta-showcase .gta-feature-stage{
+  height:auto;
+  transition:none!important;
+  will-change:auto!important;
+}
+#gta-showcase .gta-feature-stage .gta-feature-panel{
+  position:relative!important;
+  inset:auto!important;
+  display:block;
+  visibility:visible!important;
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+  animation:none!important;
+  transition:opacity .15s ease-out,transform .15s ease-out!important;
+  will-change:auto;
+}
+#gta-showcase .gta-feature-stage .gta-feature-panel[hidden]{
+  display:none!important;
+}
+#gta-showcase .gta-feature-stage.is-switching-out .gta-feature-panel.is-current{
+  opacity:0!important;
+  transform:translateY(-4px)!important;
+  pointer-events:none;
+}
+#gta-showcase .gta-feature-stage.is-switching-in .gta-feature-panel.is-current{
+  opacity:0!important;
+  transform:translateY(4px)!important;
+  pointer-events:none;
+}
+/* Preserve one continuous sunset across both tabs, avoiding a large animated
+   pseudo-element with mask and gradient while changing the gallery. */
+#gta-showcase .gta-sunset-sky::after{
+  opacity:.08!important;
+  transition:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-feature-stage .gta-feature-panel{
+    transition:none!important;
+    transform:none!important;
+  }
+}
+
+
+/* GTA VI: Our Work-style MP4 hover reveal. A thumbnail remains visible behind
+   the video until a decoded frame is confirmed by requestVideoFrameCallback. */
+#gta-showcase .gta-feature-card .gta-showcase-thumb.has-local-preview img{
+  opacity:1!important;
+}
+#gta-showcase .gta-feature-card .gta-showcase-preview.gta-local-preview{
+  opacity:0;
+  transition:opacity .24s ease;
+  background:transparent;
+  z-index:2;
+}
+#gta-showcase .gta-feature-card .gta-showcase-thumb.is-previewing .gta-local-preview{
+  opacity:1;
+}
+/* Desktop: height flows smoothly when switching between 16:9 and 9:16 grids.
+   JS animates only the stage height; mobile retains the fast, light fade. */
+@media(min-width:701px){
+  #gta-showcase .gta-feature-stage .gta-feature-panel{
+    transition:opacity .28s ease,transform .32s cubic-bezier(.2,.7,.2,1)!important;
+  }
+  #gta-showcase .gta-feature-stage.is-switching-in .gta-feature-panel.is-current{
+    transform:translateY(11px)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-feature-card .gta-showcase-preview.gta-local-preview{
+    transition:none!important;
+  }
+}
+
+
+/* GTA VI: dedicated YouTube-inspired information below the thumbnail.
+   Keep images/video completely clean, and move larger stats to the right. */
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live{
+  aspect-ratio:auto;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live .gta-feature-thumb{
+  flex:0 0 auto;
+  display:block;
+  width:100%;
+  height:auto!important;
+  aspect-ratio:16/9!important;
+  border-radius:0;
+  overflow:hidden;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card-empty{
+  aspect-ratio:auto;
+  min-height:100%;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-details{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 12px 14px;
+  min-height:95px;
+  background:linear-gradient(125deg,rgba(30,12,42,.96),rgba(44,19,49,.96) 62%,rgba(38,16,56,.96));
+  border-top:1px solid rgba(252,179,222,.27);
+  box-shadow:inset 0 1px 0 rgba(255,204,237,.06);
+  color:#fff0f7;
+}
+#gta-showcase .gta-channel-avatar{
+  flex:0 0 40px;
+  width:40px;height:40px;
+  position:relative;
+  border-radius:50%;
+  overflow:hidden;
+  border:2px solid rgba(255,166,212,.72);
+  box-shadow:0 0 0 2px rgba(141,55,136,.2);
+  background:linear-gradient(135deg,#f27b9f,#9d6ed5);
+}
+#gta-showcase .gta-channel-avatar-fallback{
+  position:absolute;inset:0;display:grid;place-items:center;
+  color:#fff;font:800 13px/1 'DM Sans',sans-serif;letter-spacing:.04em;
+}
+#gta-showcase .gta-channel-avatar img:not([hidden]){
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;
+  background:#2d1439;
+}
+#gta-showcase .gta-card-copy{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
+}
+#gta-showcase .gta-card-title{
+  margin:0;
+  color:#fff4fb;
+  font:750 13px/1.32 'DM Sans',sans-serif;
+  letter-spacing:-.01em;
+  display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:2;line-clamp:2;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+#gta-showcase .gta-card-channel{
+  display:block;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#e7b8d7;
+  font:650 11.5px/1.2 'DM Sans',sans-serif;
+}
+#gta-showcase .gta-card-metrics{
+  flex:0 0 auto;
+  display:flex;flex-direction:column;
+  align-items:stretch;justify-content:center;
+  gap:6px;
+  font-variant-numeric:tabular-nums;
+}
+#gta-showcase .gta-card-metric{
+  display:inline-flex;align-items:center;justify-content:flex-start;
+  gap:7px;
+  min-width:76px;
+  padding:6px 8px;
+  border:1px solid rgba(254,170,215,.31);
+  border-radius:10px;
+  background:rgba(242,110,173,.105);
+  color:#ffe4f5;
+  font:750 13px/1.15 'DM Sans',sans-serif;
+  white-space:nowrap;
+}
+#gta-showcase .gta-metric-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 17px;}
+#gta-showcase .gta-card-metric svg{
+  display:block;width:17px;height:17px;
+  fill:none;stroke:#fc96cb;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+@media(max-width:640px){
+  #gta-showcase .gta-feature-grid-long .gta-card-details{padding:13px 14px;gap:12px;min-height:92px;}
+  #gta-showcase .gta-channel-avatar{flex-basis:42px;width:42px;height:42px;}
+  #gta-showcase .gta-card-title{font-size:14px;}
+  #gta-showcase .gta-card-channel{font-size:12px;}
+  #gta-showcase .gta-card-metric{font-size:13.5px;min-width:85px;}
+  #gta-showcase .gta-card-metric svg{width:18px;height:18px;}
+}
+@media (max-width:360px){
+  #gta-showcase .gta-feature-grid-long .gta-card-details{gap:8px;padding:11px 10px;}
+  #gta-showcase .gta-channel-avatar{flex-basis:36px;width:36px;height:36px;}
+  #gta-showcase .gta-card-title{font-size:12.5px;}
+  #gta-showcase .gta-card-metric{min-width:73px;padding:5px 6px;font-size:12px;}
+}
+
+
+/* 2026-11-11: YouTube-style, unboxed GTA VI metadata.
+   The video thumbnail is the standalone visual card. Channel/title/stats
+   sit directly on the sunset (no separate purple banner or badge panels).
+   Preserve local MP4 preview, avatars, stats bindings and tab animations. */
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
+  gap:0;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live:hover{
+  transform:none;
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live .gta-feature-thumb{
+  border-radius:clamp(12px,1.3vw,16px);
+  overflow:hidden;
+  box-shadow:0 8px 22px rgba(25,8,30,.19);
+  transition:box-shadow .24s ease;
+}
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live .gta-feature-thumb:hover,
+#gta-showcase .gta-feature-grid-long .gta-feature-card-live .gta-feature-thumb:focus-visible{
+  box-shadow:0 12px 30px rgba(25,8,30,.30);
+}
+#gta-showcase .gta-feature-grid-long .gta-card-details{
+  min-height:0;
+  padding:12px 2px 0;
+  gap:10px;
+  align-items:flex-start;
+  color:#fff5fb;
+  text-shadow:0 1px 2px rgba(27,8,31,.28);
+  background:none;
+  background-color:transparent;
+  border:0;
+  border-top:0;
+  border-radius:0;
+  box-shadow:none;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-copy{
+  padding-top:2px;
+  gap:5px;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-title{
+  color:#fff6fb;
+  font-size:13.5px;
+  font-weight:750;
+  line-height:1.33;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-channel{
+  color:#f0c7df;
+  font-size:11.5px;
+  font-weight:600;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-metrics{
+  gap:6px;
+  padding-top:2px;
+  align-items:flex-end;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-metric{
+  min-width:0;
+  padding:2px 0;
+  gap:6px;
+  justify-content:flex-end;
+  background:none;
+  background-color:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  font-size:13.5px;
+  font-weight:750;
+  color:#fff0f8;
+}
+#gta-showcase .gta-feature-grid-long .gta-metric-icon{
+  flex:0 0 18px;
+}
+#gta-showcase .gta-feature-grid-long .gta-card-metric svg{
+  width:18px;
+  height:18px;
+  stroke:#ffabd7;
+}
+/* The empty sixth tile should line up with thumbnail imagery, not extend
+   downward into the other cards' unboxed description rows. */
+#gta-showcase .gta-feature-grid-long .gta-feature-card-empty{
+  align-self:start;
+  aspect-ratio:16/9;
+  min-height:0;
+}
+@media(max-width:640px){
+  #gta-showcase .gta-feature-grid-long .gta-card-details{
+    padding:12px 2px 0;
+    gap:12px;
+    min-height:0;
+  }
+  #gta-showcase .gta-feature-grid-long .gta-card-title{font-size:14.5px;}
+  #gta-showcase .gta-feature-grid-long .gta-card-channel{font-size:12px;}
+  #gta-showcase .gta-feature-grid-long .gta-card-metric{font-size:14px;min-width:0;padding:2px 0;}
+  #gta-showcase .gta-feature-grid-long .gta-card-metric svg{width:19px;height:19px;}
+}
+@media(max-width:360px){
+  #gta-showcase .gta-feature-grid-long .gta-card-details{gap:8px;padding:10px 2px 0;}
+  #gta-showcase .gta-feature-grid-long .gta-card-title{font-size:13px;}
+  #gta-showcase .gta-feature-grid-long .gta-card-metric{font-size:12.5px;min-width:0;padding:2px 0;}
+}
+
+/* Cut & Hire creator announcement — refined studio-style callout, 3.5s entrance. */
+#hero .creator-intro-banner{
+  position:absolute;
+  inset:0 0 auto;
+  z-index:8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  padding:13px 22px;
+  background:linear-gradient(180deg,rgba(10,9,11,.96),rgba(8,7,9,.92));
+  border-bottom:1px solid rgba(224,32,32,.30);
+  box-shadow:0 12px 28px rgba(0,0,0,.34);
+  color:#f5f0eb;
+  font-family:'DM Sans',sans-serif;
+  text-align:center;
+  opacity:0;
+  transform:translate3d(0,-105%,0);
+  animation:creator-intro-banner-enter 1.3s cubic-bezier(.22,.7,.36,1) 3.5s both;
+}
+#hero .creator-intro-banner::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+  width:min(320px,52vw);
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(224,32,32,.75),transparent);
+  pointer-events:none;
+}
+#hero .creator-intro-banner-inner{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  column-gap:18px;
+  row-gap:5px;
+  flex-wrap:wrap;
+}
+#hero .creator-intro-banner-question{
+  color:#f5f0eb;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:600;
+  letter-spacing:.005em;
+}
+#hero .creator-intro-banner-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  color:#f5f0eb;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:700;
+  letter-spacing:.005em;
+  text-decoration:none;
+  cursor:pointer;
+  transition:color .24s ease, text-shadow .24s ease;
+}
+#hero .creator-intro-banner-link-text{
+  color:inherit;
+  text-decoration-line:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:5px;
+  text-decoration-color:#e02020;
+  text-decoration-skip-ink:auto;
+  transition:text-decoration-color .24s ease, text-decoration-thickness .24s ease;
+}
+#hero .creator-intro-banner-link svg{
+  width:15px;
+  height:15px;
+  flex:0 0 auto;
+  color:#e02020;
+  transition:transform .24s cubic-bezier(.22,1,.36,1),color .24s ease;
+}
+#hero .creator-intro-banner-link:is(:hover,:focus-visible){
+  color:#ff3030;
+  text-shadow:0 0 15px rgba(224,32,32,.24);
+}
+#hero .creator-intro-banner-link:is(:hover,:focus-visible) .creator-intro-banner-link-text{
+  text-decoration-color:#ff3838;
+  text-decoration-thickness:3px;
+}
+#hero .creator-intro-banner-link:is(:hover,:focus-visible) svg{
+  color:#ff3030;
+  transform:translateX(5px);
+}
+#hero .creator-intro-banner-link:active{color:#ff5252}
+#hero .creator-intro-banner-link:focus-visible{outline:2px solid #ff4040;outline-offset:5px;border-radius:2px}
+@keyframes creator-intro-banner-enter{
+  from{opacity:0;transform:translate3d(0,-105%,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@media(max-width:600px){
+  #hero .creator-intro-banner{min-height:56px;padding:10px 12px}
+  #hero .creator-intro-banner-inner{column-gap:10px;row-gap:3px}
+  #hero .creator-intro-banner-question,
+  #hero .creator-intro-banner-link{font-size:12.5px;line-height:1.45}
+  #hero .creator-intro-banner-link{gap:5px}
+  #hero .creator-intro-banner-link svg{width:13px;height:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  #hero .creator-intro-banner{animation:none!important;opacity:1!important;transform:none!important}
+  #hero .creator-intro-banner-link,
+  #hero .creator-intro-banner-link svg{transition:none!important}
+}
+
+
+/* Pricedown Bold GTA VI wordmark as fixed SVG artwork. Rest of heading unchanged. */
+#gta-showcase .gta-showcase-title em.gta-pricedown-wordmark {
+  display:inline-block;
+  vertical-align:-.065em;
+  line-height:0;
+  padding:0;
+  margin:0;
+  background:none;
+  -webkit-text-fill-color:initial;
+  font-style:normal;
+}
+#gta-showcase .gta-showcase-title em.gta-pricedown-wordmark img {
+  display:inline-block;
+  height:.76em;
+  width:auto;
+  max-width:none;
+  vertical-align:baseline;
+}
+@media (max-width:370px) {
+  #gta-showcase .gta-showcase-title em.gta-pricedown-wordmark img { height:.71em; }
+}
+
+/* Stable layout for 500ms GTA-to-contact anchor navigation. */
+#discord{content-visibility:visible!important;}
+
+
+/* GTA VI daily views — reuses the About Us stat structure and typography. */
+#gta-showcase .gta-daily-views{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  margin:clamp(3.4rem,5.6vw,5.6rem) auto 0;
+  padding:0 1rem;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+#gta-showcase .gta-daily-views-stat{min-width:0;}
+#gta-showcase .gta-daily-views .stat-n{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(4.3rem,10vw,9rem);
+  line-height:1;
+  font-weight:800;
+  letter-spacing:-.035em;
+  font-variant-numeric:lining-nums tabular-nums;
+  font-feature-settings:'lnum' 1,'tnum' 1;
+}
+#gta-showcase .gta-daily-views-number{
+  color:#fff5fa;
+  display:inline-flex;
+  align-items:baseline;
+  justify-content:center;
+  white-space:nowrap;
+  font:inherit;
+  text-shadow:0 8px 24px rgba(75,22,63,.22);
+}
+#gta-showcase .gta-daily-views .stat-suffix{
+  color:#ffb0cd;
+  font:inherit;
+  margin-left:.045em;
+  letter-spacing:-.045em;
+}
+#gta-showcase .gta-daily-views-label{
+  color:rgba(255,233,242,.92);
+  font-family:'DM Mono',monospace;
+  font-size:clamp(.63rem,.85vw,.78rem);
+  font-weight:500;
+  letter-spacing:.22em;
+  margin-top:clamp(.75rem,1.2vw,1rem);
+  text-transform:uppercase;
+  white-space:normal;
+}
+#gta-showcase .gta-daily-views-bar{
+  width:clamp(72px,7vw,106px);
+  height:2px;
+  margin-top:.95rem;
+  background:linear-gradient(90deg,transparent,#ffc0d7 35%,#ef73ae 65%,transparent);
+  box-shadow:0 0 14px rgba(255,172,208,.15);
+}
+#gta-showcase .gta-daily-views + .gta-feature-cta{
+  margin-top:clamp(3.1rem,5vw,4.8rem);
+}
+@media(max-width:650px){
+  #gta-showcase .gta-daily-views{margin-top:3rem;padding:0 .5rem;}
+  #gta-showcase .gta-daily-views .stat-n{font-size:clamp(3.8rem,15vw,6rem);}
+  #gta-showcase .gta-daily-views-label{font-size:.59rem;letter-spacing:.16em;}
+  #gta-showcase .gta-daily-views + .gta-feature-cta{margin-top:3.2rem;}
+}
+
+/* About Us stat hover mechanics, recolored for the GTA VI pink palette. */
+#gta-showcase .gta-daily-views-stat{
+  position:relative;
+  isolation:isolate;
+  max-width:100%;
+  padding:1.1rem clamp(1rem,3vw,3.4rem) 1.3rem;
+  cursor:default;
+  transition:transform .32s cubic-bezier(.22,1,.36,1),filter .32s ease;
+}
+#gta-showcase .gta-daily-views-stat::before{
+  content:'';
+  position:absolute;
+  inset:3% -9% -14%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,121,182,.22),rgba(235,85,157,.08) 40%,transparent 68%);
+  opacity:0;
+  filter:blur(22px);
+  transition:opacity .32s ease;
+  z-index:-1;
+  pointer-events:none;
+}
+#gta-showcase .gta-daily-views-stat:hover{
+  transform:translateY(-9px) scale(1.015);
+  filter:brightness(1.08);
+}
+#gta-showcase .gta-daily-views-stat:hover::before{opacity:1;}
+#gta-showcase .gta-daily-views .stat-n{
+  color:#fff5fa;
+  text-shadow:0 0 20px rgba(255,255,255,.08),0 0 36px rgba(255,123,187,.14);
+  transition:text-shadow .3s ease;
+}
+#gta-showcase .gta-daily-views-stat:hover .stat-n{
+  text-shadow:0 0 28px rgba(255,255,255,.22),0 0 56px rgba(255,124,185,.43);
+}
+#gta-showcase .gta-daily-views .stat-suffix{
+  font-size:.55em;
+  text-shadow:0 0 7px rgba(255,138,190,.26),0 0 18px rgba(255,138,190,.10);
+  animation:gtaSoftSuffixGlow 2.8s ease-in-out infinite;
+}
+@keyframes gtaSoftSuffixGlow{
+  0%,100%{filter:brightness(.97)}
+  50%{filter:brightness(1.10)}
+}
+#gta-showcase .gta-daily-views-bar{
+  width:0;
+  max-width:330px;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow:0 0 14px rgba(255,141,191,.68);
+  transition:width .6s cubic-bezier(.22,1,.36,1);
+}
+#gta-showcase .gta-daily-views-stat:hover .gta-daily-views-bar{width:92%;}
+@media(max-width:650px){
+  #gta-showcase .gta-daily-views-stat{padding:1rem .2rem 1.2rem;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-daily-views-stat,
+  #gta-showcase .gta-daily-views-stat::before,
+  #gta-showcase .gta-daily-views .stat-n,
+  #gta-showcase .gta-daily-views-bar{transition:none!important;}
+  #gta-showcase .gta-daily-views .stat-suffix{animation:none!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #gta-showcase .gta-daily-views.rv{opacity:1!important;transform:none!important;transition:none!important;}
+}

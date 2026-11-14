@@ -701,6 +701,9 @@ a,button,input,.cat-tab,.wc,.vp-wrap,.photo-lb,.vp-btn,.vp-timeline,.vp-vol,.her
 }
 .hero-scroll-arrow.is-hidden{pointer-events:none;visibility:hidden;transition:opacity .16s linear,visibility 0s linear .16s}
 .hero-scroll-arrow.is-visible{visibility:visible;transition:opacity .16s linear}
+/* Keep the hero scroll cue out of sight until the opening hero reveal finishes,
+   plus two seconds. The existing scroll-based hide/show logic still applies. */
+.hero-scroll-arrow.is-awaiting-hero{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 .hero-scroll-arrow:focus-visible{outline:2px solid #ff7278;outline-offset:1px;border-radius:4px}
 @keyframes cnh-gta-chevron-float{
   0%,100%{transform:translate3d(0,-2px,0);opacity:1;filter:drop-shadow(0 0 5px rgba(241,46,54,.45))}
@@ -8124,6 +8127,151 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
   transition: none !important;
 }
 </style>
+
+<style id="cnh-voice-acting-styles">
+/* Voice Acting | a contained category inside the original Our Work gallery. */
+@media (min-width:821px) {
+  #cat-tabs.cat-tabs {flex-wrap:wrap!important;justify-content:center!important;row-gap:.5rem!important;}
+}
+#work #work-grid[data-cat="voice"]{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;align-items:stretch!important;grid-auto-rows:auto!important;
+  grid-auto-flow:row!important;max-width:none!important;width:100%!important;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-card{
+  box-sizing:border-box;position:relative;isolation:isolate;display:flex!important;
+  flex-direction:column;justify-content:flex-end;min-width:0!important;
+  max-width:none!important;width:100%!important;min-height:0!important;height:auto!important;
+  padding:9px 8px 9px;border:0!important;border-radius:0;
+  background:transparent!important;box-shadow:none!important;overflow:visible;
+  transition:none;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-card:hover{
+  border-color:transparent!important;box-shadow:none!important;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-name{
+  margin:0 0 8px;color:#f6f0ed;font-family:'DM Sans',sans-serif;
+  font-size:clamp(23px,2.1vw,29px);font-weight:900;line-height:1.18;letter-spacing:.01em;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-player{
+  position:relative;display:flex;align-items:center;gap:10px;width:100%;min-height:54px;
+  padding:9px 12px;background:#242426;border:1px solid rgba(255,255,255,.11);
+  border-radius:8px;color:#ebebed;box-shadow:inset 0 1px 0 rgba(255,255,255,.045);
+  margin-top:0;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  padding:0;border:0;min-width:24px;height:28px;color:#dedee0;
+  background:transparent;cursor:pointer;transition:color .2s ease!important;
+  transform:none!important;scale:1!important;translate:none!important;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon:hover,
+#work #work-grid[data-cat="voice"] .cnh-voice-icon:active,
+#work #work-grid[data-cat="voice"] .cnh-voice-icon:focus {
+  color:#fff;transform:none!important;scale:1!important;translate:none!important;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon svg,
+#work #work-grid[data-cat="voice"] .cnh-voice-icon:hover svg {
+  transform:none!important;transition:none!important;animation:none!important;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon:focus-visible,
+#work #work-grid[data-cat="voice"] .cnh-voice-speed:focus-visible,
+#work #work-grid[data-cat="voice"] input:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+#work #work-grid[data-cat="voice"] .cnh-voice-icon .cnh-play-polygon{fill:currentColor;stroke:none;}
+#work #work-grid[data-cat="voice"] .cnh-voice-seek{
+  flex:1 1 auto;min-width:35px;width:auto!important;--voice-pct:0%;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-volume{width:56px!important;min-width:42px;}
+#work #work-grid[data-cat="voice"] input[type="range"]{
+  display:block;appearance:none;-webkit-appearance:none;height:4px!important;
+  margin:0;border:none;border-radius:99px;cursor:pointer;
+  background:linear-gradient(90deg,var(--red) var(--voice-pct,0%),#66666a var(--voice-pct,0%));
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-volume{--voice-pct:75%;}
+#work #work-grid[data-cat="voice"] input[type="range"]::-webkit-slider-thumb{
+  appearance:none;-webkit-appearance:none;width:12px;height:12px;border-radius:50%;
+  border:0;background:#f3f1ef;box-shadow:0 0 0 2px rgba(0,0,0,.1);
+}
+#work #work-grid[data-cat="voice"] input[type="range"]::-moz-range-thumb{
+  width:12px;height:12px;border:0;border-radius:50%;background:#f3f1ef;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-time{
+  flex:none;min-width:37px;text-align:right;color:#c8c8c9;
+  font:500 11px/1 'DM Mono',monospace;font-variant-numeric:tabular-nums;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-settings-wrap{position:relative;flex:none;}
+#work #work-grid[data-cat="voice"] .cnh-voice-settings-menu{
+  position:absolute;right:-5px;bottom:calc(100% + 10px);z-index:50;
+  width:160px;padding:8px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.15);background:#19191b;
+  box-shadow:0 18px 38px rgba(0,0,0,.56);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(10px) scale(.965);transform-origin:bottom right;
+  transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1),visibility .24s;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-settings-menu.is-open {
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-settings-menu[hidden]{display:none!important;}
+#work #work-grid[data-cat="voice"] .cnh-voice-menu-title{
+  padding:7px 8px 9px;color:rgba(255,255,255,.5);
+  font:500 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.09em;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-speed{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:9px;border:0;border-radius:6px;background:transparent;color:#e3e3e4;
+  text-align:left;cursor:pointer;font:500 12px/1 'DM Sans',sans-serif;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-speed:hover,
+#work #work-grid[data-cat="voice"] .cnh-voice-speed[aria-checked="true"]{
+  background:var(--rs);color:#fff;
+}
+/* Status announcements stay accessible without visible captions under the player. */
+#work #work-grid[data-cat="voice"] .cnh-voice-status{
+  position:absolute!important;width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+/* Animate the Voice Acting layout as ONE centered unit, not two cards
+   staggered from opposite grid columns. Only vertical movement + fade. */
+@keyframes cnhVoiceCategoryIn {
+  from { opacity:0; transform:translate3d(0,18px,0); }
+  to { opacity:1; transform:translate3d(0,0,0); }
+}
+#work #work-grid[data-cat="voice"] {
+  animation:cnhVoiceCategoryIn .52s cubic-bezier(.22,1,.36,1) both;
+  transform-origin:center center;
+}
+#work #work-grid[data-cat="voice"] .cnh-voice-card {
+  animation:none!important;
+}
+/* Once the entrance finishes, keep the active category visibly settled.
+   This also overrides stale inline opacity/transform applied by the site's
+   regular work-grid transition logic when DevTools switches viewports. */
+#work #work-grid[data-cat="voice"].cnh-voice-ready {
+  animation:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #work #work-grid[data-cat="voice"]{animation:none!important;}
+  #work #work-grid[data-cat="voice"] .cnh-voice-settings-menu{transition:none!important;}
+}
+@media(max-width:820px){
+  #work #work-grid[data-cat="voice"]{grid-template-columns:1fr!important;gap:8px!important;max-width:680px!important;margin:auto!important;}
+  #work #work-grid[data-cat="voice"] .cnh-voice-card{min-height:0!important;padding:9px 4px 9px;}
+}
+@media(max-width:420px){
+  #work #work-grid[data-cat="voice"] .cnh-voice-card{padding:9px 4px 9px;}
+  #work #work-grid[data-cat="voice"] .cnh-voice-player{gap:7px;padding:9px 8px;}
+  #work #work-grid[data-cat="voice"] .cnh-voice-volume{width:38px!important;min-width:34px;}
+  #work #work-grid[data-cat="voice"] .cnh-voice-time{font-size:10px;}
+}
+</style>
+
 </head>
 <body class="hero-start-boost">
 <script src="assets/js/site-init.js"></script>
@@ -8182,7 +8330,7 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
 
 </div>
 </section>
-<button class="hero-scroll-arrow is-visible" id="hero-scroll-arrow" type="button" aria-label="Scroll down to the next section">
+<button class="hero-scroll-arrow is-hidden is-awaiting-hero" id="hero-scroll-arrow" type="button" aria-label="Scroll down to the next section" aria-hidden="true" tabindex="-1">
   <svg viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <path d="M9 10 L24 22 L39 10"/>
   </svg>
@@ -8452,6 +8600,7 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
 <button class="cat-tab" onclick="filterWork('explainer',this)"><span>Explainer/Informative</span></button>
 <button class="cat-tab" onclick="filterWork('vlogs',this)"><span>Vlogs/IRL Content</span></button>
 <button class="cat-tab" onclick="filterWork('thumbnail',this)"><span>Thumbnails</span></button>
+<button class="cat-tab" id="cnh-voice-tab" type="button" aria-controls="work-grid"><span>Voice Acting</span></button>
 </div>
 <button aria-label="Next work categories" class="cat-arrow cat-arrow-right" data-cat-scroll="right" type="button">
 <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg>
@@ -9996,6 +10145,289 @@ html:has(.gta-video-modal:not([hidden])) #hero-scroll-arrow {
 <!-- Three new Our Work / Shorts-Reels items; use the standard website cards and player. -->
 <script src="assets/js/work-shorts-additions.js?v=20261114-2"></script>
 
+<script id="cnh-voice-acting-script">
+(function(){
+  'use strict';
+  const voiceTab=document.getElementById('cnh-voice-tab');
+  const tabs=document.getElementById('cat-tabs');
+  const grid=document.getElementById('work-grid');
+  if(!voiceTab||!tabs||!grid)return;
+
+  const voices=[
+    {id:'zack',name:'Zack Seiko',file:'KAZE.mp3'},
+    {id:'andrew',name:'Andrew Aquino',file:'Andrew AquinoExplainer Sample.mp3'},
+    {id:'ross',name:'Ross K. Foad',file:'Ross_K.mp3'},
+    {id:'stephen',name:'Stephen Bryson',file:'Bryson_Sample.mp3'}
+  ];
+  const playbackSpeeds=[0.5,0.75,1,1.25,1.5,2];
+  const icons={
+    play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path class="cnh-play-polygon" d="M7 4.5 19 12 7 19.5z"/></svg>',
+    pause:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor" stroke="none"/></svg>',
+    volume:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg>',
+    muted:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6M21 9l-5 6"/></svg>',
+    settings:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l-1.9 1.9a1.6 1.6 0 0 0-1.8-.3l-1.3.5-.4 2.1H9.7l-.4-2.1-1.3-.5a1.6 1.6 0 0 0-1.8.3l-1.9-1.9a1.6 1.6 0 0 0 .3-1.8l-.5-1.3-2.1-.4V9.7l2.1-.4.5-1.3a1.6 1.6 0 0 0-.3-1.8l1.9-1.9a1.6 1.6 0 0 0 1.8.3l1.3-.5.4-2.1h4.6l.4 2.1 1.3.5a1.6 1.6 0 0 0 1.8-.3l1.9 1.9a1.6 1.6 0 0 0-.3 1.8l.5 1.3 2.1.4v4.6l-2.1.4z"/></svg>'
+  };
+  const controllers=[];
+  let listenerController=new AbortController();
+  let voiceSelected=false;
+  let resizeSettleTimer=0;
+  let repairFrame=0;
+  let entranceTimer=0;
+
+  function formatTime(seconds){
+    if(!Number.isFinite(seconds)||seconds<0)return '0:00';
+    const whole=Math.floor(seconds);
+    return Math.floor(whole/60)+':'+String(whole%60).padStart(2,'0');
+  }
+  function htmlEscape(value){
+    return String(value).replace(/[&<>"']/g,character=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[character]);
+  }
+  function resetVoice(){
+    controllers.forEach(controller=>{
+      try{controller.audio.pause();}catch(e){}
+      controller.hideMenu(true);
+    });
+    controllers.length=0;
+    listenerController.abort();
+    listenerController=new AbortController();
+  }
+  function voiceCard(voice){
+    const name=htmlEscape(voice.name);
+    const file=htmlEscape(voice.file);
+    const src='assets/audio/'+encodeURIComponent(voice.file);
+    return `
+      <article class="cnh-voice-card" data-voice-id="${voice.id}" aria-label="${name} voice acting sample">
+        <h3 class="cnh-voice-name">${name}</h3>
+        <div>
+          <div class="cnh-voice-player" role="group" aria-label="${name} audio player">
+            <button type="button" class="cnh-voice-icon cnh-voice-play" aria-label="Play ${name}">${icons.play}</button>
+            <input class="cnh-voice-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="${name} audio position"/>
+            <span class="cnh-voice-time" aria-live="off">0:00</span>
+            <button type="button" class="cnh-voice-icon cnh-voice-mute" aria-label="Mute ${name} audio">${icons.volume}</button>
+            <input class="cnh-voice-volume" type="range" min="0" max="1" step="0.05" value="0.75" aria-label="${name} volume"/>
+            <div class="cnh-voice-settings-wrap">
+              <button type="button" class="cnh-voice-icon cnh-voice-settings" aria-haspopup="true" aria-expanded="false" aria-label="${name} playback speed settings">${icons.settings}</button>
+              <div class="cnh-voice-settings-menu" role="menu" aria-label="${name} playback speed" hidden>
+                <div class="cnh-voice-menu-title">Playback speed</div>
+                ${playbackSpeeds.map(speed=>`<button type="button" class="cnh-voice-speed" role="menuitemradio" aria-checked="${speed===1}" data-rate="${speed}">${speed}×</button>`).join('')}
+              </div>
+            </div>
+            <audio preload="metadata" src="${src}"></audio>
+          </div>
+          <p class="cnh-voice-status" aria-live="polite">Voice sample · ${file}</p>
+        </div>
+      </article>`;
+  }
+  function markup(){return voices.map(voiceCard).join('');}
+  function attachPlayer(card,voice){
+    const audio=card.querySelector('audio');
+    const play=card.querySelector('.cnh-voice-play');
+    const seek=card.querySelector('.cnh-voice-seek');
+    const clock=card.querySelector('.cnh-voice-time');
+    const mute=card.querySelector('.cnh-voice-mute');
+    const volume=card.querySelector('.cnh-voice-volume');
+    const settings=card.querySelector('.cnh-voice-settings');
+    const menu=card.querySelector('.cnh-voice-settings-menu');
+    const status=card.querySelector('.cnh-voice-status');
+    let usedFallback=false;
+    let menuOpen=false;
+    let menuCloseTimer=0;
+
+    function refreshPlay(){
+      const running=!audio.paused&&!audio.ended;
+      play.innerHTML=running?icons.pause:icons.play;
+      play.setAttribute('aria-label',(running?'Pause ':'Play ')+voice.name);
+    }
+    function refreshTime(){
+      const duration=audio.duration;
+      if(Number.isFinite(duration)&&duration>0){
+        const pct=Math.min(100,Math.max(0,audio.currentTime/duration*100));
+        seek.value=String(Math.round(pct*10));
+        seek.style.setProperty('--voice-pct',pct+'%');
+        clock.textContent='-'+formatTime(Math.max(0,duration-audio.currentTime));
+      }else{
+        clock.textContent='0:00';seek.value='0';seek.style.setProperty('--voice-pct','0%');
+      }
+    }
+    function refreshVolume(){
+      const level=audio.muted?0:audio.volume;
+      mute.innerHTML=level===0?icons.muted:icons.volume;
+      mute.setAttribute('aria-label',(level===0?'Unmute ':'Mute ')+voice.name+' audio');
+      volume.value=String(level);
+      volume.style.setProperty('--voice-pct',Math.round(level*100)+'%');
+    }
+    function hideMenu(immediate=false){
+      menuOpen=false;settings.setAttribute('aria-expanded','false');
+      menu.classList.remove('is-open');clearTimeout(menuCloseTimer);
+      if(immediate||window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        menu.hidden=true;
+      }else{
+        menuCloseTimer=setTimeout(()=>{if(!menuOpen)menu.hidden=true;},250);
+      }
+    }
+    function showMenu(){
+      controllers.forEach(controller=>{if(controller.audio!==audio)controller.hideMenu();});
+      clearTimeout(menuCloseTimer);menuOpen=true;menu.hidden=false;
+      settings.setAttribute('aria-expanded','true');
+      requestAnimationFrame(()=>{if(menuOpen)menu.classList.add('is-open');});
+    }
+    controllers.push({audio,hideMenu});
+    audio.volume=.75;
+    ['loadedmetadata','durationchange','timeupdate','seeking','seeked','ended'].forEach(evt=>audio.addEventListener(evt,refreshTime));
+    ['play','pause','ended'].forEach(evt=>audio.addEventListener(evt,refreshPlay));
+    ['volumechange'].forEach(evt=>audio.addEventListener(evt,refreshVolume));
+    // Never mix multiple voice samples; pause the previous actor when another starts.
+    audio.addEventListener('play',()=>controllers.forEach(controller=>{
+      if(controller.audio!==audio&&!controller.audio.paused)controller.audio.pause();
+    }));
+    audio.addEventListener('error',()=>{
+      if(!usedFallback){
+        usedFallback=true;
+        audio.src='assets/videos/'+encodeURIComponent(voice.file);
+        audio.load();
+      }else{
+        play.disabled=true;
+        status.textContent=voice.file+' not found — add it to assets/audio/';
+      }
+    });
+    audio.addEventListener('loadedmetadata',()=>{
+      status.textContent='Voice sample · '+voice.file;
+      play.disabled=false;refreshTime();
+    });
+    play.addEventListener('click',()=>{
+      if(audio.paused){
+        const result=audio.play();
+        if(result&&typeof result.catch==='function')result.catch(()=>{
+          status.textContent='Unable to play '+voice.file+'. Check the MP3 file.';
+          refreshPlay();
+        });
+      }else audio.pause();
+    });
+    seek.addEventListener('input',()=>{
+      if(Number.isFinite(audio.duration)&&audio.duration>0){
+        audio.currentTime=Number(seek.value)/1000*audio.duration;
+        refreshTime();
+      }
+    });
+    mute.addEventListener('click',()=>{audio.muted=!audio.muted;refreshVolume();});
+    volume.addEventListener('input',()=>{audio.muted=false;audio.volume=Number(volume.value);refreshVolume();});
+    settings.addEventListener('click',()=>{if(menuOpen)hideMenu();else showMenu();});
+    menu.querySelectorAll('[data-rate]').forEach(button=>button.addEventListener('click',()=>{
+      audio.playbackRate=Number(button.dataset.rate);
+      menu.querySelectorAll('[data-rate]').forEach(other=>other.setAttribute('aria-checked',String(other===button)));
+      hideMenu();settings.focus();
+    }));
+    document.addEventListener('pointerdown',event=>{
+      if(!settings.contains(event.target)&&!menu.contains(event.target))hideMenu();
+    },{signal:listenerController.signal});
+    document.addEventListener('keydown',event=>{
+      if(event.key==='Escape'&&menuOpen){hideMenu();settings.focus();}
+    },{signal:listenerController.signal});
+    refreshPlay();refreshVolume();refreshTime();
+  }
+  function settleVoice(){
+    if(!voiceSelected || grid.dataset.cat!=='voice')return;
+    grid.classList.add('cnh-voice-ready');
+    if(grid.style.opacity!=='1')grid.style.opacity='1';
+    for(const property of ['visibility','transform','display','height']){
+      if(grid.style.getPropertyValue(property))grid.style.removeProperty(property);
+    }
+  }
+  function renderVoice(){
+    resetVoice();
+    grid.classList.remove('cnh-voice-ready');
+    clearTimeout(entranceTimer);
+    tabs.querySelectorAll('.cat-tab').forEach(button=>{
+      const selected=button===voiceTab;
+      button.classList.toggle('on',selected);
+      button.setAttribute('aria-pressed',String(selected));
+    });
+    grid.dataset.cat='voice';
+    grid.innerHTML=markup();
+    grid.style.opacity='1';
+    grid.style.removeProperty('display');
+    grid.style.removeProperty('visibility');
+    grid.style.removeProperty('transform');
+    grid.style.removeProperty('height');
+    grid.querySelectorAll('.cnh-voice-card').forEach((card,index)=>{
+      attachPlayer(card,voices[index]);
+    });
+    // Preserve the original centered fade-up once, then leave the grid visible
+    // even if a responsive layout transition rewrites inline gallery styles.
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)settleVoice();
+    else entranceTimer=setTimeout(()=>{entranceTimer=0;settleVoice();},560);
+  }
+  function ensureVoiceAfterLayout(){
+    if(!voiceSelected)return;
+    const cards=grid.querySelectorAll('.cnh-voice-card');
+    const players=grid.querySelectorAll('.cnh-voice-card audio');
+    // The standard Our Work resize routine can replace the voice markup.
+    // Rebuild only if it actually did, otherwise preserve the audio positions.
+    if(grid.dataset.cat!=='voice'||cards.length!==voices.length||players.length!==voices.length){
+      renderVoice();
+      return;
+    }
+    // Guard against another category's transient fade-out state persisting.
+    if(!grid.classList.contains('cnh-voice-ready') && !entranceTimer){
+      settleVoice();
+    }
+    if(grid.classList.contains('cnh-voice-ready'))settleVoice();
+    // Reaffirm the active tab if a desktop/mobile category-bar refresh reset it.
+    if(!voiceTab.classList.contains('on')){
+      tabs.querySelectorAll('.cat-tab').forEach(button=>{
+        const selected=button===voiceTab;
+        button.classList.toggle('on',selected);
+        button.setAttribute('aria-pressed',String(selected));
+      });
+    }
+  }
+  function queueVoiceCheck(){
+    if(!voiceSelected||repairFrame)return;
+    repairFrame=requestAnimationFrame(()=>{
+      repairFrame=0;
+      ensureVoiceAfterLayout();
+    });
+  }
+  // DevTools device mode fires resize and sometimes delayed gallery changes.
+  // Observe just the gallery root (not individual player updates) to catch
+  // unexpected overwrites, including those caused after the resize event.
+  const voiceObserver=new MutationObserver(mutations=>{
+    if(!voiceSelected)return;
+    if(mutations.some(m=>m.type==='childList'||m.attributeName==='data-cat'||m.attributeName==='style')){
+      queueVoiceCheck();
+    }
+  });
+  voiceObserver.observe(grid,{childList:true,attributes:true,attributeFilter:['data-cat','style']});
+  window.addEventListener('resize',()=>{
+    if(!voiceSelected)return;
+    queueVoiceCheck();
+    clearTimeout(resizeSettleTimer);
+    resizeSettleTimer=setTimeout(ensureVoiceAfterLayout,260);
+  },{passive:true});
+  voiceTab.addEventListener('click',()=>{
+    voiceSelected=true;
+    renderVoice();
+  });
+  tabs.addEventListener('click',event=>{
+    const tab=event.target.closest('.cat-tab');
+    if(tab&&tab!==voiceTab){
+      voiceSelected=false;
+      clearTimeout(resizeSettleTimer);
+      clearTimeout(entranceTimer);
+      entranceTimer=0;
+      // Keep the completed voice entrance disabled until the regular gallery
+      // replaces its markup. Removing this class while data-cat is still
+      // 'voice' restarts the fade-up keyframes and causes a second flicker.
+      // renderVoice() clears the class when Voice Acting is selected again.
+      if(grid.dataset.cat==='voice')resetVoice();
+    }
+  },true);
+})();
+</script>
+
+
 <!-- GTA VI video 06: public YouTube metadata fallback (the standard GTA metadata loader remains primary). -->
 <script id="cnh-gta-six-metadata-fallback">
 (function () {
@@ -10435,19 +10867,24 @@ body.cnh-video-scroll-locked {
   var arrow=document.getElementById('hero-scroll-arrow');
   var about=document.getElementById('about');
   if(!arrow) return;
+  var heroStack=document.querySelector('#hero .hero-center-stack');
   var scheduled=false;
+  var introReady=false;
+  var revealQueued=false;
+  var AFTER_HERO_MS=2000;
+
   function update(){
     scheduled=false;
-    var y=Math.max(0, window.scrollY || window.pageYOffset || 0);
+    var y=Math.max(0,window.scrollY || window.pageYOffset || 0);
     var distance=Math.max(145,Math.min(240,window.innerHeight*.24));
     var p=Math.max(0,Math.min(1,y/distance));
-    arrow.style.opacity=(1-p).toFixed(3);
-    if(p>=1){
+    arrow.style.opacity=introReady?(1-p).toFixed(3):'0';
+    if(!introReady || p>=1){
       arrow.classList.add('is-hidden');
       arrow.classList.remove('is-visible');
       arrow.setAttribute('aria-hidden','true');
       arrow.tabIndex=-1;
-    } else {
+    }else{
       arrow.classList.remove('is-hidden');
       arrow.classList.add('is-visible');
       arrow.removeAttribute('aria-hidden');
@@ -10459,6 +10896,22 @@ body.cnh-video-scroll-locked {
     scheduled=true;
     requestAnimationFrame(update);
   }
+  function showAfterIntro(){
+    introReady=true;
+    arrow.classList.remove('is-awaiting-hero');
+    update();
+  }
+  function queueReveal(){
+    if(revealQueued)return;
+    revealQueued=true;
+    window.setTimeout(showAfterIntro,AFTER_HERO_MS);
+  }
+  function cssTimeToMs(value){
+    var part=(value||'0s').split(',')[0].trim();
+    var number=parseFloat(part)||0;
+    return part.endsWith('ms')?number:number*1000;
+  }
+
   arrow.addEventListener('click',function(){
     if(!about)return;
     about.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
@@ -10466,6 +10919,27 @@ body.cnh-video-scroll-locked {
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule,{passive:true});
   update();
+
+  // Base timing on the actual hero reveal, not simply on page load. This also
+  // tracks changes to the reveal duration/delay in the stylesheet.
+  if(heroStack){
+    var style=window.getComputedStyle(heroStack);
+    var names=style.animationName.split(',').map(function(s){return s.trim();});
+    var idx=names.indexOf('hero-stack-rise');
+    if(idx!==-1){
+      var durations=style.animationDuration.split(',').map(function(s){return s.trim();});
+      var delays=style.animationDelay.split(',').map(function(s){return s.trim();});
+      var duration=cssTimeToMs(durations[idx%durations.length]);
+      var delay=cssTimeToMs(delays[idx%delays.length]);
+      if(duration>0){
+        heroStack.addEventListener('animationend',function(event){
+          if(event.target===heroStack && event.animationName==='hero-stack-rise')queueReveal();
+        });
+        // Safety fallback in case animationend is dropped (e.g. tab suspension).
+        window.setTimeout(queueReveal,Math.max(0,delay+duration)+100);
+      }else queueReveal();
+    }else queueReveal();
+  }else queueReveal();
 })();
 </script>
 

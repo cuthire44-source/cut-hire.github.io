@@ -1,0 +1,53 @@
+name: Publish Cut & Hire (GitHub Pages)
+
+# Deploy after normal site edits and after each successful GTA VI stats refresh.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "Refresh GTA VI YouTube video details (YouTube Data API)"
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: cut-hire-github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Never publish after a failed stats run or one from an unexpected repo.
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out latest published branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Verify website and stats files
+        run: |
+          test -f index.html
+          test -f assets/data/gta6-video-stats.json
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Package static website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: '.'
+
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -107,7 +107,7 @@ document.querySelector('[data-results-next]')?.addEventListener('click',()=>scro
  
 (function(){
    
-  const HERO_CACHE_VERSION='v=20260526hero8';
+  const HERO_CACHE_VERSION='v=20261117-newthumbs';
   const FILES=[
     'assets/images/8.webp',
     'assets/images/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp',
@@ -117,19 +117,19 @@ document.querySelector('[data-results-next]')?.addEventListener('click',()=>scro
     'assets/images/image.webp',
     'assets/images/bvcvcbvcbvcb43541.webp',
     'assets/images/I_tested_10_Spy_Gadgets_Thumbnail.webp',
-    'assets/images/Illustrator_vid.webp',
+    'assets/images/TubIDk.webp',
     'assets/images/thumbnail_by_lokesh_4.webp',
     'assets/images/thumbnail_by_lokesh_7.png.webp',
-    'assets/images/thumnbail_by_lokesh_2.webp',
-    'assets/images/thumbnail_by_lokesh_1_.webp',
-    'assets/images/thumbnail_by_lokesh_5.png.webp',
-    'assets/images/thumbnail_by_lokesh_3.png.webp',
-    'assets/images/descarga_1.webp',
-    'assets/images/descarga_2.webp',
-    'assets/images/IMG-20251116-WA0014.webp',
-    'assets/images/20260312_052641.webp',
-    'assets/images/20260314_051758.webp',
-    'assets/images/image (1).webp',
+    'assets/images/MArio.webp',
+    'assets/images/TeastingDiffrentthings.webp',
+    'assets/images/MAcdonals Ad.jpeg',
+    'assets/images/Gta 6Thumbnail Right.webp',
+    'assets/images/Gta 6Thumbnail Left.webp',
+    'assets/images/Guy Arrested.webp',
+    'assets/images/CooKHOuse.webp',
+    'assets/images/Mrbeast Yt.webp',
+    'assets/images/Gta 6Thumbnail Middle.webp',
+    'assets/images/Fnaf Yt.webp',
     'assets/images/4_1.webp',
     'assets/images/3_2.webp',
     'assets/images/4_2.webp',
@@ -555,21 +555,17 @@ const works=[
 {cat:[],title:'Long Form 10',size:'',src:'longform10.mp4',isPhoto:false},
 {cat:[],title:'Long Form 11',size:'',src:'longform11.mp4',isPhoto:false},
 {cat:[],title:'Long Form 12',size:'wide',src:'longform12.mp4',isPhoto:false},
-{cat:['thumbnail'],title:'Thumbnail 1',src:'',isPhoto:true,img:'assets/images/8.webp'},
-{cat:['thumbnail'],title:'Thumbnail 2',src:'',isPhoto:true,img:'assets/images/f6b5a56b-c6cc-476f-8bed-5920429ccc70.webp'},
-{cat:['thumbnail'],title:'Thumbnail 3',src:'',isPhoto:true,img:'assets/images/9cb0f7f2-b98d-4f8c-9802-ff93a7ecb8e3.webp'},
-{cat:['thumbnail'],title:'Thumbnail 4',src:'',isPhoto:true,img:'assets/images/e837326a-3c9d-4142-a663-1d32cff2edef.webp'},
-{cat:['thumbnail'],title:'Thumbnail 5',src:'',isPhoto:true,img:'assets/images/5.webp'},
-{cat:['thumbnail'],title:'Thumbnail 6',src:'',isPhoto:true,img:'assets/images/image.webp'},
-{cat:['thumbnail'],title:'Thumbnail 7',src:'',isPhoto:true,img:'assets/images/bvcvcbvcbvcb43541.webp'},
-{cat:['thumbnail'],title:'Thumbnail 8',src:'',isPhoto:true,img:'assets/images/I_tested_10_Spy_Gadgets_Thumbnail.webp'},
-{cat:['thumbnail'],title:'Thumbnail 9',src:'',isPhoto:true,img:'assets/images/Illustrator_vid.webp'},
-{cat:['thumbnail'],title:'Thumbnail 10',src:'',isPhoto:true,img:'assets/images/thumbnail_by_lokesh_4.webp'},
-{cat:['thumbnail'],title:'Thumbnail 11',src:'',isPhoto:true,img:'assets/images/thumbnail_by_lokesh_7.png.webp'},
-{cat:['thumbnail'],title:'Thumbnail 12',src:'',isPhoto:true,img:'assets/images/thumnbail_by_lokesh_2.webp'},
-{cat:['thumbnail'],title:'Thumbnail 13',src:'',isPhoto:true,img:'assets/images/thumbnail_by_lokesh_1_.webp'},
-{cat:['thumbnail'],title:'Thumbnail 14',src:'',isPhoto:true,img:'assets/images/3(3).webp'},
-{cat:['thumbnail'],title:'Thumbnail 15',src:'',isPhoto:true,img:'assets/images/thumbnail_by_lokesh_3.png.webp'}
+{cat:['thumbnail'],title:'Gta 6Thumbnail Left',src:'',isPhoto:true,img:'assets/images/Gta 6Thumbnail Left.webp'},
+{cat:['thumbnail'],title:'Gta 6Thumbnail Middle',src:'',isPhoto:true,img:'assets/images/Gta 6Thumbnail Middle.webp'},
+{cat:['thumbnail'],title:'Gta 6Thumbnail Right',src:'',isPhoto:true,img:'assets/images/Gta 6Thumbnail Right.webp'},
+{cat:['thumbnail'],title:'Mrbeast Yt',src:'',isPhoto:true,img:'assets/images/Mrbeast Yt.webp'},
+{cat:['thumbnail'],title:'TubIDk',src:'',isPhoto:true,img:'assets/images/TubIDk.webp'},
+{cat:['thumbnail'],title:'Fnaf Yt',src:'',isPhoto:true,img:'assets/images/Fnaf Yt.webp'},
+{cat:['thumbnail'],title:'MAcdonals Ad',src:'',isPhoto:true,img:'assets/images/MAcdonals Ad.jpeg'},
+{cat:['thumbnail'],title:'CooKHOuse',src:'',isPhoto:true,img:'assets/images/CooKHOuse.webp'},
+{cat:['thumbnail'],title:'TeastingDiffrentthings',src:'',isPhoto:true,img:'assets/images/TeastingDiffrentthings.webp'},
+{cat:['thumbnail'],title:'Guy Arrested',src:'',isPhoto:true,img:'assets/images/Guy Arrested.webp'},
+{cat:['thumbnail'],title:'MArio',src:'',isPhoto:true,img:'assets/images/MArio.webp'}
 ];
 
 
@@ -770,7 +766,7 @@ function mobilePortfolioLimit(activeCat){
   if(!isMobilePortfolioView()) return Infinity;
   if(cat === 'youtube') return 7;
   if(cat === 'all') return 8;
-  if(cat === 'thumbnail') return 8;
+  if(cat === 'thumbnail') return Infinity;
   if(cat === 'shorts') return 27;
   return 6;
 }

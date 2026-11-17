@@ -17424,8 +17424,7 @@
       <img alt="" id="photo-lb-img" src="" />
     </div>
     <div class="photo-lb-bar">
-      <span class="photo-lb-hint">Press F to fullscreen · Esc to close</span>
-      <button class="photo-lb-fs" onclick="photoFullscreen()">⛶ Fullscreen</button>
+      <button class="photo-lb-fs" onclick="photoFullscreen()" style="margin-left: auto">⛶ Fullscreen</button>
     </div>
   </div>
   <script id="cnh-work-player-parity">
@@ -18254,11 +18253,12 @@
       'use strict';
       const root = document.documentElement;
       const body = document.body;
-      // Existing portfolio player + GTA VI popups + new Cut & Hire reel popup.
+      // Shared background scroll lock for video players and thumbnail previews.
       const overlays = [
         document.getElementById('vp-wrap'),
         document.getElementById('gta-video-modal'),
-        document.getElementById('about-reel-popup')
+        document.getElementById('about-reel-popup'),
+        document.getElementById('photo-lb')
       ].filter(Boolean);
       if (!overlays.length) return;
 
@@ -18267,7 +18267,7 @@
 
       function openPlayer() {
         return overlays.some(function (el) {
-          if (el.id === 'vp-wrap') return el.classList.contains('open');
+          if (el.id === 'vp-wrap' || el.id === 'photo-lb') return el.classList.contains('open');
           return !el.hidden;
         });
       }
@@ -18303,7 +18303,7 @@
         });
       });
 
-      // Stop wheel/trackpad and touch gestures from scrolling the page below a player.
+      // Stop wheel/trackpad and touch gestures from scrolling behind open previews.
       document.addEventListener('wheel', function (event) {
         if (locked) event.preventDefault();
       }, { capture: true, passive: false });

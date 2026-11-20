@@ -2152,7 +2152,8 @@ body.hero-start-boost
   .hero-center-stack{
     max-width:100%!important;
     padding:0 1rem!important;
-    transform:translate(-50%, calc(-50% - 38px))!important;
+    /* Keep the final placement, but allow the hero-stack-rise keyframes to move it. */
+    transform:translate(-50%, calc(-50% - 38px));
   }
   @keyframes hero-stack-rise{
     from{opacity:0;transform:translate(-50%, calc(-50% - 6px));filter:blur(1.2px)}
@@ -5728,10 +5729,8 @@ body.cnh-policy-active #cnh-policy-portal{opacity:1;visibility:visible;pointer-e
   }
 
   .hero-cta .btn-primary.main-mrbeast-glint-btn .main-glint-stroke{
-    --main-glint-angle:103.678deg;
-    --main-glint-x:83.9783%;
-    animation:none!important;
-    will-change:auto!important;
+    animation:mainHeroGlintSpin 5.75s linear infinite!important;
+    will-change:background!important;
   }
 }
 

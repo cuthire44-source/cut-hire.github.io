@@ -993,24 +993,169 @@ function captureVideoThumbnail(img){
 let movingPreviewActive=new Set();
 const MOVING_PREVIEW_MAX_ACTIVE=2;
 
+// Site-wide YouTube-style preview on mobile: one muted video in view at a time.
+// Desktop preview behavior stays hover-only. All local previews reuse their
+// existing handlers so their poster, modal, and playback logic is preserved.
+let cnhMobilePreviewObserver=null;
+let cnhMobilePreviewGrid=null;
+let cnhMobilePreviewCurrent=null;
+let cnhMobilePreviewTimer=null;
+let cnhMobilePreviewListenersBound=false;
+
+function cnhIsMobilePreviewView(){
+  return !!(window.matchMedia && window.matchMedia('(max-width: 960px) and (pointer: coarse)').matches);
+}
+function cnhStopMobileWorkPreview(){
+  const current=cnhMobilePreviewCurrent;
+  cnhMobilePreviewCurrent=null;
+  if(!current)return;
+  if(current.type==='work')stopMovingPreview(current.video,true);
+  else if(typeof current.card.__cnhStopPreview==='function')current.card.__cnhStopPreview();
+}
+function cnhMobileCandidateCards(){
+  return document.querySelectorAll([
+    '#work-grid .wc.is-video:not(.pending-work-card)',
+    '#video-testimonials .testimonial-video-card[data-testimonial-card]',
+    '.pricing-video-shell[data-pricing-src]',
+    '#about .about-reel-card',
+    '#gta-showcase .gta-feature-thumb[data-gta-hover-mp4]'
+  ].join(','));
+}
+function cnhVisibleCardFraction(card,vw,vh){
+  if(card.closest('[hidden], [inert]'))return 0;
+  const r=card.getBoundingClientRect();
+  if(!r.width || !r.height)return 0;
+  let l=Math.max(0,r.left),t=Math.max(0,r.top),rr=Math.min(vw,r.right),b=Math.min(vh,r.bottom);
+  // Prevent offscreen carousel cards from competing with the visible card.
+  const clip=card.closest('.testimonial-carousel-stage, .pricing-viewport');
+  if(clip){const c=clip.getBoundingClientRect();l=Math.max(l,c.left);rr=Math.min(rr,c.right);t=Math.max(t,c.top);b=Math.min(b,c.bottom);}
+  const visibleWidth=Math.max(0,rr-l),visibleHeight=Math.max(0,b-t);
+  return (visibleWidth*visibleHeight)/(r.width*r.height);
+}
+function cnhMobileCardType(card){
+  if(card.matches('#work-grid .wc.is-video'))return 'work';
+  if(card.matches('#video-testimonials .testimonial-video-card'))return 'testimonial';
+  if(card.matches('.pricing-video-shell'))return 'pricing';
+  if(card.matches('#about .about-reel-card'))return 'reel';
+  if(card.matches('#gta-showcase .gta-feature-thumb'))return 'gta';
+  return null;
+}
+function cnhSyncMobileWorkPreview(){
+  cnhMobilePreviewTimer=null;
+  const modalOpen=!!document.querySelector('#vp-wrap.open, #photo-lb.open, #review-modal.open, #results-modal.open') ||
+    !!document.querySelector('#gta-video-modal:not([hidden]), #about-reel-popup:not([hidden])');
+  if(!cnhIsMobilePreviewView() || document.hidden || modalOpen ||
+     (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+     (navigator.connection && navigator.connection.saveData)){
+    cnhStopMobileWorkPreview();return;
+  }
+  const vh=window.innerHeight||document.documentElement.clientHeight;
+  const vw=window.innerWidth||document.documentElement.clientWidth;
+  let chosen=null,best=-Infinity;
+  cnhMobileCandidateCards().forEach(card=>{
+    const type=cnhMobileCardType(card);
+    if(!type)return;
+    const video=(type==='work'?card.querySelector('.wc-preview-video'):null);
+    if(type==='work' && (!video || !video.dataset.src))return;
+    if(type!=='work' && (typeof card.__cnhStartPreview!=='function' || typeof card.__cnhStopPreview!=='function'))return;
+    const visible=cnhVisibleCardFraction(card,vw,vh);
+    const box=card.getBoundingClientRect();
+    if(visible<.25 || visible*box.width*box.height<3800)return;
+    const r=card.getBoundingClientRect();
+    const vdist=Math.abs((r.top+r.bottom)*.5-vh*.5)/Math.max(vh*.5,1);
+    const hdist=Math.abs((r.left+r.right)*.5-vw*.5)/Math.max(vw*.5,1);
+    const score=visible*1.6-vdist*.5-hdist*.16;
+    if(score>best){chosen={card,video,type};best=score;}
+  });
+  const current=cnhMobilePreviewCurrent;
+  if(current && chosen && current.card===chosen.card){
+    if(current.type==='work' && current.video.paused && !movingPreviewActive.has(current.video))startMovingPreview(current.video);
+    return;
+  }
+  cnhStopMobileWorkPreview();
+  if(!chosen)return;
+  cnhMobilePreviewCurrent=chosen;
+  if(chosen.type==='work')startMovingPreview(chosen.video);
+  else chosen.card.__cnhStartPreview();
+}
+function cnhScheduleMobileWorkPreview(delay=100){
+  if(cnhMobilePreviewTimer!==null)clearTimeout(cnhMobilePreviewTimer);
+  cnhMobilePreviewTimer=setTimeout(cnhSyncMobileWorkPreview,delay);
+}
+function cnhObserveMobilePreviewCards(){
+  if(!cnhMobilePreviewObserver)return;
+  cnhMobileCandidateCards().forEach(card=>cnhMobilePreviewObserver.observe(card));
+}
+function cnhInstallMobilePreviewListeners(){
+  if(cnhMobilePreviewListenersBound)return;
+  cnhMobilePreviewListenersBound=true;
+  window.addEventListener('scroll',()=>cnhScheduleMobileWorkPreview(90),{passive:true});
+  window.addEventListener('resize',()=>cnhScheduleMobileWorkPreview(140),{passive:true});
+  window.addEventListener('pagehide',cnhStopMobileWorkPreview);
+  window.addEventListener('load',()=>cnhScheduleMobileWorkPreview(120),{once:true});
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)cnhStopMobileWorkPreview();
+    else cnhScheduleMobileWorkPreview(120);
+  });
+  ['vp-wrap','photo-lb','review-modal','results-modal','gta-video-modal','about-reel-popup'].forEach(id=>{
+    const modal=document.getElementById(id);
+    if(modal)new MutationObserver(()=>cnhScheduleMobileWorkPreview(0))
+      .observe(modal,{attributes:true,attributeFilter:['class','hidden','aria-hidden']});
+  });
+  // The pricing carousel moves horizontally without a window scroll event.
+  // Track slide changes, buttons, swipes and cloned cards. Schedule both during
+  // and after the slide to pick the new video automatically without touching it.
+  const pricingTrack=document.querySelector('[data-pricing-carousel] .pricing-track');
+  const pricingViewport=document.querySelector('[data-pricing-carousel] .pricing-viewport');
+  if(pricingTrack){
+    pricingTrack.addEventListener('transitionend',()=>cnhScheduleMobileWorkPreview(20));
+    new MutationObserver(records=>{
+      if(records.some(r=>r.type==='childList'))cnhObserveMobilePreviewCards();
+      cnhScheduleMobileWorkPreview(110);
+    }).observe(pricingTrack,{attributes:true,attributeFilter:['style','class'],childList:true});
+  }
+  if(pricingViewport){
+    pricingViewport.addEventListener('pointerup',()=>{cnhScheduleMobileWorkPreview(100);setTimeout(()=>cnhScheduleMobileWorkPreview(20),730);},{passive:true});
+    pricingViewport.addEventListener('touchend',()=>{cnhScheduleMobileWorkPreview(140);setTimeout(()=>cnhScheduleMobileWorkPreview(20),730);},{passive:true});
+  }
+  const pricingCarousel=document.querySelector('[data-pricing-carousel]');
+  if(pricingCarousel)pricingCarousel.addEventListener('click',()=>{
+    cnhScheduleMobileWorkPreview(120);
+    setTimeout(()=>cnhScheduleMobileWorkPreview(20),730);
+  },{passive:true});
+  // Testimonial belt moves horizontally even when the window is not scrolling.
+  // Refresh only while this section is onscreen so offscreen pages stay efficient.
+  setInterval(()=>{
+    if(!cnhIsMobilePreviewView() || document.hidden)return;
+    const testimonial=document.getElementById('video-testimonials');
+    if(!testimonial)return;
+    const r=testimonial.getBoundingClientRect();
+    if(r.top<window.innerHeight && r.bottom>0)cnhScheduleMobileWorkPreview(10);
+  },460);
+}
 function initMovingPreviews(root){
+  if(cnhMobilePreviewObserver)cnhMobilePreviewObserver.disconnect();
+  cnhStopMobileWorkPreview();
   movingPreviewActive.forEach(v=>stopMovingPreview(v,true));
   movingPreviewActive.clear();
-
+  cnhMobilePreviewGrid=root||document.getElementById('work-grid');
+  cnhInstallMobilePreviewListeners();
+  const mobile=cnhIsMobilePreviewView();
   const cards=Array.from((root||document).querySelectorAll('.wc.is-video')).filter(card=>!card.hasAttribute('data-testimonial-card'));
   cards.forEach(card=>{
     const v=card.querySelector('.wc-preview-video');
     if(!v)return;
-    card.addEventListener('mouseenter',()=>startMovingPreview(v),{passive:true});
-    if(!card.classList.contains('autoplay-preview')){
+    if(!mobile){
+      card.addEventListener('mouseenter',()=>startMovingPreview(v),{passive:true});
       card.addEventListener('mouseleave',()=>stopMovingPreview(v,true),{passive:true});
     }
-    card.addEventListener('touchstart',()=>startMovingPreview(v),{passive:true});
-
-    if(card.classList.contains('autoplay-preview')){
-      startMovingPreview(v);
-    }
   });
+  if(mobile && 'IntersectionObserver' in window){
+    cnhMobilePreviewObserver=new IntersectionObserver(()=>cnhScheduleMobileWorkPreview(55),
+      {threshold:[0,.10,.25,.50,.75,1]});
+    cnhObserveMobilePreviewCards();
+  }
+  if(mobile)cnhScheduleMobileWorkPreview(160);
 }
 
 function queueMovingPreview(v){
@@ -1029,6 +1174,8 @@ function startMovingPreview(videoEl){
   }
 
   movingPreviewActive.add(videoEl);
+  const previewRequestId=(videoEl.__cnhPreviewRequestId||0)+1;
+  videoEl.__cnhPreviewRequestId=previewRequestId;
   if(card)card.classList.add('preview-loading');
 
   const startAt=Number(videoEl.dataset.start||2),endAt=Number(videoEl.dataset.end||5);
@@ -1045,6 +1192,7 @@ function startMovingPreview(videoEl){
   videoEl.preload='auto';
 
   function showMoving(){
+    if(videoEl.__cnhPreviewRequestId!==previewRequestId || !movingPreviewActive.has(videoEl))return;
     if(shown)return;
     shown=true;
     if(card){
@@ -1060,6 +1208,7 @@ function startMovingPreview(videoEl){
     }catch(e){}
   }
   function playPreview(){
+    if(videoEl.__cnhPreviewRequestId!==previewRequestId || !movingPreviewActive.has(videoEl))return;
     if(playAttempted || !videoEl.isConnected)return;
     playAttempted=true;
     seekToStart();
@@ -1086,6 +1235,7 @@ function startMovingPreview(videoEl){
     }
   };
   videoEl.onerror=()=>{
+    if(videoEl.__cnhPreviewRequestId!==previewRequestId || !movingPreviewActive.has(videoEl))return;
     playAttempted=false;
     shown=false;
     if(candidateIndex<candidates.length-1){
@@ -1114,6 +1264,7 @@ function startMovingPreview(videoEl){
 
 function stopMovingPreview(videoEl,unload){
   if(!videoEl)return;
+  videoEl.__cnhPreviewRequestId=(videoEl.__cnhPreviewRequestId||0)+1;
   if(movingPreviewActive.has(videoEl))movingPreviewActive.delete(videoEl);
   const card=videoEl.closest('.wc');
   videoEl.pause();
@@ -1279,7 +1430,7 @@ window.vpOpenYouTube = vpOpenYouTube;
       const img=copy.querySelector('img');
       if(img){img.loading='lazy';img.removeAttribute('fetchpriority');}
       const vid=copy.querySelector('video');
-      if(vid)vid.removeAttribute('src'); // MP4 loads only when hovered.
+      if(vid){vid.dataset.src=vid.getAttribute('src')||vid.dataset.src||'';vid.removeAttribute('src');} // Clone loads only when previewed.
       return copy;
     };
     grid.prepend(...originals.map(cloneCard));
@@ -1374,10 +1525,12 @@ window.vpOpenYouTube = vpOpenYouTube;
       }
     });
 
-    card.addEventListener('mouseenter',startPreview,{passive:true});
-    card.addEventListener('mouseleave',stopPreview,{passive:true});
-    card.addEventListener('focusin',startPreview);
-    card.addEventListener('focusout',stopPreview);
+    card.__cnhStartPreview=startPreview;
+    card.__cnhStopPreview=stopPreview;
+    card.addEventListener('mouseenter',()=>{if(!cnhIsMobilePreviewView())startPreview();},{passive:true});
+    card.addEventListener('mouseleave',()=>{if(!cnhIsMobilePreviewView())stopPreview();},{passive:true});
+    card.addEventListener('focusin',()=>{if(!cnhIsMobilePreviewView())startPreview();});
+    card.addEventListener('focusout',()=>{if(!cnhIsMobilePreviewView())stopPreview();});
 
     const open=()=>{
       stopPreview();
@@ -2126,7 +2279,8 @@ ring.style.visibility = 'visible';
       const original = Array.from(row.children);
       if(!original.length) return;
 
-      const targetCopies = 8;
+      const targetCopies = window.matchMedia('(max-width: 820px)').matches ? 4 : 8;
+      row.dataset.heroLoopCopies = String(targetCopies);
       const originalCount = original.length;
 
       while(row.children.length < originalCount * targetCopies){
@@ -2153,7 +2307,7 @@ ring.style.visibility = 'visible';
 
     const offsets = rows.map((row, i) => {
       const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
-      const loopWidth = row.scrollWidth / 8 || 1;
+      const loopWidth = row.scrollWidth / (Number(row.dataset.heroLoopCopies) || 8) || 1;
       return loopWidth * cfg.offset;
     });
 
@@ -2171,7 +2325,7 @@ ring.style.visibility = 'visible';
 
       rows.forEach(function(row, i){
         const cfg = ROW_SETTINGS[i] || ROW_SETTINGS[0];
-        const loopWidth = row.scrollWidth / 8;
+        const loopWidth = row.scrollWidth / (Number(row.dataset.heroLoopCopies) || 8);
         if(!loopWidth || loopWidth < 10) return;
 
         const pxPerSecond = loopWidth / cfg.duration;
@@ -2754,27 +2908,53 @@ ring.style.visibility = 'visible';
       const youtube = shell.getAttribute('data-pricing-youtube') || '';
       const portrait = shell.getAttribute('data-pricing-portrait') === 'true';
 
+      let previewWanted=false;
+      let previewToken=0;
       function ensurePreview(){
         if(!video || !src) return;
+        video.muted=true;
+        video.defaultMuted=true;
+        video.playsInline=true;
+        video.setAttribute('muted','');
+        video.setAttribute('playsinline','');
+        video.setAttribute('webkit-playsinline','');
+        video.preload='auto';
         if(!video.getAttribute('src')){
-          video.setAttribute('src', src);
-          if(poster) video.setAttribute('poster', poster);
-          video.preload = 'metadata';
-          try{ video.load(); }catch(e){}
+          video.setAttribute('src',src);
+          if(poster)video.setAttribute('poster',poster);
+          try{video.load();}catch(e){}
         }
       }
-
-      function playPreview(){
-        ensurePreview();
+      function revealIfPlaying(token){
+        if(token!==previewToken || !previewWanted || !video || video.paused || video.readyState<2)return;
         shell.classList.add('preview-on');
-        if(video) video.play().catch(()=>{});
       }
-
+      function playPreview(){
+        if(!video || !src)return;
+        previewWanted=true;
+        const token=++previewToken;
+        ensurePreview();
+        const attempt=()=>{
+          if(!previewWanted || token!==previewToken)return;
+          let promise;
+          try{promise=video.play();}catch(e){return;}
+          if(promise && typeof promise.then==='function')promise.then(()=>revealIfPlaying(token)).catch(()=>{
+            if(token===previewToken)shell.classList.remove('preview-on');
+          });
+          else revealIfPlaying(token);
+        };
+        attempt();
+      }
       function stopPreview(){
+        previewWanted=false;
+        ++previewToken;
         shell.classList.remove('preview-on');
-        if(video){
-          try{ video.pause(); video.currentTime = 0; }catch(e){}
-        }
+        if(video){try{video.pause();video.currentTime=0;}catch(e){}}
+      }
+      if(video){
+        video.addEventListener('playing',()=>revealIfPlaying(previewToken));
+        video.addEventListener('loadeddata',()=>revealIfPlaying(previewToken));
+        video.addEventListener('error',()=>shell.classList.remove('preview-on'));
       }
 
       function openPreview(e){
@@ -2793,10 +2973,12 @@ ring.style.visibility = 'visible';
         }
       }
 
-      shell.addEventListener('mouseenter', playPreview, {passive:true});
-      shell.addEventListener('mouseleave', stopPreview, {passive:true});
-      shell.addEventListener('focus', playPreview);
-      shell.addEventListener('blur', stopPreview);
+      shell.__cnhStartPreview=playPreview;
+      shell.__cnhStopPreview=stopPreview;
+      shell.addEventListener('mouseenter', ()=>{if(!cnhIsMobilePreviewView())playPreview();}, {passive:true});
+      shell.addEventListener('mouseleave', ()=>{if(!cnhIsMobilePreviewView())stopPreview();}, {passive:true});
+      shell.addEventListener('focus', ()=>{if(!cnhIsMobilePreviewView())playPreview();});
+      shell.addEventListener('blur', ()=>{if(!cnhIsMobilePreviewView())stopPreview();});
       shell.addEventListener('click', openPreview);
       shell.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' || e.key === ' '){
@@ -3285,6 +3467,9 @@ ring.style.visibility = 'visible';
   // decoded MP4 frame can be painted. No empty/black preview layer on hover.
   function stopPreview(btn){
     const state=previews.get(btn);
+    // These buttons also have a dedicated inline preview controller. Do not
+    // remove its video element when the legacy observer fires offscreen.
+    if(!state)return;
     if(state?.timer)clearTimeout(state.timer);
     if(state?.fallbackTimer)clearTimeout(state.fallbackTimer);
     const preview=btn.querySelector('.gta-showcase-preview');
@@ -3303,6 +3488,9 @@ ring.style.visibility = 'visible';
   }
   function stopAllPreviews(){videoButtons.forEach(stopPreview)}
   function startPreview(btn){
+    // The newer inline controller handles both desktop hover and mobile
+    // in-view playback; avoid duplicate decoders and competing DOM writes.
+    if(typeof btn.__cnhStartPreview==='function')return;
     if(reduced.matches || document.hidden || !root.classList.contains('gta-in-view')
        || window.matchMedia('(hover:none)').matches || previews.has(btn))return;
     stopAllPreviews();
@@ -3594,7 +3782,7 @@ ring.style.visibility = 'visible';
     if(previouslyFocused && previouslyFocused.isConnected)previouslyFocused.focus({preventScroll:true});
   }
   videoButtons.forEach(btn=>{
-    btn.addEventListener('pointerenter',ev=>{if(ev.pointerType!=='touch')startPreview(btn);});
+    btn.addEventListener('pointerenter',ev=>{if(ev.pointerType!=='touch'&&!cnhIsMobilePreviewView())startPreview(btn);});
     btn.addEventListener('pointerleave',()=>stopPreview(btn));
     btn.addEventListener('click',()=>openVideo(btn));
   });

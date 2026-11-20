@@ -5918,7 +5918,8 @@
       .hero-center-stack {
         max-width: 100% !important;
         padding: 0 1rem !important;
-        transform: translate(-50%, calc(-50% - 38px)) !important;
+        /* Do not pin the transform with !important: hero-stack-rise animates it. */
+        transform: translate(-50%, calc(-50% - 38px));
       }
 
       @keyframes hero-stack-rise {
@@ -12215,10 +12216,9 @@
       }
 
       .hero-cta .btn-primary.main-mrbeast-glint-btn .main-glint-stroke {
-        --main-glint-angle: 103.678deg;
-        --main-glint-x: 83.9783%;
-        animation: none !important;
-        will-change: auto !important;
+        /* Run the identical border light used by the desktop button. */
+        animation: mainHeroGlintSpin 5.75s linear infinite !important;
+        will-change: background !important;
       }
     }
 
@@ -13923,7 +13923,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="assets/css/index.css?v=creator-banner-refined-35s-20261111">
+  <link rel="stylesheet" href="assets/css/index.css?v=mobile-hero-motion-20261120">
   <style id="cut-hire-creator-gta-bar">
     /* GTA VI PRE-LOAD bar behavior adapted for the Cut & Hire creator announcement.
    These are the same user-provided palm silhouettes already used in the GTA section. */
@@ -15075,6 +15075,89 @@
     }
   </style>
 
+  <style id="cnh-mobile-reel-scroll-and-spacing-v3">
+    @media (max-width: 767px) {
+      /* Preserve a full-height opening hero, but remove the large dead zone
+         between its CTA and the reel as the visitor scrolls down. */
+      #hero { min-height: 100svh !important; }
+      #about.about-section.about-glow-section {
+        margin-top: calc(-1 * clamp(96px, 13svh, 126px)) !important;
+        padding-top: 20px !important;
+        position: relative !important;
+      }
+      /* Before a genuine scroll, keep the reel visually absent, including
+         the part that overlaps the bottom of the opening hero viewport. */
+      #about .about-reel-feature:not(.cnh-reel-on-screen) {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateY(18px) scale(.985) !important;
+      }
+      #about .about-reel-feature.cnh-reel-on-screen {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1) !important;
+      }
+    }
+  </style>
+  <!-- Mobile footer logo: center both its box and the visible art within its transparent canvas. -->
+  <style id="cnh-mobile-footer-logo-center-fix">
+    @media (max-width: 820px) {
+      footer .fi .fb {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      footer .fi .fb .footer-brand-link {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-inline: auto;
+      }
+      footer .fi .fb .logo-anim-wrap.footer-logo {
+        transform: scale(.9);
+        transform-origin: center center;
+        margin-inline: auto;
+      }
+      /* The animated WebP has extra transparent padding on its right. */
+      footer .fi .fb .footer-logo .logo-gif {
+        transform: translateX(12px);
+      }
+    }
+  </style>
+  <!-- Tighten the two mobile section transitions surrounding Choose Your Editing Setup. -->
+  <style id="cnh-mobile-pricing-section-spacing-fix">
+    @media (max-width: 760px) {
+      #services.creator-reviews-section {
+        padding-bottom: 18px !important;
+      }
+      #process.pricing-showcase-section {
+        padding-top: 20px !important;
+        padding-bottom: 12px !important;
+      }
+      #video-testimonials.testimonial-videos-section {
+        padding-top: 16px !important;
+      }
+    }
+  </style>
+
+  <!-- Optimize animated logo compositing: alpha transparency already handles the black background. -->
+  <style id="cnh-logo-animation-performance">
+    .hero-logo-gif, footer .logo-gif { mix-blend-mode: normal !important; }
+  </style>
+  <style id="cnh-mobile-hero-motion-accessibility">
+    @media (max-width: 820px) and (prefers-reduced-motion: reduce) {
+      #hero .hero-cta .main-mrbeast-glint-btn .main-glint-stroke {
+        animation: none !important;
+        will-change: auto !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="hero-start-boost">
@@ -15121,7 +15204,7 @@
         <div class="hero-logo-wrap">
           <a aria-label="Cut &amp; Hire home" class="hero-logo-link" href="/">
             <img alt="Cut &amp; Hire" class="hero-logo-gif" onerror="this.closest('.hero-logo-wrap').style.display='none';"
-              src="assets/images/CutAndHire.webp?v=20261120-motion1" />
+              src="assets/images/CutAndHire.webp?v=20261120-optimized2" decoding="async" fetchpriority="high" />
           </a>
         </div>
         <h1 class="hero-h1 hero-h1-fixed">
@@ -17357,7 +17440,7 @@
       <div class="fb">
         <a class="logo footer-brand-link" href="#">
           <div class="logo-anim-wrap footer-logo">
-            <img alt="Cut &amp; Hire" class="logo-gif" src="assets/images/CutAndHire.webp?v=20261120-motion1" />
+            <img alt="Cut &amp; Hire" class="logo-gif" src="assets/images/CutAndHire.webp?v=20261120-optimized2" decoding="async" loading="lazy" fetchpriority="low" />
           </div>
         </a>
         <p>The Only Team Your Channel Needs.</p>
@@ -17531,6 +17614,11 @@
             }
             function playPreview(token) {
               if (!hovering || token !== playToken) return;
+              video.muted=true;
+              video.defaultMuted=true;
+              video.playsInline=true;
+              video.setAttribute('muted', '');
+              video.setAttribute('playsinline', '');
               var result;
               try { result = video.play(); } catch (_) { return; }
               if (result && result.then) result.then(function () { showIfReady(token); }).catch(function () {
@@ -17548,7 +17636,7 @@
               try { video.load(); } catch (_) { }
             }
             function startPreview() {
-              if (hovering || reduced.matches || !source || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+              if (hovering || reduced.matches || !source || (!window.matchMedia('(hover:hover) and (pointer:fine)').matches && !(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))) return;
               while (active.size >= maxActive) {
                 var oldest = active.values().next().value;
                 if (oldest && typeof oldest.__cnhStopGtaPreview === 'function') oldest.__cnhStopGtaPreview();
@@ -17557,12 +17645,16 @@
               hovering = true;
               var token = ++playToken;
               active.add(button);
+              // Restore the managed video if an older site script moved it.
+              if (!video.isConnected) button.insertBefore(video, button.querySelector('.gta-showcase-scan') || null);
               button.classList.add('preview-loading');
               video.preload = 'auto';
               if (video.getAttribute('src') !== source) { video.src = source; try { video.load(); } catch (_) { } }
               seekStart();
               playPreview(token);
             }
+            button.__cnhStartPreview=startPreview;
+            button.__cnhStopPreview=stopPreview;
             button.__cnhStopGtaPreview = stopPreview;
             video.addEventListener('loadedmetadata', function () { if (hovering) { seekStart(); playPreview(playToken); } });
             video.addEventListener('loadeddata', function () { if (hovering) showIfReady(playToken); });
@@ -17577,10 +17669,10 @@
               }
             });
             video.addEventListener('error', function () { if (hovering) { button.classList.remove('preview-loading'); stopPreview(); } });
-            button.addEventListener('mouseenter', startPreview, { passive: true });
-            button.addEventListener('mouseleave', stopPreview, { passive: true });
-            button.addEventListener('focusin', startPreview);
-            button.addEventListener('focusout', stopPreview);
+            button.addEventListener('mouseenter', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))startPreview();}, { passive: true });
+            button.addEventListener('mouseleave', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))stopPreview();}, { passive: true });
+            button.addEventListener('focusin', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))startPreview();});
+            button.addEventListener('focusout', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))stopPreview();});
           });
         }
         function stopAllGtaPreviews() {
@@ -17601,7 +17693,23 @@
       else setup();
     })();
   </script>
-  <script src="assets/js/index.js?v=thumbnails-20261117-up-to-mario"></script>
+  <style id="cnh-mobile-scroll-preview-fixes">
+    @media (max-width: 960px) and (pointer: coarse) {
+      .pricing-video-shell:hover:not(.preview-on) .pricing-preview-video {
+        opacity: 0 !important;
+      }
+      .pricing-video-shell:hover:not(.preview-on) > img {
+        opacity: 1 !important;
+      }
+      .pricing-video-shell.preview-on .pricing-preview-video {
+        opacity: 1 !important;
+      }
+      .pricing-video-shell.preview-on > img {
+        opacity: 0 !important;
+      }
+    }
+  </style>
+  <script src="assets/js/index.js?v=mobile-hero-motion-20261120"></script>
   <!-- Three new Our Work / Shorts-Reels items; use the standard website cards and player. -->
   <script src="assets/js/work-shorts-additions.js?v=20261114-2"></script>
 
@@ -17618,7 +17726,9 @@
         { id: 'andrew', name: 'Andrew Aquino', file: 'Andrew AquinoExplainer Sample.mp3' },
         { id: 'ross', name: 'Ross K. Foad', file: 'Ross_K.mp3' },
         { id: 'stephen', name: 'Stephen Bryson', file: 'Bryson_Sample.mp3' },
-        { id: 'alex', name: 'Alex Jewson', file: 'Alex Jewson Character Sampler.mp3' }
+        { id: 'alex', name: 'Alex Jewson', file: 'Alex Jewson Character Sampler.mp3' },
+        { id: 'mark-sebastian', name: 'Mark Sebastian', file: 'HanVa Voice Acting Demo Reel 2024.mp3' },
+        { id: 'karkar', name: 'Karkar', file: 'Demo Reel - KarkarVA.mp3' }
       ];
       const playbackSpeeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
       const icons = {
@@ -18161,7 +18271,7 @@
         if (result && typeof result.catch === 'function') result.catch(function () { });
       }
       function startPreview() {
-        if (!video || failed || reducedMotion.matches || !fineHover.matches || !popup.hidden) return;
+        if (!video || failed || reducedMotion.matches || (!fineHover.matches && !(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView())) || !popup.hidden) return;
         hovering = true;
         if (!loaded) {
           loaded = true;
@@ -18187,8 +18297,10 @@
           if (hovering) { resetPreviewTime(); playPreview(); }
         });
         video.addEventListener('error', function () { failed = true; stopPreview(); });
-        card.addEventListener('mouseenter', startPreview);
-        card.addEventListener('mouseleave', stopPreview);
+        card.__cnhStartPreview=startPreview;
+        card.__cnhStopPreview=stopPreview;
+        card.addEventListener('mouseenter', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))startPreview();});
+        card.addEventListener('mouseleave', function(){if(!(typeof cnhIsMobilePreviewView==='function' && cnhIsMobilePreviewView()))stopPreview();});
       }
 
       function openReel() {
@@ -18771,6 +18883,36 @@
         });
         delays.push(setTimeout(release, 2700));
       }, true);
+    })();
+  </script>
+
+  <script id="cnh-mobile-reel-scroll-trigger-v2-script">
+    (function () {
+      var reel = document.querySelector('#about .about-reel-feature');
+      if (!reel) return;
+      var mobile = window.matchMedia('(max-width: 767px)');
+      var queued = false;
+      function check() {
+        queued = false;
+        if (!mobile.matches) return;
+        if (window.scrollY < 70) return; // Stay hidden on the opening screen.
+        var bounds = reel.getBoundingClientRect();
+        if (bounds.top < window.innerHeight * .85 && bounds.bottom > 0) {
+          reel.classList.add('cnh-reel-on-screen');
+        }
+      }
+      function schedule() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(check);
+      }
+      window.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule, { passive: true });
+      if (mobile.addEventListener) mobile.addEventListener('change', schedule);
+      else if (mobile.addListener) mobile.addListener(schedule);
+      // Support direct visits that restore a prior scroll position.
+      if (document.readyState === 'complete') schedule();
+      else window.addEventListener('load', schedule, { once: true });
     })();
   </script>
 </body>

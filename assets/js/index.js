@@ -3415,7 +3415,7 @@ ring.style.visibility = 'visible';
 })();
 
 (function(){
-  const HERO_REEL_URL = 'https://youtu.be/QBdW_OE0Nug';
+  const HERO_REEL_URL = 'https://youtu.be/Ck74FknRVV8';
   let lastOpen = 0;
 
   function openHeroReel(event){

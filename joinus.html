@@ -299,6 +299,162 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link as="image" href="assets/images/Cut &amp; Hire V2.png" rel="preload"/>
 <link rel="stylesheet" href="assets/css/joinus.css">
+
+<style id="cnh-reel-parity-styles">
+/* Main Reel parity: index.html's 900px, borderless, .35s fade player. */
+#vp-wrap.cnh-reel-youtube {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0,0,0,.55) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: opacity .35s, visibility 0s linear .35s !important;
+}
+#vp-wrap.cnh-reel-youtube.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: all !important;
+  transition: opacity .35s, visibility 0s linear 0s !important;
+}
+#vp-wrap.cnh-reel-youtube .vp-screen.landscape {
+  display: block !important;
+  position: relative !important;
+  flex: none !important;
+  width: min(900px, 92vw) !important;
+  max-width: 900px !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: #000 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+#vp-wrap.cnh-reel-youtube #vp-embed-iframe {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: #000;
+}
+#vp-wrap.cnh-reel-youtube #vp-video,
+#vp-wrap.cnh-reel-youtube .vp-placeholder-empty,
+#vp-wrap.cnh-reel-youtube .vp-bigplay,
+#vp-wrap.cnh-reel-youtube .vp-controls {
+  display: none !important;
+}
+#vp-wrap.cnh-reel-youtube .vp-close {
+  display: flex !important;
+  position: fixed !important;
+  top: 18px !important;
+  right: 18px !important;
+  z-index: 100000 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 46px !important;
+  height: 46px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font: 28px/1 Arial, sans-serif !important;
+  color: #fff !important;
+  background: rgba(0,0,0,.72) !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.45) !important;
+}
+#vp-wrap.cnh-reel-youtube .vp-close:hover {
+  border-color: rgba(224,32,32,.7) !important;
+  background: rgba(224,32,32,.22) !important;
+}
+#vp-wrap.cnh-reel-youtube .vp-close:focus-visible,
+#paths .cnh-reel-card:focus-visible { outline: 2px solid #fff !important; outline-offset: 4px; }
+html.cnh-reel-player-open, body.cnh-reel-player-open {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+}
+/* Exact Main Reel preview treatment: zoom the poster, fade in only when playing,
+   hide the play indicator, and show the 2s–5s muted video teaser. */
+#paths .cnh-reel-card { position: relative; isolation: isolate; overflow: hidden; cursor: pointer; }
+#paths .cnh-reel-card .cnh-reel-poster,
+#paths .cnh-reel-card .cnh-reel-preview {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  pointer-events: none !important;
+}
+#paths .cnh-reel-card .cnh-reel-poster {
+  z-index: 0;
+  opacity: 1;
+  transition: transform 1s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+}
+#paths .cnh-reel-card:hover .cnh-reel-poster { transform: scale(1.045); }
+#paths .cnh-reel-card .cnh-reel-preview {
+  z-index: 1;
+  opacity: 0 !important;
+  background: #111;
+  transition: opacity .4s ease !important;
+}
+#paths .cnh-reel-card.is-previewing .cnh-reel-preview { opacity: 1 !important; }
+#paths .cnh-reel-card .join-video-shade { z-index: 2; pointer-events: none; }
+#paths .cnh-reel-card .join-video-play {
+  z-index: 3;
+  pointer-events: none;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+}
+#paths .cnh-reel-card.is-previewing .join-video-play { opacity: 0 !important; }
+@media (max-width:640px) {
+  #vp-wrap.cnh-reel-youtube .vp-close {
+    top: calc(12px + env(safe-area-inset-top)) !important;
+    right: calc(12px + env(safe-area-inset-right)) !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+@media (max-height:490px) and (orientation:landscape) {
+  #vp-wrap.cnh-reel-youtube .vp-screen.landscape {
+    width: min(900px, 92vw, calc((100dvh - 30px) * 16 / 9)) !important;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  #vp-wrap.cnh-reel-youtube,
+  #paths .cnh-reel-card .cnh-reel-poster,
+  #paths .cnh-reel-card .cnh-reel-preview,
+  #paths .cnh-reel-card .join-video-play { transition: none !important; }
+}
+</style>
 <script src="assets/js/joinus-init.js"></script>
 </head>
 <body>
@@ -326,12 +482,11 @@
 <div class="path-badge ed"><img alt="" class="icon-img badge-icon" src="assets/images/scissors.png"/> For Creators</div>
 <span class="path-icon"><img alt="" src="assets/images/film-reel.png"/></span>
 <h2>Ready to <em>land real clients?</em></h2>
-<div aria-label="Play editor/designer video" class="join-video-card editor-video-card" data-video-poster="assets/images/Cut &amp; Hire V2.png" data-video-src="assets/videos/Cut &amp; Hire V2.mp4" role="button" tabindex="0">
-<video class="join-video-preview" muted="" playsinline="" poster="assets/images/Cut &amp; Hire V2.png" preload="metadata" src="assets/videos/Cut &amp; Hire V2.mp4"></video>
-<div class="join-video-shade"></div>
-<div class="join-video-play">
-<span></span>
-</div>
+<div aria-label="Play Cut &amp; Hire Main Reel on YouTube" class="join-video-card editor-video-card cnh-reel-card" data-youtube-video="Ck74FknRVV8" data-video-poster="assets/images/Cut &amp; Hire V2.png" data-video-src="assets/videos/Cut%20%26%20Hire%20Main%20Reel.mp4" role="button" tabindex="0">
+  <img class="cnh-reel-poster" src="assets/images/Cut &amp; Hire V2.png" alt="" draggable="false" />
+  <video class="join-video-preview cnh-reel-preview" muted playsinline webkit-playsinline preload="none" data-reel-src="assets/videos/Cut%20%26%20Hire%20Main%20Reel.mp4" aria-hidden="true"></video>
+  <div class="join-video-shade"></div>
+  <div class="join-video-play" aria-hidden="true"><span></span></div>
 </div>
 <a class="btn-blu path-btn stroke-glow-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScDBnUx8HFeNl8I2OR1dwerlBADqXj2J79HIZnEsLyClGsMuQ/viewform" rel="noopener" target="_blank">
 <span aria-hidden="true" class="stroke-spin-mask"></span>
@@ -342,11 +497,12 @@
 </div>
 </div>
  
-<div aria-hidden="true" class="vp-wrap" id="vp-wrap">
+<div aria-hidden="true" class="vp-wrap cnh-reel-youtube" id="vp-wrap" role="dialog" aria-modal="true" aria-label="Cut & Hire Main Reel on YouTube">
 <button aria-label="Close video" class="vp-close" id="vp-close" type="button">✕</button>
 <div class="vp-screen landscape" id="vp-screen">
 <div class="vp-placeholder-empty" id="vp-placeholder-empty"></div>
 <video controlslist="nodownload noplaybackrate" disablepictureinpicture="" id="vp-video" playsinline="" poster="assets/images/Cut &amp; Hire V2.png" preload="metadata"></video>
+<iframe id="vp-embed-iframe" class="vp-embed-iframe" title="Cut &amp; Hire Main Reel on YouTube" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
 <div class="vp-bigplay" id="vp-bigplay"><img alt="" id="vp-bigplay-img" src="assets/images/play-buttton.png"/></div>
 </div>
 <div class="vp-controls landscape" id="vp-controls">
@@ -368,5 +524,170 @@
 </div>
 </div>
 <script src="assets/js/joinus.js"></script>
+
+<script id="cnh-joinus-main-reel-parity">
+/* Join Us: same player and 2–5s teaser logic as the main site's Watch Our Reel. */
+(function () {
+  'use strict';
+  var oldCard = document.querySelector('#paths .cnh-reel-card');
+  var wrapper = document.getElementById('vp-wrap');
+  var screen = document.getElementById('vp-screen');
+  var iframe = document.getElementById('vp-embed-iframe');
+  var closeBtn = document.getElementById('vp-close');
+  if (!oldCard || !wrapper || !screen || !iframe || !closeBtn) return;
+
+  // Detach legacy Join Us player event listeners. The full video uses the
+  // main-site YouTube iframe rather than the separate local MP4 player.
+  var card = oldCard.cloneNode(true);
+  oldCard.replaceWith(card);
+  var video = card.querySelector('.cnh-reel-preview');
+  if (!video) return;
+  var src = video.getAttribute('data-reel-src');
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var fineHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var mobileMode = window.matchMedia('(max-width: 900px) and (hover: none)');
+  var loading = false, failed = false, active = false, requestNumber = 0;
+  var lastFocus = null, oldBodyStyle = null, savedScrollY = 0;
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+
+  function resetTime() {
+    if (video.readyState < 1) return;
+    var maxStart = Math.max(0, (video.duration || 5) - .3);
+    try { video.currentTime = Math.min(2, maxStart); } catch (_) { }
+  }
+  function stopPreview() {
+    active = false;
+    ++requestNumber;
+    video.pause();
+    card.classList.remove('is-previewing');
+    resetTime();
+  }
+  function playPreview() {
+    if (!active || failed || wrapper.classList.contains('open')) return;
+    var token = ++requestNumber;
+    var result;
+    try { result = video.play(); } catch (_) { result = null; }
+    if (result && typeof result.then === 'function') {
+      result.then(function () {
+        if (active && token === requestNumber && !wrapper.classList.contains('open')) {
+          card.classList.add('is-previewing');
+        }
+      }).catch(function () { card.classList.remove('is-previewing'); });
+    } else if (!video.paused) {
+      card.classList.add('is-previewing');
+    }
+  }
+  function startPreview() {
+    if (failed || reducedMotion.matches || document.hidden || wrapper.classList.contains('open')) return;
+    active = true;
+    if (!loading) {
+      loading = true;
+      video.src = src;
+      video.preload = 'auto';
+      video.load();
+    }
+    resetTime();
+    playPreview();
+  }
+  video.addEventListener('loadedmetadata', function () { if (active) resetTime(); });
+  video.addEventListener('playing', function () {
+    if (active && !wrapper.classList.contains('open')) card.classList.add('is-previewing');
+  });
+  video.addEventListener('timeupdate', function () {
+    if (active && video.currentTime >= 5) {
+      resetTime();
+      if (video.paused) playPreview();
+    }
+  });
+  video.addEventListener('ended', function () { if (active) { resetTime(); playPreview(); } });
+  video.addEventListener('error', function () { failed = true; stopPreview(); });
+
+  card.addEventListener('mouseenter', function () { if (fineHover.matches) startPreview(); });
+  card.addEventListener('mouseleave', function () { if (fineHover.matches) stopPreview(); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) stopPreview(); });
+
+  // Match index.html's mobile viewport autoplay without activating it on PC.
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      if (!mobileMode.matches) return;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.intersectionRatio >= .45) startPreview();
+        else stopPreview();
+      });
+    }, { threshold: [0, .2, .45, .65] });
+    observer.observe(card);
+  }
+
+  function openReel() {
+    if (wrapper.classList.contains('open')) return;
+    stopPreview();
+    lastFocus = document.activeElement;
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    oldBodyStyle = document.body.getAttribute('style');
+    document.documentElement.classList.add('cnh-reel-player-open');
+    document.body.classList.add('cnh-reel-player-open');
+    document.body.style.position = 'fixed';
+    document.body.style.top = (-savedScrollY) + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    screen.className = 'vp-screen landscape';
+    wrapper.classList.add('open', 'youtube-active');
+    wrapper.setAttribute('aria-hidden', 'false');
+    iframe.src = 'https://www.youtube.com/embed/Ck74FknRVV8?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    closeBtn.focus({ preventScroll: true });
+  }
+  function closeReel() {
+    if (!wrapper.classList.contains('open')) return;
+    iframe.removeAttribute('src');
+    wrapper.classList.remove('open', 'youtube-active');
+    wrapper.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('cnh-reel-player-open');
+    document.body.classList.remove('cnh-reel-player-open');
+    if (oldBodyStyle === null) document.body.removeAttribute('style');
+    else document.body.setAttribute('style', oldBodyStyle);
+    window.scrollTo(0, savedScrollY);
+    if (lastFocus && typeof lastFocus.focus === 'function') {
+      lastFocus.focus({ preventScroll: true });
+    }
+  }
+  card.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openReel();
+  });
+  card.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      openReel();
+    }
+  });
+  closeBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeReel();
+  }, true);
+  wrapper.addEventListener('click', function (event) {
+    if (event.target === wrapper) closeReel();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && wrapper.classList.contains('open')) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeReel();
+    }
+  }, true);
+  window.addEventListener('pagehide', function () {
+    if (wrapper.classList.contains('open')) closeReel();
+  });
+})();
+</script>
+
 </body>
 </html>

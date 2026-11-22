@@ -15247,9 +15247,8 @@
     <div class="about-reel-feature con rv cnh-work-reveal" aria-labelledby="about-reel-heading">
 
       <button class="about-reel-card" type="button" aria-label="Play the Cut &amp; Hire main reel in a popup"
-        aria-haspopup="dialog" aria-controls="about-reel-popup">
-        <img class="about-reel-thumbnail" src="https://i.ytimg.com/vi/QBdW_OE0Nug/maxresdefault.jpg"
-          onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://i.ytimg.com/vi/QBdW_OE0Nug/hqdefault.jpg';}"
+        aria-haspopup="dialog" aria-controls="about-reel-popup" data-gta-video="Ck74FknRVV8">
+        <img class="about-reel-thumbnail" src="assets/images/Cut &amp; Hire V2.png"
           alt="Thumbnail of Cut &amp; Hire's main showreel" loading="lazy" decoding="async" />
         <video class="about-reel-hover-video" muted playsinline preload="none" aria-hidden="true"
           data-reel-src="assets/videos/Cut%20%26%20Hire%20Main%20Reel.mp4"></video>
@@ -15952,40 +15951,6 @@
                   <li>Dedicated clipping team</li>
                 </ul>
                 <a class="pricing-btn js-contact-jump" href="#discord">Start Your Project</a>
-              </div>
-            </article>
-
-            <article class="pricing-card pricing-card-featured" data-pricing-card>
-              <a class="pricing-img-shell pricing-video-shell minimal-pricing-img"
-                href="https://youtube.com/shorts/k2s_fIZtLV8?feature=share" role="button" tabindex="0"
-                aria-label="Open Minimal Reels Pricing YouTube video" data-pricing-src="assets/videos/Video 44.mp4"
-                data-pricing-poster="assets/images/minimalreelphoto.jpg" data-pricing-title="Minimal Reels Pricing"
-                data-pricing-portrait="true"
-                data-pricing-youtube="https://youtube.com/shorts/k2s_fIZtLV8?feature=share">
-                <img src="assets/images/minimalreelphoto.jpg" alt="Minimal reels pricing preview" loading="lazy">
-                <video class="pricing-preview-video" muted loop playsinline preload="none"
-                  poster="assets/images/minimalreelphoto.jpg"></video>
-                <span class="pricing-video-play" aria-hidden="true"></span>
-              </a>
-              <div class="pricing-card-body">
-                <p class="pricing-kicker">For creators who want clean viral authority</p>
-                <h3>Minimal Reels Pricing</h3>
-                <div class="pricing-price-wrap pricing-simple-price">
-                  <div class="pricing-price-line" aria-label="Minimal Reels custom pricing">
-                    <strong class="pricing-new-price">Custom Pricing</strong>
-                  </div>
-                </div>
-                <p class="pricing-includes">Includes a personalized short-form editing plan</p>
-                <p class="pricing-copy">Clean, professional edits designed around your brand, posting schedule, and
-                  content strategy.</p>
-                <ul class="pricing-list">
-                  <li>Custom monthly output</li>
-                  <li>Fast turnaround</li>
-                  <li>Storyboarding available</li>
-                  <li>Clean viral style</li>
-                </ul>
-                <a class="pricing-btn pricing-btn-book" href="https://calendar.app.google/ZGCEAVC6E4PU5UiSA"
-                  target="_blank" rel="noopener">Start Your Project</a>
               </div>
             </article>
 
@@ -17533,7 +17498,7 @@
         var target = event.target;
         var card = target && target.closest && target.closest('#about .about-reel-card, #gta-showcase .gta-feature-thumb[data-gta-video]');
         if (!card || typeof window.vpOpenYouTube !== 'function') return;
-        var videoId = card.getAttribute('data-gta-video') || 'QBdW_OE0Nug';
+        var videoId = card.getAttribute('data-gta-video') || 'Ck74FknRVV8';
         if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return;
         var start = Math.max(0, Number(card.getAttribute('data-start')) || 0);
         var title = card.getAttribute('data-gta-title') || 'Cut & Hire Main Reel';
@@ -17715,7 +17680,7 @@
       }
     }
   </style>
-  <script src="assets/js/index.js?v=mobile-hero-motion-20261120"></script>
+  <script src="assets/js/index.js?v=pricing-reel-20261123"></script>
   <!-- Three new Our Work / Shorts-Reels items; use the standard website cards and player. -->
   <script src="assets/js/work-shorts-additions.js?v=20261114-2"></script>
 
@@ -18253,7 +18218,7 @@
       const closeButton = popup.querySelector('.about-reel-popup-close');
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)');
-      const fullVideoEmbed = 'https://www.youtube-nocookie.com/embed/QBdW_OE0Nug?autoplay=0&rel=0&playsinline=1';
+      const fullVideoEmbed = 'https://www.youtube-nocookie.com/embed/Ck74FknRVV8?autoplay=0&rel=0&playsinline=1';
       const previewStart = 2, previewSeconds = 5; // Same 2–5 second looping teaser as Our Work.
       let loaded = false;
       let failed = false;

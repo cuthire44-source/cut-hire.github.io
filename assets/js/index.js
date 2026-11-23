@@ -278,7 +278,7 @@ document.querySelector('[data-results-next]')?.addEventListener('click',()=>scro
     "✂️ Crafted frame by frame",
     "✨ Creativity in every detail",
     "🎞️ Stories worth watching",
-    "🚀 Cut & Hire Studio"
+    "🚀 Cut & Hire"
   ];
   const back=[
     "👋 Welcome back",
@@ -3415,7 +3415,7 @@ ring.style.visibility = 'visible';
 })();
 
 (function(){
-  const HERO_REEL_URL = 'https://youtu.be/Ck74FknRVV8';
+  const HERO_REEL_URL = 'https://youtu.be/QBdW_OE0Nug';
   let lastOpen = 0;
 
   function openHeroReel(event){
